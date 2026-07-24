@@ -39,3 +39,35 @@ La scène principale provisoire a été rendue en 1920 × 1080 et inspectée. Le
 ### Résultat
 
 Tous les critères d’acceptation de M0.1 sont prouvés. Les cases de `roadmap_v1.md` restent inchangées pendant la session et seront mises à jour par `/close`, conformément au protocole du projet.
+
+## M0.2 — Installer la discipline qualité
+
+Date : 2026-07-24
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche documents et tests headless
+
+- `_docs/performance_baseline.md` décrit la configuration Windows de référence, le budget et le protocole de mesure. Les mesures release restent explicitement en attente.
+- `_docs/asset_licenses.md` initialise le registre et constate qu’aucune ressource externe n’est actuellement intégrée.
+- `test.py` lance Godot en mode headless par l’intermédiaire de `run.py`.
+- `tests/headless_test_runner.gd` découvre les fichiers `tests/test_*.gd`, exécute leur méthode `run_tests()` et renvoie un code non nul si une suite échoue.
+- `tests/test_project_configuration.gd` vérifie le nom configuré du projet.
+- `check.py` contrôle successivement l’import, les tests headless et la création d’un export `.pck`. Il s’arrête au premier échec et en conserve le code.
+- L’overlay affiche FPS, temps de frame, zombies actifs, nœuds et mémoire. `F3` le masque ou le réaffiche.
+- L’overlay n’est instancié que si `OS.is_debug_build()` est vrai ; il est donc absent d’un export release par défaut.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Compilation Python | `python -m py_compile run.py test.py check.py tests\test_run.py tests\test_check.py` | code 0 |
+| Tests Python | `python -m unittest discover -s tests -p "test_*.py" -v` | 4 tests réussis |
+| Tests Godot headless | `python test.py` | code 0, 2 suites réussies sans erreur moteur |
+| Propagation d’échec | `python test.py --test-file=res://tests/absent.gd` | code 1, fichier introuvable signalé |
+| Contrôle global | `python check.py` | code 0, import, 2 suites et export `.pck` réussis |
+| Rendu Forward+ | `python run.py --rendering-method forward_plus --quit-after 3` | code 0, Vulkan 1.4.312, overlay et scène principale prêts |
+
+### Résultat
+
+Les trois documents qualité, le lanceur headless, la commande globale et l’overlay satisfont les critères M0.2. La configuration de référence est renseignée ; les mesures FPS release restent à produire lorsque les scènes de qualification existeront.

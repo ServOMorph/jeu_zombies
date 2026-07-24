@@ -31,6 +31,16 @@ python run.py
 
 Godot doit être disponible dans le `PATH`. Sinon, définir `GODOT_BIN` avec le chemin complet de l’exécutable.
 
+## Contrôle qualité
+
+La commande suivante vérifie successivement l’import Godot, les tests headless et l’export de contrôle :
+
+```powershell
+python check.py
+```
+
+Le contrôle s’arrête au premier échec et transmet un code de sortie non nul. En développement, l’overlay de métriques est affiché en haut à gauche et peut être masqué ou réaffiché avec `F3`. Il n’est pas instancié dans un export release.
+
 ## État actuel
 
-M0.1 est validé : le projet s’importe et démarre sans erreur, le lanceur fonctionne depuis tout répertoire, la scène provisoire est rendue en Forward+ et les 15 actions clavier/souris sont configurées. La prochaine tâche est M0.2 — discipline qualité.
+M0.1 et M0.2 sont validés. `python check.py` contrôle l’import, les tests headless et l’export `.pck`. L’overlay de développement affiche les métriques utiles et se masque avec `F3`. La prochaine tâche est M0.3 — socle de session.

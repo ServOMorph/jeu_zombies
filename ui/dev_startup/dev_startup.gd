@@ -1,5 +1,8 @@
 extends Control
 
+const DEV_METRICS_OVERLAY := preload(
+	"res://ui/dev_overlay/dev_metrics_overlay.tscn"
+)
 const EXPECTED_INPUT_ACTIONS: PackedStringArray = [
 	"move_forward",
 	"move_backward",
@@ -20,6 +23,9 @@ const EXPECTED_INPUT_ACTIONS: PackedStringArray = [
 
 
 func _ready() -> void:
+	if OS.is_debug_build():
+		add_child(DEV_METRICS_OVERLAY.instantiate())
+
 	var missing_actions: PackedStringArray = []
 	for action: String in EXPECTED_INPUT_ACTIONS:
 		if (

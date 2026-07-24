@@ -254,13 +254,13 @@ Tester au minimum :
 
 ### M0.2 — Installer la discipline qualité
 
-- [ ] Créer `_docs/validation_v1.md`.
-- [ ] Créer `_docs/performance_baseline.md`.
-- [ ] Créer `_docs/asset_licenses.md`.
-- [ ] Créer le lanceur de tests headless et un premier test volontairement simple.
-- [ ] Ajouter une commande documentée de vérification d'import, de tests et d'export.
-- [ ] Ajouter un overlay de développement affichant FPS, temps de frame, nombre de zombies actifs, nombre de nœuds et mémoire utile.
-- [ ] Rendre l'overlay désactivable et absent de l'export release par défaut.
+- [x] Créer `_docs/validation_v1.md`.
+- [x] Créer `_docs/performance_baseline.md`.
+- [x] Créer `_docs/asset_licenses.md`.
+- [x] Créer le lanceur de tests headless et un premier test volontairement simple.
+- [x] Ajouter une commande documentée de vérification d'import, de tests et d'export.
+- [x] Ajouter un overlay de développement affichant FPS, temps de frame, nombre de zombies actifs, nombre de nœuds et mémoire utile.
+- [x] Rendre l'overlay désactivable et absent de l'export release par défaut.
 
 **Acceptation :**
 
@@ -807,4 +807,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Commencer par **M0.1 — Initialiser le projet**. Ne produire ni arme, ni zombie, ni asset final avant que M0.1, M0.2 et M0.3 soient validés. La toute première preuve attendue est un projet Godot importable et lançable sans erreur avec `python run.py`, suivi d'un test headless réussi et d'une fiche de performance de référence.
+Continuer par **M0.3 — Socle de session**. Ne produire ni arme, ni zombie, ni asset final avant que M0.3 soit validé. Les preuves M0.1 et M0.2 sont consignées dans `_docs/validation_v1.md`.

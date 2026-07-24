@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/dev_overlay/dev_metrics_overlay.gd" id="1_overlay"]
+
+[node name="DevMetricsOverlay" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_overlay")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 246.0
+offset_bottom = 174.0
+
+[node name="MetricsLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 158)
+theme_override_colors/font_color = Color(0.78, 0.91, 0.96, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "FPS : 0
+Frame : 0.00 ms
+Zombies : 0
+Nœuds : 0
+Mémoire : 0.0 Mio
+[F3] Masquer"

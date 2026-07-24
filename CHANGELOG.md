@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2 — 2026-07-24
+
+### Ajouté
+
+- Documents de baseline de performance et de licences des ressources.
+- Lanceur de tests Godot headless, deux suites et commande globale `python check.py`.
+- Preset d’export Windows et overlay de développement désactivable avec `F3`.
+
+### Modifié
+
+- Roadmap, README et contexte alignés sur la validation de M0.2 et le démarrage de M0.3.
+
 ## v0.1 — 2026-07-24
 
 ### Ajouté
