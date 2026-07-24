@@ -2,4 +2,4 @@
 
 | Alias | Dossier |
 |-------|---------|
-| jeu_zombies | D\:ServOMorphjeu_zombies |
+| jeu_zombies | D:\ServOMorph\jeu_zombies |

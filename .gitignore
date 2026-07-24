@@ -1,0 +1,20 @@
+# Godot
+.godot/
+*.tmp
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Builds and local measurements
+builds/
+exports/
+reports/local/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
