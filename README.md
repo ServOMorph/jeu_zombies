@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0.1 à M1.4 et l'instrumentation M1.5-A sont validés. `python check.py` contrôle l'import, 8 suites headless et l'export `.pck`. Une chute VSync intermittente à 30 FPS lors d'un tir dans le vide a été suivie de deux répétitions conformes. M2 reste bloqué jusqu'à trois parcours complets VSync conformes, réalisés avec le moins possible de charge système en arrière-plan.
+M0, M1 et M2.1 sont validés. `python check.py` contrôle l'import, 9 suites headless et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. Le zombie standard contourne un obstacle, attaque uniquement avec ligne de vue et s'arrête après sa mort. La prochaine tâche est M2.2 : apparition contrôlée.

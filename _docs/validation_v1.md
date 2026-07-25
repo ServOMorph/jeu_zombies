@@ -209,7 +209,7 @@ Les critères d'acceptation de M1.4 sont satisfaits.
 
 Date : 2026-07-25
 Version Godot : `4.5.stable.official.876b29033`
-Statut : non validé
+Statut : validé
 
 ### Mesure manuelle
 
@@ -253,3 +253,38 @@ Les premiers essais VSync par scénario étaient conformes sauf un tir dans le v
 Une erreur de script au passage vers la scène FPS a été corrigée en marquant l'entrée `F2` comme traitée avant le changement de scène. `python check.py` réussit après correction : import Godot, 8 suites headless et export de contrôle.
 
 Ces essais ne remplacent pas les trois parcours complets VSync requis. La qualification doit être réalisée avec le moins possible de charge CPU, GPU et disque en arrière-plan, selon `tests_manuels.md`.
+
+### Requalification validée
+
+Les trois parcours complets VSync, réalisés avec une faible charge système, sont conformes. Le pire résultat retenu est : moyenne 60 FPS, minimum 55 FPS, pire frame 18,06 ms, zéro frame sous 50 FPS et séquence maximale nulle.
+
+La porte M1 est validée. Le parcours sans VSync reste diagnostique et n'est pas requis pour cette validation.
+
+## M2.1 — Zombie standard
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `ZombieDefinition` centralise santé, vitesse, dégâts, portée, cooldown, fréquence de recalcul et récompense.
+- `ZombieStandard` gère apparition, poursuite par `NavigationAgent3D`, attaque avec ligne de vue, réaction aux dégâts, mort unique et désactivation.
+- La scène de test contient un obstacle central et un maillage de navigation avec deux passages latéraux.
+- Le zombie est identifié par le groupe `zombies` ; le joueur s'inscrit explicitement dans le groupe `player`.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 9 suites réussies |
+| Chargement scène de test | `python run.py --headless res://world/dev_player_test.tscn --quit-after 5` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+| Contrôle global | `python check.py` | code 0, import, 9 suites et export `.pck` réussis |
+
+### Contrôle manuel
+
+Le zombie contourne l'obstacle, n'attaque pas à travers celui-ci, attaque uniquement à portée, reçoit les dégâts du pistolet et du couteau, puis cesse tout déplacement et dégât après sa mort.
+
+### Résultat
+
+Les critères d'acceptation de M2.1 sont satisfaits.

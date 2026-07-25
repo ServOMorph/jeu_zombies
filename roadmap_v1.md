@@ -368,12 +368,12 @@ Tester au minimum :
 
 #### E. Requalifier la porte M1
 
-- [ ] Exécuter `python check.py` après les corrections.
-- [ ] Réaliser trois parcours complets avec VSync et retenir le pire résultat.
-- [ ] Confirmer sur chacun : moyenne d'au moins 60 FPS, minimum d'au moins 50 FPS, zéro frame sous 50 FPS, séquence maximale nulle et pire frame d'au plus 20 ms.
+- [x] Exécuter `python check.py` après les corrections.
+- [x] Réaliser trois parcours complets avec VSync et retenir le pire résultat.
+- [x] Confirmer sur chacun : moyenne d'au moins 60 FPS, minimum d'au moins 50 FPS, zéro frame sous 50 FPS, séquence maximale nulle et pire frame d'au plus 20 ms.
 - [ ] Réaliser ensuite le parcours sans VSync à titre diagnostique.
-- [ ] Consigner les preuves dans `_docs/validation_v1.md`.
-- [ ] Après validation manuelle par l'utilisateur, supprimer uniquement la section correspondante de `tests_manuels.md`.
+- [x] Consigner les preuves dans `_docs/validation_v1.md`.
+- [x] Après validation manuelle par l'utilisateur, supprimer uniquement la section correspondante de `tests_manuels.md`.
 
 **Porte de sortie M1 :**
 
@@ -382,7 +382,7 @@ Tester au minimum :
 - La scène tient la cible interne de 60 FPS sur la configuration de référence.
 - Aucun défaut de caméra, collision, réticule ou arme tenue n'est visible dans le parcours de test.
 
-Statut au 2026-07-25 : les fonctionnalités M1 et l'instrumentation M1.5-A sont validées. L'isolation M1.5-B a relevé une chute intermittente lors d'un tir dans le vide, suivie de deux essais conformes. La porte reste bloquée jusqu'à trois parcours complets VSync conformes réalisés avec une faible charge système.
+Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSync à faible charge sont conformes ; pire résultat retenu : moyenne 60 FPS, minimum 55 FPS, pire frame 18,06 ms, aucune frame sous 50 FPS et séquence maximale nulle. Le parcours sans VSync reste uniquement un diagnostic optionnel.
 
 ## 8. Jalon M2 — Zombie standard et vagues
 
@@ -390,14 +390,14 @@ Statut au 2026-07-25 : les fonctionnalités M1 et l'instrumentation M1.5-A sont 
 
 ### M2.1 — Zombie standard
 
-- [ ] Créer une scène zombie standard avec données de santé, vitesse, dégâts, portée et récompense.
-- [ ] Implémenter les états apparition, poursuite, attaque, réaction aux dégâts, mort et désactivation.
-- [ ] Utiliser la navigation Godot pour rejoindre le joueur.
-- [ ] Recalculer les chemins à une fréquence bornée, pas à chaque frame pour chaque zombie.
-- [ ] Gérer l'évitement ou une séparation légère sans comportement instable.
-- [ ] Permettre le franchissement des entrées prévues.
-- [ ] Empêcher les attaques à travers les murs et hors portée.
-- [ ] Ajouter une animation ou un feedback temporaire lisible pour chaque état.
+- [x] Créer une scène zombie standard avec données de santé, vitesse, dégâts, portée et récompense.
+- [x] Implémenter les états apparition, poursuite, attaque, réaction aux dégâts, mort et désactivation.
+- [x] Utiliser la navigation Godot pour rejoindre le joueur.
+- [x] Recalculer les chemins à une fréquence bornée, pas à chaque frame pour chaque zombie.
+- [x] Gérer l'évitement ou une séparation légère sans comportement instable.
+- [x] Permettre le franchissement des entrées prévues.
+- [x] Empêcher les attaques à travers les murs et hors portée.
+- [x] Ajouter une animation ou un feedback temporaire lisible pour chaque état.
 
 **Acceptation :**
 
@@ -858,4 +858,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Terminer **M1.5-B** dans les conditions de faible charge décrites par `tests_manuels.md`, puis exécuter trois parcours complets VSync conformes. M2 reste bloqué jusque-là.
+Réaliser **M2.2 — Apparition contrôlée** : points configurables, validation de chemin, exclusion du champ proche du joueur, plafond actif et stratégie de repli.

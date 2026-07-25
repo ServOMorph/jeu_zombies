@@ -28,14 +28,3 @@
 7. Répéter avec `python run.py --disable-vsync` uniquement les scénarios qui ont relevé au moins une chute sous 50 FPS avec VSync. Cette mesure est diagnostique et ne remplace pas la qualification VSync.
 
 Résultat attendu pour la qualification finale VSync : moyenne d'au moins 60 FPS, minimum d'au moins 50 FPS, zéro frame sous 50 FPS, séquence maximale nulle et pire frame d'au plus 20 ms.
-
-## Porte de sortie M1 — Requalification de performance
-
-1. Après les corrections issues de M1.5-B, lancer `python run.py`, appuyer sur Entrée puis `F2` et vérifier `VSync : activée`.
-2. Attendre 30 secondes de préchauffage.
-3. Appuyer sur `F4`, attendre `Mesure : active`, puis effectuer quatre séquences de 15 secondes : repos, déplacement avec pentes et accroupissement, tirs et rechargements, puis couteau sur la cible.
-4. Attendre une seconde, relever les six métriques et conserver le résultat.
-5. Répéter le parcours complet trois fois ; retenir le pire résultat de chaque métrique.
-6. Réaliser ensuite le même parcours avec `python run.py --disable-vsync` à titre diagnostique.
-
-Résultat attendu avec VSync : moyenne d'au moins 60 FPS, minimum d'au moins 50 FPS, zéro frame sous 50 FPS, séquence maximale nulle et pire frame d'au plus 20 ms.

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ZombieDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://enemies/zombie_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+display_name = "Zombie standard"
+max_health = 100.0
+move_speed = 2.8
+attack_damage = 15.0
+attack_range_meters = 1.6
+attack_cooldown_seconds = 1.0
+path_refresh_seconds = 0.35
+credit_reward = 50

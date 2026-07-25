@@ -51,6 +51,7 @@ var vitals = PLAYER_VITALS.new()
 
 
 func _ready() -> void:
+	add_to_group("player")
 	vitals.configure(
 		max_health,
 		damage_invulnerability_seconds,

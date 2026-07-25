@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.7 — 2026-07-25
+
+### Ajouté
+
+- Zombie standard avec données, navigation, attaques à ligne de vue, mort unique et récompense.
+- Scène de navigation avec obstacle de contournement et test automatisé dédié.
+
+### Modifié
+
+- Porte M1 validée sur trois parcours VSync conformes à faible charge ; M2 est débloqué.
+- Validation, roadmap, contexte et README alignés sur M2.1 et 9 suites headless.
+
 ## v0.6 — 2026-07-25
 
 ### Ajouté
