@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.3 — 2026-07-25
+
+### Ajouté
+
+- Socle de session, contrôleur FPS, santé, endurance, pistolet hitscan et scène de test jouable.
+- Cinq suites de tests Godot supplémentaires, portant le total à sept.
+
+### Modifié
+
+- Roadmap, contexte et README alignés sur la validation de M0.3, M1.2 et M1.3 ; M1.1 attend la validation de pente.
+- Cycle de vie des tests manuels documenté dans les instructions du projet.
+
 ## v0.2 — 2026-07-24
 
 ### Ajouté

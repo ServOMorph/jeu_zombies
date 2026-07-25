@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://weapons/weapon_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+weapon_name = "Pistolet de secours"
+damage = 25.0
+fire_interval_seconds = 0.3
+range_meters = 60.0
+spread_degrees = 1.5
+magazine_capacity = 12
+reserve_capacity = 48
+reload_duration_seconds = 1.2

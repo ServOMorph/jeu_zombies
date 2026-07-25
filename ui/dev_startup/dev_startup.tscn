@@ -53,5 +53,20 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.65, 0.28, 1)
 theme_override_font_sizes/font_size = 18
-text = "ÉCRAN TEMPORAIRE DE DÉVELOPPEMENT — M0.1"
+text = "ÉCRAN TEMPORAIRE DE DÉVELOPPEMENT — M0.3"
+horizontal_alignment = 1
+
+[node name="SessionStatus" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.91, 0.96, 1)
+theme_override_font_sizes/font_size = 24
+text = "État de session : MENU"
+horizontal_alignment = 1
+
+[node name="SessionControls" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 0.64, 0.68, 1)
+theme_override_font_sizes/font_size = 18
+text = "Entrée : démarrer · P : pause/reprendre · F2 : test FPS · Échap : retour au menu"
 horizontal_alignment = 1

@@ -15,6 +15,10 @@ config/description="Jeu de survie FPS solo dans le Complexe Helix-9."
 run/main_scene="res://ui/dev_startup/dev_startup.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
+[autoload]
+
+GameSession="*res://core/game_session.gd"
+
 [display]
 
 window/size/viewport_width=1920

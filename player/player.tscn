@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://player/player_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://weapons/weapon_controller.gd" id="2_weapons"]
+[ext_resource type="Resource" path="res://weapons/data/starter_pistol.tres" id="3_pistol"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_pistol"]
+size = Vector3(0.16, 0.14, 0.55)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 1.55, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 75.0
+
+[node name="WeaponVisual" type="MeshInstance3D" parent="Head/Camera3D"]
+position = Vector3(0.36, -0.28, -0.62)
+mesh = SubResource("BoxMesh_pistol")
+
+[node name="WeaponController" type="Node3D" parent="."]
+script = ExtResource("2_weapons")
+initial_weapon = ExtResource("3_pistol")

@@ -270,10 +270,10 @@ Tester au minimum :
 
 ### M0.3 — Socle de session
 
-- [ ] Créer le contrôleur de session avec les états `MENU`, `PLAYING`, `PAUSED`, `DEFEAT`, `VICTORY`.
-- [ ] Définir la création et la destruction propres d'une partie.
-- [ ] Centraliser les signaux de début, pause, fin et remise à zéro.
-- [ ] Tester deux démarrages de partie successifs sans état résiduel.
+- [x] Créer le contrôleur de session avec les états `MENU`, `PLAYING`, `PAUSED`, `DEFEAT`, `VICTORY`.
+- [x] Définir la création et la destruction propres d'une partie.
+- [x] Centraliser les signaux de début, pause, fin et remise à zéro.
+- [x] Tester deux démarrages de partie successifs sans état résiduel.
 
 **Porte de sortie M0 :**
 
@@ -286,13 +286,13 @@ Tester au minimum :
 
 ### M1.1 — Contrôleur joueur
 
-- [ ] Créer un `CharacterBody3D` joueur avec caméra FPS.
-- [ ] Implémenter marche, course, saut et accroupissement.
+- [x] Créer un `CharacterBody3D` joueur avec caméra FPS.
+- [x] Implémenter marche, course, saut et accroupissement.
 - [ ] Gérer accélération, décélération, gravité, pente, plafond bas et marche sur petits obstacles.
-- [ ] Capturer/libérer correctement la souris.
-- [ ] Empêcher le passage à travers murs, portes et sol.
-- [ ] Exposer vitesse, accélération, hauteur de saut et sensibilité comme paramètres.
-- [ ] Vérifier le comportement à bas et haut FPS.
+- [x] Capturer/libérer correctement la souris.
+- [x] Empêcher le passage à travers murs, portes et sol.
+- [x] Exposer vitesse, accélération, hauteur de saut et sensibilité comme paramètres.
+- [x] Vérifier le comportement à bas et haut FPS.
 
 **Acceptation :**
 
@@ -302,21 +302,21 @@ Tester au minimum :
 
 ### M1.2 — Santé et endurance
 
-- [ ] Implémenter santé maximale, dégâts, invulnérabilité brève si nécessaire, mort et régénération retardée.
-- [ ] Implémenter consommation d'endurance pendant la course et régénération au repos.
-- [ ] Interdire la course quand l'endurance est épuisée et la réactiver de façon lisible.
-- [ ] Arrêter les actions de combat à la mort.
-- [ ] Ajouter les tests de limites et de remise à zéro.
+- [x] Implémenter santé maximale, dégâts, invulnérabilité brève si nécessaire, mort et régénération retardée.
+- [x] Implémenter consommation d'endurance pendant la course et régénération au repos.
+- [x] Interdire la course quand l'endurance est épuisée et la réactiver de façon lisible.
+- [x] Arrêter les actions de combat à la mort.
+- [x] Ajouter les tests de limites et de remise à zéro.
 
 ### M1.3 — Cadre d'armes
 
-- [ ] Créer une ressource de définition d'arme.
-- [ ] Créer un contrôleur d'armes gérant deux emplacements, arme active et couteau permanent.
-- [ ] Implémenter cadence, hitscan, dégâts, portée, dispersion, chargeur, réserve et rechargement.
-- [ ] Empêcher tir et rechargement dans les états incompatibles.
-- [ ] Gérer le changement d'arme sans duplication de munitions.
-- [ ] Créer le petit pistolet de départ.
-- [ ] Créer une cible de test avec retour de dégâts.
+- [x] Créer une ressource de définition d'arme.
+- [x] Créer un contrôleur d'armes gérant deux emplacements, arme active et couteau permanent.
+- [x] Implémenter cadence, hitscan, dégâts, portée, dispersion, chargeur, réserve et rechargement.
+- [x] Empêcher tir et rechargement dans les états incompatibles.
+- [x] Gérer le changement d'arme sans duplication de munitions.
+- [x] Créer le petit pistolet de départ.
+- [x] Créer une cible de test avec retour de dégâts.
 
 ### M1.4 — Mêlée et sensations
 
@@ -807,4 +807,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Continuer par **M0.3 — Socle de session**. Ne produire ni arme, ni zombie, ni asset final avant que M0.3 soit validé. Les preuves M0.1 et M0.2 sont consignées dans `_docs/validation_v1.md`.
+Finaliser **M1.1 — Contrôleur joueur** par la validation de pente. Les preuves M0.1 à M1.3 sont consignées dans `_docs/validation_v1.md`.

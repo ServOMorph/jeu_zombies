@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0.1 et M0.2 sont validés. `python check.py` contrôle l’import, les tests headless et l’export `.pck`. L’overlay de développement affiche les métriques utiles et se masque avec `F3`. La prochaine tâche est M0.3 — socle de session.
+M0.1 à M0.3, M1.2 et M1.3 sont validés. `python check.py` contrôle l’import, 7 suites headless et l’export `.pck`. L’overlay de développement affiche les métriques utiles et se masque avec `F3`. La tâche en cours est la validation de pente de M1.1.

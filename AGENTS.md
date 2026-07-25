@@ -75,7 +75,7 @@ Lire `.claude/memory.md` en début de chaque session si le fichier existe. Ce fi
 Rappel : jamais de secret en dur dans le code ou les prompts — stockage hors git, accès via service/API.
 
 Dossiers ou fichiers contenant des données sensibles (registre nominatif, credentials, données clients, fichiers financiers) à ne jamais lire ni écrire sans instruction explicite :
-Aucun\ d\�\�clar\�\�\.
+Aucun\ d\éclar\é\.
 
 <!-- Exemple :
 - Chemin/vers/dossier_sensible
@@ -88,3 +88,5 @@ Pour les tâches répétitives et templated (commits, posts, changelogs, donnée
 ## Spécificités projet
 
 Section réservée aux règles propres à ce projet, hors périmètre du kit. Cette section est préservée intégralement par `/update` (jamais écrasée ni fusionnée avec le contenu du kit). Convention : toute règle liée à une section précise du fichier doit la référencer explicitement par son titre (ex: "Section Roadmap : ..."), plutôt que compter sur la position physique de cette section (toujours en fin de fichier).
+
+- Tests manuels : utiliser `D:\ServOMorph\jeu_zombies\tests_manuels.md`. Après validation, supprimer uniquement la section du test validé ; conserver le fichier pour les tests restants.

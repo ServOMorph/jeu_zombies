@@ -71,3 +71,104 @@ Statut : validé
 ### Résultat
 
 Les trois documents qualité, le lanceur headless, la commande globale et l’overlay satisfont les critères M0.2. La configuration de référence est renseignée ; les mesures FPS release restent à produire lorsque les scènes de qualification existeront.
+
+## M0.3 — Socle de session
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `GameSession`, autoload unique, centralise les états `MENU`, `PLAYING`, `PAUSED`, `DEFEAT` et `VICTORY`.
+- La création initialise une session vide ; le retour au menu la détruit et efface toutes ses données.
+- Les signaux `session_started`, `session_paused`, `session_ended` et `session_reset` couvrent les transitions de cycle de vie.
+- L'écran provisoire permet de démarrer une session vide avec Entrée, de la mettre en pause avec `P`, puis de revenir au menu avec Échap.
+- Les tests couvrent deux redémarrages, défaite, victoire, transitions interdites, signaux et absence d'état résiduel.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 4 suites réussies |
+| Contrôle global | `python check.py` | code 0, import, 4 suites et export `.pck` réussis |
+
+### Résultat
+
+Les critères automatisables et le contrôle visuel interactif sont validés. La scène Forward+ démarre sans erreur ; le démarrage, la pause, le retour au menu, les redémarrages successifs et le relancement propre ont été vérifiés manuellement.
+
+## M1.1 — Contrôleur FPS
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validation de pente en attente
+
+### Tranche implémentée
+
+- `PlayerController` est un `CharacterBody3D` typé avec caméra FPS, marche, course, saut, accroupissement, gravité, accélération et décélération configurables.
+- Le contrôleur vérifie l'espace disponible avant de quitter l'accroupissement et tente de franchir une marche basse bornée.
+- La scène `world/dev_player_test.tscn` fournit un sol, des murs, une marche et un plafond bas pour le contrôle manuel.
+- L'écran provisoire ouvre cette scène avec `F2` depuis une session en cours.
+- Les tests déterministes couvrent les vitesses de marche/course/accroupissement, la stabilité entre 30 et 120 FPS et l'absence de glissement résiduel ; le contrôle de pente reste à ajouter.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 5 suites réussies |
+| Chargement scène FPS headless | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+| Chargement scène FPS Forward+ | `python run.py --rendering-method forward_plus res://world/dev_player_test.tscn --quit-after 3` | code 0, Vulkan 1.4.312, RTX 4060 |
+
+### Résultat
+
+Les contrôles automatisés, les chargements moteur et les tests manuels hors pente sont validés. Une pente doit encore être ajoutée à la scène de test et vérifiée manuellement.
+
+## M1.2 — Santé et endurance
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `PlayerVitals` centralise santé, dégâts, invulnérabilité brève, régénération retardée, endurance et épuisement.
+- La course consomme l'endurance ; son épuisement la bloque jusqu'au seuil de réactivation configuré.
+- La mort arrête le mouvement, libère la souris et bascule la session vers `DEFEAT`.
+- La scène de test affiche santé, endurance, vitesse, état de course et état général ; `F6` applique 25 dégâts pour vérifier la régénération et la défaite.
+- Les tests couvrent les limites de santé, l'invulnérabilité, la régénération, l'épuisement, la réactivation de course, la mort et la remise à zéro.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 6 suites réussies |
+| Chargement scène de test | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+
+### Résultat
+
+Les contrôles automatisés et tous les tests manuels de M1.2 sont validés, y compris la course, l'épuisement, la réactivation, la régénération et la défaite.
+
+## M1.3 — Cadre d'armes
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `WeaponDefinition` centralise les paramètres de l'arme de départ.
+- `WeaponController` gère deux slots, le couteau permanent, le hitscan, la cadence, les dégâts, la portée, la dispersion, les chargeurs, les réserves et le rechargement.
+- Le pistolet de secours est fourni avec un chargeur plein et une réserve initiale.
+- La scène de test fournit une cible avec santé, tir, rechargement et retour de munitions.
+- Les tests couvrent consommation, cadence, rechargement, changement de slot, séparation des réserves et couteau.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 7 suites réussies |
+| Chargement scène FPS | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+
+### Résultat
+
+Les contrôles automatisés et tous les tests manuels de M1.3 sont validés : tir, dégâts, cadence, rechargement, munitions, cible et couteau.
