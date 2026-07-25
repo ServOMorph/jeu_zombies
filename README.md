@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0.1 à M1.4 sont validés fonctionnellement. `python check.py` contrôle l’import, 8 suites headless et l’export `.pck`. La porte M1 reste en attente d’une mesure VSync conforme après les optimisations de frame pacing.
+M0.1 à M1.4 sont validés fonctionnellement. `python check.py` contrôle l’import, 8 suites headless et l’export `.pck`. La porte M1 reste non conforme après deux relevés comportant des chutes ponctuelles à 30 et 39 FPS. La tâche urgente M1.5 doit fiabiliser la mesure, isoler puis corriger ces chutes avant tout démarrage de M2.

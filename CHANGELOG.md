@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.5 — 2026-07-25
+
+### Ajouté
+
+- Tâche urgente M1.5 détaillant la fiabilisation des métriques, l'isolation des chutes, les corrections mesurées, le profilage et la requalification.
+
+### Modifié
+
+- Validation, contexte et README alignés sur deux relevés FPS non conformes et le maintien du blocage de M2.
+
 ## v0.4 — 2026-07-25
 
 ### Ajouté

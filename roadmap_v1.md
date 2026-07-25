@@ -326,6 +326,55 @@ Tester au minimum :
 - [x] Ajouter des sons temporaires originaux ou sous licence compatible.
 - [x] Vérifier que les effets ne masquent pas la cible.
 
+### M1.5 — URGENT — Éliminer les chutes ponctuelles de FPS
+
+**Priorité : P0 — bloque M2.**
+
+**Constat :** la performance moyenne dispose d'une marge importante sans VSync, mais une ou plusieurs frames ponctuellement lentes empêchent la validation de M1. Les libellés VSync et sans VSync des dernières mesures doivent être confirmés avant toute conclusion : une exécution a relevé 60 FPS de moyenne, 30 FPS minimum et 33,33 ms de pire frame ; l'autre environ 2 647 FPS de moyenne, 39 FPS minimum et 25,43 ms de pire frame.
+
+#### A. Fiabiliser l'instrumentation
+
+- [ ] Séparer la collecte des métriques de leur affichage.
+- [ ] Continuer la collecte lorsque l'overlay est masqué.
+- [ ] Limiter l'actualisation visuelle de l'overlay à 1 Hz.
+- [ ] Compter les zombies sans créer de tableau avec `get_nodes_in_group()` à chaque actualisation.
+- [ ] Après `F4`, armer la mesure avec un délai d'une seconde pour exclure l'entrée clavier et la première frame.
+- [ ] Conserver un historique borné des frames lentes avec durée et horodatage.
+- [ ] Afficher l'état VSync effectif et les cinq métriques de qualification.
+- [ ] Ajouter ou adapter les tests automatisés de moyenne, minimum, pire frame, compteur sous 50 FPS, séquence maximale et réinitialisation.
+
+#### B. Isoler la source de la chute
+
+- [ ] Après 30 secondes de préchauffage, mesurer séparément et trois fois : repos, déplacement, pentes/accroupissement, tirs dans le vide, tirs sur cible, rechargements et couteau.
+- [ ] Pour chaque essai, relever moyenne, minimum, pire frame, frames sous 50 FPS, séquence maximale et instant de la dernière chute.
+- [ ] Réaliser d'abord les mesures avec `python run.py`, puis répéter uniquement les scénarios fautifs avec `python run.py --disable-vsync`.
+- [ ] Classer la chute selon son déclencheur : périodique au repos, première utilisation, audio, effet graphique, tir, physique ou événement système.
+
+#### C. Corriger uniquement les causes démontrées
+
+- [ ] Alléger l'overlay et supprimer ses allocations évitables.
+- [ ] Si la première utilisation est fautive, préchauffer avant la mesure les sons, le flash, les impacts, leurs matériaux et leurs shaders.
+- [ ] Si l'audio est fautif, initialiser les lecteurs avant la mesure et confirmer le diagnostic avec un pilote audio factice.
+- [ ] Mettre à jour le HUD par signaux ou changement réel de valeur plutôt que par reconstruction périodique inchangée.
+- [ ] Si l'accroupissement est fautif, réutiliser la requête physique de dégagement et éviter sa recréation à chaque frame sous un plafond.
+- [ ] Si les tirs sont fautifs, profiler séparément raycast, signaux, impact et audio avant toute simplification.
+
+#### D. Profiler les chutes persistantes
+
+- [ ] Enregistrer le scénario reproductible dans le profiler Godot et comparer script, physique, rendu CPU, rendu GPU et audio.
+- [ ] Utiliser `python run.py --disable-vsync --gpu-profile` pour compléter le diagnostic GPU.
+- [ ] Modifier un seul sous-système à la fois et répéter exactement le même scénario après chaque correction.
+- [ ] Si une chute persiste au repos, vérifier le taux de rafraîchissement Windows, les réglages NVIDIA, les overlays, les captures, la charge système et les analyses antivirus.
+
+#### E. Requalifier la porte M1
+
+- [ ] Exécuter `python check.py` après les corrections.
+- [ ] Réaliser trois parcours complets avec VSync et retenir le pire résultat.
+- [ ] Confirmer sur chacun : moyenne d'au moins 60 FPS, minimum d'au moins 50 FPS, zéro frame sous 50 FPS, séquence maximale nulle et pire frame d'au plus 20 ms.
+- [ ] Réaliser ensuite le parcours sans VSync à titre diagnostique.
+- [ ] Consigner les preuves dans `_docs/validation_v1.md`.
+- [ ] Après validation manuelle par l'utilisateur, supprimer uniquement la section correspondante de `tests_manuels.md`.
+
 **Porte de sortie M1 :**
 
 - Dans une scène de test, le joueur peut marcher, courir, sauter, s'accroupir, viser, tirer, recharger, changer d'arme et frapper au couteau.
@@ -809,4 +858,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Requalifier la porte de sortie **M1** avec le protocole VSync et sans VSync de `tests_manuels.md`. M2 reste bloqué jusqu'à une mesure conforme.
+Exécuter l'étape **M1.5-A** : fiabiliser l'instrumentation de performance et ses tests avant d'isoler les chutes par scénario. M2 reste bloqué jusqu'à trois parcours VSync conformes.

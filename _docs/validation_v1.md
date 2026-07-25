@@ -229,3 +229,14 @@ La moyenne cible et la limite de temps de frame sont respectées, mais le minimu
 ### Requalification attendue
 
 Le protocole VSync puis sans VSync est défini dans `tests_manuels.md`. Les résultats ne sont pas encore connus.
+
+### Relevés supplémentaires communiqués
+
+Deux nouveaux parcours ont relevé :
+
+- moyenne 60 FPS, minimum 30 FPS, pire frame 33,33 ms ;
+- moyenne annoncée à environ 2 647 FPS, minimum 39 FPS, pire frame 25,43 ms.
+
+Le premier relevé a été déclaré sans VSync et le second avec VSync, ce qui est incohérent avec la configuration du projet : `python run.py` active la VSync à 60 Hz, tandis que `python run.py --disable-vsync` produit normalement la mesure non plafonnée. Les compteurs de frames sous 50 FPS, la séquence maximale et l'instant de la dernière chute n'ont pas été reportés.
+
+La porte M1 reste non validée dans les deux cas. La tâche urgente M1.5 de `roadmap_v1.md` prévoit de fiabiliser l'instrumentation avant une nouvelle qualification.
