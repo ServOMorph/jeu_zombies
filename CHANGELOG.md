@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.6 — 2026-07-25
+
+### Ajouté
+
+- Collecteur de performance séparé, historique borné des frames lentes, délai d'armement et état VSync dans l'overlay.
+- Protocole M1.5-B et conditions de qualification à faible charge système.
+
+### Corrigé
+
+- Erreur d'accès au viewport lors du passage à la scène FPS avec `F2`.
+
+### Modifié
+
+- Tests automatisés des métriques et preuves de validation alignés sur les essais VSync préliminaires.
+
 ## v0.5 — 2026-07-25
 
 ### Ajouté

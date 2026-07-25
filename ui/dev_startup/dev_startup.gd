@@ -66,8 +66,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		GameSession.return_to_menu()
 		get_viewport().set_input_as_handled()
 	elif event.keycode == KEY_F2 and GameSession.state == GameSession.State.PLAYING:
-		get_tree().change_scene_to_file("res://world/dev_player_test.tscn")
 		get_viewport().set_input_as_handled()
+		get_tree().change_scene_to_file("res://world/dev_player_test.tscn")
 
 
 func _on_session_changed(_value: Variant = null) -> void:

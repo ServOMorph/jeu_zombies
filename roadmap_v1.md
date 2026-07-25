@@ -334,14 +334,14 @@ Tester au minimum :
 
 #### A. Fiabiliser l'instrumentation
 
-- [ ] Séparer la collecte des métriques de leur affichage.
-- [ ] Continuer la collecte lorsque l'overlay est masqué.
-- [ ] Limiter l'actualisation visuelle de l'overlay à 1 Hz.
-- [ ] Compter les zombies sans créer de tableau avec `get_nodes_in_group()` à chaque actualisation.
-- [ ] Après `F4`, armer la mesure avec un délai d'une seconde pour exclure l'entrée clavier et la première frame.
-- [ ] Conserver un historique borné des frames lentes avec durée et horodatage.
-- [ ] Afficher l'état VSync effectif et les cinq métriques de qualification.
-- [ ] Ajouter ou adapter les tests automatisés de moyenne, minimum, pire frame, compteur sous 50 FPS, séquence maximale et réinitialisation.
+- [x] Séparer la collecte des métriques de leur affichage.
+- [x] Continuer la collecte lorsque l'overlay est masqué.
+- [x] Limiter l'actualisation visuelle de l'overlay à 1 Hz.
+- [x] Compter les zombies sans créer de tableau avec `get_nodes_in_group()` à chaque actualisation.
+- [x] Après `F4`, armer la mesure avec un délai d'une seconde pour exclure l'entrée clavier et la première frame.
+- [x] Conserver un historique borné des frames lentes avec durée et horodatage.
+- [x] Afficher l'état VSync effectif et les cinq métriques de qualification.
+- [x] Ajouter ou adapter les tests automatisés de moyenne, minimum, pire frame, compteur sous 50 FPS, séquence maximale et réinitialisation.
 
 #### B. Isoler la source de la chute
 
@@ -382,7 +382,7 @@ Tester au minimum :
 - La scène tient la cible interne de 60 FPS sur la configuration de référence.
 - Aucun défaut de caméra, collision, réticule ou arme tenue n'est visible dans le parcours de test.
 
-Statut au 2026-07-25 : les fonctionnalités M1 sont validées ; la porte de performance reste en attente d'une mesure conforme, décrite dans `tests_manuels.md`.
+Statut au 2026-07-25 : les fonctionnalités M1 et l'instrumentation M1.5-A sont validées. L'isolation M1.5-B a relevé une chute intermittente lors d'un tir dans le vide, suivie de deux essais conformes. La porte reste bloquée jusqu'à trois parcours complets VSync conformes réalisés avec une faible charge système.
 
 ## 8. Jalon M2 — Zombie standard et vagues
 
@@ -858,4 +858,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Exécuter l'étape **M1.5-A** : fiabiliser l'instrumentation de performance et ses tests avant d'isoler les chutes par scénario. M2 reste bloqué jusqu'à trois parcours VSync conformes.
+Terminer **M1.5-B** dans les conditions de faible charge décrites par `tests_manuels.md`, puis exécuter trois parcours complets VSync conformes. M2 reste bloqué jusque-là.

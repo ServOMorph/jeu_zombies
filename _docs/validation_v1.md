@@ -225,6 +225,9 @@ La moyenne cible et la limite de temps de frame sont respectées, mais le minimu
 - Les impacts visuels sont réutilisés depuis un pool de 12 instances ; le HUD de test est limité à 10 Hz.
 - L'overlay conserve le minimum brut et affiche aussi le nombre de frames sous 50 FPS, leur séquence maximale et la dernière chute.
 - VSync est explicitement activée pour rendre le prochain relevé reproductible sur l'écran 60 Hz.
+- M1.5-A sépare le collecteur de métriques de l'affichage ; il collecte aussi lorsque l'overlay est masqué et n'actualise le texte qu'à 1 Hz.
+- Après `F4`, la mesure attend une seconde avant de compter les frames ; l'overlay expose l'état VSync, l'historique borné des 20 dernières chutes et les cinq métriques de qualification.
+- `python check.py` a réussi le 2026-07-25 : import Godot, 8 suites headless et export de contrôle.
 
 ### Requalification attendue
 
@@ -240,3 +243,13 @@ Deux nouveaux parcours ont relevé :
 Le premier relevé a été déclaré sans VSync et le second avec VSync, ce qui est incohérent avec la configuration du projet : `python run.py` active la VSync à 60 Hz, tandis que `python run.py --disable-vsync` produit normalement la mesure non plafonnée. Les compteurs de frames sous 50 FPS, la séquence maximale et l'instant de la dernière chute n'ont pas été reportés.
 
 La porte M1 reste non validée dans les deux cas. La tâche urgente M1.5 de `roadmap_v1.md` prévoit de fiabiliser l'instrumentation avant une nouvelle qualification.
+
+### Instrumentation M1.5-A et essais d'isolation
+
+L'instrumentation sépare désormais la collecte de l'affichage, continue lorsque l'overlay est masqué, actualise le texte à 1 Hz, attend une seconde après `F4`, affiche l'état VSync et conserve un historique borné des chutes.
+
+Les premiers essais VSync par scénario étaient conformes sauf un tir dans le vide : moyenne 60 FPS, minimum 30 FPS, pire frame 33,18 ms, une frame sous 50 FPS et séquence maximale de 0,033 s à 7,2 s. Deux répétitions du même scénario ont ensuite été conformes : `60 / 55 / 18 ms / 0` puis `60 / 60 / 16,67 ms / 0`.
+
+Une erreur de script au passage vers la scène FPS a été corrigée en marquant l'entrée `F2` comme traitée avant le changement de scène. `python check.py` réussit après correction : import Godot, 8 suites headless et export de contrôle.
+
+Ces essais ne remplacent pas les trois parcours complets VSync requis. La qualification doit être réalisée avec le moins possible de charge CPU, GPU et disque en arrière-plan, selon `tests_manuels.md`.

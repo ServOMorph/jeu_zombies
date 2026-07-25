@@ -1,22 +1,32 @@
 extends CanvasLayer
 
-const UPDATE_INTERVAL_SECONDS := 0.25
+const DevPerformanceMetrics := preload("res://ui/dev_overlay/dev_performance_metrics.gd")
+
+const UPDATE_INTERVAL_SECONDS := 1.0
+const ARMING_DELAY_SECONDS := 1.0
 const BYTES_PER_MEBIBYTE := 1024.0 * 1024.0
-const MINIMUM_FPS := 50.0
-const MAXIMUM_FRAME_TIME_SECONDS := 1.0 / MINIMUM_FPS
 
 @onready var metrics_label: Label = %MetricsLabel
 
-var _elapsed_since_update := 0.0
-var measurement_duration := 0.0
-var measurement_frame_count := 0
-var minimum_fps := INF
-var worst_frame_time_ms := 0.0
-var slow_frame_count := 0
-var _current_slow_sequence_seconds := 0.0
-var longest_slow_sequence_seconds := 0.0
-var last_slow_frame_time_ms := 0.0
-var last_slow_frame_at_seconds := 0.0
+var _elapsed_since_display_update := 0.0
+var _arming_remaining_seconds := 0.0
+var _metrics := DevPerformanceMetrics.new()
+
+var measurement_duration: float:
+	get:
+		return _metrics.measurement_duration
+var measurement_frame_count: int:
+	get:
+		return _metrics.measurement_frame_count
+var slow_frame_count: int:
+	get:
+		return _metrics.slow_frame_count
+var longest_slow_sequence_seconds: float:
+	get:
+		return _metrics.longest_slow_sequence_seconds
+var is_measurement_armed: bool:
+	get:
+		return _arming_remaining_seconds <= 0.0
 
 
 func _ready() -> void:
@@ -28,14 +38,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_record_frame(delta)
 	if not visible:
 		return
-	_record_frame(delta)
-	_elapsed_since_update += delta
-	if _elapsed_since_update < UPDATE_INTERVAL_SECONDS:
+	_elapsed_since_display_update += delta
+	if _elapsed_since_display_update < UPDATE_INTERVAL_SECONDS:
 		return
 	_update_metrics(delta)
-	_elapsed_since_update = 0.0
+	_elapsed_since_display_update = 0.0
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -58,64 +68,61 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func reset_measurement() -> void:
-	measurement_duration = 0.0
-	measurement_frame_count = 0
-	minimum_fps = INF
-	worst_frame_time_ms = 0.0
-	slow_frame_count = 0
-	_current_slow_sequence_seconds = 0.0
-	longest_slow_sequence_seconds = 0.0
-	last_slow_frame_time_ms = 0.0
-	last_slow_frame_at_seconds = 0.0
+	_metrics.reset()
+	_arming_remaining_seconds = ARMING_DELAY_SECONDS
+	_elapsed_since_display_update = UPDATE_INTERVAL_SECONDS
+	_update_metrics(0.0)
 
 
 func _record_frame(delta: float) -> void:
 	if delta <= 0.0:
 		return
-	measurement_duration += delta
-	measurement_frame_count += 1
-	minimum_fps = minf(minimum_fps, 1.0 / delta)
-	worst_frame_time_ms = maxf(worst_frame_time_ms, delta * 1000.0)
-	if delta <= MAXIMUM_FRAME_TIME_SECONDS:
-		_current_slow_sequence_seconds = 0.0
+	if _arming_remaining_seconds > 0.0:
+		_arming_remaining_seconds = maxf(0.0, _arming_remaining_seconds - delta)
 		return
-	slow_frame_count += 1
-	_current_slow_sequence_seconds += delta
-	longest_slow_sequence_seconds = maxf(
-		longest_slow_sequence_seconds,
-		_current_slow_sequence_seconds
-	)
-	last_slow_frame_time_ms = delta * 1000.0
-	last_slow_frame_at_seconds = measurement_duration
+	_metrics.record_frame(delta)
 
 
 func _update_metrics(frame_delta: float) -> void:
-	var frame_time_ms := frame_delta * 1000.0
-	var zombie_count := get_tree().get_nodes_in_group("zombies").size()
+	var frame_time_ms := _metrics.last_frame_time_ms
+	if frame_time_ms <= 0.0:
+		frame_time_ms = frame_delta * 1000.0
+	var zombie_count := get_tree().get_node_count_in_group("zombies")
 	var node_count := int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
 	var memory_mib := (
 		Performance.get_monitor(Performance.MEMORY_STATIC) / BYTES_PER_MEBIBYTE
 	)
-	var average_fps := (
-		float(measurement_frame_count) / measurement_duration
-		if measurement_duration > 0.0
-		else 0.0
-	)
-	var displayed_minimum := 0.0 if minimum_fps == INF else minimum_fps
+	var arming_state := "active" if is_measurement_armed else "dans %.1f s" % _arming_remaining_seconds
 	metrics_label.text = (
-		"FPS : %d\nFrame : %.2f ms\nMoyenne : %.0f FPS\nMinimum : %.0f FPS\nPire frame : %.2f ms\nSous 50 FPS : %d\nSéquence max : %.3f s\nDernière chute : %.2f ms à %.1f s\nZombies : %d\nNœuds : %d\nMémoire : %.1f Mio\n[F3] Masquer · [F4] Réinitialiser"
+		"FPS : %d\nFrame : %.2f ms\nMoyenne : %.0f FPS\nMinimum : %.0f FPS\nPire frame : %.2f ms\nSous 50 FPS : %d\nSéquence max : %.3f s\nDernière chute : %.2f ms à %.1f s\nMesure : %s\nVSync : %s\nZombies : %d\nNœuds : %d\nMémoire : %.1f Mio\n[F3] Masquer · [F4] Réinitialiser"
 		% [
 			Engine.get_frames_per_second(),
 			frame_time_ms,
-			average_fps,
-			displayed_minimum,
-			worst_frame_time_ms,
-			slow_frame_count,
-			longest_slow_sequence_seconds,
-			last_slow_frame_time_ms,
-			last_slow_frame_at_seconds,
+			_metrics.average_fps(),
+			_metrics.displayed_minimum_fps(),
+			_metrics.worst_frame_time_ms,
+			_metrics.slow_frame_count,
+			_metrics.longest_slow_sequence_seconds,
+			_metrics.last_slow_frame_time_ms,
+			_metrics.last_slow_frame_at_seconds,
+			arming_state,
+			_vsync_state_label(),
 			zombie_count,
 			node_count,
 			memory_mib,
 		]
 	)
+
+
+func _vsync_state_label() -> String:
+	match DisplayServer.window_get_vsync_mode():
+		DisplayServer.VSYNC_DISABLED:
+			return "désactivée"
+		DisplayServer.VSYNC_ENABLED:
+			return "activée"
+		DisplayServer.VSYNC_ADAPTIVE:
+			return "adaptative"
+		DisplayServer.VSYNC_MAILBOX:
+			return "mailbox"
+		_:
+			return "inconnue"
