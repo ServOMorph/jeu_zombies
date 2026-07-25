@@ -36,6 +36,7 @@ var _attack_cooldown_remaining := 0.0
 var _path_refresh_remaining := 0.0
 var _reward_has_been_granted := false
 var _body_material: StandardMaterial3D
+var _base_definition: ZombieDefinition
 
 
 func _ready() -> void:
@@ -46,13 +47,18 @@ func _ready() -> void:
 	body_visual.material_override = _body_material
 	if definition == null:
 		definition = ZombieDefinition.new()
+	_base_definition = definition
 	if start_active:
 		activate()
 	else:
 		deactivate()
 
 
-func activate(target: Node3D = null) -> void:
+func activate(target: Node3D = null, definition_override: ZombieDefinition = null) -> void:
+	var active_definition := definition_override if definition_override != null else _base_definition
+	if active_definition == null:
+		active_definition = definition
+	definition = active_definition
 	if definition == null:
 		definition = ZombieDefinition.new()
 	_target = target
@@ -70,6 +76,13 @@ func activate(target: Node3D = null) -> void:
 	set_physics_process(true)
 	_set_state(State.SPAWNING)
 	health_changed.emit(health, definition.max_health)
+
+
+func create_wave_definition(health_multiplier: float) -> ZombieDefinition:
+	var source := _base_definition if _base_definition != null else definition
+	var scaled_definition := source.duplicate() as ZombieDefinition
+	scaled_definition.max_health = source.max_health * maxf(health_multiplier, 0.1)
+	return scaled_definition
 
 
 func deactivate() -> void:

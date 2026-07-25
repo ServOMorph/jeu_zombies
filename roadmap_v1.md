@@ -416,12 +416,12 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 
 ### M2.3 — Gestionnaire de vagues
 
-- [ ] Créer des ressources de configuration des vagues.
-- [ ] Implémenter début, compteur restant, fin et pause inter-vague.
-- [ ] Faire évoluer nombre, santé et pression sans ajouter d'ennemi spécial.
-- [ ] Empêcher la fin de vague tant qu'un zombie vivant reste actif.
-- [ ] Empêcher le démarrage multiple d'une même vague.
-- [ ] Prévoir un mode de test permettant de lancer une vague précise sans affecter la release.
+- [x] Créer des ressources de configuration des vagues.
+- [x] Implémenter début, compteur restant, fin et pause inter-vague.
+- [x] Faire évoluer nombre, santé et pression sans ajouter d'ennemi spécial.
+- [x] Empêcher la fin de vague tant qu'un zombie vivant reste actif.
+- [x] Empêcher le démarrage multiple d'une même vague.
+- [x] Prévoir un mode de test permettant de lancer une vague précise sans affecter la release.
 
 ### M2.4 — Première boucle de survie
 

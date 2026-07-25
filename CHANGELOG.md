@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.9 — 2026-07-25
+
+### Ajouté
+
+- Gestionnaire de vagues avec ressources de configuration, compteur, pause inter-vague, enchaînement et mode de test ciblé.
+- Ressources des trois premières vagues et couverture automatisée dédiée.
+
+### Modifié
+
+- Les zombies de vague reçoivent une santé mise à l'échelle sans altérer leur définition de base.
+- Roadmap, contexte, README et validation alignés sur M2.3 validée.
+
 ## v0.8 — 2026-07-25
 
 ### Ajouté

@@ -24,7 +24,11 @@ func _ready() -> void:
 			return
 
 
-func request_spawn(zone_id: String, target: Node3D = null) -> ZombieStandard:
+func request_spawn(
+	zone_id: String,
+	target: Node3D = null,
+	health_multiplier: float = 1.0,
+) -> ZombieStandard:
 	_prune_active_zombies()
 	if not can_spawn(get_active_zombie_count(), max_active_zombies):
 		spawn_deferred.emit(zone_id)
@@ -42,7 +46,7 @@ func request_spawn(zone_id: String, target: Node3D = null) -> ZombieStandard:
 		spawn_deferred.emit(zone_id)
 		return null
 	zombie.global_position = _get_navigation_position(spawn_point.global_position)
-	zombie.activate(resolved_target)
+	zombie.activate(resolved_target, zombie.create_wave_definition(health_multiplier))
 	_active_zombies.append(zombie)
 	zombie_spawned.emit(zombie, spawn_point, _last_spawn_used_fallback)
 	return zombie

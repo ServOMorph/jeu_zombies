@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" path="res://enemies/zombie_standard.tscn" id="6_zombie"]
 [ext_resource type="Script" path="res://enemies/zombie_spawner.gd" id="7_spawner"]
 [ext_resource type="Script" path="res://enemies/zombie_spawn_point.gd" id="8_spawn_point"]
+[ext_resource type="Script" path="res://systems/wave_manager.gd" id="9_wave_manager"]
+[ext_resource type="Resource" path="res://data/waves/wave_01.tres" id="10_wave_01"]
+[ext_resource type="Resource" path="res://data/waves/wave_02.tres" id="11_wave_02"]
+[ext_resource type="Resource" path="res://data/waves/wave_03.tres" id="12_wave_03"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -215,7 +219,7 @@ offset_right = 900.0
 offset_bottom = 140.0
 theme_override_colors/font_color = Color(0.8, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 20
-text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nMarche basse devant, plafond bas au fond. F6 : subir des dégâts · Échap : retour au menu"
+text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nF8 : première vague · F9 : vague 2 en test · F6 : subir des dégâts · Échap : retour au menu"
 
 [node name="VitalsLabel" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -242,6 +246,7 @@ position = Vector3(3, 1, -7)
 
 [node name="ZombieStandard" parent="." instance=ExtResource("6_zombie")]
 position = Vector3(0, 0.01, -2)
+start_active = false
 
 [node name="ZombieSpawner" type="Node3D" parent="."]
 script = ExtResource("7_spawner")
@@ -249,6 +254,12 @@ zombie_scene = ExtResource("6_zombie")
 max_active_zombies = 4
 player_exclusion_radius_meters = 6.0
 prewarm_pool_size = 4
+
+[node name="WaveManager" type="Node" parent="." node_paths=PackedStringArray("zombie_spawner")]
+script = ExtResource("9_wave_manager")
+zombie_spawner = NodePath("../ZombieSpawner")
+wave_definitions = [ExtResource("10_wave_01"), ExtResource("11_wave_02"), ExtResource("12_wave_03")]
+intermission_seconds = 5.0
 
 [node name="SpawnPointAccueilA" type="Marker3D" parent="."]
 position = Vector3(-12, 0.01, -12)
@@ -273,4 +284,4 @@ offset_right = 520.0
 offset_bottom = 510.0
 theme_override_colors/font_color = Color(0.9, 0.78, 0.44, 1)
 theme_override_font_sizes/font_size = 18
-text = "Apparition : prête (F8)\nZombies actifs : 0 / 4"
+text = "Vagues : F8 démarre la première · F9 lance la vague 2 en test\nZombies restants : 0"

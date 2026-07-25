@@ -33,6 +33,14 @@ func run_tests() -> Array[String]:
 		failures.append("un zombie hors sol doit être soumis à la gravité")
 	if ZOMBIE_STANDARD.resolve_vertical_velocity(-1.0, true, 9.8, 0.1) != 0.0:
 		failures.append("un zombie au sol ne doit pas conserver une vitesse verticale")
+	var base_definition := ZOMBIE_DEFINITION.new()
+	base_definition.max_health = 100.0
+	var wave_zombie := ZOMBIE_STANDARD.new()
+	wave_zombie.definition = base_definition
+	var scaled_definition := wave_zombie.create_wave_definition(1.5)
+	if scaled_definition.max_health != 150.0 or base_definition.max_health != 100.0:
+		failures.append("une vague doit ajuster la santé sans modifier la définition de base")
+	wave_zombie.free()
 
 	var zombie := ZOMBIE_STANDARD.new()
 	var definition := ZOMBIE_DEFINITION.new()

@@ -319,3 +319,33 @@ Validation communiquée par l'utilisateur : plafond à quatre zombies respecté,
 ### Résultat
 
 Les critères de M2.2 sont satisfaits.
+
+## M2.3 — Gestionnaire de vagues
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `WaveDefinition` configure zone, nombre de zombies, multiplicateur de santé et intervalle d'apparition.
+- `WaveManager` pilote les états de vague, le compteur vivant, la fin après élimination, la pause inter-vague et l'enchaînement.
+- Les doubles démarrages sont refusés pendant une vague ou une pause.
+- Le mode de développement permet de lancer directement la vague 2 avec `F9` ; il est désactivé en build release.
+- Chaque zombie de vague reçoit une définition dupliquée et mise à l'échelle, sans modifier la définition de base.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py --test-file=res://tests/test_wave_manager.gd` | code 0, configuration, compteur, bornes et blocage des doubles démarrages couverts |
+| Contrôle global | `python check.py` | code 0, import, 11 suites et export de contrôle réussis |
+| Chargement scène de test | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur : le compteur décroît, la vague ne finit qu'après le dernier zombie, la pause inter-vague et l'enchaînement fonctionnent, les doubles démarrages sont refusés et le lancement ciblé de la vague 2 est conforme.
+
+### Résultat
+
+Les critères de M2.3 sont satisfaits.

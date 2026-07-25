@@ -11,6 +11,7 @@ const IMPACT_LIFETIME_SECONDS := 0.12
 @onready var hit_marker: Label = %HitMarker
 @onready var target = $TargetDummy
 @onready var zombie_spawner = $ZombieSpawner
+@onready var wave_manager: WaveManager = $WaveManager
 @onready var spawn_label: Label = %SpawnLabel
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
@@ -34,6 +35,9 @@ func _ready() -> void:
 	player.weapon_controller.impact_registered.connect(_on_impact_registered)
 	zombie_spawner.zombie_spawned.connect(_on_zombie_spawned)
 	zombie_spawner.spawn_deferred.connect(_on_spawn_deferred)
+	wave_manager.wave_started.connect(_on_wave_started)
+	wave_manager.remaining_zombies_changed.connect(_on_wave_remaining_changed)
+	wave_manager.wave_finished.connect(_on_wave_finished)
 	print("NOX_PROTOCOL_DEV_PLAYER_TEST_READY")
 
 
@@ -157,7 +161,15 @@ func _input(event: InputEvent) -> void:
 		and not event.echo
 		and event.keycode == KEY_F8
 	):
-		zombie_spawner.request_spawn("accueil", player)
+		wave_manager.start_next_wave(player)
+		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F9
+	):
+		wave_manager.start_wave_for_test(2, player)
 		get_viewport().set_input_as_handled()
 
 
@@ -175,4 +187,25 @@ func _on_spawn_deferred(_zone_id: String) -> void:
 	spawn_label.text = "Apparition différée : aucun point valide ou plafond atteint\nZombies actifs : %d / %d" % [
 		zombie_spawner.get_active_zombie_count(),
 		zombie_spawner.max_active_zombies,
+	]
+
+
+func _on_wave_started(wave_number: int, _definition: WaveDefinition) -> void:
+	spawn_label.text = "Vague %d en cours\nZombies restants : %d" % [
+		wave_number,
+		wave_manager.get_remaining_zombie_count(),
+	]
+
+
+func _on_wave_remaining_changed(remaining_count: int) -> void:
+	spawn_label.text = "Vague %d en cours\nZombies restants : %d" % [
+		wave_manager.current_wave_number,
+		remaining_count,
+	]
+
+
+func _on_wave_finished(wave_number: int) -> void:
+	spawn_label.text = "Vague %d terminée\nPause : %.1f s" % [
+		wave_number,
+		wave_manager.get_intermission_remaining_seconds(),
 	]
