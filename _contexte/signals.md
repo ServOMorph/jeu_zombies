@@ -2,34 +2,35 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Finaliser M1.1 — Validation de pente. fait quand: montée, descente et limite de pente sont vérifiées manuellement sans glissement anormal. réf: `roadmap_v1.md`, section M1.1 ; `_docs/validation_v1.md`
+- [P1|ouvert] Requalifier la porte de sortie M1 — Performance. fait quand: le parcours VSync relève une moyenne d'au moins 60 FPS, un minimum d'au moins 50 FPS, zéro frame sous 50 FPS et une pire frame d'au plus 20 ms. réf: `tests_manuels.md` ; `_docs/validation_v1.md`, section « Porte de sortie M1 — Performance »
 
 ## Contexte chaud
 
-- Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060.
-- `python check.py` valide l’import, 7 suites Godot headless et l’export de contrôle `.pck`.
-- `world/dev_player_test.tscn` valide manuellement le déplacement, la santé, l’endurance, le pistolet et la cible de test.
+- Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 à 60 Hz.
+- `python check.py` valide l'import, 8 suites Godot headless et l'export de contrôle `.pck`.
+- La mesure précédente a relevé 60 FPS de moyenne, 30 FPS minimum et 33,33 ms de pire frame ; la porte M1 n'est pas validée.
+- L'overlay à droite trace désormais les frames sous 50 FPS, leur séquence maximale et la dernière chute ; `F4` réinitialise la mesure.
 
 ## Dernière session
 
 # Session du 2026-07-25
 
 ## Décisions prises
-- M0.3, M1.2 et M1.3 sont validés après contrôles automatisés et manuels ; M1.1 attend sa validation de pente.
+- Les optimisations de frame pacing sont appliquées avant toute reprise de la roadmap : sons précalculés, impacts mutualisés, HUD cadencé et VSync explicitement activée.
 
 ## Livrables produits ou modifiés
-- `core/game_session.gd` : cycle de session complet et testé.
-- `player/`, `weapons/`, `world/dev_player_test.tscn` : joueur FPS, santé, endurance, pistolet hitscan et cible de test.
-- `tests/` : 7 suites headless couvrant session, joueur, vitalité et armes.
-- `AGENTS.md`, `.claude/CLAUDE.md` : cycle de vie des tests manuels documenté.
+- `weapons/combat_audio_feedback.gd` : sons synthétisés à l'initialisation, sans travail audio par frame.
+- `world/dev_player_test.gd` : pool d'impacts et HUD limité à 10 Hz.
+- `ui/dev_overlay/` : diagnostic des chutes sous 50 FPS, positionné en haut à droite.
+- `tests/` : huit suites headless, dont les tests audio et de métriques.
+- `tests_manuels.md` : protocole de requalification VSync et sans VSync.
 
 ## Hypothèses validées / invalidées
-- VALIDE : le socle de session se réinitialise sans état résiduel.
-- VALIDE : déplacement hors pente, endurance et pistolet sont fonctionnels dans la scène de test.
-- EN ATTENTE : validation de pente, mêlée, retours sensoriels, sons temporaires et mesure FPS release.
+- VALIDE : import, 8 suites headless, scène de test Forward+ et export de contrôle réussissent.
+- EN ATTENTE : effet réel des optimisations sur la mesure VSync et validation de la porte M1.
 
 ## Prochaine étape exacte
-Ajouter une pente à la scène de test, puis vérifier montée, descente et limite de pente pour finaliser M1.1.
+Exécuter le protocole de requalification de `tests_manuels.md` et reporter les cinq métriques VSync, puis celles sans VSync.
 
 ## Question bloquante pour la session suivante
 Aucune

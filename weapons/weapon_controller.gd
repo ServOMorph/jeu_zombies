@@ -7,11 +7,17 @@ signal weapon_changed(weapon_name: String)
 signal ammo_changed(magazine: int, reserve: int)
 signal shot_fired(weapon_name: String)
 signal hit_confirmed(damage: float)
+signal impact_registered(position: Vector3, normal: Vector3)
+signal melee_swung
 signal reload_started
 signal reload_finished
 signal dry_fire
 
 @export var initial_weapon: Resource
+@export_category("Melee")
+@export var melee_damage := 45.0
+@export_range(0.5, 4.0, 0.1) var melee_range_meters := 2.0
+@export_range(0.1, 2.0, 0.05) var melee_cooldown_seconds := 0.55
 
 class WeaponState:
 	var definition
@@ -30,6 +36,7 @@ var active_slot := 0
 var _slots: Array = [null, null]
 var _knife_active := false
 var _enabled := true
+var _melee_cooldown_remaining := 0.0
 
 
 func _ready() -> void:
@@ -46,6 +53,7 @@ func configure_slots(first_weapon, second_weapon = null) -> void:
 	active_slot = 0
 	_knife_active = false
 	_enabled = true
+	_melee_cooldown_remaining = 0.0
 	_emit_current_state()
 
 
@@ -61,6 +69,7 @@ func set_slot(slot_index: int, definition) -> bool:
 
 
 func tick(delta: float) -> void:
+	_melee_cooldown_remaining = maxf(0.0, _melee_cooldown_remaining - delta)
 	for state in _slots:
 		if state == null:
 			continue
@@ -87,6 +96,15 @@ func try_fire(origin: Vector3, direction: Vector3) -> bool:
 	_emit_ammo(state)
 	shot_fired.emit(state.definition.weapon_name)
 	_perform_hitscan(origin, direction, state.definition)
+	return true
+
+
+func try_melee(origin: Vector3, direction: Vector3) -> bool:
+	if not _enabled or not _knife_active or is_reloading() or _melee_cooldown_remaining > 0.0:
+		return false
+	_melee_cooldown_remaining = melee_cooldown_seconds
+	melee_swung.emit()
+	_perform_damage_ray(origin, direction.normalized(), melee_range_meters, melee_damage)
 	return true
 
 
@@ -195,9 +213,28 @@ func _perform_hitscan(origin: Vector3, direction: Vector3, definition) -> void:
 	var result := world.direct_space_state.intersect_ray(query)
 	if result.is_empty():
 		return
+	_perform_damage_result(result, definition.damage)
+
+
+func _perform_damage_ray(origin: Vector3, direction: Vector3, range_meters: float, damage: float) -> void:
+	if not is_inside_tree():
+		return
+	var world := get_world_3d()
+	if world == null:
+		return
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + direction * range_meters)
+	query.exclude = [get_parent().get_rid()]
+	var result := world.direct_space_state.intersect_ray(query)
+	if result.is_empty():
+		return
+	_perform_damage_result(result, damage)
+
+
+func _perform_damage_result(result: Dictionary, damage: float) -> void:
+	impact_registered.emit(result["position"], result["normal"])
 	var collider: Object = result["collider"]
-	if collider.has_method("receive_damage") and collider.call("receive_damage", definition.damage):
-		hit_confirmed.emit(definition.damage)
+	if collider.has_method("receive_damage") and collider.call("receive_damage", damage):
+		hit_confirmed.emit(damage)
 
 
 func _apply_spread(direction: Vector3, spread_degrees: float) -> Vector3:

@@ -1,19 +1,80 @@
 extends Node3D
 
 const STARTUP_SCENE := "res://ui/dev_startup/dev_startup.tscn"
+const HUD_UPDATE_INTERVAL_SECONDS := 0.1
+const IMPACT_POOL_SIZE := 12
+const IMPACT_LIFETIME_SECONDS := 0.12
 
 @onready var player = $Player
 @onready var vitals_label: Label = %VitalsLabel
 @onready var weapon_label: Label = %WeaponLabel
+@onready var hit_marker: Label = %HitMarker
 @onready var target = $TargetDummy
+@onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
+@onready var impact_effects: Node3D = $ImpactEffects
+@onready var combat_audio = $CombatAudioFeedback
+
+var _hit_marker_remaining := 0.0
+var _muzzle_flash_remaining := 0.0
+var _hud_update_elapsed := 0.0
+var _impact_pool: Array[MeshInstance3D] = []
+var _impact_lifetimes: Array[float] = []
+var _impact_pool_cursor := 0
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_create_impact_pool()
+	_refresh_hud()
+	player.weapon_controller.shot_fired.connect(_on_shot_fired)
+	player.weapon_controller.melee_swung.connect(_on_melee_swung)
+	player.weapon_controller.hit_confirmed.connect(_on_hit_confirmed)
+	player.weapon_controller.impact_registered.connect(_on_impact_registered)
 	print("NOX_PROTOCOL_DEV_PLAYER_TEST_READY")
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_update_transient_effects(delta)
+	_hud_update_elapsed += delta
+	if _hud_update_elapsed >= HUD_UPDATE_INTERVAL_SECONDS:
+		_refresh_hud()
+		_hud_update_elapsed = 0.0
+
+
+func _create_impact_pool() -> void:
+	var mesh := SphereMesh.new()
+	mesh.radius = 0.06
+	mesh.height = 0.12
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color(1.0, 0.56, 0.14, 1.0)
+	material.emission_enabled = true
+	material.emission = Color(1.0, 0.2, 0.02, 1.0)
+	material.emission_energy_multiplier = 3.0
+	for _index in IMPACT_POOL_SIZE:
+		var impact := MeshInstance3D.new()
+		impact.mesh = mesh
+		impact.material_override = material
+		impact.visible = false
+		impact_effects.add_child(impact)
+		_impact_pool.append(impact)
+		_impact_lifetimes.append(0.0)
+
+
+func _update_transient_effects(delta: float) -> void:
+	_hit_marker_remaining = maxf(0.0, _hit_marker_remaining - delta)
+	_muzzle_flash_remaining = maxf(0.0, _muzzle_flash_remaining - delta)
+	hit_marker.visible = _hit_marker_remaining > 0.0
+	muzzle_flash.visible = _muzzle_flash_remaining > 0.0
+	for index in _impact_pool.size():
+		if _impact_lifetimes[index] <= 0.0:
+			continue
+		_impact_lifetimes[index] = maxf(0.0, _impact_lifetimes[index] - delta)
+		if _impact_lifetimes[index] == 0.0:
+			_impact_pool[index].visible = false
+
+
+func _refresh_hud() -> void:
 	var state := "DÉFAITE" if player.vitals.is_dead else "EN COURS"
 	var sprint_state := "ACTIVE" if player.is_sprinting else "REPOS"
 	if player.vitals.is_exhausted:
@@ -35,6 +96,28 @@ func _process(_delta: float) -> void:
 		target.health,
 		target.max_health,
 	]
+
+
+func _on_shot_fired(_weapon_name: String) -> void:
+	_muzzle_flash_remaining = 0.06
+	combat_audio.play_shot()
+
+
+func _on_melee_swung() -> void:
+	combat_audio.play_melee()
+
+
+func _on_hit_confirmed(_damage: float) -> void:
+	_hit_marker_remaining = 0.12
+	combat_audio.play_hit()
+
+
+func _on_impact_registered(position: Vector3, normal: Vector3) -> void:
+	var impact := _impact_pool[_impact_pool_cursor]
+	impact.global_position = position + normal * 0.03
+	impact.visible = true
+	_impact_lifetimes[_impact_pool_cursor] = IMPACT_LIFETIME_SECONDS
+	_impact_pool_cursor = (_impact_pool_cursor + 1) % IMPACT_POOL_SIZE
 
 
 func _input(event: InputEvent) -> void:

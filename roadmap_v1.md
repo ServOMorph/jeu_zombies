@@ -288,7 +288,7 @@ Tester au minimum :
 
 - [x] Créer un `CharacterBody3D` joueur avec caméra FPS.
 - [x] Implémenter marche, course, saut et accroupissement.
-- [ ] Gérer accélération, décélération, gravité, pente, plafond bas et marche sur petits obstacles.
+- [x] Gérer accélération, décélération, gravité, pente, plafond bas et marche sur petits obstacles.
 - [x] Capturer/libérer correctement la souris.
 - [x] Empêcher le passage à travers murs, portes et sol.
 - [x] Exposer vitesse, accélération, hauteur de saut et sensibilité comme paramètres.
@@ -320,11 +320,11 @@ Tester au minimum :
 
 ### M1.4 — Mêlée et sensations
 
-- [ ] Implémenter une attaque au couteau à portée courte avec cooldown.
-- [ ] Empêcher de toucher une même cible plusieurs fois dans un seul coup.
-- [ ] Ajouter réticule, flash de tir, impact, recul visuel léger et confirmation de touche.
-- [ ] Ajouter des sons temporaires originaux ou sous licence compatible.
-- [ ] Vérifier que les effets ne masquent pas la cible.
+- [x] Implémenter une attaque au couteau à portée courte avec cooldown.
+- [x] Empêcher de toucher une même cible plusieurs fois dans un seul coup.
+- [x] Ajouter réticule, flash de tir, impact, recul visuel léger et confirmation de touche.
+- [x] Ajouter des sons temporaires originaux ou sous licence compatible.
+- [x] Vérifier que les effets ne masquent pas la cible.
 
 **Porte de sortie M1 :**
 
@@ -332,6 +332,8 @@ Tester au minimum :
 - Santé et endurance fonctionnent, se réinitialisent et sont testées.
 - La scène tient la cible interne de 60 FPS sur la configuration de référence.
 - Aucun défaut de caméra, collision, réticule ou arme tenue n'est visible dans le parcours de test.
+
+Statut au 2026-07-25 : les fonctionnalités M1 sont validées ; la porte de performance reste en attente d'une mesure conforme, décrite dans `tests_manuels.md`.
 
 ## 8. Jalon M2 — Zombie standard et vagues
 
@@ -807,4 +809,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Finaliser **M1.1 — Contrôleur joueur** par la validation de pente. Les preuves M0.1 à M1.3 sont consignées dans `_docs/validation_v1.md`.
+Requalifier la porte de sortie **M1** avec le protocole VSync et sans VSync de `tests_manuels.md`. M2 reste bloqué jusqu'à une mesure conforme.

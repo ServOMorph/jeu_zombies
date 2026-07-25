@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.4 — 2026-07-25
+
+### Ajouté
+
+- Attaque au couteau, retours de combat et sons synthétisés localement.
+- Diagnostic FPS détaillant les chutes sous 50 FPS et leur durée.
+
+### Modifié
+
+- Audio précalculé, impacts mutualisés, HUD cadencé et VSync explicitement activée.
+- Roadmap, contexte et README alignés sur la requalification de la porte M1.
+
 ## v0.3 — 2026-07-25
 
 ### Ajouté

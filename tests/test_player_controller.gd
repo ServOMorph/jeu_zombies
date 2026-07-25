@@ -25,6 +25,10 @@ func run_tests() -> Array[String]:
 	)
 	if not stopped_velocity.is_zero_approx():
 		failures.append("la décélération doit arrêter le joueur sans glissement résiduel")
+	if not PLAYER_CONTROLLER.is_slope_walkable(30.0, 46.0):
+		failures.append("la pente de 30 degres doit rester praticable")
+	if PLAYER_CONTROLLER.is_slope_walkable(55.0, 46.0):
+		failures.append("la pente de 55 degres doit etre refusee")
 	return failures
 
 

@@ -101,7 +101,7 @@ Les critères automatisables et le contrôle visuel interactif sont validés. La
 
 Date : 2026-07-25
 Version Godot : `4.5.stable.official.876b29033`
-Statut : validation de pente en attente
+Statut : validé
 
 ### Tranche implémentée
 
@@ -119,9 +119,13 @@ Statut : validation de pente en attente
 | Chargement scène FPS headless | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
 | Chargement scène FPS Forward+ | `python run.py --rendering-method forward_plus res://world/dev_player_test.tscn --quit-after 3` | code 0, Vulkan 1.4.312, RTX 4060 |
 
+### Contrôle manuel
+
+La rampe bleue inclinée à 30° a été montée et descendue en marche et en course sans glissement anormal, tremblement ni blocage. La rampe rouge inclinée à 55° est restée infranchissable sans saut et sans traversée de géométrie.
+
 ### Résultat
 
-Les contrôles automatisés, les chargements moteur et les tests manuels hors pente sont validés. Une pente doit encore être ajoutée à la scène de test et vérifiée manuellement.
+Les contrôles automatisés, les chargements moteur et les tests manuels sont validés, y compris la pente. Les critères d'acceptation de M1.1 sont satisfaits.
 
 ## M1.2 — Santé et endurance
 
@@ -172,3 +176,56 @@ Statut : validé
 ### Résultat
 
 Les contrôles automatisés et tous les tests manuels de M1.3 sont validés : tir, dégâts, cadence, rechargement, munitions, cible et couteau.
+
+## M1.4 — Mêlée et sensations
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- Le couteau inflige 45 dégâts à moins de 2 mètres et son cooldown de 0,55 seconde empêche plusieurs touches pendant un même coup.
+- La scène de test comprend un réticule, un flash de tir, un recul visuel léger, un impact orange temporaire et un marqueur de touche.
+- Les sons temporaires de tir, touche et mêlée sont synthétisés localement à l'exécution ; aucune ressource audio externe n'est ajoutée.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Test mêlée ciblé | `python test.py --test-file=res://tests/test_weapon_controller.gd` | code 0, cooldown du couteau vérifié |
+| Chargement scène de test | `python run.py --headless res://world/dev_player_test.tscn --quit-after 3` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+| Contrôle global | `python check.py` | code 0, import, 7 suites et export `.pck` réussis |
+
+### Contrôle manuel
+
+Réticule, flash, recul, impacts, marqueur de touche et sons ont été vérifiés comme lisibles. Le couteau touche une seule fois par coup et respecte son cooldown.
+
+### Résultat
+
+Les critères d'acceptation de M1.4 sont satisfaits.
+
+## Porte de sortie M1 — Performance
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : non validé
+
+### Mesure manuelle
+
+Après préchauffage puis réinitialisation de l'overlay, le parcours de 60 secondes a relevé une moyenne de 60 FPS, un minimum de 30 FPS et une pire frame de 33,33 ms.
+
+### Résultat
+
+La moyenne cible et la limite de temps de frame sont respectées, mais le minimum est inférieur au seuil de 50 FPS. M2 ne peut pas commencer avant une mesure conforme.
+
+### Correctifs appliqués
+
+- Les sons temporaires sont précalculés à l'initialisation, sans génération d'échantillons par frame.
+- Les impacts visuels sont réutilisés depuis un pool de 12 instances ; le HUD de test est limité à 10 Hz.
+- L'overlay conserve le minimum brut et affiche aussi le nombre de frames sous 50 FPS, leur séquence maximale et la dernière chute.
+- VSync est explicitement activée pour rendre le prochain relevé reproductible sur l'écran 60 Hz.
+
+### Requalification attendue
+
+Le protocole VSync puis sans VSync est défini dans `tests_manuels.md`. Les résultats ne sont pas encore connus.

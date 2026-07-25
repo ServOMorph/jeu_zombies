@@ -19,6 +19,8 @@ const PLAYER_VITALS := preload("res://player/player_vitals.gd")
 @export_range(10.0, 89.0, 1.0) var vertical_look_limit_degrees := 80.0
 @export_range(60.0, 110.0, 1.0) var sprint_fov := 82.0
 @export_range(1.0, 30.0, 0.5) var fov_transition_speed := 10.0
+@export_range(0.1, 5.0, 0.1) var recoil_degrees := 0.7
+@export_range(1.0, 40.0, 0.5) var recoil_recovery_degrees_per_second := 9.0
 
 @export_category("Posture")
 @export_range(0.8, 2.4, 0.05) var standing_height := 1.8
@@ -43,6 +45,7 @@ var _standing_shape: CapsuleShape3D
 var _standing_collision_position := Vector3.ZERO
 var _is_crouching := false
 var _base_fov := 75.0
+var _recoil_remaining := 0.0
 var is_sprinting := false
 var vitals = PLAYER_VITALS.new()
 
@@ -63,12 +66,15 @@ func _ready() -> void:
 	_standing_shape.height = standing_height
 	_standing_collision_position = Vector3(0.0, standing_height * 0.5, 0.0)
 	floor_max_angle = deg_to_rad(max_floor_angle_degrees)
+	floor_stop_on_slope = true
 	_apply_stance(false)
 	_base_fov = camera.fov
+	weapon_controller.shot_fired.connect(_on_shot_fired)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _physics_process(delta: float) -> void:
+	_recover_recoil(delta)
 	if vitals.is_dead:
 		velocity = Vector3.ZERO
 		is_sprinting = false
@@ -118,8 +124,10 @@ func _physics_process(delta: float) -> void:
 	if was_on_floor:
 		_try_step_up(horizontal_motion)
 	_update_camera_fov(delta)
-	if Input.is_action_pressed("fire"):
+	if Input.is_action_pressed("fire") and not weapon_controller.is_knife_active():
 		weapon_controller.try_fire(camera.global_position, -camera.global_transform.basis.z)
+	elif Input.is_action_just_pressed("fire"):
+		weapon_controller.try_melee(camera.global_position, -camera.global_transform.basis.z)
 	if Input.is_action_just_pressed("reload"):
 		weapon_controller.start_reload()
 	if Input.is_action_just_pressed("weapon_next"):
@@ -128,6 +136,7 @@ func _physics_process(delta: float) -> void:
 		weapon_controller.switch_next()
 	if Input.is_action_just_pressed("melee"):
 		weapon_controller.select_knife()
+		weapon_controller.try_melee(camera.global_position, -camera.global_transform.basis.z)
 
 
 func receive_damage(amount: float) -> bool:
@@ -149,6 +158,24 @@ func get_horizontal_speed() -> float:
 func _update_camera_fov(delta: float) -> void:
 	var target_fov := sprint_fov if is_sprinting else _base_fov
 	camera.fov = move_toward(camera.fov, target_fov, fov_transition_speed * delta)
+
+
+func _on_shot_fired(_weapon_name: String) -> void:
+	var recoil := deg_to_rad(recoil_degrees)
+	var look_limit := deg_to_rad(vertical_look_limit_degrees)
+	head.rotation.x = maxf(head.rotation.x - recoil, -look_limit)
+	_recoil_remaining += recoil
+
+
+func _recover_recoil(delta: float) -> void:
+	if _recoil_remaining <= 0.0:
+		return
+	var recovery := minf(
+		_recoil_remaining,
+		deg_to_rad(recoil_recovery_degrees_per_second) * delta
+	)
+	head.rotation.x += recovery
+	_recoil_remaining -= recovery
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -226,3 +253,7 @@ static func resolve_horizontal_velocity(
 	var target := direction * target_speed
 	var rate := acceleration_value if not direction.is_zero_approx() else deceleration_value
 	return current.move_toward(target, rate * delta)
+
+
+static func is_slope_walkable(slope_angle_degrees: float, max_angle_degrees: float) -> bool:
+	return slope_angle_degrees <= max_angle_degrees

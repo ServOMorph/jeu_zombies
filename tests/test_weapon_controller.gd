@@ -50,5 +50,12 @@ func run_tests() -> Array[String]:
 		failures.append("le couteau doit rester sélectionnable")
 	if controller.try_fire(Vector3.ZERO, Vector3.FORWARD):
 		failures.append("le tir doit être impossible avec le couteau actif")
+	if not controller.try_melee(Vector3.ZERO, Vector3.FORWARD):
+		failures.append("le couteau doit pouvoir attaquer")
+	if controller.try_melee(Vector3.ZERO, Vector3.FORWARD):
+		failures.append("le cooldown doit empecher un second coup immediat")
+	controller.tick(controller.melee_cooldown_seconds)
+	if not controller.try_melee(Vector3.ZERO, Vector3.FORWARD):
+		failures.append("le couteau doit redevenir disponible apres son cooldown")
 	controller.free()
 	return failures

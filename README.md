@@ -39,8 +39,8 @@ La commande suivante vérifie successivement l’import Godot, les tests headles
 python check.py
 ```
 
-Le contrôle s’arrête au premier échec et transmet un code de sortie non nul. En développement, l’overlay de métriques est affiché en haut à gauche et peut être masqué ou réaffiché avec `F3`. Il n’est pas instancié dans un export release.
+Le contrôle s’arrête au premier échec et transmet un code de sortie non nul. En développement, l’overlay de métriques est affiché en haut à droite, peut être masqué ou réaffiché avec `F3` et réinitialisé avec `F4`. Il n’est pas instancié dans un export release.
 
 ## État actuel
 
-M0.1 à M0.3, M1.2 et M1.3 sont validés. `python check.py` contrôle l’import, 7 suites headless et l’export `.pck`. L’overlay de développement affiche les métriques utiles et se masque avec `F3`. La tâche en cours est la validation de pente de M1.1.
+M0.1 à M1.4 sont validés fonctionnellement. `python check.py` contrôle l’import, 8 suites headless et l’export `.pck`. La porte M1 reste en attente d’une mesure VSync conforme après les optimisations de frame pacing.
