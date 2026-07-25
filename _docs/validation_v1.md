@@ -288,3 +288,34 @@ Le zombie contourne l'obstacle, n'attaque pas à travers celui-ci, attaque uniqu
 ### Résultat
 
 Les critères d'acceptation de M2.1 sont satisfaits.
+
+## M2.2 — Apparition contrôlée
+
+Date : 2026-07-25
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `ZombieSpawner` préalloue un pool borné et réutilise les instances désactivées après leur mort.
+- `ZombieSpawnPoint` associe chaque point configurable à une zone.
+- Une apparition exige un point hors du champ proche du joueur et projetable sur le même maillage de navigation avec un chemin vers lui.
+- Les points invalides sont ignorés ; les points d'autres zones constituent le repli. Sans point valide ou au plafond, l'apparition est différée.
+- Le plafond compte tous les zombies vivants de la scène, y compris ceux hors pool.
+- La scène de test comprend trois points et `F8` déclenche une apparition contrôlée avec un indicateur d'état.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Tests Godot headless | `python test.py` | code 0, 10 suites réussies ; exclusion, chemin invalide, repli et plafond couverts |
+| Chargement scène de test | `python run.py --headless res://world/dev_player_test.tscn --quit-after 5` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+| Contrôle global | `python check.py` | code 0, import, 10 suites et export `.pck` réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur : plafond à quatre zombies respecté, apparition supplémentaire différée, zombies au sol, déplacement navigable, disparition après la mort et réutilisation de l'emplacement conformes.
+
+### Résultat
+
+Les critères de M2.2 sont satisfaits.

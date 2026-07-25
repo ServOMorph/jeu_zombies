@@ -8,11 +8,11 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- M0, M1 et M2.1 sont validés ; M2.2 est la prochaine tâche.
-- `python check.py` valide l'import, 9 suites Godot headless et l'export `.pck`.
-- La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS.
-- Le zombie standard contourne l'obstacle, attaque avec ligne de vue et s'arrête définitivement après sa mort.
-- La prochaine action est l'apparition contrôlée avec plafond de zombies actifs.
+- M0, M1, M2.1 et M2.2 sont validés ; M2.3 est la prochaine tâche.
+- `python check.py` valide l'import, 10 suites Godot headless et l'export `.pck`.
+- La porte M1 reste validée par trois parcours VSync sans frame sous 50 FPS.
+- Les zombies apparaissent sur un point navigable hors du joueur, respectent un plafond global et sont réutilisés après mort.
+- Aucun contrôle manuel ne reste en attente dans `tests_manuels.md`.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
 - 2026-07-24 : Initialisation du protocole vibecoding.
@@ -24,3 +24,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-07-25 : La qualification FPS doit être reproductible avec le moins possible de charge CPU, GPU et disque en arrière-plan.
 - 2026-07-25 : La porte M1 est validée par trois parcours VSync conformes ; M2 est débloqué.
 - 2026-07-25 : Le zombie standard est validé avec navigation à fréquence bornée, ligne de vue d'attaque et mort unique.
+- 2026-07-25 : M2.2 est validée avec points d'apparition navigables, plafond global, pool et désactivation différée après mort.

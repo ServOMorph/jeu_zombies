@@ -8,4 +8,6 @@ extends Resource
 @export_range(0.5, 5.0, 0.1) var attack_range_meters := 1.6
 @export_range(0.1, 5.0, 0.05) var attack_cooldown_seconds := 1.0
 @export_range(0.05, 3.0, 0.05) var path_refresh_seconds := 0.35
+@export_range(1.0, 50.0, 0.1) var gravity_acceleration := 9.8
+@export_range(0.0, 5.0, 0.05) var death_feedback_seconds := 0.45
 @export_range(0, 10000, 1) var credit_reward := 50

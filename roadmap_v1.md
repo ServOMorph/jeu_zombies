@@ -407,12 +407,12 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 
 ### M2.2 — Apparition contrôlée
 
-- [ ] Créer des points d'apparition configurables par zone.
-- [ ] Interdire l'apparition directement dans le champ proche du joueur.
-- [ ] Vérifier qu'un point possède un chemin navigable jusqu'au joueur.
-- [ ] Prévoir une stratégie de repli si un point est invalide.
-- [ ] Plafonner le nombre de zombies actifs.
-- [ ] Réutiliser les zombies ou mesurer et corriger le coût de création/destruction.
+- [x] Créer des points d'apparition configurables par zone.
+- [x] Interdire l'apparition directement dans le champ proche du joueur.
+- [x] Vérifier qu'un point possède un chemin navigable jusqu'au joueur.
+- [x] Prévoir une stratégie de repli si un point est invalide.
+- [x] Plafonner le nombre de zombies actifs.
+- [x] Réutiliser les zombies ou mesurer et corriger le coût de création/destruction.
 
 ### M2.3 — Gestionnaire de vagues
 
@@ -858,4 +858,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M2.2 — Apparition contrôlée** : points configurables, validation de chemin, exclusion du champ proche du joueur, plafond actif et stratégie de repli.
+Réaliser **M2.3 — Gestionnaire de vagues** : ressources de vagues, transitions, compteur, pause inter-vague et mode de test.

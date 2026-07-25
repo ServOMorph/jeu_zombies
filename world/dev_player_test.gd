@@ -10,6 +10,8 @@ const IMPACT_LIFETIME_SECONDS := 0.12
 @onready var weapon_label: Label = %WeaponLabel
 @onready var hit_marker: Label = %HitMarker
 @onready var target = $TargetDummy
+@onready var zombie_spawner = $ZombieSpawner
+@onready var spawn_label: Label = %SpawnLabel
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
@@ -30,6 +32,8 @@ func _ready() -> void:
 	player.weapon_controller.melee_swung.connect(_on_melee_swung)
 	player.weapon_controller.hit_confirmed.connect(_on_hit_confirmed)
 	player.weapon_controller.impact_registered.connect(_on_impact_registered)
+	zombie_spawner.zombie_spawned.connect(_on_zombie_spawned)
+	zombie_spawner.spawn_deferred.connect(_on_spawn_deferred)
 	print("NOX_PROTOCOL_DEV_PLAYER_TEST_READY")
 
 
@@ -147,3 +151,28 @@ func _input(event: InputEvent) -> void:
 	):
 		target.reset()
 		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F8
+	):
+		zombie_spawner.request_spawn("accueil", player)
+		get_viewport().set_input_as_handled()
+
+
+func _on_zombie_spawned(_zombie: Node3D, spawn_point: Node3D, used_fallback: bool) -> void:
+	var source := "repli" if used_fallback else "zone demandée"
+	spawn_label.text = "Apparition : %s (%s)\nZombies actifs : %d / %d" % [
+		spawn_point.name,
+		source,
+		zombie_spawner.get_active_zombie_count(),
+		zombie_spawner.max_active_zombies,
+	]
+
+
+func _on_spawn_deferred(_zone_id: String) -> void:
+	spawn_label.text = "Apparition différée : aucun point valide ou plafond atteint\nZombies actifs : %d / %d" % [
+		zombie_spawner.get_active_zombie_count(),
+		zombie_spawner.max_active_zombies,
+	]

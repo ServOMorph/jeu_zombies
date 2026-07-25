@@ -29,6 +29,10 @@ func run_tests() -> Array[String]:
 		failures.append("un chemin doit être actualisé à échéance")
 	if ZOMBIE_STANDARD.should_refresh_path(0.1, 0.35):
 		failures.append("un chemin ne doit pas être recalculé avant son échéance")
+	if ZOMBIE_STANDARD.resolve_vertical_velocity(0.0, false, 9.8, 0.1) >= 0.0:
+		failures.append("un zombie hors sol doit être soumis à la gravité")
+	if ZOMBIE_STANDARD.resolve_vertical_velocity(-1.0, true, 9.8, 0.1) != 0.0:
+		failures.append("un zombie au sol ne doit pas conserver une vitesse verticale")
 
 	var zombie := ZOMBIE_STANDARD.new()
 	var definition := ZOMBIE_DEFINITION.new()
@@ -49,5 +53,8 @@ func run_tests() -> Array[String]:
 		failures.append("un zombie mort ne doit plus recevoir de dégâts")
 	if observer.deaths != 1 or observer.rewards != 1:
 		failures.append("un zombie mort ne doit pas réémettre sa mort ou sa récompense")
+	zombie._physics_process(definition.death_feedback_seconds + 0.1)
+	if zombie.state != ZOMBIE_STANDARD.State.INACTIVE or zombie.visible:
+		failures.append("un zombie mort doit être désactivé et masqué après son feedback")
 	zombie.free()
 	return failures

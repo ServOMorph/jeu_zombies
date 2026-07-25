@@ -2,35 +2,35 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Réaliser M2.2 — Apparition contrôlée. fait quand: des points d'apparition configurables valident un chemin vers le joueur, excluent son champ proche, appliquent un plafond actif et utilisent une stratégie de repli testée. réf: `roadmap_v1.md`, tâche M2.2 ; `_docs/validation_v1.md`, section « M2.1 — Zombie standard »
+- [P1|ouvert] Réaliser M2.3 — Gestionnaire de vagues. fait quand: les ressources de vagues pilotent début, compteur, fin et pause, empêchent les démarrages multiples et sont couvertes par un mode de test. réf: `roadmap_v1.md`, tâche M2.3 ; `_docs/validation_v1.md`, section « M2.2 — Apparition contrôlée »
 
 ## Contexte chaud
 
 - Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 à 60 Hz.
-- `python check.py` valide l'import, 9 suites Godot headless et l'export de contrôle `.pck`.
+- `python check.py` valide l'import, 10 suites Godot headless et l'export de contrôle `.pck`.
 - La porte M1 est validée : trois parcours VSync à faible charge, pire résultat `60 / 55 / 18,06 ms`, aucune chute sous 50 FPS.
-- M2.1 est validée : le zombie contourne l'obstacle, attaque seulement à portée avec ligne de vue et meurt une seule fois.
+- M2.1 et M2.2 sont validées : navigation, apparition hors champ proche, plafond actif, repli, pool et nettoyage après mort fonctionnent.
 
 ## Dernière session
 
 # Session du 2026-07-25
 
 ## Décisions prises
-- La porte M1 est validée sur trois parcours VSync conformes à faible charge ; M2 est débloqué.
-- Le zombie standard utilise une navigation à fréquence bornée et une ligne de vue obligatoire pour l'attaque.
+- M2.2 est validée ; les zombies sont gérés par un pool, ancrés au maillage de navigation et désactivés après leur feedback de mort.
+- `tests_manuels.md` devient vide après validation complète des contrôles manuels.
 
 ## Livrables produits ou modifiés
-- `enemies/` : définition de données, scène et contrôleur du zombie standard ajoutés.
-- `world/dev_player_test.tscn` : maillage de navigation et obstacle de contournement ajoutés.
-- `tests/test_zombie_standard.gd` : états, dégâts, mort unique, récompense et règles d'attaque testés.
-- `tests_manuels.md` et `_docs/validation_v1.md` : validation manuelle M2.1 et requalification M1 consignées.
+- `enemies/zombie_spawner.gd` et `enemies/zombie_spawn_point.gd` : apparition contrôlée par zone, repli, plafond et pool ajoutés.
+- `enemies/zombie_standard.gd` : mouvement vertical fiable et nettoyage différé après mort corrigés.
+- `tests/test_zombie_spawner.gd` et `tests/test_zombie_standard.gd` : couverture du plafond, des candidats, de la gravité et de la désactivation ajoutée.
+- `_docs/validation_v1.md` et `tests_manuels.md` : validation M2.2 consignée ; file de tests manuels vidée.
 
 ## Hypothèses validées / invalidées
-- VALIDE : `python check.py` réussit l'import, 9 suites headless et l'export ; M1 et M2.1 satisfont leurs critères.
-- EN ATTENTE : M2.2, apparitions contrôlées et plafond de zombies actifs.
+- VALIDE : `python check.py` réussit l'import, 10 suites et l'export ; M2.2 satisfait ses critères automatiques et manuels.
+- EN ATTENTE : M2.3, gestionnaire de vagues et boucle de survie.
 
 ## Prochaine étape exacte
-Implémenter M2.2 : points d'apparition configurables, exclusion du joueur, validation de navigation, repli et plafond actif.
+Implémenter M2.3 : ressources de configuration des vagues, transitions déterministes, compteur vivant, pause inter-vague et mode de test.
 
 ## Question bloquante pour la session suivante
 Aucune

@@ -17,6 +17,7 @@ enum State {
 }
 
 @export var definition: ZombieDefinition
+@export var start_active := true
 @export_range(0.0, 5.0, 0.05) var spawn_delay_seconds := 0.45
 @export_range(0.0, 3.0, 0.05) var hurt_feedback_seconds := 0.16
 @export_flags_3d_physics var attack_collision_mask := 1
@@ -30,6 +31,7 @@ var health := 0.0
 var _target: Node3D
 var _spawn_remaining := 0.0
 var _hurt_remaining := 0.0
+var _death_remaining := 0.0
 var _attack_cooldown_remaining := 0.0
 var _path_refresh_remaining := 0.0
 var _reward_has_been_granted := false
@@ -44,7 +46,10 @@ func _ready() -> void:
 	body_visual.material_override = _body_material
 	if definition == null:
 		definition = ZombieDefinition.new()
-	activate()
+	if start_active:
+		activate()
+	else:
+		deactivate()
 
 
 func activate(target: Node3D = null) -> void:
@@ -54,10 +59,12 @@ func activate(target: Node3D = null) -> void:
 	health = definition.max_health
 	_spawn_remaining = spawn_delay_seconds
 	_hurt_remaining = 0.0
+	_death_remaining = 0.0
 	_attack_cooldown_remaining = 0.0
 	_path_refresh_remaining = 0.0
 	_reward_has_been_granted = false
 	velocity = Vector3.ZERO
+	visible = true
 	if collision_shape != null:
 		collision_shape.disabled = false
 	set_physics_process(true)
@@ -67,6 +74,7 @@ func activate(target: Node3D = null) -> void:
 
 func deactivate() -> void:
 	velocity = Vector3.ZERO
+	visible = false
 	if collision_shape != null:
 		collision_shape.set_deferred("disabled", true)
 	_set_state(State.INACTIVE)
@@ -87,32 +95,45 @@ func receive_damage(amount: float) -> bool:
 
 
 func _physics_process(delta: float) -> void:
+	if state == State.INACTIVE:
+		return
+	if state == State.DYING:
+		_death_remaining = maxf(0.0, _death_remaining - delta)
+		if _death_remaining == 0.0:
+			deactivate()
+		return
+
+	_apply_gravity(delta)
 	if state == State.SPAWNING:
+		_stop_horizontal_motion()
 		_spawn_remaining = maxf(0.0, _spawn_remaining - delta)
 		if _spawn_remaining == 0.0:
 			_set_state(State.CHASING)
+		move_and_slide()
 		return
 	if state == State.HURT:
+		_stop_horizontal_motion()
 		_hurt_remaining = maxf(0.0, _hurt_remaining - delta)
 		if _hurt_remaining == 0.0:
 			_set_state(State.CHASING)
+		move_and_slide()
 		return
-	if state == State.DYING or state == State.INACTIVE:
-		return
-
 	_resolve_target()
 	if _target == null:
-		velocity = Vector3.ZERO
+		_stop_horizontal_motion()
+		move_and_slide()
 		return
 
 	var distance := global_position.distance_to(_target.global_position)
 	if is_attack_valid(distance, definition.attack_range_meters, _has_clear_attack_line()):
 		_set_state(State.ATTACKING)
 		_try_attack(delta)
+		move_and_slide()
 		return
 
 	_set_state(State.CHASING)
 	_move_toward_target(delta)
+	move_and_slide()
 
 
 func _move_toward_target(delta: float) -> void:
@@ -129,17 +150,30 @@ func _move_toward_target(delta: float) -> void:
 	var direction := global_position.direction_to(next_position)
 	direction.y = 0.0
 	if direction.length_squared() == 0.0:
-		velocity = Vector3.ZERO
+		_stop_horizontal_motion()
 		return
 	direction = direction.normalized()
 	velocity.x = direction.x * definition.move_speed
 	velocity.z = direction.z * definition.move_speed
-	move_and_slide()
 	_separate_from_neighbours()
 
 
+func _apply_gravity(delta: float) -> void:
+	velocity.y = resolve_vertical_velocity(
+		velocity.y,
+		is_on_floor(),
+		definition.gravity_acceleration,
+		delta,
+	)
+
+
+func _stop_horizontal_motion() -> void:
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+
 func _try_attack(delta: float) -> void:
-	velocity = Vector3.ZERO
+	_stop_horizontal_motion()
 	_attack_cooldown_remaining = maxf(0.0, _attack_cooldown_remaining - delta)
 	if _attack_cooldown_remaining > 0.0 or _target == null:
 		return
@@ -188,6 +222,7 @@ func _die() -> void:
 	if state == State.DYING:
 		return
 	velocity = Vector3.ZERO
+	_death_remaining = definition.death_feedback_seconds
 	_set_state(State.DYING)
 	if collision_shape != null:
 		collision_shape.set_deferred("disabled", true)
@@ -212,6 +247,15 @@ static func is_attack_valid(distance: float, attack_range: float, has_clear_line
 
 static func should_refresh_path(remaining_seconds: float, refresh_seconds: float) -> bool:
 	return remaining_seconds <= 0.0 and refresh_seconds > 0.0
+
+
+static func resolve_vertical_velocity(
+	current_velocity: float,
+	on_floor: bool,
+	gravity_acceleration: float,
+	delta: float,
+) -> float:
+	return 0.0 if on_floor else current_velocity - gravity_acceleration * delta
 
 
 static func _state_color(new_state: State) -> Color:

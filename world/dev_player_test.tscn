@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://weapons/combat_audio_feedback.gd" id="4_audio"]
 [ext_resource type="PackedScene" path="res://ui/dev_overlay/dev_metrics_overlay.tscn" id="5_overlay"]
 [ext_resource type="PackedScene" path="res://enemies/zombie_standard.tscn" id="6_zombie"]
+[ext_resource type="Script" path="res://enemies/zombie_spawner.gd" id="7_spawner"]
+[ext_resource type="Script" path="res://enemies/zombie_spawn_point.gd" id="8_spawn_point"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -240,3 +242,35 @@ position = Vector3(3, 1, -7)
 
 [node name="ZombieStandard" parent="." instance=ExtResource("6_zombie")]
 position = Vector3(0, 0.01, -2)
+
+[node name="ZombieSpawner" type="Node3D" parent="."]
+script = ExtResource("7_spawner")
+zombie_scene = ExtResource("6_zombie")
+max_active_zombies = 4
+player_exclusion_radius_meters = 6.0
+prewarm_pool_size = 4
+
+[node name="SpawnPointAccueilA" type="Marker3D" parent="."]
+position = Vector3(-12, 0.01, -12)
+script = ExtResource("8_spawn_point")
+zone_id = "accueil"
+
+[node name="SpawnPointAccueilB" type="Marker3D" parent="."]
+position = Vector3(12, 0.01, -12)
+script = ExtResource("8_spawn_point")
+zone_id = "accueil"
+
+[node name="SpawnPointCouloirs" type="Marker3D" parent="."]
+position = Vector3(-12, 0.01, 0)
+script = ExtResource("8_spawn_point")
+zone_id = "couloirs"
+
+[node name="SpawnLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 450.0
+offset_right = 520.0
+offset_bottom = 510.0
+theme_override_colors/font_color = Color(0.9, 0.78, 0.44, 1)
+theme_override_font_sizes/font_size = 18
+text = "Apparition : prête (F8)\nZombies actifs : 0 / 4"

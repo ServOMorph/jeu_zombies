@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1 et M2.1 sont validés. `python check.py` contrôle l'import, 9 suites headless et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. Le zombie standard contourne un obstacle, attaque uniquement avec ligne de vue et s'arrête après sa mort. La prochaine tâche est M2.2 : apparition contrôlée.
+M0, M1, M2.1 et M2.2 sont validés. `python check.py` contrôle l'import, 10 suites headless et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. Les zombies apparaissent sur un point navigable hors du joueur, respectent un plafond global et sont réutilisés après leur mort. La prochaine tâche est M2.3 : gestionnaire de vagues.

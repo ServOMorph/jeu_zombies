@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.8 — 2026-07-25
+
+### Ajouté
+
+- Apparition contrôlée des zombies : points par zone, validation de navigation, repli, plafond global et pool réutilisable.
+- Tests automatisés et contrôle manuel dédiés à M2.2.
+
+### Corrigé
+
+- Mouvement vertical des zombies et nettoyage après mort, évitant les ennemis suspendus ou persistants.
+
+### Modifié
+
+- Protocole des tests manuels : le fichier d'attente est vidé après validation complète.
+
 ## v0.7 — 2026-07-25
 
 ### Ajouté
