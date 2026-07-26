@@ -242,7 +242,7 @@ Donner une identité originale et un rôle visuel clair aux six armes et au cout
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 6 — Achats, avantages et objets de quête `[TODO]`
+## Phase 6 — Achats, avantages et objets de quête `[FAIT]`
 
 ### But
 
@@ -271,6 +271,12 @@ Concevoir tous les objets interactifs nécessaires aux jalons M4 et M5.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
+
+### État au 2026-07-26
+
+- Les 16 exports GLB, inventaire, fiches, planche d’états, bordereau et rapport de validation sont produits dans `objets_interactifs_phase6/`.
+- Les copies sont contrôlées dans le laboratoire via `F4`, section « Assets phase 6 — Achats et quête ».
+- Le contrôle automatisé est réussi et le lot est approuvé par l’utilisateur ; aucune ressource n’est intégrée au jeu.
 
 ## Phase 7 — HUD, menus et identité graphique `[TODO]`
 

@@ -6,6 +6,7 @@ const PHASE3_ASSETS_PATH := "res://imports/phase3"
 const PHASE3_ZONES_PATH := "res://imports/phase3/zones"
 const PHASE4_ASSETS_PATH := "res://imports/phase4"
 const PHASE5_ASSETS_PATH := "res://imports/phase5"
+const PHASE6_ASSETS_PATH := "res://imports/phase6"
 const ALLOWED_EXTENSIONS := ["glb", "gltf", "tscn"]
 const CYAN := Color("#40d5db")
 const AMBER := Color("#f0a43a")
@@ -479,6 +480,10 @@ func _create_selection_menu() -> void:
 	for asset_path: String in _asset_paths:
 		if asset_path.begins_with(PHASE5_ASSETS_PATH):
 			_add_menu_button(entries, asset_path.get_file(), Callable(self, "_select_asset_path").bind(asset_path))
+	_add_menu_title(entries, "Assets phase 6 — Achats et quête")
+	for asset_path: String in _asset_paths:
+		if asset_path.begins_with(PHASE6_ASSETS_PATH):
+			_add_menu_button(entries, asset_path.get_file(), Callable(self, "_select_asset_path").bind(asset_path))
 
 
 func _add_menu_title(parent: VBoxContainer, title: String) -> void:
@@ -559,6 +564,11 @@ func _discover_assets() -> void:
 		for file_name: String in phase5_directory.get_files():
 			if file_name.get_extension().to_lower() == "glb":
 				_asset_paths.append("%s/%s" % [PHASE5_ASSETS_PATH, file_name])
+	var phase6_directory := DirAccess.open(PHASE6_ASSETS_PATH)
+	if phase6_directory != null:
+		for file_name: String in phase6_directory.get_files():
+			if file_name.get_extension().to_lower() == "glb":
+				_asset_paths.append("%s/%s" % [PHASE6_ASSETS_PATH, file_name])
 	_asset_paths.sort()
 	if not _asset_paths.is_empty():
 		_asset_index = 0

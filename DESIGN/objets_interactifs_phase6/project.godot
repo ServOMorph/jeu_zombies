@@ -1,0 +1,6 @@
+[application]
+config/name="Nox Protocol - Exports phase 6"
+config/features=PackedStringArray("4.5")
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
