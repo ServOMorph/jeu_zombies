@@ -32,6 +32,12 @@ python run.py
 
 Godot doit être disponible dans le `PATH`. Sinon, définir `GODOT_BIN` avec le chemin complet de l’exécutable.
 
+Le laboratoire visuel autonome de la zone DESIGN se lance séparément :
+
+```powershell
+python run_labo.py
+```
+
 ## Contrôle qualité
 
 La commande suivante vérifie successivement l’import Godot, les tests headless et l’export de contrôle :
@@ -44,4 +50,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le HUD autonome observe les signaux de session et est validé sur plusieurs résolutions. Le blockout comporte cinq zones, des crédits de session, des interactions caméra et cinq portes achetables. Le premier contrôle manuel de la porte de sortie M3 a échoué (FPS minimum 28, compteur de zombies restants figé en vague 5) ; une instrumentation de diagnostic a été ajoutée et le contrôle reste à rejouer avant M4. La conception graphique est isolée dans `DESIGN/` et suit un flux de validation avant toute intégration dans le jeu.
+M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le premier contrôle manuel de la porte de sortie M3 a échoué ; son diagnostic reste à rejouer avant M4. La direction low-poly propre et optimisée est approuvée, un laboratoire Godot autonome permet de contrôler les assets hors du jeu, et `DESIGN/roadmap_design.md` place le kit modulaire structurel en phase 1.

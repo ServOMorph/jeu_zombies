@@ -22,11 +22,11 @@ assets intégrés.
 
 ## État actuel
 
-- Aucun asset externe ou final n'est actuellement intégré.
-- La carte repose sur un blockout procédural.
-- Le zombie, l'arme et plusieurs objets utilisent des primitives.
-- Le HUD est fonctionnel mais son style est provisoire.
-- Le workflow graphique séparé est défini dans `workflow_graphique.md`.
+- La bible et le rendu cible low-poly propre et optimisé sont approuvés.
+- Le laboratoire Godot autonome de prévisualisation FPS est testé et validé.
+- `roadmap_design.md` organise la production en dix phases ; la phase 1 est en cours.
+- Aucun asset externe ou final n'est intégré au projet jouable.
+- Le prochain lot concerne sols, murs, plafonds, portes et encadrements.
 
 ## Contrats techniques à préserver
 
@@ -40,3 +40,6 @@ assets intégrés.
 - 2026-07-26 : La conception graphique reste confinée à `DESIGN/`; l'import dans `assets/` et l'intégration Godot sont réalisés dans une session de code dédiée.
 - 2026-07-26 : Tout lot suit le flux `DESIGN → validation → assets/ → scènes Godot → tests`.
 - 2026-07-26 : La première passe environnementale habille le blockout sans remplacer ses collisions ni sa navigation.
+- 2026-07-26 : La cible validée est une 3D low-poly sombre, propre, modulaire et optimisée, conforme à `bible_direction_artistique.md`.
+- 2026-07-26 : Les assets DESIGN sont contrôlés dans un laboratoire Godot autonome avant toute transmission au code.
+- 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.

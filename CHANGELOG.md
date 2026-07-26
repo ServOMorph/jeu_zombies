@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.17 — 2026-07-26
+
+### Ajouté
+
+- Bible de direction artistique et deux références visuelles approuvées pour la cible low-poly.
+- Laboratoire Godot autonome de prévisualisation FPS avec lanceur `run_labo.py`.
+- Roadmap DESIGN complète en dix phases, avec le kit modulaire structurel en phase 1.
+
+### Modifié
+
+- Contexte DESIGN et README alignés sur la direction validée et le flux de contrôle avant intégration.
+
 ## v0.16 — 2026-07-26
 
 ### Ajouté
