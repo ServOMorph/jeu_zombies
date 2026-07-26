@@ -42,16 +42,25 @@ const WEAPON_UPGRADE_STATIONS: Array[Dictionary] = [
 	{"id": "laboratoire_station", "zone": "laboratoire", "position": Vector3(-5.0, 1.1, -4.0)},
 ]
 
+const PERK_STATIONS: Array[Dictionary] = [
+	{"id": "constitution_renforcee", "zone": "accueil", "position": Vector3(-6.0, 1.1, -3.0)},
+	{"id": "gestes_precis", "zone": "accueil", "position": Vector3(-2.0, 1.1, -3.0)},
+	{"id": "reflexes_stimules", "zone": "accueil", "position": Vector3(2.0, 1.1, -3.0)},
+	{"id": "reparation_cellulaire", "zone": "accueil", "position": Vector3(6.0, 1.1, -3.0)},
+]
+
 var _doors: Dictionary = {}
 var _wall_buys: Dictionary = {}
 var _mystery_boxes: Dictionary = {}
 var _weapon_upgrade_stations: Dictionary = {}
+var _perk_stations: Dictionary = {}
 var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
 @export var wall_buy_definitions: Array[Resource] = []
 @export var mystery_box_definitions: Array[Resource] = []
 @export var weapon_upgrade_station_definitions: Array[Resource] = []
+@export var perk_station_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -65,6 +74,8 @@ func _ready() -> void:
 		_create_mystery_box(mystery_box)
 	for weapon_upgrade_station: Dictionary in WEAPON_UPGRADE_STATIONS:
 		_create_weapon_upgrade_station(weapon_upgrade_station)
+	for perk_station: Dictionary in PERK_STATIONS:
+		_create_perk_station(perk_station)
 	_create_navigation_regions()
 
 
@@ -103,6 +114,13 @@ static func get_weapon_upgrade_station_ids() -> PackedStringArray:
 	return station_ids
 
 
+static func get_perk_station_ids() -> PackedStringArray:
+	var station_ids := PackedStringArray()
+	for perk_station: Dictionary in PERK_STATIONS:
+		station_ids.append(str(perk_station["id"]))
+	return station_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -129,6 +147,10 @@ func get_mystery_box(box_id: String) -> MysteryBox:
 
 func get_weapon_upgrade_station(station_id: String) -> WeaponUpgradeStation:
 	return _weapon_upgrade_stations.get(station_id) as WeaponUpgradeStation
+
+
+func get_perk_station(station_id: String) -> PerkStation:
+	return _perk_stations.get(station_id) as PerkStation
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -312,6 +334,31 @@ func _create_weapon_upgrade_station(weapon_upgrade_station: Dictionary) -> void:
 func _find_weapon_upgrade_station_definition(station_id: String) -> Resource:
 	for definition: Resource in weapon_upgrade_station_definitions:
 		if definition != null and str(definition.get("station_id")) == station_id:
+			return definition
+	return null
+
+
+func _create_perk_station(perk_station: Dictionary) -> void:
+	var station_id := str(perk_station["id"])
+	var definition := _find_perk_station_definition(station_id)
+	if definition == null:
+		push_error("Définition d'avantage manquante : %s" % station_id)
+		return
+	var zone_root := _zone_roots.get(str(perk_station["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour la station d'avantage : %s" % station_id)
+		return
+	var station := PerkStation.new()
+	station.name = "StationAvantage_%s" % station_id
+	station.configure(definition)
+	station.position = perk_station["position"] as Vector3
+	zone_root.add_child(station)
+	_perk_stations[station_id] = station
+
+
+func _find_perk_station_definition(station_id: String) -> Resource:
+	for definition: Resource in perk_station_definitions:
+		if definition != null and str(definition.get("perk_id")) == station_id:
 			return definition
 	return null
 

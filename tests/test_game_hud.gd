@@ -17,6 +17,8 @@ func run_tests() -> Array[String]:
 		return failures
 	var credits_label := hud.get_node("CreditsLabel") as Label
 	var health_label := hud.get_node("VitalsPanel/HealthLabel") as Label
+	var health_bar := hud.get_node("VitalsPanel/HealthBar") as ProgressBar
+	var stamina_bar := hud.get_node("VitalsPanel/StaminaBar") as ProgressBar
 	var stamina_label := hud.get_node("VitalsPanel/StaminaLabel") as Label
 	var weapon_label := hud.get_node("WeaponPanel/WeaponLabel") as Label
 	var ammo_label := hud.get_node("WeaponPanel/AmmoLabel") as Label
@@ -28,6 +30,16 @@ func run_tests() -> Array[String]:
 	world.player.vitals.apply_damage(25.0)
 	if health_label.text != "Santé : 75 / 100":
 		failures.append("le HUD doit suivre la santé par signal")
+	var base_bar_width := health_bar.custom_minimum_size.x
+	world.player.vitals.max_health = 150.0
+	world.player.vitals.health = 150.0
+	world.player.vitals.health_changed.emit(150.0, 150.0)
+	if health_label.text != "Santé : 150 / 150":
+		failures.append("le HUD doit refléter une santé maximale accrue même à pleine vie")
+	if health_bar.custom_minimum_size.x <= base_bar_width:
+		failures.append("la barre de vie doit s'élargir avec la santé maximale pour rester perceptible à pleine vie")
+	if stamina_bar.size_flags_horizontal != Control.SIZE_SHRINK_BEGIN:
+		failures.append("la barre d'endurance doit garder une largeur fixe, indépendante de l'élargissement de la barre de vie dans le même conteneur")
 	world.player.vitals.stamina = 60.0
 	world.player.vitals.stamina_changed.emit(60.0, 100.0)
 	if stamina_label.text != "Endurance : 60 / 100":

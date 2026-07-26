@@ -2,6 +2,7 @@ class_name PlayerController
 extends CharacterBody3D
 
 const PLAYER_VITALS := preload("res://player/player_vitals.gd")
+const PLAYER_PERKS := preload("res://player/player_perks.gd")
 const WEAPON_VISUAL_RESTING_Z := -0.62
 const WEAPON_VISUAL_CLOSEST_Z := 0.06
 const WEAPON_VISUAL_FRONT_OFFSET := 0.355
@@ -57,6 +58,8 @@ var _base_fov := 75.0
 var _recoil_remaining := 0.0
 var is_sprinting := false
 var vitals = PLAYER_VITALS.new()
+var perks = PLAYER_PERKS.new()
+var _movement_speed_multiplier := 1.0
 
 
 func _ready() -> void:
@@ -72,6 +75,8 @@ func _ready() -> void:
 		stamina_reactivation_threshold
 	)
 	vitals.died.connect(_on_died)
+	perks.perk_purchased.connect(_on_perk_purchased)
+	_apply_perk_effects()
 	_standing_shape = (collision_shape.shape as CapsuleShape3D).duplicate() as CapsuleShape3D
 	_standing_shape.height = standing_height
 	_standing_collision_position = Vector3(0.0, standing_height * 0.5, 0.0)
@@ -118,9 +123,9 @@ func _physics_process(delta: float) -> void:
 	var target_speed := select_speed(
 		_is_crouching,
 		is_sprinting,
-		walk_speed,
-		sprint_speed,
-		crouch_speed
+		walk_speed * _movement_speed_multiplier,
+		sprint_speed * _movement_speed_multiplier,
+		crouch_speed * _movement_speed_multiplier
 	)
 	var horizontal_velocity := resolve_horizontal_velocity(
 		Vector3(velocity.x, 0.0, velocity.z),
@@ -169,6 +174,26 @@ func _on_died() -> void:
 
 func get_horizontal_speed() -> float:
 	return Vector2(velocity.x, velocity.z).length()
+
+
+func _on_perk_purchased(_perk_id: String) -> void:
+	_apply_perk_effects()
+
+
+func _apply_perk_effects() -> void:
+	var new_max_health: float = max_health * perks.get_effect_multiplier(PerkDefinition.Effect.HEALTH)
+	var health_gain := maxf(0.0, new_max_health - vitals.max_health)
+	vitals.max_health = new_max_health
+	vitals.health = minf(vitals.max_health, vitals.health + health_gain)
+	vitals.health_regeneration_per_second = (
+		health_regeneration_per_second
+		* perks.get_effect_multiplier(PerkDefinition.Effect.REGENERATION)
+	)
+	vitals.health_changed.emit(vitals.health, vitals.max_health)
+	_movement_speed_multiplier = perks.get_effect_multiplier(PerkDefinition.Effect.MOVEMENT_SPEED)
+	weapon_controller.reload_speed_multiplier = perks.get_effect_multiplier(
+		PerkDefinition.Effect.RELOAD_SPEED
+	)
 
 
 func _update_camera_fov(delta: float) -> void:

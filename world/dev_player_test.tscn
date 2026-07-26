@@ -30,6 +30,10 @@
 [ext_resource type="Resource" path="res://data/weapons/wall_buy_extraction_broyeur.tres" id="28_wall_buy_extraction_heavy"]
 [ext_resource type="Resource" path="res://data/weapons/mystery_box_entrepot.tres" id="29_mystery_box_entrepot"]
 [ext_resource type="Resource" path="res://data/weapons/weapon_upgrade_station_laboratoire.tres" id="30_weapon_upgrade_station_laboratoire"]
+[ext_resource type="Resource" path="res://data/perks/perk_constitution_renforcee.tres" id="31_perk_constitution_renforcee"]
+[ext_resource type="Resource" path="res://data/perks/perk_gestes_precis.tres" id="32_perk_gestes_precis"]
+[ext_resource type="Resource" path="res://data/perks/perk_reflexes_stimules.tres" id="33_perk_reflexes_stimules"]
+[ext_resource type="Resource" path="res://data/perks/perk_reparation_cellulaire.tres" id="34_perk_reparation_cellulaire"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -115,6 +119,7 @@ door_definitions = Array[Resource]([ExtResource("17_door_accueil"), ExtResource(
 wall_buy_definitions = Array[Resource]([ExtResource("23_wall_buy_accueil"), ExtResource("24_wall_buy_couloirs"), ExtResource("25_wall_buy_entrepot"), ExtResource("26_wall_buy_laboratoire"), ExtResource("27_wall_buy_extraction_sniper"), ExtResource("28_wall_buy_extraction_heavy")])
 mystery_box_definitions = Array[Resource]([ExtResource("29_mystery_box_entrepot")])
 weapon_upgrade_station_definitions = Array[Resource]([ExtResource("30_weapon_upgrade_station_laboratoire")])
+perk_station_definitions = Array[Resource]([ExtResource("31_perk_constitution_renforcee"), ExtResource("32_perk_gestes_precis"), ExtResource("33_perk_reflexes_stimules"), ExtResource("34_perk_reparation_cellulaire")])
 
 [node name="InteractionTestTerminal" type="Area3D" parent="."]
 position = Vector3(2, 0.8, 2)

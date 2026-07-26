@@ -15,6 +15,7 @@ signal reload_finished
 signal dry_fire
 
 @export var initial_weapon: Resource
+@export_range(0.1, 1.0, 0.01) var reload_speed_multiplier := 1.0
 @export_category("Melee")
 @export var melee_damage := 45.0
 @export_range(0.5, 4.0, 0.1) var melee_range_meters := 2.0
@@ -119,7 +120,7 @@ func start_reload() -> bool:
 	var state = _current_state()
 	if state == null or state.magazine >= state.definition.magazine_capacity or state.reserve <= 0:
 		return false
-	state.reload_remaining = state.definition.reload_duration_seconds
+	state.reload_remaining = state.definition.reload_duration_seconds * reload_speed_multiplier
 	reload_started.emit()
 	return true
 

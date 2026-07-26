@@ -8,15 +8,13 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- M0 à M4.4 sont validés ; `python check.py` valide l'import, 20 suites headless, le franchissement d'une porte et l'export `.pck`.
+- M0 à M4.4 sont validés ; `python check.py` valide l'import, 23 suites headless, le franchissement d'une porte et l'export `.pck`.
+- M4.5 (quatre avantages) est implémentée et testée automatiquement (stations, effets, HUD) mais en attente de validation manuelle complète ; seule la barre de vie est confirmée par l'utilisateur.
+- Deux bugs d'affichage HUD corrigés en session : barre de vie à pourcentage fixe (invisible à pleine vie) et étirement en cascade de la barre d'endurance via le conteneur `VitalsPanel`.
 - La porte de sortie M3 est franchie le 2026-07-26 après un retest ciblé ; la cause initiale de l'échec du premier contrôle (FPS min 28, compteur figé) reste non diagnostiquée (P3, rattachée à M7.2).
-- M4.1 (six armes), M4.2 (achats muraux), M4.3 (caisse d'armes aléatoire, Entrepôt médical) et M4.4 (station d'amélioration, Laboratoire de synthèse, ×1,35 dégâts) sont validés.
-- Raccourcis de développement `F1` (cycle arsenal) et `F2` (crédit de test) ajoutés dans `dev_player_test.gd`.
-- M4.5 (quatre avantages) est le prochain travail à entamer.
+- Raccourcis de développement `F1` (cycle arsenal) et `F2` (crédit de test) disponibles dans `dev_player_test.gd`.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
-- 2026-07-26 : M2.4 est validée : cinq vagues, défaite, redémarrage et test de charge à huit zombies conforme.
-- 2026-07-26 : Le blockout M3.1 définit les cinq zones ; les portes restent ouvertes tant que leurs états et leur navigation ne sont pas implémentés.
 - 2026-07-26 : Les scénarios de test Parcours et Survie séparent les contrôles de carte des vagues de zombies ; M3.1 attend un dernier contrôle manuel après déplacement du plafond bas.
 - 2026-07-26 : M3.1 à M3.4 sont validés avec interactions caméra, crédits de session et portes configurées ; les liens ouverts forcent le recalcul des zombies sans interrompre leur traversée.
 - 2026-07-26 : M3.5 est validée : le HUD est un composant autonome mis à jour par signaux, qualifié manuellement sur plusieurs résolutions.
@@ -25,3 +23,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-07-26 : M4.1 et M4.2 sont validés ensemble : arsenal de six armes avec plombs/dégâts bornés, achats muraux à confirmation de remplacement, modèle et son distincts par arme (traité en avance sur M6 car nécessaire pour tester les achats).
 - 2026-07-26 : M4.3 est validée : caisse d'armes aléatoire placée dans l'Entrepôt médical (1 500 crédits, 5 armes hors pistolet de départ), exclusion de l'arme tenue, confirmation explicite après tirage, remise à zéro sur reset de session.
 - 2026-07-26 : M4.4 est validée : station d'amélioration au Laboratoire de synthèse (1 200 crédits, ×1,35 dégâts), amélioration stockée par emplacement d'arme (perdue au remplacement, conservée au changement d'emplacement actif), refus sans débit si déjà améliorée ou couteau actif.
+- 2026-07-26 : M4.5 implémentée (non validée manuellement) : quatre avantages dans l'Accueil sécurisé à 1 000 crédits chacun (santé ×1,5, rechargement ×0,65, vitesse ×1,2, régénération ×1,75), achat unique par avantage via `PlayerPerks`.

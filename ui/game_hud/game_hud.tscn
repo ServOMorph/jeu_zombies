@@ -48,6 +48,7 @@ text = "Endurance : 100 / 100"
 
 [node name="StaminaBar" type="ProgressBar" parent="VitalsPanel"]
 unique_name_in_owner = true
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(250, 16)
 theme_override_styles/fill = SubResource("StyleBoxFlat_stamina")
 value = 100.0

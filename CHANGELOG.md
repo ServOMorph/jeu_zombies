@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.28 — 2026-07-26
+
+### Ajouté
+
+- Quatre avantages (M4.5) : Constitution renforcée (×1,5 santé), Gestes précis (×0,65 durée de rechargement), Réflexes stimulés (×1,2 vitesse), Réparation cellulaire (×1,75 régénération), achetables une seule fois chacun via `PlayerPerks` et quatre stations dans l'Accueil sécurisé (1 000 crédits chacune).
+
+### Corrigé
+
+- Barre de vie du HUD : sa largeur était uniquement proportionnelle (pourcentage), donc invisible à pleine vie ; elle s'ajuste désormais à la santé maximale réelle du joueur.
+- Barre d'endurance : suivait par erreur l'élargissement de la barre de vie via le conteneur partagé `VitalsPanel` ; largeur désormais fixe et indépendante.
+
 ## v0.27 — 2026-07-26
 
 ### Ajouté

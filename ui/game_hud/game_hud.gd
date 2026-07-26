@@ -2,6 +2,7 @@ class_name GameHud
 extends CanvasLayer
 
 const PURCHASE_FEEDBACK_SECONDS := 2.5
+const HEALTH_BAR_BASE_WIDTH := 250.0
 
 @onready var health_label: Label = %HealthLabel
 @onready var health_bar: ProgressBar = %HealthBar
@@ -18,6 +19,7 @@ var _player: PlayerController
 var _wave_manager: WaveManager
 var _interaction_controller: InteractionController
 var _feedback_remaining := 0.0
+var _base_max_health := 100.0
 
 
 func _ready() -> void:
@@ -37,6 +39,7 @@ func configure(
 	_player = player
 	_wave_manager = wave_manager
 	_interaction_controller = interaction_controller
+	_base_max_health = maxf(1.0, _player.max_health)
 	_player.vitals.health_changed.connect(_on_health_changed)
 	_player.vitals.stamina_changed.connect(_on_stamina_changed)
 	_player.weapon_controller.weapon_changed.connect(_on_weapon_changed)
@@ -76,6 +79,7 @@ func _refresh_current_values() -> void:
 func _on_health_changed(current_health: float, maximum_health: float) -> void:
 	_set_text(health_label, "Santé : %.0f / %.0f" % [current_health, maximum_health])
 	_set_bar_value(health_bar, current_health, maximum_health)
+	_update_health_bar_width(maximum_health)
 
 
 func _on_stamina_changed(current_stamina: float, maximum_stamina: float) -> void:
@@ -144,6 +148,12 @@ func _show_purchase_feedback(message: String, color: Color) -> void:
 func _set_text(label: Label, value: String) -> void:
 	if label.text != value:
 		label.text = value
+
+
+func _update_health_bar_width(maximum_health: float) -> void:
+	var width := HEALTH_BAR_BASE_WIDTH * (maximum_health / _base_max_health)
+	if not is_equal_approx(health_bar.custom_minimum_size.x, width):
+		health_bar.custom_minimum_size.x = width
 
 
 func _set_bar_value(bar: ProgressBar, current_value: float, maximum_value: float) -> void:
