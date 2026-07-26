@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.28
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="Cyan"]
+albedo_color = Color(0.25098, 0.835294, 0.858824, 1)
+emission_enabled = true
+emission = Color(0.04, 0.18, 0.2, 1)
+roughness = 0.56
+
+[sub_resource type="BoxMesh" id="Slab"]
+material = SubResource("Steel")
+size = Vector3(2, 0.18, 2)
+
+[sub_resource type="BoxMesh" id="Light"]
+material = SubResource("Cyan")
+size = Vector3(1.2, 0.03, 0.1)
+
+[node name="NP_KMS_11_PlafondTechnique" type="Node3D"]
+
+[node name="Dalle" type="MeshInstance3D" parent="."]
+mesh = SubResource("Slab")
+position = Vector3(0, 0.09, 0)
+
+[node name="Bandeau" type="MeshInstance3D" parent="."]
+mesh = SubResource("Light")
+position = Vector3(0, -0.02, 0)

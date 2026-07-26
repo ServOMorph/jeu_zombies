@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Concrete"]
+albedo_color = Color(0.290196, 0.333333, 0.380392, 1)
+roughness = 0.94
+
+[sub_resource type="StandardMaterial3D" id="Cyan"]
+albedo_color = Color(0.25098, 0.835294, 0.858824, 1)
+emission_enabled = true
+emission = Color(0.04, 0.18, 0.2, 1)
+roughness = 0.56
+
+[sub_resource type="BoxMesh" id="Slab"]
+material = SubResource("Concrete")
+size = Vector3(2, 0.12, 2)
+
+[sub_resource type="BoxMesh" id="Guide"]
+material = SubResource("Cyan")
+size = Vector3(0.12, 0.02, 1.2)
+
+[node name="NP_KMS_02_SolAngle" type="Node3D"]
+
+[node name="Dalle" type="MeshInstance3D" parent="."]
+mesh = SubResource("Slab")
+position = Vector3(0, 0.06, 0)
+
+[node name="GuideX" type="MeshInstance3D" parent="."]
+mesh = SubResource("Guide")
+position = Vector3(-0.55, 0.13, 0.25)
+
+[node name="GuideZ" type="MeshInstance3D" parent="."]
+mesh = SubResource("Guide")
+position = Vector3(-0.25, 0.13, 0.55)
+rotation_degrees = Vector3(0, 90, 0)

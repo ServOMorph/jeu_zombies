@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.38
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="Panel"]
+albedo_color = Color(0.290196, 0.333333, 0.380392, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Cyan"]
+albedo_color = Color(0.25098, 0.835294, 0.858824, 1)
+emission_enabled = true
+emission = Color(0.04, 0.18, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="Door"]
+material = SubResource("Steel")
+size = Vector3(4, 3.5, 0.35)
+
+[sub_resource type="BoxMesh" id="Reinforcement"]
+material = SubResource("Panel")
+size = Vector3(2.8, 0.28, 0.06)
+
+[sub_resource type="BoxMesh" id="Guide"]
+material = SubResource("Cyan")
+size = Vector3(0.12, 1.7, 0.04)
+
+[node name="NP_KMS_19_PorteLaboratoireExtraction" type="Node3D"]
+
+[node name="Panneau" type="MeshInstance3D" parent="."]
+mesh = SubResource("Door")
+position = Vector3(0, 1.75, 0)
+
+[node name="RenfortHaut" type="MeshInstance3D" parent="."]
+mesh = SubResource("Reinforcement")
+position = Vector3(0, 2.45, -0.2)
+
+[node name="RenfortBas" type="MeshInstance3D" parent="."]
+mesh = SubResource("Reinforcement")
+position = Vector3(0, 1.05, -0.2)
+
+[node name="GuideGauche" type="MeshInstance3D" parent="."]
+mesh = SubResource("Guide")
+position = Vector3(-1.4, 1.75, -0.22)
+
+[node name="GuideDroit" type="MeshInstance3D" parent="."]
+mesh = SubResource("Guide")
+position = Vector3(1.4, 1.75, -0.22)

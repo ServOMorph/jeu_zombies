@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.38
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="Panel"]
+albedo_color = Color(0.490196, 0.537255, 0.572549, 1)
+metallic = 0.18
+roughness = 0.66
+
+[sub_resource type="StandardMaterial3D" id="Cyan"]
+albedo_color = Color(0.25098, 0.835294, 0.858824, 1)
+emission_enabled = true
+emission = Color(0.04, 0.18, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="Door"]
+material = SubResource("Steel")
+size = Vector3(4, 3.5, 0.35)
+
+[sub_resource type="BoxMesh" id="Inset"]
+material = SubResource("Panel")
+size = Vector3(2.6, 1.6, 0.04)
+
+[sub_resource type="BoxMesh" id="Guide"]
+material = SubResource("Cyan")
+size = Vector3(1.8, 0.1, 0.04)
+
+[node name="NP_KMS_18_PorteEntrepotExtraction" type="Node3D"]
+
+[node name="Panneau" type="MeshInstance3D" parent="."]
+mesh = SubResource("Door")
+position = Vector3(0, 1.75, 0)
+
+[node name="Insert" type="MeshInstance3D" parent="."]
+mesh = SubResource("Inset")
+position = Vector3(0, 1.75, -0.195)
+
+[node name="GuideExtraction" type="MeshInstance3D" parent="."]
+mesh = SubResource("Guide")
+position = Vector3(0, 2.55, -0.22)

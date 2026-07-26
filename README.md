@@ -50,4 +50,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le premier contrôle manuel de la porte de sortie M3 a échoué ; son diagnostic reste à rejouer avant M4. La direction low-poly propre et optimisée est approuvée, un laboratoire Godot autonome permet de contrôler les assets hors du jeu, et `DESIGN/roadmap_design.md` place le kit modulaire structurel en phase 1.
+M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le premier contrôle manuel de la porte de sortie M3 a échoué ; son diagnostic reste à rejouer avant M4. La direction low-poly est approuvée ; les spécifications du kit modulaire structurel et ses 23 prototypes isolés sont disponibles dans `DESIGN/`, mais leur validation visuelle reste bloquée par M3 et aucun asset final n'est intégré.

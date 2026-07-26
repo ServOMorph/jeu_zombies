@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.18 — 2026-07-26
+
+### Ajouté
+
+- Kit modulaire structurel V1 documenté : conventions, inventaire fermé de 23 modules, fiches, planche et bordereau préparatoire.
+- Vingt-trois prototypes `.tscn` confinés à `DESIGN/` et copies chargeables dans le laboratoire autonome.
+
+### Modifié
+
+- Spécification et planche du kit approuvées ; la phase 1 reste bloquée sur sa validation visuelle tant que M3 est en attente.
+
 ## v0.17 — 2026-07-26
 
 ### Ajouté

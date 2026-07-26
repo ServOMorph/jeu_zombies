@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.32
+roughness = 0.66
+
+[sub_resource type="BoxMesh" id="Core"]
+material = SubResource("Steel")
+size = Vector3(0.3, 3.5, 0.3)
+
+[sub_resource type="BoxMesh" id="Cap"]
+material = SubResource("Steel")
+size = Vector3(0.46, 0.16, 0.46)
+
+[node name="NP_KMS_20_Pilier" type="Node3D"]
+
+[node name="Montant" type="MeshInstance3D" parent="."]
+mesh = SubResource("Core")
+position = Vector3(0, 1.75, 0)
+
+[node name="Embase" type="MeshInstance3D" parent="."]
+mesh = SubResource("Cap")
+position = Vector3(0, 0.08, 0)
+
+[node name="Tete" type="MeshInstance3D" parent="."]
+mesh = SubResource("Cap")
+position = Vector3(0, 3.42, 0)

@@ -19,6 +19,8 @@ supplémentaires, cosmétiques persistants et rendu réaliste détaillé.
 - Rendu cible low-poly propre et optimisé approuvé.
 - Laboratoire Godot autonome validé par l'utilisateur.
 - Flux obligatoire défini : `DESIGN → validation → assets/ → scènes Godot → tests`.
+- Conventions, inventaire, fiches et planche du kit modulaire structurel approuvés.
+- Vingt-trois prototypes `.tscn` du kit importables dans le laboratoire ; validation visuelle encore en attente.
 
 ## Règles de suivi
 
@@ -84,6 +86,12 @@ ni la navigation du blockout.
 - Comparer les trois ambiances lumineuses.
 - Vérifier absence de z-fighting, face manquante et fuite visible.
 - Produire le bordereau de lot et obtenir l'approbation utilisateur.
+
+### État au 2026-07-26
+
+- Spécifications, inventaire, fiches et planche approuvés par l'utilisateur.
+- Les 23 prototypes `.tscn` sont présents dans `kit_modulaire/prototypes/` et leurs copies sont importées sans erreur dans le laboratoire.
+- La validation visuelle FPS des quatre vignettes et les exports `.glb` restent bloqués tant que M3 figure dans `tests_manuels.md`.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

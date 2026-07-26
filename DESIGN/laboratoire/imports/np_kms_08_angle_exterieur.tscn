@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Concrete"]
+albedo_color = Color(0.290196, 0.333333, 0.380392, 1)
+roughness = 0.94
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.28
+roughness = 0.72
+
+[sub_resource type="BoxMesh" id="LongWall"]
+material = SubResource("Concrete")
+size = Vector3(2, 3.5, 0.2)
+
+[sub_resource type="BoxMesh" id="SideWall"]
+material = SubResource("Concrete")
+size = Vector3(0.2, 3.5, 2)
+
+[node name="NP_KMS_08_AngleExterieur" type="Node3D"]
+
+[node name="MurX" type="MeshInstance3D" parent="."]
+mesh = SubResource("LongWall")
+position = Vector3(-0.9, 1.75, 0)
+
+[node name="MurZ" type="MeshInstance3D" parent="."]
+mesh = SubResource("SideWall")
+position = Vector3(0, 1.75, -0.9)

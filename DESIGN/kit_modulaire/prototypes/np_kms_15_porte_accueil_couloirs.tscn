@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.066667, 0.094118, 0.12549, 1)
+metallic = 0.38
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="Panel"]
+albedo_color = Color(0.490196, 0.537255, 0.572549, 1)
+metallic = 0.18
+roughness = 0.66
+
+[sub_resource type="StandardMaterial3D" id="Amber"]
+albedo_color = Color(0.941176, 0.643137, 0.227451, 1)
+emission_enabled = true
+emission = Color(0.26, 0.1, 0.01, 1)
+
+[sub_resource type="BoxMesh" id="Door"]
+material = SubResource("Steel")
+size = Vector3(4, 3.5, 0.35)
+
+[sub_resource type="BoxMesh" id="Inset"]
+material = SubResource("Panel")
+size = Vector3(2.8, 1.85, 0.04)
+
+[sub_resource type="BoxMesh" id="Indicator"]
+material = SubResource("Amber")
+size = Vector3(0.12, 0.35, 0.04)
+
+[node name="NP_KMS_15_PorteAccueilCouloirs" type="Node3D"]
+
+[node name="Panneau" type="MeshInstance3D" parent="."]
+mesh = SubResource("Door")
+position = Vector3(0, 1.75, 0)
+
+[node name="Insert" type="MeshInstance3D" parent="."]
+mesh = SubResource("Inset")
+position = Vector3(0, 1.75, -0.195)
+
+[node name="VoyantAchat" type="MeshInstance3D" parent="."]
+mesh = SubResource("Indicator")
+position = Vector3(1.55, 2.5, -0.22)

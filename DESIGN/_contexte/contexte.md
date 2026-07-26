@@ -22,11 +22,11 @@ assets intégrés.
 
 ## État actuel
 
-- La bible et le rendu cible low-poly propre et optimisé sont approuvés.
-- Le laboratoire Godot autonome de prévisualisation FPS est testé et validé.
-- `roadmap_design.md` organise la production en dix phases ; la phase 1 est en cours.
-- Aucun asset externe ou final n'est intégré au projet jouable.
-- Le prochain lot concerne sols, murs, plafonds, portes et encadrements.
+- Les spécifications et la planche du kit modulaire structurel sont approuvées.
+- Vingt-trois prototypes `.tscn` sont produits dans `DESIGN/kit_modulaire/` et chargeables dans le laboratoire isolé.
+- La phase 1 reste en cours : la validation visuelle FPS et les exports `.glb` ne sont pas réalisés.
+- Le contrôle M3 en attente interdit toute nouvelle campagne manuelle DESIGN.
+- Aucun asset final n'est intégré au projet jouable.
 
 ## Contrats techniques à préserver
 
@@ -43,3 +43,4 @@ assets intégrés.
 - 2026-07-26 : La cible validée est une 3D low-poly sombre, propre, modulaire et optimisée, conforme à `bible_direction_artistique.md`.
 - 2026-07-26 : Les assets DESIGN sont contrôlés dans un laboratoire Godot autonome avant toute transmission au code.
 - 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.
+- 2026-07-26 : Le kit modulaire structurel V1 est approuvé comme spécification ; ses 23 prototypes restent confinés à DESIGN jusqu'à validation visuelle et export approuvé.
