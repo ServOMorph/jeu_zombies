@@ -529,13 +529,15 @@ Statut au 2026-07-26 : porte franchie. Premier contrôle manuel échoué (FPS mi
 
 ### M4.3 — Caisse d'armes aléatoire
 
-- [ ] Placer la caisse dans une zone avancée.
-- [ ] Dépenser les crédits une seule fois par activation.
-- [ ] Tirer un résultat dans une table de données contrôlée.
-- [ ] Afficher une séquence courte qui ne bloque pas le jeu.
-- [ ] Donner ou remplacer l'arme uniquement après confirmation d'interaction.
-- [ ] Gérer abandon, éloignement, mort et nouvelle vague sans duplication ni softlock.
-- [ ] Tester statistiquement que tous les résultats autorisés peuvent apparaître.
+- [x] Placer la caisse dans une zone avancée.
+- [x] Dépenser les crédits une seule fois par activation.
+- [x] Tirer un résultat dans une table de données contrôlée.
+- [x] Afficher une séquence courte qui ne bloque pas le jeu.
+- [x] Donner ou remplacer l'arme uniquement après confirmation d'interaction.
+- [x] Gérer abandon, éloignement, mort et nouvelle vague sans duplication ni softlock.
+- [x] Tester statistiquement que tous les résultats autorisés peuvent apparaître.
+
+Statut au 2026-07-26 : validé. Caisse placée dans l'Entrepôt médical (1 500 crédits), tirage parmi Frelon/Foudroyeur/Sentinelle/Œil-de-Nox/Broyeur avec exclusion de l'arme tenue, confirmation explicite après tirage. Preuves dans `_docs/validation_v1.md`.
 
 ### M4.4 — Station d'amélioration
 
@@ -862,4 +864,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M4.3 — Caisse d'armes aléatoire**.
+Réaliser **M4.4 — Station d'amélioration**.

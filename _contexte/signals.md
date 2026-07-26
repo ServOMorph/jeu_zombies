@@ -7,8 +7,8 @@
 ## Contexte chaud
 
 - Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 (8 188 Mio VRAM, seule carte graphique — le Ryzen 7 5700X n'a pas d'iGPU) à 60 Hz.
-- `python check.py` valide l'import, 18 suites Godot headless, le franchissement réel d'une porte par un zombie et l'export de contrôle `.pck`.
-- M4.1 et M4.2 sont validés : arsenal des six armes, achats muraux, silhouette/son distincts par arme.
+- `python check.py` valide l'import, 19 suites Godot headless, le franchissement réel d'une porte par un zombie et l'export de contrôle `.pck`.
+- M4.1, M4.2 et M4.3 sont validés : arsenal des six armes, achats muraux, caisse d'armes aléatoire dans l'Entrepôt médical.
 - Raccourcis de développement disponibles dans `dev_player_test.gd` (build debug uniquement) : `F1` cycle l'arsenal sur l'emplacement actif, `F2` crédite 5 000 crédits de test.
 - Le pool de zombies (`prewarm_pool_size = 8`) est inférieur à `wave_05.zombie_count` (12) et n'est jamais agrandi à la volée : cause possible de blocage à surveiller si le motif `POOL_EXHAUSTED` réapparaît.
 
@@ -17,29 +17,27 @@
 # Session du 2026-07-26
 
 ## Décisions prises
-- La divergence `F9` (vague 2 vs vague 5) est résolue en documentant le nouveau comportement dans `_docs/validation_v1.md` plutôt qu'en restaurant l'ancien.
-- M4.1 (six armes distinctes) et M4.2 (achats muraux) sont traités ensemble : le modèle/son différencié par arme, initialement proposé pour report, a été câblé dès M4.2 puisque les armes ne devenaient testables qu'à ce stade.
-- Répartition des six armes sur les cinq zones : pistolet à l'Accueil, Frelon aux Couloirs, Foudroyeur à l'Entrepôt, Sentinelle au Laboratoire, Œil-de-Nox et Broyeur à l'Extraction (deux présentoirs).
-- Achat mural : premier appui sur une arme sans emplacement libre arme une confirmation de remplacement (sans coût), second appui confirme et débite ; la perte de la cible réinitialise la confirmation.
+- La caisse d'armes aléatoire est placée dans l'Entrepôt médical (zone avancée moins chargée que le Laboratoire, qui accueillera la station d'amélioration M4.4 et la fabrication d'antidote M5.2), à 1 500 crédits.
+- Le tirage exclut le pistolet de départ (table de 5 armes : Frelon, Foudroyeur, Sentinelle, Œil-de-Nox, Broyeur) et exclut l'arme actuellement tenue tant qu'un autre résultat est possible (règle de production 3.1).
+- L'attribution de l'arme tirée exige une confirmation explicite après la séquence de tirage (1,4 s, non bloquante), y compris quand un emplacement est libre — plus strict que l'achat mural qui n'exige une confirmation qu'en cas d'emplacements pleins.
+- La perte de cible (éloignement du joueur) ne réinitialise pas un tirage ou une confirmation en attente, car les crédits sont déjà débités ; seule la remise à zéro de session (mort, nouvelle partie) les annule.
 
 ## Livrables produits ou modifiés
-- `weapons/weapon_definition.gd`, `weapons/weapon_controller.gd` : ajout plombs/dégâts bornés par tir, profil modèle/son, accesseurs de slot pour les achats.
-- `weapons/data/*.tres` (5 nouveaux + pistolet mis à jour) : Frelon, Foudroyeur, Sentinelle, Œil-de-Nox, Broyeur.
-- `world/wall_weapon_buy.gd`, `data/weapons/wall_weapon_buy_definition.gd` + 6 ressources `.tres` : système d'achat mural complet.
-- `world/helix_blockout.gd` : placement des six achats muraux par zone.
-- `systems/interactable.gd`, `systems/interaction_controller.gd` : hook `on_target_lost` générique.
-- `player/player_controller.gd`, `weapons/combat_audio_feedback.gd`, `world/dev_player_test.gd` : silhouette et son distincts par arme équipée ; raccourcis `F1`/`F2`.
-- `tests/test_weapon_arsenal.gd`, `tests/test_wall_weapon_buy.gd` : nouvelles suites (18 au total).
-- `_docs/validation_v1.md` : entrées M4.1, M4.2 et retest ciblé M3 documentées.
-- `roadmap_v1.md` : M4.1 et M4.2 cochés ; section 18 pointe vers M4.3.
+- `data/weapons/mystery_box_definition.gd` : ressource de définition (identifiant, prix, table d'armes).
+- `data/weapons/mystery_box_entrepot.tres` : instance de la caisse de l'Entrepôt (1 500 crédits, 5 armes).
+- `world/mystery_box.gd` : machine à états IDLE/SPINNING/AWAITING_CONFIRM, tirage pondéré-exclusion, confirmation, reset sur signal de session.
+- `world/helix_blockout.gd` : ajout de `MYSTERY_BOXES`, `mystery_box_definitions`, `_create_mystery_box`, `get_mystery_box`/`get_mystery_box_ids`.
+- `world/dev_player_test.tscn` : câblage de la ressource `mystery_box_entrepot.tres` dans le blockout.
+- `tests/test_mystery_box.gd` : nouvelle suite (wiring, débit unique, refus pendant tirage, confirmation, exclusion statistique, remise à zéro de session).
+- `_docs/validation_v1.md` : entrée M4.3 documentée.
+- `roadmap_v1.md` : M4.3 cochée ; section 18 pointe vers M4.4.
 
 ## Hypothèses validées / invalidées
-- VALIDE : arsenal, achats muraux, différenciation modèle/son — confirmés par test manuel utilisateur (raccourcis `F1`/`F2`).
-- INVALIDE : `set_slot` seul suffisait à équiper une arme achetée dans un emplacement libre -> pivot : `WallWeaponBuy` appelle explicitement `equip_slot` après l'achat.
+- VALIDE : placement, débit unique, séquence de tirage, confirmation et exclusion de l'arme tenue — confirmés par test manuel utilisateur.
 - EN ATTENTE : cause réelle de la chute FPS à 28 et du blocage du compteur en vague 5 (P3, inchangé).
 
 ## Prochaine étape exacte
-Démarrer M4.3 — Caisse d'armes aléatoire (placement en zone avancée, tirage contrôlé, confirmation d'interaction, tests statistiques des résultats).
+Démarrer M4.4 — Station d'amélioration (placement au Laboratoire de synthèse, une amélioration unique par arme, retour visuel/sonore, refus de seconde amélioration, conservation/perte lors du changement d'arme).
 
 ## Question bloquante pour la session suivante
 Aucune

@@ -604,3 +604,32 @@ Validation communiquée par l'utilisateur après correction du bug d'équipement
 ### Résultat
 
 Les critères de M4.2 sont satisfaits.
+
+## M4.3 — Caisse d'armes aléatoire
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `MysteryBoxDefinition` centralise l'identifiant, le prix (1 500 crédits) et la table contrôlée des armes tirables.
+- `MysteryBox` (extension d'`Interactable`) : débit unique à l'activation (`GameSession.try_purchase`), séquence de tirage non bloquante de 1,4 s via un `Timer`, confirmation explicite (`interact` après tirage) avant d'attribuer ou de remplacer l'arme du joueur.
+- Exclusion de l'arme actuellement tenue du tirage tant que d'autres résultats existent (règle de production 3.1).
+- `HelixBlockout` place la caisse dans l'Entrepôt médical (zone avancée) via `MYSTERY_BOXES` et `mystery_box_definitions`.
+- La perte de cible (éloignement) ne réinitialise pas une confirmation en attente puisque les crédits sont déjà débités ; la remise à zéro de session (mort, nouvelle partie) annule un tirage ou une confirmation en attente pour éviter tout état résiduel entre sessions.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite caisse aléatoire | `python test.py --test-file=res://tests/test_mystery_box.gd` | code 0, wiring, débit unique, refus pendant le tirage, confirmation, exclusion de l'arme tenue, couverture statistique des résultats et remise à zéro de session vérifiés |
+| Contrôle global | `python check.py` | code 0, 19 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur : placement dans l'Entrepôt médical, débit unique de 1 500 crédits, séquence de tirage, confirmation attribuant l'arme tirée.
+
+### Résultat
+
+Les critères de M4.3 sont satisfaits.

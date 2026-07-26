@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MysteryBoxDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/weapons/mystery_box_definition.gd" id="1_definition"]
+[ext_resource type="Resource" path="res://weapons/data/smg_frelon.tres" id="2_frelon"]
+[ext_resource type="Resource" path="res://weapons/data/shotgun_foudroyeur.tres" id="3_foudroyeur"]
+[ext_resource type="Resource" path="res://weapons/data/rifle_sentinelle.tres" id="4_sentinelle"]
+[ext_resource type="Resource" path="res://weapons/data/sniper_oeil_de_nox.tres" id="5_oeil_de_nox"]
+[ext_resource type="Resource" path="res://weapons/data/heavy_broyeur.tres" id="6_broyeur"]
+
+[resource]
+script = ExtResource("1_definition")
+box_id = "entrepot_caisse"
+price_credits = 1500
+possible_weapons = Array[Resource]([ExtResource("2_frelon"), ExtResource("3_foudroyeur"), ExtResource("4_sentinelle"), ExtResource("5_oeil_de_nox"), ExtResource("6_broyeur")])

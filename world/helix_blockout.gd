@@ -34,12 +34,18 @@ const WALL_BUYS: Array[Dictionary] = [
 	{"id": "extraction_broyeur", "zone": "extraction", "position": Vector3(5.0, 1.1, 4.0)},
 ]
 
+const MYSTERY_BOXES: Array[Dictionary] = [
+	{"id": "entrepot_caisse", "zone": "entrepot", "position": Vector3(-5.0, 1.1, -4.0)},
+]
+
 var _doors: Dictionary = {}
 var _wall_buys: Dictionary = {}
+var _mystery_boxes: Dictionary = {}
 var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
 @export var wall_buy_definitions: Array[Resource] = []
+@export var mystery_box_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -49,6 +55,8 @@ func _ready() -> void:
 		_create_door(connection)
 	for wall_buy: Dictionary in WALL_BUYS:
 		_create_wall_buy(wall_buy)
+	for mystery_box: Dictionary in MYSTERY_BOXES:
+		_create_mystery_box(mystery_box)
 	_create_navigation_regions()
 
 
@@ -73,6 +81,13 @@ static func get_wall_buy_ids() -> PackedStringArray:
 	return buy_ids
 
 
+static func get_mystery_box_ids() -> PackedStringArray:
+	var box_ids := PackedStringArray()
+	for mystery_box: Dictionary in MYSTERY_BOXES:
+		box_ids.append(str(mystery_box["id"]))
+	return box_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -91,6 +106,10 @@ func get_door(door_id: String) -> HelixDoor:
 
 func get_wall_buy(buy_id: String) -> WallWeaponBuy:
 	return _wall_buys.get(buy_id) as WallWeaponBuy
+
+
+func get_mystery_box(box_id: String) -> MysteryBox:
+	return _mystery_boxes.get(box_id) as MysteryBox
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -224,6 +243,31 @@ func _create_wall_buy(wall_buy: Dictionary) -> void:
 func _find_wall_buy_definition(buy_id: String) -> Resource:
 	for definition: Resource in wall_buy_definitions:
 		if definition != null and str(definition.get("buy_id")) == buy_id:
+			return definition
+	return null
+
+
+func _create_mystery_box(mystery_box: Dictionary) -> void:
+	var box_id := str(mystery_box["id"])
+	var definition := _find_mystery_box_definition(box_id)
+	if definition == null:
+		push_error("Définition de caisse aléatoire manquante : %s" % box_id)
+		return
+	var zone_root := _zone_roots.get(str(mystery_box["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour la caisse aléatoire : %s" % box_id)
+		return
+	var box := MysteryBox.new()
+	box.name = "CaisseAleatoire_%s" % box_id
+	box.configure(definition)
+	box.position = mystery_box["position"] as Vector3
+	zone_root.add_child(box)
+	_mystery_boxes[box_id] = box
+
+
+func _find_mystery_box_definition(box_id: String) -> Resource:
+	for definition: Resource in mystery_box_definitions:
+		if definition != null and str(definition.get("box_id")) == box_id:
 			return definition
 	return null
 

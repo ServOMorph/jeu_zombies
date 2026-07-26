@@ -8,11 +8,11 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- M0 à M4.2 sont validés ; `python check.py` valide l'import, 18 suites headless, le franchissement d'une porte et l'export `.pck`.
+- M0 à M4.3 sont validés ; `python check.py` valide l'import, 19 suites headless, le franchissement d'une porte et l'export `.pck`.
 - La porte de sortie M3 est franchie le 2026-07-26 après un retest ciblé ; la cause initiale de l'échec du premier contrôle (FPS min 28, compteur figé) reste non diagnostiquée (P3, rattachée à M7.2).
-- M4.1 (six armes, plombs/dégâts bornés, modèle/son distincts) et M4.2 (achats muraux dans les cinq zones, remplacement confirmé, rachat de munitions) sont validés, avec correction d'un bug d'équipement à l'achat trouvé en test manuel.
+- M4.1 (six armes), M4.2 (achats muraux) et M4.3 (caisse d'armes aléatoire dans l'Entrepôt médical, 1 500 crédits) sont validés.
 - Raccourcis de développement `F1` (cycle arsenal) et `F2` (crédit de test) ajoutés dans `dev_player_test.gd`.
-- M4.3 (caisse d'armes aléatoire) est le prochain travail à entamer.
+- M4.4 (station d'amélioration) est le prochain travail à entamer.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
 - 2026-07-25 : M2.3 est validée avec ressources de vagues, transitions déterministes, pause inter-vague et lancement de test isolé de la release.
@@ -24,3 +24,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-07-26 : Le premier contrôle manuel de la porte M3 échoue (FPS min 28, compteur zombies figé en vague 5) ; instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif) avant de rejouer le test.
 - 2026-07-26 : La porte de sortie M3 est validée après un retest ciblé (vague 5 forcée via `F9` modifié, zombies réduits à 1-2, FPS min 60, zéro frame sous 50) ; la cause initiale n'a pas été diagnostiquée, seulement non reproduite.
 - 2026-07-26 : M4.1 et M4.2 sont validés ensemble : arsenal de six armes avec plombs/dégâts bornés, achats muraux à confirmation de remplacement, modèle et son distincts par arme (traité en avance sur M6 car nécessaire pour tester les achats).
+- 2026-07-26 : M4.3 est validée : caisse d'armes aléatoire placée dans l'Entrepôt médical (1 500 crédits, 5 armes hors pistolet de départ), exclusion de l'arme tenue, confirmation explicite après tirage, remise à zéro sur reset de session.

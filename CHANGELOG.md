@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.23 — 2026-07-26
+
+### Ajouté
+
+- Caisse d'armes aléatoire (M4.3) : placée dans l'Entrepôt médical, débit unique de 1 500 crédits, séquence de tirage non bloquante, confirmation explicite avant d'attribuer ou remplacer l'arme, exclusion de l'arme actuellement tenue, table contrôlée de cinq armes.
+
 ## v0.22 — 2026-07-26
 
 ### Ajouté

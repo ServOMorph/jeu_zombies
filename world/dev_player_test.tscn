@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3]
+[gd_scene load_steps=44 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -28,6 +28,7 @@
 [ext_resource type="Resource" path="res://data/weapons/wall_buy_laboratoire_sentinelle.tres" id="26_wall_buy_laboratoire"]
 [ext_resource type="Resource" path="res://data/weapons/wall_buy_extraction_oeil_de_nox.tres" id="27_wall_buy_extraction_sniper"]
 [ext_resource type="Resource" path="res://data/weapons/wall_buy_extraction_broyeur.tres" id="28_wall_buy_extraction_heavy"]
+[ext_resource type="Resource" path="res://data/weapons/mystery_box_entrepot.tres" id="29_mystery_box_entrepot"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -111,6 +112,7 @@ shadow_enabled = true
 script = ExtResource("15_blockout")
 door_definitions = Array[Resource]([ExtResource("17_door_accueil"), ExtResource("18_door_entrepot"), ExtResource("19_door_laboratoire"), ExtResource("20_door_entrepot_extraction"), ExtResource("21_door_laboratoire_extraction")])
 wall_buy_definitions = Array[Resource]([ExtResource("23_wall_buy_accueil"), ExtResource("24_wall_buy_couloirs"), ExtResource("25_wall_buy_entrepot"), ExtResource("26_wall_buy_laboratoire"), ExtResource("27_wall_buy_extraction_sniper"), ExtResource("28_wall_buy_extraction_heavy")])
+mystery_box_definitions = Array[Resource]([ExtResource("29_mystery_box_entrepot")])
 
 [node name="InteractionTestTerminal" type="Area3D" parent="."]
 position = Vector3(2, 0.8, 2)
