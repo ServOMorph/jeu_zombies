@@ -201,7 +201,7 @@ lisible sans gore explicite.
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 5 — Arsenal et vue première personne `[TODO]`
+## Phase 5 — Arsenal et vue première personne `[FAIT]`
 
 ### But
 
@@ -231,6 +231,13 @@ Donner une identité originale et un rôle visuel clair aux six armes et au cout
 - Vérifier pivots, mains, chargeurs et points d'ancrage.
 - Tester versions murale, portée et améliorée dans le laboratoire.
 - Approuver chaque arme avant transmission au jalon M4.
+
+### État au 2026-07-26
+
+- Les sept silhouettes, leurs variantes améliorées, les bras FPS et les deux supports visuels sont produits dans `arsenal_premiere_personne/`.
+- Les 17 exports GLB sont contrôlés : 14 armes avec les ancrages `WeaponVisualRoot` et `MuzzleFlash`, et cinq clips démonstratifs par arme.
+- Le laboratoire expose le lot dans `F4`, section « Assets phase 5 — Arsenal FPS » ; les armes sont approuvées par l’utilisateur.
+- Le lot reste dans DESIGN jusqu’à une session d’intégration dédiée.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

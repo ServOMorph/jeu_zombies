@@ -2,35 +2,36 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Préparer la phase 5, arsenal et vue première personne. fait quand: les sept silhouettes, les fiches, les points d’ancrage et la validation laboratoire sont approuvés. réf: `roadmap_design.md` ; `workflow_graphique.md`
+- [P1|ouvert] Préparer la phase 6, achats, avantages et objets de quête. fait quand: les objets interactifs, leurs fiches, leurs états et la validation laboratoire sont approuvés. réf: `roadmap_design.md` ; `workflow_graphique.md`
 
 ## Contexte chaud
 
-- Le zombie standard de phase 4 est approuvé ; son GLB, son skin et ses huit clips restent dans `DESIGN/zombie_standard/` jusqu’à intégration dédiée.
-- Le laboratoire propose cet asset dans le menu `F4`, section « Assets phase 4 », avec téléportation face au socle.
+- Les 17 exports de phase 5 restent dans `DESIGN/arsenal_premiere_personne/` et leurs copies sont accessibles par `F4`, section « Assets phase 5 — Arsenal FPS ».
+- Les armes de phase 5 sont approuvées ; aucune ressource DESIGN n’est intégrée au projet jouable.
 
 ## Prochaine étape exacte
 
-Après `/compact` et confirmation écrite, démarrer la conception de l’arsenal et de la vue première personne de la phase 5.
+Après `/compact` et confirmation écrite, démarrer la conception des achats, avantages et objets de quête de la phase 6.
 
 ## Dernière session
 
 # Session du 2026-07-26
 
 ## Décisions prises
-- Clore la phase 4 après validation utilisateur du zombie standard.
-- Conserver le modèle, son skin et ses animations dans DESIGN jusqu’à une intégration de code dédiée.
+- Approuver les sept armes de phase 5 et leurs variantes améliorées.
+- Conserver les 17 exports de phase 5 dans DESIGN jusqu’à une intégration de code dédiée.
 
 ## Livrables produits ou modifiés
-- `zombie_standard/` : référence, fiches, contrat d’animation, export GLB skinné, contrôles et bordereau produits.
-- `laboratoire/` : import phase 4, entrée F4, téléportation de prévisualisation et validation automatisée ajoutés.
+- `arsenal_premiere_personne/` : planche, inventaire, fiches, contrat FPS, 17 exports GLB, contrôles et bordereau produits.
+- `laboratoire/` : imports phase 5, section F4 dédiée et validation de la présence des 17 entrées ajoutées.
 
 ## Hypothèses validées / invalidées
-- VALIDE : le zombie standard est lisible et approuvé dans le laboratoire.
-- VALIDE : le GLB contient 24 meshes, un skin et les huit clips requis.
+- VALIDE : les 14 exports d’armes possèdent les ancrages FPS et les cinq clips requis.
+- VALIDE : les sept silhouettes et leurs variantes améliorées sont approuvées dans le laboratoire.
+- INVALIDE : la découverte automatique suffisait pour les rendre visibles dans F4 ; le menu a dû être complété.
 
 ## Prochaine étape exacte
-Après `/compact` et confirmation écrite, démarrer la phase 5 — arsenal et vue première personne.
+Après `/compact` et confirmation écrite, démarrer la phase 6 — achats, avantages et objets de quête.
 
 ## Question bloquante pour la session suivante
 Aucune.

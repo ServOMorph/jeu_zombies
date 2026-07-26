@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.29 — 2026-07-26
+
+### Ajouté
+
+- Phase 5 DESIGN : arsenal FPS avec sept silhouettes, 14 variantes d'armes, bras scientifiques, support mural, silhouette de sol, 17 exports GLB, fiches et contrat d'intégration.
+- Laboratoire DESIGN : les 17 exports de phase 5 sont accessibles dans `F4`, section « Assets phase 5 — Arsenal FPS ».
+
+### Modifié
+
+- Phase 5 DESIGN approuvée par l'utilisateur ; le lot reste dans `DESIGN/` jusqu'à son intégration dédiée.
+
 ## v0.28 — 2026-07-26
 
 ### Ajouté

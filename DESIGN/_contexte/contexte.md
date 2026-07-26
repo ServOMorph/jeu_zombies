@@ -22,10 +22,10 @@ assets intégrés.
 
 ## État actuel
 
-- Les phases 1 à 4 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
-- La phase 4 fournit un zombie standard GLB skinné avec huit clips et un contrat `BodyVisual`.
-- Le laboratoire expose le zombie par `F4`, avec prévisualisation directe au socle.
-- La phase 5, arsenal et vue première personne, attend `/compact` et confirmation écrite.
+- Les phases 1 à 5 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
+- La phase 5 fournit 14 exports d’armes, les bras FPS et deux supports visuels, avec le contrat `WeaponVisualRoot` et `MuzzleFlash`.
+- Le laboratoire expose les assets de phase 5 par `F4`, section « Assets phase 5 — Arsenal FPS ».
+- La phase 6, achats, avantages et objets de quête, attend `/compact` et confirmation écrite.
 - Aucun asset DESIGN n’est intégré au projet jouable.
 
 ## Contrats techniques à préserver
@@ -37,7 +37,6 @@ assets intégrés.
 
 ## Décisions structurantes
 
-- 2026-07-26 : La première passe environnementale habille le blockout sans remplacer ses collisions ni sa navigation.
 - 2026-07-26 : La cible validée est une 3D low-poly sombre, propre, modulaire et optimisée, conforme à `bible_direction_artistique.md`.
 - 2026-07-26 : Les assets DESIGN sont contrôlés dans un laboratoire Godot autonome avant toute transmission au code.
 - 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.
@@ -47,3 +46,4 @@ assets intégrés.
 - 2026-07-26 : Les zones visuelles de phase 3 restent des surcouches GLB sans collision, navigation ni logique ; le blockout fonctionnel doit être préservé lors de leur intégration.
 - 2026-07-26 : La phase 3 est approuvée avec 13 accessoires et cinq zones visuelles ; les exports restent confinés à DESIGN jusqu’à une intégration dédiée.
 - 2026-07-26 : Le zombie standard V1 est approuvé avec un GLB skinné, huit clips et un raccord `BodyVisual` ; son intégration reste une session de code distincte.
+- 2026-07-26 : L’arsenal FPS V1 est approuvé avec sept silhouettes, 14 variantes d’arme, 17 exports GLB et les raccords `WeaponVisualRoot` et `MuzzleFlash` ; son intégration reste une session de code distincte.
