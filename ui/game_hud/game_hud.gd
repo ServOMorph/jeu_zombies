@@ -10,6 +10,7 @@ const HEALTH_BAR_BASE_WIDTH := 250.0
 @onready var stamina_bar: ProgressBar = %StaminaBar
 @onready var credits_label: Label = %CreditsLabel
 @onready var wave_label: Label = %WaveLabel
+@onready var objective_label: Label = %ObjectiveLabel
 @onready var weapon_label: Label = %WeaponLabel
 @onready var ammo_label: Label = %AmmoLabel
 @onready var interaction_prompt: Label = %InteractionPrompt
@@ -28,6 +29,8 @@ func _ready() -> void:
 	GameSession.purchase_failed.connect(_on_purchase_failed)
 	GameSession.session_started.connect(_on_session_changed)
 	GameSession.session_reset.connect(_on_session_changed)
+	QuestController.state_changed.connect(_on_quest_state_changed)
+	_set_text(objective_label, "Objectif : %s" % QuestController.get_objective_text())
 	set_process(false)
 
 
@@ -74,6 +77,7 @@ func _refresh_current_values() -> void:
 		])
 	if _interaction_controller != null:
 		_on_interaction_target_changed(_interaction_controller.get_current_target())
+	_set_text(objective_label, "Objectif : %s" % QuestController.get_objective_text())
 
 
 func _on_health_changed(current_health: float, maximum_health: float) -> void:
@@ -134,6 +138,10 @@ func _on_purchase_failed(item_name: String, cost: int, available_credits: int) -
 
 func _on_session_changed(_value: Variant = null) -> void:
 	_on_credits_changed(GameSession.get_credits(), 0)
+
+
+func _on_quest_state_changed(_previous_state: int, _new_state: int) -> void:
+	_set_text(objective_label, "Objectif : %s" % QuestController.get_objective_text())
 
 
 func _show_purchase_feedback(message: String, color: Color) -> void:

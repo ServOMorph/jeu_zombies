@@ -23,6 +23,7 @@ func run_tests() -> Array[String]:
 	var weapon_label := hud.get_node("WeaponPanel/WeaponLabel") as Label
 	var ammo_label := hud.get_node("WeaponPanel/AmmoLabel") as Label
 	var wave_label := hud.get_node("WaveLabel") as Label
+	var objective_label := hud.get_node("ObjectiveLabel") as Label
 	if not GameSession.start_new_session() or not GameSession.add_credits(150):
 		failures.append("le HUD doit pouvoir recevoir les crédits de session")
 	if credits_label.text != "Crédits : 150":
@@ -52,6 +53,11 @@ func run_tests() -> Array[String]:
 	world.wave_manager.wave_started.emit(2, world.wave_manager.wave_definitions[1])
 	if wave_label.text != "Vague : 2 / 5":
 		failures.append("le HUD doit afficher la vague réelle")
+	if objective_label.text != "Objectif : Survivre aux vagues et gagner des crédits.":
+		failures.append("le HUD doit afficher l'objectif de quête courant")
+	QuestController.try_advance(QuestController.State.OUVRIR_LES_ZONES)
+	if objective_label.text != "Objectif : Ouvrir les zones verrouillées du complexe.":
+		failures.append("le HUD doit suivre l'objectif de quête par signal")
 	var interactable = INTERACTABLE.new()
 	interactable.action_label = "Ouvrir"
 	interactable.display_name = "Porte nord"

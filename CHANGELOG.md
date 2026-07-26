@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.30 — 2026-07-26
+
+### Ajouté
+
+- Machine d'état de quête (M5.1) : autoload `QuestController` avec neuf états séquentiels (`SURVIVRE` à `VICTOIRE`), transitions refusées sans effet de bord si hors ordre, journalisation en développement, objectif français affiché et mis à jour dans le HUD.
+
+### Modifié
+
+- M4.5 (quatre avantages) validée après confirmation manuelle complète de l'utilisateur (rechargement, vitesse, régénération, refus de doublon, invite, flash/son) ; porte de sortie M4 franchie.
+
 ## v0.29 — 2026-07-26
 
 ### Ajouté

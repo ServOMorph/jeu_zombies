@@ -552,14 +552,16 @@ Statut au 2026-07-26 : validé. Station placée au Laboratoire de synthèse (1 2
 
 ### M4.5 — Quatre avantages
 
-- [ ] Implémenter Constitution renforcée : santé maximale accrue.
-- [ ] Implémenter Gestes précis : rechargement accéléré.
-- [ ] Implémenter Réflexes stimulés : déplacement plus rapide.
-- [ ] Implémenter Réparation cellulaire : régénération améliorée.
-- [ ] Placer un point d'achat lisible pour chaque avantage.
-- [ ] Appliquer chaque effet une seule fois et jusqu'à la fin de la partie.
-- [ ] Remettre tous les effets à zéro après victoire, défaite ou retour au menu.
-- [ ] Tester les combinaisons des quatre avantages.
+- [x] Implémenter Constitution renforcée : santé maximale accrue.
+- [x] Implémenter Gestes précis : rechargement accéléré.
+- [x] Implémenter Réflexes stimulés : déplacement plus rapide.
+- [x] Implémenter Réparation cellulaire : régénération améliorée.
+- [x] Placer un point d'achat lisible pour chaque avantage.
+- [x] Appliquer chaque effet une seule fois et jusqu'à la fin de la partie.
+- [x] Remettre tous les effets à zéro après victoire, défaite ou retour au menu.
+- [x] Tester les combinaisons des quatre avantages.
+
+Statut au 2026-07-26 : validé. Quatre stations dans l'Accueil sécurisé (1 000 crédits chacune), effets appliqués via `PlayerPerks` (achat unique, durable). Preuves dans `_docs/validation_v1.md`.
 
 **Porte de sortie M4 :**
 

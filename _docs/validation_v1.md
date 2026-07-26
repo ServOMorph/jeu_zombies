@@ -663,3 +663,64 @@ Validation communiquée par l'utilisateur : dégâts nettement supérieurs aprè
 ### Résultat
 
 Les critères de M4.4 sont satisfaits.
+
+## M4.5 — Quatre avantages
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `data/perks/perk_definition.gd` + 4 ressources `.tres` centralisent identifiant, prix (1 000 crédits chacun) et multiplicateur par avantage.
+- `player/player_perks.gd` : suivi des avantages possédés, achat unique par avantage, calcul des multiplicateurs par effet.
+- `player/player_controller.gd` : application des effets (santé max ×1,5 + soin proportionnel, régénération ×1,75, vitesse ×1,2) via le signal `perk_purchased`.
+- `weapons/weapon_controller.gd` : `reload_speed_multiplier` (×0,65 sur la durée) appliqué au rechargement.
+- `world/perk_station.gd` : interactable dédiée (flash, son, refus sans débit si déjà possédé, invite « Déjà acheté : ... »).
+- Quatre stations câblées dans l'Accueil sécurisé (`world/helix_blockout.gd`, `world/dev_player_test.tscn`).
+- `ui/game_hud/game_hud.gd` : largeur de la barre de vie proportionnelle à `max_health` (au lieu d'un pourcentage fixe, invisible à pleine vie) ; `StaminaBar` isolée de l'élargissement du conteneur `VitalsPanel`.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suites avantages/HUD | `python test.py --test-file=res://tests/test_player_perks.gd` et `res://tests/test_perk_station.gd` | code 0, achat, unicité, multiplicateurs et refus de doublon couverts |
+| Contrôle global | `python check.py` | code 0, 23 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Campagne complète de `tests_manuels.md` validée par l'utilisateur : invite nom/prix, refus sans crédits suffisants, Constitution renforcée (santé + soin), Gestes précis (rechargement accéléré), Réflexes stimulés (déplacement plus rapide), Réparation cellulaire (régénération accélérée), refus d'un second achat du même avantage sans débit, flash et son perceptibles à chaque achat réussi.
+
+### Résultat
+
+Les critères de M4.5 et la porte de sortie M4 sont satisfaits.
+
+## M5.1 — Machine d'état de quête
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : implémenté, testé automatiquement, validation manuelle en attente
+
+### Tranche implémentée
+
+- `core/quest_controller.gd`, nouvel autoload `QuestController`, centralise les neuf états de quête (`SURVIVRE` à `VICTOIRE`) et leur ordre linéaire strict.
+- `try_advance(target_state)` n'accepte que la transition vers l'état immédiatement suivant dans l'ordre défini ; toute autre cible (saut, retour en arrière, état courant) est refusée sans modifier la progression ni émettre de signal.
+- Chaque transition acceptée journalise `NOX_PROTOCOL_QUEST_TRANSITION <avant> -> <après>` via `print()` uniquement en build de développement (`OS.is_debug_build()`).
+- `get_objective_text()` retourne un texte français court et exact par état ; le signal `state_changed` permet aux systèmes d'interface de suivre l'objectif courant.
+- La remise à zéro de session (`GameSession.session_reset`) ramène la quête à `SURVIVRE`.
+- `ui/game_hud/game_hud.*` affiche l'objectif courant (`ObjectiveLabel`) et le met à jour par signal, sans réécriture inutile.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite quête ciblée | `python test.py --test-file=res://tests/test_quest_controller.gd` | code 0, ordre complet des transitions valides, refus des sauts/retours/état courant, remise à zéro et textes d'objectif vérifiés |
+| Contrôle global | `python check.py` | code 0, 23 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+En attente : affichage de l'objectif initial dans le HUD en jeu (voir `tests_manuels.md`). Seul l'état `SURVIVRE` est actuellement atteignable en jeu, les déclencheurs des étapes suivantes étant prévus par M5.2 à M5.4.
+
+### Résultat
+
+Les critères automatisables de M5.1 sont satisfaits. La case correspondante de `roadmap_v1.md` reste à cocher jusqu'à la validation manuelle de l'affichage HUD.

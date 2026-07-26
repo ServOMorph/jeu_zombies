@@ -8,9 +8,8 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- M0 à M4.4 sont validés ; `python check.py` valide l'import, 23 suites headless, le franchissement d'une porte et l'export `.pck`.
-- M4.5 (quatre avantages) est implémentée et testée automatiquement (stations, effets, HUD) mais en attente de validation manuelle complète ; seule la barre de vie est confirmée par l'utilisateur.
-- Deux bugs d'affichage HUD corrigés en session : barre de vie à pourcentage fixe (invisible à pleine vie) et étirement en cascade de la barre d'endurance via le conteneur `VitalsPanel`.
+- M0 à M4.5 sont validés (porte de sortie M4 franchie) ; `python check.py` valide l'import, 23 suites headless, le franchissement d'une porte et l'export `.pck`.
+- M5.1 (machine d'état de quête, `QuestController`) est implémentée et testée automatiquement (neuf états, transitions séquentielles, objectif HUD) mais en attente de validation manuelle de l'affichage HUD.
 - La porte de sortie M3 est franchie le 2026-07-26 après un retest ciblé ; la cause initiale de l'échec du premier contrôle (FPS min 28, compteur figé) reste non diagnostiquée (P3, rattachée à M7.2).
 - Raccourcis de développement `F1` (cycle arsenal) et `F2` (crédit de test) disponibles dans `dev_player_test.gd`.
 
@@ -23,4 +22,5 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-07-26 : M4.1 et M4.2 sont validés ensemble : arsenal de six armes avec plombs/dégâts bornés, achats muraux à confirmation de remplacement, modèle et son distincts par arme (traité en avance sur M6 car nécessaire pour tester les achats).
 - 2026-07-26 : M4.3 est validée : caisse d'armes aléatoire placée dans l'Entrepôt médical (1 500 crédits, 5 armes hors pistolet de départ), exclusion de l'arme tenue, confirmation explicite après tirage, remise à zéro sur reset de session.
 - 2026-07-26 : M4.4 est validée : station d'amélioration au Laboratoire de synthèse (1 200 crédits, ×1,35 dégâts), amélioration stockée par emplacement d'arme (perdue au remplacement, conservée au changement d'emplacement actif), refus sans débit si déjà améliorée ou couteau actif.
-- 2026-07-26 : M4.5 implémentée (non validée manuellement) : quatre avantages dans l'Accueil sécurisé à 1 000 crédits chacun (santé ×1,5, rechargement ×0,65, vitesse ×1,2, régénération ×1,75), achat unique par avantage via `PlayerPerks`.
+- 2026-07-26 : M4.5 validée : quatre avantages dans l'Accueil sécurisé à 1 000 crédits chacun (santé ×1,5, rechargement ×0,65, vitesse ×1,2, régénération ×1,75), achat unique par avantage via `PlayerPerks`. Porte de sortie M4 franchie.
+- 2026-07-26 : M5.1 implémentée (non validée manuellement) : `QuestController` gère neuf états de quête séquentiels (SURVIVRE à VICTOIRE), refuse toute transition hors ordre sans effet de bord, journalise en dev, affiche l'objectif dans le HUD.
