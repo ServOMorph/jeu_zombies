@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1, M2.1, M2.2 et M2.3 sont validés. `python check.py` contrôle l'import, 11 suites headless et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. Les vagues sont configurées par ressources, attendent l'élimination des zombies vivants puis enchaînent après une pause. La prochaine tâche est M2.4 : première boucle de survie.
+M0, M1 et M2 sont validés. `python check.py` contrôle l'import, 13 suites headless et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. La boucle de survie couvre cinq vagues, la défaite et le redémarrage. Le blockout des cinq zones est présent ; la prochaine étape est de finaliser les états navigables des portes de M3.1.

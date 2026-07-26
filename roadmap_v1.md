@@ -425,10 +425,10 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 
 ### M2.4 — Première boucle de survie
 
-- [ ] Relier dégâts joueur, mort, zombies, vagues et redémarrage.
-- [ ] Afficher temporairement santé, endurance et numéro de vague.
-- [ ] Ajouter une pause inter-vague assez longue pour tester les futures interactions.
-- [ ] Lancer un test de charge avec le plafond de zombies actifs.
+- [x] Relier dégâts joueur, mort, zombies, vagues et redémarrage.
+- [x] Afficher temporairement santé, endurance et numéro de vague.
+- [x] Ajouter une pause inter-vague assez longue pour tester les futures interactions.
+- [x] Lancer un test de charge avec le plafond de zombies actifs.
 
 **Porte de sortie M2 :**
 

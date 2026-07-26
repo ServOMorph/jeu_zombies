@@ -62,6 +62,17 @@ func get_intermission_remaining_seconds() -> float:
 	return _intermission_remaining_seconds
 
 
+func stop() -> void:
+	_remaining_to_spawn = 0
+	_spawn_remaining_seconds = 0.0
+	_intermission_remaining_seconds = 0.0
+	_target = null
+	_wave_zombies.clear()
+	_last_reported_remaining = -1
+	_set_state(State.IDLE)
+	_report_remaining_if_changed()
+
+
 func _start_wave_at_index(wave_index: int, target: Node3D) -> bool:
 	if zombie_spawner == null or not is_valid_wave_index(wave_index, wave_definitions.size()):
 		return false

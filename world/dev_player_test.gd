@@ -4,6 +4,7 @@ const STARTUP_SCENE := "res://ui/dev_startup/dev_startup.tscn"
 const HUD_UPDATE_INTERVAL_SECONDS := 0.1
 const IMPACT_POOL_SIZE := 12
 const IMPACT_LIFETIME_SECONDS := 0.12
+const STRESS_TEST_WAVE_NUMBER := 5
 
 @onready var player = $Player
 @onready var vitals_label: Label = %VitalsLabel
@@ -13,6 +14,8 @@ const IMPACT_LIFETIME_SECONDS := 0.12
 @onready var zombie_spawner = $ZombieSpawner
 @onready var wave_manager: WaveManager = $WaveManager
 @onready var spawn_label: Label = %SpawnLabel
+@onready var survival_label: Label = %SurvivalLabel
+@onready var defeat_label: Label = %DefeatLabel
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
@@ -38,6 +41,11 @@ func _ready() -> void:
 	wave_manager.wave_started.connect(_on_wave_started)
 	wave_manager.remaining_zombies_changed.connect(_on_wave_remaining_changed)
 	wave_manager.wave_finished.connect(_on_wave_finished)
+	wave_manager.waves_completed.connect(_on_waves_completed)
+	GameSession.session_ended.connect(_on_session_ended)
+	if GameSession.state == GameSession.State.MENU:
+		GameSession.start_new_session()
+	call_deferred("_start_survival_loop")
 	print("NOX_PROTOCOL_DEV_PLAYER_TEST_READY")
 
 
@@ -104,6 +112,14 @@ func _refresh_hud() -> void:
 		target.health,
 		target.max_health,
 	]
+	var wave_status := _get_wave_status_text()
+	survival_label.text = "Vague : %d / %d\n%s\nZombies : %d / %d" % [
+		wave_manager.current_wave_number,
+		wave_manager.wave_definitions.size(),
+		wave_status,
+		zombie_spawner.get_active_zombie_count(),
+		zombie_spawner.max_active_zombies,
+	]
 
 
 func _on_shot_fired(_weapon_name: String) -> void:
@@ -129,6 +145,10 @@ func _on_impact_registered(position: Vector3, normal: Vector3) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ENTER and GameSession.state == GameSession.State.DEFEAT:
+		_restart_survival_session()
+		get_viewport().set_input_as_handled()
+		return
 	if (
 		event is InputEventKey
 		and event.pressed
@@ -171,6 +191,14 @@ func _input(event: InputEvent) -> void:
 	):
 		wave_manager.start_wave_for_test(2, player)
 		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F10
+	):
+		_start_stress_test()
+		get_viewport().set_input_as_handled()
 
 
 func _on_zombie_spawned(_zombie: Node3D, spawn_point: Node3D, used_fallback: bool) -> void:
@@ -202,6 +230,57 @@ func _on_wave_remaining_changed(remaining_count: int) -> void:
 		wave_manager.current_wave_number,
 		remaining_count,
 	]
+
+
+func _on_waves_completed() -> void:
+	spawn_label.text = "Cinq vagues terminées\nSurvie validée"
+
+
+func _on_session_ended(final_state: int) -> void:
+	if final_state != GameSession.State.DEFEAT:
+		return
+	wave_manager.stop()
+	zombie_spawner.deactivate_all()
+	defeat_label.visible = true
+	spawn_label.text = "Défaite\nEntrée : recommencer une session neuve"
+
+
+func _start_survival_loop() -> void:
+	if GameSession.state != GameSession.State.PLAYING:
+		return
+	wave_manager.start_next_wave(player)
+
+
+func _restart_survival_session() -> void:
+	if not GameSession.start_new_session():
+		return
+	get_tree().reload_current_scene()
+
+
+func _start_stress_test() -> void:
+	if not OS.is_debug_build() or GameSession.state != GameSession.State.PLAYING:
+		return
+	wave_manager.stop()
+	zombie_spawner.deactivate_all()
+	if wave_manager.start_wave_for_test(STRESS_TEST_WAVE_NUMBER, player):
+		spawn_label.text = "Test de charge : vague %d\nPlafond : %d zombies" % [
+			STRESS_TEST_WAVE_NUMBER,
+			zombie_spawner.max_active_zombies,
+		]
+
+
+func _get_wave_status_text() -> String:
+	match wave_manager.state:
+		WaveManager.State.SPAWNING:
+			return "Apparitions en cours"
+		WaveManager.State.WAITING_FOR_CLEAR:
+			return "Éliminez les derniers zombies"
+		WaveManager.State.INTERMISSION:
+			return "Pause : %.1f s" % wave_manager.get_intermission_remaining_seconds()
+		WaveManager.State.COMPLETED:
+			return "Survie terminée"
+		_:
+			return "En attente"
 
 
 func _on_wave_finished(wave_number: int) -> void:

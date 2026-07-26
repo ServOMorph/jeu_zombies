@@ -349,3 +349,62 @@ Validation communiquée par l'utilisateur : le compteur décroît, la vague ne f
 ### Résultat
 
 Les critères de M2.3 sont satisfaits.
+
+## M2.4 — Première boucle de survie
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- La scène de test démarre automatiquement une session et la première vague ; cinq ressources de vague sont configurées.
+- Le HUD temporaire affiche santé, endurance, vague, état de vague et zombies actifs.
+- La mort arrête le gestionnaire de vagues, désactive les zombies actifs et affiche la défaite. `Entrée` redémarre une session neuve à la vague 1.
+- `F10`, réservé au build de développement, lance la vague 5 pour le test de charge au plafond de huit zombies.
+- Le pistolet de départ a 132 tirs disponibles ; le test calcule qu'il couvre les 76 tirs théoriques nécessaires aux cinq vagues.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Test de boucle ciblé | `python test.py --test-file=res://tests/test_survival_loop.gd` | code 0, cinq vagues, pause, plafond préalloué, remise à zéro et munitions vérifiés |
+| Contrôle global | `python check.py` | code 0, import, 12 suites headless et export de contrôle réussis |
+| Chargement scène de survie | `python run.py --headless res://world/dev_player_test.tscn --quit-after 8` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+
+### Contrôle manuel
+
+Les cinq vagues, les pauses inter-vagues, la défaite et le redémarrage ont été validés. Après `F10`, avec VSync activée et huit zombies actifs, l'overlay a relevé : 60 FPS moyens et minimums, pire frame à 16,67 ms, zéro frame sous 50 FPS, séquence sous le seuil nulle et mémoire à 61,1 Mio.
+
+### Résultat
+
+Les critères de M2.4 et la porte de sortie M2 sont satisfaits sur la scène de test actuelle.
+
+## M3.1 — Blockout complet d'Helix-9
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : partiel
+
+### Tranche implémentée
+
+- Les cinq zones prévues sont matérialisées : Accueil sécurisé, Couloirs de confinement, Entrepôt médical, Laboratoire de synthèse et Salle d'extraction.
+- Les zones sont reliées par des parcours lisibles, des cadres de porte visuels et une boucle passant par l'Entrepôt et le Laboratoire avant l'Extraction.
+- Chaque zone expose une décision de dépense future et possède au moins un point d'apparition ; les portes restent ouvertes et non interactives.
+- Le sol, les collisions et le maillage de navigation couvrent l'intégralité de l'Extraction.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Test de structure ciblé | `python test.py --test-file=res://tests/test_helix_blockout.gd` | code 0, cinq zones, points d'apparition et couverture du sol vérifiés |
+| Contrôle global | `python check.py` | code 0, import, 13 suites headless et export de contrôle réussis |
+| Chargement de la scène | `python run.py --headless res://world/dev_player_test.tscn --quit-after 5` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+
+### Contrôle manuel
+
+Les cinq zones sont accessibles et lisibles. Le joueur ne reste pas coincé, les zombies atteignent le joueur dans les zones vérifiées et la Salle d'extraction est accessible après extension du sol et de la navigation.
+
+### Résultat
+
+Le blockout, les parcours ouverts et les points d'apparition sont validés. M3.1 reste ouverte : les portes n'ont pas encore d'état ouvert/fermé à vérifier avec la navigation ; cette partie doit être ajoutée avant de valider la tâche.

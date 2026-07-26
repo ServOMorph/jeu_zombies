@@ -68,6 +68,13 @@ func last_spawn_used_fallback() -> bool:
 	return _last_spawn_used_fallback
 
 
+func deactivate_all() -> void:
+	for zombie: ZombieStandard in _pooled_zombies:
+		if is_instance_valid(zombie):
+			zombie.deactivate()
+	_active_zombies.clear()
+
+
 func _find_spawn_point(zone_id: String, target: Node3D) -> Node3D:
 	_last_spawn_used_fallback = false
 	var primary_points: Array[Node3D] = []

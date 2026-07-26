@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_definition")
 weapon_name = "Pistolet de secours"
-damage = 25.0
+damage = 100.0
 fire_interval_seconds = 0.3
 range_meters = 60.0
 spread_degrees = 1.5
 magazine_capacity = 12
-reserve_capacity = 48
+reserve_capacity = 120
 reload_duration_seconds = 1.2

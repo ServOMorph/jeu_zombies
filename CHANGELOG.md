@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.10 — 2026-07-26
+
+### Ajouté
+
+- Boucle de survie complète : cinq vagues, HUD temporaire, défaite, redémarrage et test de charge à huit zombies.
+- Blockout initial d'Helix-9 : cinq zones, points d'apparition, parcours, portes visuelles et test structurel.
+
+### Corrigé
+
+- Sol, collision et navigation étendus pour rendre la Salle d'extraction accessible.
+
+### Modifié
+
+- Pistolet de test ajusté pour fournir les munitions nécessaires aux cinq vagues.
+- M2.4 validée ; M3.1 reste ouverte jusqu'à l'implémentation des états navigables des portes.
+
 ## v0.9 — 2026-07-25
 
 ### Ajouté
