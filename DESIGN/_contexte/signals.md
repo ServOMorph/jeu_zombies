@@ -2,36 +2,36 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Démarrer la phase 3, identité des cinq zones. fait quand: une vignette approuvée existe pour chaque zone et respecte les lignes de tir. réf: `roadmap_design.md` ; `workflow_graphique.md`
+- [P1|ouvert] Compléter la phase 3, identité des cinq zones. fait quand: chariot médical, console et observation de synthèse sont produits, documentés et validés dans le laboratoire. réf: `roadmap_design.md` ; `identites_zones/phase3_identites_zones.md`
 
 ## Contexte chaud
 
-- Les phases 1 et 2 sont validées ; leurs lots restent dans `DESIGN/` et sont transmissibles à une session d'intégration dédiée.
-- Le laboratoire comprend une cinquième vignette pour les matériaux et la signalétique, vérifiée sous trois ambiances par l'utilisateur.
-- Aucun asset final n'est intégré au jeu ; le flux reste `DESIGN → validation → assets/ → scènes Godot → tests`.
+- Les zones visuelles complètes et les dix accessoires déjà produits sont approuvés par l'utilisateur ; leurs exports restent dans `DESIGN/`.
+- La phase 3 n'est pas terminée : le livrable exige encore un chariot médical ainsi qu'une console et une observation de synthèse explicites.
+- Le laboratoire dispose d'un menu `F4`, de cinq vignettes de zone et de cinq zones complètes de validation ; aucune ressource n'est intégrée au jeu.
 
 ## Prochaine étape exacte
 
-Après `/compact` et confirmation écrite, démarrer la phase 3 sans intégrer les lots validés dans le projet jouable.
+Après `/compact` et confirmation écrite, compléter les trois accessoires manquants de la phase 3, les ajouter au laboratoire et les faire valider.
 
 ## Dernière session
 
 # Session du 2026-07-26
 
 ## Décisions prises
-- Valider la palette commune, les neuf matériaux et la signalétique fonctionnelle V1.
-- Conserver les ressources dans `DESIGN/` et ne transmettre le lot qu'à une session d'intégration dédiée.
+- Valider les cinq références, les fiches d'intégration et les cinq zones visuelles complètes de la phase 3.
+- Conserver les exports de zone comme surcouches visuelles sans collision, navigation ni logique de jeu.
 
 ## Livrables produits ou modifiés
-- `materiaux_signaletique/` : neuf matériaux, planche SVG, fiches, rapport et bordereau validés.
-- `laboratoire/` : vignette phase 2 et copies de validation ajoutées.
+- `identites_zones/` : dix accessoires GLB, cinq zones GLB, fiches, inventaire, contrat et tests structurels créés.
+- `laboratoire/` : menu `F4`, copies de validation, vignettes et zones FPS parcourables ajoutés.
 
 ## Hypothèses validées / invalidées
-- VALIDE : les matériaux et la signalétique restent lisibles dans les trois ambiances du laboratoire.
-- VALIDE : les états de porte sont lisibles sans dépendre uniquement de la couleur.
+- VALIDE : les cinq zones sont parcourables et approuvées dans le laboratoire.
+- INVALIDE : la phase 3 est complète. Il manque le chariot médical, la console et l'observation de synthèse exigés par la roadmap.
 
 ## Prochaine étape exacte
-Après `/compact` et confirmation écrite, produire les identités visuelles des cinq zones de la phase 3.
+Après `/compact` et confirmation écrite, compléter puis valider les trois accessoires manquants de la phase 3.
 
 ## Question bloquante pour la session suivante
 Aucune.

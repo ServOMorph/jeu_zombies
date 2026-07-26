@@ -2,6 +2,8 @@ extends Node3D
 
 const IMPORTS_PATH := "res://imports"
 const PHASE2_MATERIALS_PATH := "res://imports/phase2"
+const PHASE3_ASSETS_PATH := "res://imports/phase3"
+const PHASE3_ZONES_PATH := "res://imports/phase3/zones"
 const ALLOWED_EXTENSIONS := ["glb", "gltf", "tscn"]
 const CYAN := Color("#40d5db")
 const AMBER := Color("#f0a43a")
@@ -27,6 +29,7 @@ var _help_visible := true
 var _help_background: ColorRect
 var _help_label: Label
 var _status_label: Label
+var _selection_menu: PanelContainer
 
 
 func _ready() -> void:
@@ -39,6 +42,7 @@ func _ready() -> void:
 	_create_interface()
 	_discover_assets()
 	_create_validation_vignettes()
+	_create_selection_menu()
 	print("NOX_PROTOCOL_DESIGN_LAB_READY")
 	print("NOX_PROTOCOL_VALIDATION_VIGNETTES_READY")
 
@@ -48,6 +52,8 @@ func _process(_delta: float) -> void:
 		_help_visible = not _help_visible
 		_help_background.visible = _help_visible
 		_help_label.visible = _help_visible
+	if Input.is_action_just_pressed("lab_menu"):
+		_set_selection_menu_visible(not _selection_menu.visible)
 	if Input.is_action_just_pressed("lab_light"):
 		_light_mode = (_light_mode + 1) % 3
 		_apply_light_mode()
@@ -73,6 +79,7 @@ func _register_inputs() -> void:
 	_bind_keys("lab_sprint", [KEY_SHIFT])
 	_bind_keys("lab_cursor", [KEY_ESCAPE])
 	_bind_keys("lab_help", [KEY_F1])
+	_bind_keys("lab_menu", [KEY_F4])
 	_bind_keys("lab_light", [KEY_F2])
 	_bind_keys("lab_asset_previous", [KEY_PAGEUP])
 	_bind_keys("lab_asset_next", [KEY_PAGEDOWN])
@@ -371,7 +378,7 @@ func _create_interface() -> void:
 
 	_help_background = ColorRect.new()
 	_help_background.position = Vector2(16.0, 16.0)
-	_help_background.size = Vector2(470.0, 190.0)
+	_help_background.size = Vector2(520.0, 210.0)
 	_help_background.color = Color(0.035, 0.055, 0.075, 0.9)
 	canvas.add_child(_help_background)
 
@@ -382,8 +389,9 @@ func _create_interface() -> void:
 		+ "ZQSD / WASD / flèches : déplacement   Souris : regard\n"
 		+ "Maj : course   Échap : libérer/capturer la souris\n"
 		+ "F2 : ambiance froide / neutre / alerte\n"
+		+ "F3 : vignette suivante   F4 : menu de sélection\n"
 		+ "Page préc./suiv. : changer d'asset   R : rotation 45°\n"
-		+ "F3 : vignette assemblée suivante   - / + : échelle de prévisualisation"
+		+ "- / + : échelle de prévisualisation"
 	)
 	_help_label.add_theme_color_override("font_color", Color("#d7e0e2"))
 	_help_label.add_theme_color_override("font_shadow_color", Color.BLACK)
@@ -412,6 +420,109 @@ func _create_interface() -> void:
 	canvas.add_child(crosshair)
 
 
+func _create_selection_menu() -> void:
+	var menu_canvas := CanvasLayer.new()
+	menu_canvas.name = "InterfaceSelection"
+	add_child(menu_canvas)
+	_selection_menu = PanelContainer.new()
+	_selection_menu.name = "MenuSelection"
+	_selection_menu.position = Vector2(16.0, 240.0)
+	_selection_menu.size = Vector2(430.0, 610.0)
+	_selection_menu.visible = false
+	menu_canvas.add_child(_selection_menu)
+
+	var scroll := ScrollContainer.new()
+	_selection_menu.add_child(scroll)
+	var entries := VBoxContainer.new()
+	entries.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(entries)
+	_add_menu_title(entries, "SÉLECTION DU LABORATOIRE")
+	_add_menu_button(entries, "Architecture témoin", Callable(self, "_select_architecture"))
+	_add_menu_title(entries, "Vignettes existantes")
+	for entry: Dictionary in [
+		{"label": "Couloir", "index": 0},
+		{"label": "Angle", "index": 1},
+		{"label": "Petite salle", "index": 2},
+		{"label": "Porte", "index": 3},
+		{"label": "Matériaux et signalétique", "index": 4},
+	]:
+		_add_menu_button(entries, entry.label, Callable(self, "_select_validation_vignette").bind(entry.index))
+	_add_menu_title(entries, "Vignettes de zones phase 3")
+	for entry: Dictionary in [
+		{"label": "Accueil sécurisé", "index": 5},
+		{"label": "Couloirs de confinement", "index": 6},
+		{"label": "Entrepôt médical", "index": 7},
+		{"label": "Laboratoire de synthèse", "index": 8},
+		{"label": "Salle d'extraction", "index": 9},
+	]:
+		_add_menu_button(entries, entry.label, Callable(self, "_select_validation_vignette").bind(entry.index))
+	_add_menu_title(entries, "Zones complètes phase 3")
+	for entry: Dictionary in [
+		{"label": "Zone complète — Accueil", "index": 10},
+		{"label": "Zone complète — Confinement", "index": 11},
+		{"label": "Zone complète — Entrepôt médical", "index": 12},
+		{"label": "Zone complète — Synthèse", "index": 13},
+		{"label": "Zone complète — Extraction", "index": 14},
+	]:
+		_add_menu_button(entries, entry.label, Callable(self, "_select_validation_vignette").bind(entry.index))
+	_add_menu_title(entries, "Assets phase 3")
+	for asset_path: String in _asset_paths:
+		if asset_path.begins_with(PHASE3_ASSETS_PATH):
+			_add_menu_button(entries, asset_path.get_file(), Callable(self, "_select_asset_path").bind(asset_path))
+
+
+func _add_menu_title(parent: VBoxContainer, title: String) -> void:
+	var label := Label.new()
+	label.text = title
+	label.add_theme_color_override("font_color", CYAN)
+	label.add_theme_font_size_override("font_size", 16)
+	parent.add_child(label)
+
+
+func _add_menu_button(parent: VBoxContainer, label_text: String, callback: Callable) -> void:
+	var button := Button.new()
+	button.text = label_text
+	button.custom_minimum_size = Vector2(390.0, 30.0)
+	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	button.pressed.connect(callback)
+	parent.add_child(button)
+
+
+func _set_selection_menu_visible(visible: bool) -> void:
+	_selection_menu.visible = visible
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if visible else Input.MOUSE_MODE_CAPTURED)
+
+
+func _select_architecture() -> void:
+	_exit_validation_mode()
+	_set_selection_menu_visible(false)
+	_update_status("Architecture témoin")
+
+
+func _select_validation_vignette(index: int) -> void:
+	if _validation_index >= 0:
+		_validation_vignettes[_validation_index].visible = false
+	_validation_index = index
+	_validation_vignettes[_validation_index].visible = true
+	_architecture.visible = false
+	_asset_anchor.visible = false
+	_place_player_for_vignette()
+	_set_selection_menu_visible(false)
+	_update_status()
+
+
+func _select_asset_path(asset_path: String) -> void:
+	var index := _asset_paths.find(asset_path)
+	if index < 0:
+		_update_status("Asset introuvable")
+		return
+	_exit_validation_mode()
+	_asset_index = index
+	_asset_scale = 1.0
+	_show_asset()
+	_set_selection_menu_visible(false)
+
+
 func _discover_assets() -> void:
 	_asset_paths.clear()
 	var directory := DirAccess.open(IMPORTS_PATH)
@@ -422,6 +533,11 @@ func _discover_assets() -> void:
 		var extension := file_name.get_extension().to_lower()
 		if extension in ALLOWED_EXTENSIONS:
 			_asset_paths.append("%s/%s" % [IMPORTS_PATH, file_name])
+	var phase3_directory := DirAccess.open(PHASE3_ASSETS_PATH)
+	if phase3_directory != null:
+		for file_name: String in phase3_directory.get_files():
+			if file_name.get_extension().to_lower() == "glb":
+				_asset_paths.append("%s/%s" % [PHASE3_ASSETS_PATH, file_name])
 	_asset_paths.sort()
 	if not _asset_paths.is_empty():
 		_asset_index = 0
@@ -491,6 +607,16 @@ func _create_validation_vignettes() -> void:
 		_create_room_vignette(),
 		_create_door_vignette(),
 		_create_phase2_vignette(),
+		_create_phase3_accueil_vignette(),
+		_create_phase3_confinement_vignette(),
+		_create_phase3_medical_vignette(),
+		_create_phase3_synthese_vignette(),
+		_create_phase3_extraction_vignette(),
+		_create_full_zone_vignette("ZoneCompleteAccueil", "np_z03_zone_accueil.glb", Vector2(16.0, 16.0)),
+		_create_full_zone_vignette("ZoneCompleteConfinement", "np_z03_zone_confinement.glb", Vector2(6.0, 24.0)),
+		_create_full_zone_vignette("ZoneCompleteEntrepotMedical", "np_z03_zone_entrepot_medical.glb", Vector2(16.0, 20.0)),
+		_create_full_zone_vignette("ZoneCompleteSynthese", "np_z03_zone_synthese.glb", Vector2(16.0, 16.0)),
+		_create_full_zone_vignette("ZoneCompleteExtraction", "np_z03_zone_extraction.glb", Vector2(20.0, 20.0)),
 	]
 	for vignette: Node3D in _validation_vignettes:
 		vignette.visible = false
@@ -613,6 +739,119 @@ func _create_phase2_vignette() -> Node3D:
 	return vignette
 
 
+func _add_phase3_asset(
+	parent: Node3D,
+	file_name: String,
+	asset_position: Vector3,
+	rotation_y_degrees: float = 0.0
+) -> void:
+	var node := _instantiate_asset("%s/%s" % [PHASE3_ASSETS_PATH, file_name])
+	if node == null:
+		push_error("Asset phase 3 incompatible : %s" % file_name)
+		return
+	node.position = asset_position
+	node.rotation_degrees.y = rotation_y_degrees
+	parent.add_child(node)
+
+
+func _add_phase3_room_shell(vignette: Node3D, open_ceiling: bool = false) -> void:
+	for x_position: float in [-3.0, -1.0, 1.0, 3.0]:
+		for z_position: float in [7.0, 5.0, 3.0, 1.0]:
+			_add_module(vignette, "np_kms_01_sol_droit.tscn", Vector3(x_position, 0.0, z_position))
+			if not open_ceiling:
+				_add_module(vignette, "np_kms_11_plafond_technique.tscn", Vector3(x_position, 3.5, z_position))
+	for x_position: float in [-3.0, -1.0, 1.0, 3.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(x_position, 0.0, 8.1), 180.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(x_position, 0.0, -0.1))
+	for z_position: float in [7.0, 5.0, 3.0, 1.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(-4.1, 0.0, z_position), 90.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(4.1, 0.0, z_position), -90.0)
+
+
+func _create_phase3_accueil_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePhase3Accueil")
+	_add_phase3_room_shell(vignette)
+	_add_phase3_asset(vignette, "np_z03_accueil_banque.glb", Vector3(-2.55, 0.0, 4.6), -90.0)
+	_add_phase3_asset(vignette, "np_z03_accueil_portillon.glb", Vector3(2.9, 0.0, 5.7), 90.0)
+	_add_phase3_asset(vignette, "np_z03_commun_equipement_mural.glb", Vector3(-3.92, 1.1, 2.7), 90.0)
+	return vignette
+
+
+func _create_phase3_confinement_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePhase3Confinement")
+	for x_position: float in [-2.0, 0.0, 2.0]:
+		for z_position: float in [8.0, 6.0, 4.0, 2.0, 0.0, -2.0]:
+			_add_module(vignette, "np_kms_01_sol_droit.tscn", Vector3(x_position, 0.0, z_position))
+			_add_module(vignette, "np_kms_10_plafond_plein.tscn", Vector3(x_position, 3.5, z_position))
+	for z_position: float in [8.0, 6.0, 4.0, 2.0, 0.0, -2.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(-3.1, 0.0, z_position), 90.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(3.1, 0.0, z_position), -90.0)
+	_add_phase3_asset(vignette, "np_z03_confinement_barriere.glb", Vector3(-2.75, 0.0, 4.0), 90.0)
+	_add_phase3_asset(vignette, "np_z03_commun_cable_fixe.glb", Vector3(0.0, 3.0, 5.8))
+	_add_phase3_asset(vignette, "np_z03_commun_equipement_mural.glb", Vector3(2.94, 1.1, 2.0), -90.0)
+	return vignette
+
+
+func _create_phase3_medical_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePhase3Medical")
+	_add_phase3_room_shell(vignette)
+	for z_position: float in [2.4, 5.4]:
+		_add_phase3_asset(vignette, "np_z03_medical_rayonnage.glb", Vector3(-3.55, 0.0, z_position), 90.0)
+		_add_phase3_asset(vignette, "np_z03_medical_rayonnage.glb", Vector3(3.55, 0.0, z_position), -90.0)
+		_add_phase3_asset(vignette, "np_z03_medical_bac.glb", Vector3(-3.55, 0.88, z_position), 90.0)
+	return vignette
+
+
+func _create_phase3_synthese_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePhase3Synthese")
+	_add_phase3_room_shell(vignette)
+	_add_phase3_asset(vignette, "np_z03_synthese_paillasse.glb", Vector3(-2.8, 0.0, 4.5), -90.0)
+	_add_phase3_asset(vignette, "np_z03_synthese_cuve.glb", Vector3(3.3, 0.0, 4.3), 90.0)
+	_add_phase3_asset(vignette, "np_z03_commun_cable_fixe.glb", Vector3(0.0, 3.0, 6.0))
+	return vignette
+
+
+func _create_phase3_extraction_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePhase3Extraction")
+	_add_phase3_room_shell(vignette, true)
+	_add_phase3_asset(vignette, "np_z03_extraction_balise.glb", Vector3(-3.55, 0.0, 5.8))
+	_add_phase3_asset(vignette, "np_z03_extraction_balise.glb", Vector3(3.55, 0.0, 5.8))
+	_add_phase3_asset(vignette, "np_z03_commun_equipement_mural.glb", Vector3(-3.92, 1.1, 2.5), 90.0)
+	_add_phase3_asset(vignette, "np_z03_commun_equipement_mural.glb", Vector3(3.92, 1.1, 2.5), -90.0)
+	return vignette
+
+
+func _create_full_zone_vignette(name: String, file_name: String, floor_size: Vector2) -> Node3D:
+	var vignette := _create_vignette(name)
+	var zone := _instantiate_asset("%s/%s" % [PHASE3_ZONES_PATH, file_name])
+	if zone == null:
+		push_error("Zone complète incompatible : %s" % file_name)
+		return vignette
+	vignette.add_child(zone)
+	_add_lab_floor_collision(vignette, floor_size)
+	return vignette
+
+
+func _add_lab_floor_collision(parent: Node3D, floor_size: Vector2) -> void:
+	_add_lab_collision_box(parent, "Sol", Vector3(floor_size.x, 0.2, floor_size.y), Vector3(0.0, -0.1, 0.0))
+	_add_lab_collision_box(parent, "MurGauche", Vector3(0.2, 4.0, floor_size.y), Vector3(-floor_size.x * 0.5, 2.0, 0.0))
+	_add_lab_collision_box(parent, "MurDroit", Vector3(0.2, 4.0, floor_size.y), Vector3(floor_size.x * 0.5, 2.0, 0.0))
+	_add_lab_collision_box(parent, "MurAvant", Vector3(floor_size.x, 4.0, 0.2), Vector3(0.0, 2.0, floor_size.y * 0.5))
+	_add_lab_collision_box(parent, "MurArriere", Vector3(floor_size.x, 4.0, 0.2), Vector3(0.0, 2.0, -floor_size.y * 0.5))
+
+
+func _add_lab_collision_box(parent: Node3D, node_name: String, size: Vector3, position: Vector3) -> void:
+	var body := StaticBody3D.new()
+	body.name = "CollisionLaboratoire%s" % node_name
+	var collision := CollisionShape3D.new()
+	var shape := BoxShape3D.new()
+	shape.size = size
+	collision.shape = shape
+	body.position = position
+	body.add_child(collision)
+	parent.add_child(body)
+
+
 func _add_sector_panel(parent: Node3D, sector: String, label: String, position: Vector3, material: Material) -> void:
 	_add_box(parent, "Secteur%s" % sector, Vector3(1.6, 1.5, 0.08), position, material)
 	_add_label3d(parent, sector, position + Vector3(0.0, 0.28, 0.06), Color("#111820"), 96)
@@ -649,8 +888,19 @@ func _change_validation_vignette() -> void:
 	_validation_vignettes[_validation_index].visible = true
 	_architecture.visible = false
 	_asset_anchor.visible = false
-	_player.position = Vector3(0.0, 0.02, 9.5)
+	_place_player_for_vignette()
 	_update_status()
+
+
+func _place_player_for_vignette() -> void:
+	var positions := [
+		Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5),
+		Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5),
+		Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 9.5),
+		Vector3(0.0, 0.02, 9.5), Vector3(0.0, 0.02, 6.0), Vector3(0.0, 0.02, 10.0),
+		Vector3(0.0, 0.02, 8.0), Vector3(0.0, 0.02, 6.0), Vector3(0.0, 0.02, 8.0),
+	]
+	_player.position = positions[_validation_index]
 
 
 func _exit_validation_mode() -> void:
@@ -702,7 +952,14 @@ func _update_status(message: String = "") -> void:
 	var light_names := ["froide", "neutre", "alerte"]
 	var asset_name := "placeholder procédural"
 	if _validation_index >= 0:
-		asset_name = ["couloir", "angle", "petite salle", "porte", "matériaux et signalétique"][_validation_index]
+		asset_name = [
+			"couloir", "angle", "petite salle", "porte", "matériaux et signalétique",
+			"phase 3 — accueil", "phase 3 — confinement", "phase 3 — entrepôt médical",
+			"phase 3 — laboratoire de synthèse", "phase 3 — extraction",
+			"zone complète — accueil", "zone complète — confinement",
+			"zone complète — entrepôt médical", "zone complète — synthèse",
+			"zone complète — extraction"
+		][_validation_index]
 	elif not _asset_paths.is_empty() and _asset_index >= 0:
 		asset_name = _asset_paths[_asset_index].get_file()
 	var suffix := ""

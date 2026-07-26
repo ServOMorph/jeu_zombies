@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.24 — 2026-07-26
+
+### Ajouté
+
+- Dix accessoires décoratifs GLB et cinq zones visuelles GLB de phase 3, accompagnés de leurs fiches, inventaire et contrat d'intégration sans collision ni navigation.
+- Menu `F4` du laboratoire : sélection ciblée des assets, vignettes et zones complètes parcourables.
+
+### Modifié
+
+- Phase 3 DESIGN engagée et validée partiellement ; chariot médical, console et observation de synthèse restent requis avant clôture.
+
 ## v0.23 — 2026-07-26
 
 ### Ajouté

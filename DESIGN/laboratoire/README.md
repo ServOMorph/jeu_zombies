@@ -40,3 +40,18 @@ Pour valider le lot :
 2. Appuyer cinq fois sur `F3` jusqu'à afficher `matériaux et signalétique`.
 3. Examiner la vignette sous les ambiances froide, neutre et alerte avec `F2`.
 4. Vérifier la différenciation des matériaux, la lecture des secteurs et des états de porte à courte et moyenne distance.
+
+## Validation phase 3
+
+Les dix exports de zone sont copiés dans `imports/phase3/`. Ils sont accessibles individuellement avec `Page préc./suiv.` et dans cinq vignettes via `F3` : accueil, confinement, entrepôt médical, synthèse et extraction.
+
+Le menu `F4` permet de sélectionner directement une vignette ou l'un des dix assets de la phase 3. Le curseur est libéré lorsque le menu est ouvert.
+
+Les cinq entrées « Zones complètes phase 3 » chargent les scènes visuelles complètes de `imports/phase3/zones/`. Elles portent une collision de sol propre au laboratoire uniquement ; les exports de zone n'en contiennent pas.
+
+Pour valider le lot :
+
+1. Lancer `python run_labo.py` depuis la racine du dépôt.
+2. Examiner les cinq vignettes de phase 3 avec `F3` sous les trois ambiances avec `F2`.
+3. Contrôler les lignes de tir, les circulations, les silhouettes et les accents de zone.
+4. Parcourir les dix assets avec `Page préc./suiv.` pour contrôler leur échelle et leur pivot.
