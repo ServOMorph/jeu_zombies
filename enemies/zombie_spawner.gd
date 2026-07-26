@@ -4,7 +4,14 @@ extends Node3D
 const ZOMBIE_SPAWN_POINT_SCRIPT := preload("res://enemies/zombie_spawn_point.gd")
 
 signal zombie_spawned(zombie: ZombieStandard, spawn_point: Node3D, used_fallback: bool)
-signal spawn_deferred(zone_id: String)
+signal spawn_deferred(zone_id: String, reason: DeferReason)
+
+enum DeferReason {
+	CAPPED,
+	NO_TARGET,
+	NO_VALID_POINT,
+	POOL_EXHAUSTED,
+}
 
 @export var zombie_scene: PackedScene
 @export_range(1, 128, 1) var max_active_zombies := 12
@@ -31,19 +38,19 @@ func request_spawn(
 ) -> ZombieStandard:
 	_prune_active_zombies()
 	if not can_spawn(get_active_zombie_count(), max_active_zombies):
-		spawn_deferred.emit(zone_id)
+		spawn_deferred.emit(zone_id, DeferReason.CAPPED)
 		return null
 	var resolved_target := target if is_instance_valid(target) else _resolve_player()
 	if resolved_target == null:
-		spawn_deferred.emit(zone_id)
+		spawn_deferred.emit(zone_id, DeferReason.NO_TARGET)
 		return null
 	var spawn_point := _find_spawn_point(zone_id, resolved_target)
 	if spawn_point == null:
-		spawn_deferred.emit(zone_id)
+		spawn_deferred.emit(zone_id, DeferReason.NO_VALID_POINT)
 		return null
 	var zombie := _take_pooled_zombie()
 	if zombie == null:
-		spawn_deferred.emit(zone_id)
+		spawn_deferred.emit(zone_id, DeferReason.POOL_EXHAUSTED)
 		return null
 	zombie.global_position = _get_navigation_position(spawn_point.global_position)
 	zombie.activate(resolved_target, zombie.create_wave_definition(health_multiplier))

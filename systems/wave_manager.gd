@@ -58,6 +58,15 @@ func get_remaining_zombie_count() -> int:
 	return remaining_zombie_count(_remaining_to_spawn, _wave_zombies.size())
 
 
+func get_zombies_to_spawn_count() -> int:
+	return maxi(0, _remaining_to_spawn)
+
+
+func get_living_zombie_count() -> int:
+	_prune_wave_zombies()
+	return _wave_zombies.size()
+
+
 func get_intermission_remaining_seconds() -> float:
 	return _intermission_remaining_seconds
 

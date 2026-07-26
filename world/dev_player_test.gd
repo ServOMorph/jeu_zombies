@@ -225,24 +225,44 @@ func _on_zombie_reward_granted(credits: int) -> void:
 		spawn_label.text = "+%d crédits\nSolde : %d" % [credits, GameSession.get_credits()]
 
 
-func _on_spawn_deferred(_zone_id: String) -> void:
-	spawn_label.text = "Apparition différée : aucun point valide ou plafond atteint\nZombies actifs : %d / %d" % [
+func _on_spawn_deferred(zone_id: String, reason: ZombieSpawner.DeferReason) -> void:
+	spawn_label.text = "Apparition différée (%s) : %s\nÀ apparaître : %d — Vivants : %d\nZombies actifs : %d / %d" % [
+		zone_id,
+		_defer_reason_label(reason),
+		wave_manager.get_zombies_to_spawn_count(),
+		wave_manager.get_living_zombie_count(),
 		zombie_spawner.get_active_zombie_count(),
 		zombie_spawner.max_active_zombies,
 	]
 
 
+func _defer_reason_label(reason: ZombieSpawner.DeferReason) -> String:
+	match reason:
+		ZombieSpawner.DeferReason.CAPPED:
+			return "plafond de zombies actifs atteint"
+		ZombieSpawner.DeferReason.NO_TARGET:
+			return "aucune cible valide"
+		ZombieSpawner.DeferReason.NO_VALID_POINT:
+			return "aucun point d'apparition navigable"
+		ZombieSpawner.DeferReason.POOL_EXHAUSTED:
+			return "pool de zombies épuisé"
+		_:
+			return "motif inconnu"
+
+
 func _on_wave_started(wave_number: int, _definition: WaveDefinition) -> void:
-	spawn_label.text = "Vague %d en cours\nZombies restants : %d" % [
+	spawn_label.text = "Vague %d en cours\nÀ apparaître : %d — Vivants : %d" % [
 		wave_number,
-		wave_manager.get_remaining_zombie_count(),
+		wave_manager.get_zombies_to_spawn_count(),
+		wave_manager.get_living_zombie_count(),
 	]
 
 
-func _on_wave_remaining_changed(remaining_count: int) -> void:
-	spawn_label.text = "Vague %d en cours\nZombies restants : %d" % [
+func _on_wave_remaining_changed(_remaining_count: int) -> void:
+	spawn_label.text = "Vague %d en cours\nÀ apparaître : %d — Vivants : %d" % [
 		wave_manager.current_wave_number,
-		remaining_count,
+		wave_manager.get_zombies_to_spawn_count(),
+		wave_manager.get_living_zombie_count(),
 	]
 
 

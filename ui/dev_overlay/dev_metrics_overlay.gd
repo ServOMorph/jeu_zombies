@@ -87,7 +87,7 @@ func _update_metrics(frame_delta: float) -> void:
 	var frame_time_ms := _metrics.last_frame_time_ms
 	if frame_time_ms <= 0.0:
 		frame_time_ms = frame_delta * 1000.0
-	var zombie_count := get_tree().get_node_count_in_group("zombies")
+	var zombie_count := _count_active_zombies()
 	var node_count := int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
 	var memory_mib := (
 		Performance.get_monitor(Performance.MEMORY_STATIC) / BYTES_PER_MEBIBYTE
@@ -112,6 +112,17 @@ func _update_metrics(frame_delta: float) -> void:
 			memory_mib,
 		]
 	)
+
+
+func _count_active_zombies() -> int:
+	var active_count := 0
+	for node: Node in get_tree().get_nodes_in_group("zombies"):
+		if not node is ZombieStandard:
+			continue
+		var zombie := node as ZombieStandard
+		if zombie.state != ZombieStandard.State.INACTIVE and zombie.state != ZombieStandard.State.DYING:
+			active_count += 1
+	return active_count
 
 
 func _vsync_state_label() -> String:

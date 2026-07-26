@@ -501,6 +501,8 @@ Statut au 2026-07-26 : validé automatiquement et manuellement, y compris le pre
 - Chaque élément du HUD affiche la valeur réelle de la session.
 - Un parcours complet de la carte avec une vague active ne descend pas sous 50 FPS.
 
+Statut au 2026-07-26 : porte non franchie. Premier contrôle manuel échoué (FPS minimum 28, 3 frames sous 50) et compteur de zombies restants figé en vague 5. Instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif) ; cause non encore corrigée, contrôle à rejouer.
+
 ## 10. Jalon M4 — Arsenal, achats et avantages
 
 **But :** compléter toute la progression d'équipement prévue par le GDD.

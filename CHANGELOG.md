@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.16 — 2026-07-26
+
+### Ajouté
+
+- Instrumentation de diagnostic pour le blocage de spawn en vague de survie : motif typé (`DeferReason`) sur les apparitions différées, compteurs séparés apparition/survivants dans `WaveManager`.
+
+### Corrigé
+
+- L'overlay de développement comptait tous les zombies du pool (actifs et inactifs) au lieu des seuls zombies actifs.
+
+### Modifié
+
+- Le premier contrôle manuel de la porte de sortie M3 échoue (FPS minimum 28, compteur de zombies restants figé en vague 5) ; le contrôle reste ouvert et sera rejoué avec la nouvelle instrumentation.
+
 ## v0.15 — 2026-07-26
 
 ### Ajouté
