@@ -20,8 +20,11 @@ func _init() -> void:
 		{"file": "np_z03_confinement_barriere", "node": _build_confinement_barriere()},
 		{"file": "np_z03_medical_rayonnage", "node": _build_medical_rayonnage()},
 		{"file": "np_z03_medical_bac", "node": _build_medical_bac()},
+		{"file": "np_z03_medical_chariot", "node": _build_medical_chariot()},
 		{"file": "np_z03_synthese_paillasse", "node": _build_synthese_paillasse()},
 		{"file": "np_z03_synthese_cuve", "node": _build_synthese_cuve()},
+		{"file": "np_z03_synthese_console", "node": _build_synthese_console()},
+		{"file": "np_z03_synthese_observation", "node": _build_synthese_observation()},
 		{"file": "np_z03_extraction_balise", "node": _build_extraction_balise()},
 		{"file": "np_z03_commun_cable_fixe", "node": _build_cable_fixe()},
 		{"file": "np_z03_commun_equipement_mural", "node": _build_equipement_mural()},
@@ -116,6 +119,18 @@ func _build_medical_bac() -> Node3D:
 	return root
 
 
+func _build_medical_chariot() -> Node3D:
+	var root := _root("NP_Z03_MED_03_ChariotMedical")
+	_box(root, "PlateauBas", Vector3(1.10, 0.08, 0.55), Vector3(0, 0.32, 0), steel_painted)
+	_box(root, "PlateauHaut", Vector3(1.10, 0.08, 0.55), Vector3(0, 0.82, 0), clinical)
+	for x_position: float in [-0.47, 0.47]:
+		for z_position: float in [-0.20, 0.20]:
+			_box(root, "Roue", Vector3(0.12, 0.12, 0.12), Vector3(x_position, 0.10, z_position), steel_dark)
+	_box(root, "Poignee", Vector3(0.08, 0.62, 0.08), Vector3(0.47, 0.60, 0), steel_painted)
+	_box(root, "Bac", Vector3(0.48, 0.18, 0.30), Vector3(-0.18, 0.95, 0), clinical)
+	return root
+
+
 func _build_synthese_paillasse() -> Node3D:
 	var root := _root("NP_Z03_SYN_01_Paillasse")
 	_box(root, "Plan", Vector3(2.0, 0.10, 0.65), Vector3(0, 0.90, 0), clinical)
@@ -132,6 +147,26 @@ func _build_synthese_cuve() -> Node3D:
 	_box(root, "CadreHaut", Vector3(0.82, 0.12, 0.82), Vector3(0, 1.88, 0), steel_painted)
 	_box(root, "VoyantGauche", Vector3(0.05, 0.13, 0.03), Vector3(-0.27, 1.70, -0.355), red)
 	_box(root, "VoyantDroit", Vector3(0.05, 0.13, 0.03), Vector3(0.27, 1.70, -0.355), red)
+	return root
+
+
+func _build_synthese_console() -> Node3D:
+	var root := _root("NP_Z03_SYN_03_Console")
+	_box(root, "Socle", Vector3(0.80, 0.12, 0.45), Vector3(0, 0.06, 0), steel_dark)
+	_box(root, "Colonne", Vector3(0.52, 0.90, 0.32), Vector3(0, 0.51, 0.06), steel_painted)
+	_box(root, "Ecran", Vector3(0.62, 0.34, 0.05), Vector3(0, 1.02, -0.14), cyan)
+	_box(root, "VoyantAlerte", Vector3(0.06, 0.06, 0.02), Vector3(0.22, 0.78, -0.12), red)
+	return root
+
+
+func _build_synthese_observation() -> Node3D:
+	var root := _root("NP_Z03_SYN_04_Observation")
+	_box(root, "CadreBas", Vector3(1.40, 0.12, 0.18), Vector3(0, 0.06, 0), steel_dark)
+	_box(root, "CadreHaut", Vector3(1.40, 0.12, 0.18), Vector3(0, 2.28, 0), steel_dark)
+	_box(root, "MontantGauche", Vector3(0.12, 2.10, 0.18), Vector3(-0.64, 1.17, 0), steel_painted)
+	_box(root, "MontantDroit", Vector3(0.12, 2.10, 0.18), Vector3(0.64, 1.17, 0), steel_painted)
+	_box(root, "VitrageRenforce", Vector3(1.12, 1.92, 0.04), Vector3(0, 1.17, -0.11), clinical)
+	_box(root, "BaliseConfinement", Vector3(0.28, 0.08, 0.03), Vector3(0, 2.05, -0.13), red)
 	return root
 
 

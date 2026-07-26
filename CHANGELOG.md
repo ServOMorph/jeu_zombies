@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.26 — 2026-07-26
+
+### Ajouté
+
+- Chariot médical, console et observation de synthèse de la phase 3 DESIGN, documentés, exportés en GLB et copiés dans le laboratoire.
+
+### Modifié
+
+- Phase 3 DESIGN validée : 13 accessoires et cinq zones visuelles contrôlés dans le laboratoire, sans collision, navigation ni logique de jeu.
+
 ## v0.25 — 2026-07-26
 
 ### Ajouté

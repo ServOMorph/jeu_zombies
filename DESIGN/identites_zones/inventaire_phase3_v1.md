@@ -21,6 +21,20 @@ Dimensions : X largeur, Y hauteur, Z profondeur. Tous les exports sont prévus �
 
 Les exports produits sont disponibles dans `exports/`. Le chemin `assets/environment/phase3/` demeure une cible de transmission : aucun fichier n'y est intégré par cette phase.
 
+## Avenant - accessoires manquants
+
+Cet avenant complete et remplace toute reference quantitative anterieure :
+l'inventaire ferme de la phase 3 contient maintenant treize assets.
+
+| ID | Asset | Zone | Dimensions X x Y x Z (m) | Variantes | Export prevu |
+|---|---|---|---:|---:|---|
+| NP-Z03-MED-03 | Chariot medical | M | 1,10 x 1,00 x 0,55 | 1 | `assets/environment/phase3/np_z03_medical_chariot.glb` |
+| NP-Z03-SYN-03 | Console de synthese | S | 0,80 x 1,10 x 0,45 | 1 | `assets/environment/phase3/np_z03_synthese_console.glb` |
+| NP-Z03-SYN-04 | Observation de synthese | S | 1,40 x 2,34 x 0,18 | 1 | `assets/environment/phase3/np_z03_synthese_observation.glb` |
+
+Les trois exports ont une racine unique, une echelle de 1,00 et un pivot au
+sol-centre. Ils ne portent aucune collision, navigation, script ou etat fonctionnel.
+
 ## Exclusions
 
 - Tout meuble haut, caisse de sol, palette, obstacle central ou décor suspendu bas.

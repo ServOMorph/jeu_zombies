@@ -799,6 +799,7 @@ func _create_phase3_medical_vignette() -> Node3D:
 		_add_phase3_asset(vignette, "np_z03_medical_rayonnage.glb", Vector3(-3.55, 0.0, z_position), 90.0)
 		_add_phase3_asset(vignette, "np_z03_medical_rayonnage.glb", Vector3(3.55, 0.0, z_position), -90.0)
 		_add_phase3_asset(vignette, "np_z03_medical_bac.glb", Vector3(-3.55, 0.88, z_position), 90.0)
+	_add_phase3_asset(vignette, "np_z03_medical_chariot.glb", Vector3(2.8, 0.0, 2.1), -90.0)
 	return vignette
 
 
@@ -807,6 +808,8 @@ func _create_phase3_synthese_vignette() -> Node3D:
 	_add_phase3_room_shell(vignette)
 	_add_phase3_asset(vignette, "np_z03_synthese_paillasse.glb", Vector3(-2.8, 0.0, 4.5), -90.0)
 	_add_phase3_asset(vignette, "np_z03_synthese_cuve.glb", Vector3(3.3, 0.0, 4.3), 90.0)
+	_add_phase3_asset(vignette, "np_z03_synthese_console.glb", Vector3(3.72, 0.0, 2.2), -90.0)
+	_add_phase3_asset(vignette, "np_z03_synthese_observation.glb", Vector3(3.92, 0.0, 6.0), -90.0)
 	_add_phase3_asset(vignette, "np_z03_commun_cable_fixe.glb", Vector3(0.0, 3.0, 6.0))
 	return vignette
 

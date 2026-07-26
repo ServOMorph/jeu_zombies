@@ -22,7 +22,7 @@ func _validate() -> void:
 		_fail("Nombre de vignettes invalide")
 		return
 	var menu := laboratory.get_node_or_null("InterfaceSelection/MenuSelection") as PanelContainer
-	if menu == null or _count_buttons(menu) != 26:
+	if menu == null or _count_buttons(menu) != 29:
 		_fail("Menu de sélection invalide")
 		return
 	for vignette_name: String in [

@@ -54,6 +54,8 @@ func _build_entrepot_medical() -> Node3D:
 		_add_asset(root, ASSET_PATH, "np_z03_medical_rayonnage.glb", Vector3(7.1, 0.0, z_position), -90.0)
 		_add_asset(root, ASSET_PATH, "np_z03_medical_bac.glb", Vector3(-7.1, 0.88, z_position), 90.0)
 		_add_asset(root, ASSET_PATH, "np_z03_medical_bac.glb", Vector3(7.1, 0.88, z_position), -90.0)
+	_add_asset(root, ASSET_PATH, "np_z03_medical_chariot.glb", Vector3(-4.8, 0.0, -6.0), 90.0)
+	_add_asset(root, ASSET_PATH, "np_z03_medical_chariot.glb", Vector3(4.8, 0.0, 6.0), -90.0)
 	return root
 
 
@@ -64,6 +66,8 @@ func _build_synthese() -> Node3D:
 		_add_asset(root, ASSET_PATH, "np_z03_synthese_paillasse.glb", Vector3(-6.9, 0.0, z_position), -90.0)
 		_add_asset(root, ASSET_PATH, "np_z03_synthese_cuve.glb", Vector3(6.7, 0.0, z_position), 90.0)
 		_add_asset(root, ASSET_PATH, "np_z03_commun_cable_fixe.glb", Vector3(0.0, 3.05, z_position))
+	_add_asset(root, ASSET_PATH, "np_z03_synthese_console.glb", Vector3(7.65, 0.0, -0.5), -90.0)
+	_add_asset(root, ASSET_PATH, "np_z03_synthese_observation.glb", Vector3(7.86, 0.0, 5.0), -90.0)
 	return root
 
 

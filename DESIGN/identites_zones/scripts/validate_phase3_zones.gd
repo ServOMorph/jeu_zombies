@@ -8,6 +8,11 @@ const EXPECTED_ZONES := {
 	"np_z03_zone_extraction.glb": "NP_Z03_ZONE_E_EXTRACTION",
 }
 
+const REQUIRED_ACCESSORIES := {
+	"np_z03_zone_entrepot_medical.glb": ["NP_Z03_MED_03_ChariotMedical"],
+	"np_z03_zone_synthese.glb": ["NP_Z03_SYN_03_Console", "NP_Z03_SYN_04_Observation"],
+}
+
 
 func _init() -> void:
 	var export_path := ProjectSettings.globalize_path("res://zones/exports")
@@ -27,6 +32,10 @@ func _init() -> void:
 		if meshes == 0 or _has_functional_node(zone):
 			_fail("Contenu invalide : %s" % file_name)
 			return
+		for accessory_name: String in REQUIRED_ACCESSORIES.get(file_name, []):
+			if not _has_named_node(zone, accessory_name):
+				_fail("Accessoire absent : %s dans %s" % [accessory_name, file_name])
+				return
 		mesh_total += meshes
 		zone.queue_free()
 	print("NOX_PROTOCOL_PHASE3_ZONE_VALIDATION_READY count=%d meshes=%d" % [EXPECTED_ZONES.size(), mesh_total])
@@ -45,6 +54,15 @@ func _has_functional_node(node: Node) -> bool:
 		return true
 	for child: Node in node.get_children():
 		if _has_functional_node(child):
+			return true
+	return false
+
+
+func _has_named_node(node: Node, expected_name: String) -> bool:
+	if node.name == expected_name:
+		return true
+	for child: Node in node.get_children():
+		if _has_named_node(child, expected_name):
 			return true
 	return false
 

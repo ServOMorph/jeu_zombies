@@ -73,6 +73,17 @@ En conception. Les cinq vignettes, les fiches d'intégration et les zones visuel
 | NP-Z03-COM-01 | Câble fixe | Toutes zones, mur/plafond | Aucun franchissement de passage |
 | NP-Z03-COM-02 | Équipement mural | Toutes zones, travée | Saillie maximale 0,20 m |
 
+## Avenant - implantation des accessoires manquants
+
+- NP-Z03-MED-03 : chariot medical stationne en peripherie de l'entrepot, hors de
+  l'allee principale et sans collision implicite.
+- NP-Z03-SYN-03 : console de synthese adossee a un mur ou placee en renfoncement ;
+  elle reste exclusivement decorative.
+- NP-Z03-SYN-04 : observation de synthese installee au mur avec un unique vitrage
+  renforce ; elle ne bloque pas la circulation.
+
+La phase 3 comporte desormais treize accessoires documentes.
+
 ## Validation de phase
 
 - Identifier chaque vignette sans texte en moins de cinq secondes.

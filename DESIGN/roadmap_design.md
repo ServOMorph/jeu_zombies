@@ -25,7 +25,7 @@ supplémentaires, cosmétiques persistants et rendu réaliste détaillé.
 
 ## Règles de suivi
 
-- Une seule phase porte le statut `[EN COURS]`.
+- Une seule phase porte le statut `[FAIT]`.
 - Les statuts sont mis à jour uniquement pendant `/close`.
 - Tout livrable reste dans `DESIGN/` jusqu'à son approbation.
 - Chaque asset possède une fiche conforme à `workflow_graphique.md`.
@@ -131,7 +131,7 @@ Créer le langage de surface commun du complexe et le système de guidage visuel
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 3 — Identité des cinq zones `[EN COURS]`
+## Phase 3 — Identité des cinq zones `[FAIT]`
 
 ### But
 
@@ -159,9 +159,9 @@ Différencier les zones sans rompre la cohérence du kit modulaire.
 
 ### État au 2026-07-26
 
-- Les dix accessoires produits, les cinq vues de référence et les cinq zones visuelles complètes sont approuvés dans le laboratoire.
+- Les 13 accessoires produits, les cinq vues de référence et les cinq zones visuelles complètes sont approuvés dans le laboratoire.
 - Les exports GLB sont structurellement contrôlés et restent confinés à `DESIGN/` ; le menu `F4` permet leur inspection ciblée.
-- Le chariot médical, la console et l'observation de synthèse ne sont pas encore produits : la phase reste en cours.
+- Le chariot médical, la console et l'observation de synthèse sont produits, documentés, contrôlés et approuvés par l'utilisateur.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

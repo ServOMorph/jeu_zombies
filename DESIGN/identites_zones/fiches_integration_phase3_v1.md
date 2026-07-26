@@ -24,6 +24,17 @@
 | COM-01 | Câble rigide rectiligne avec coudes à 90 degrés. | Acier sombre ; 80 tris par segment ; deux variantes. | Mur ou plafond ; saillie `≤ 0,08 m`. | Aucun franchissement, aucune ombre ou collision ajoutée. |
 | COM-02 | Boîtier mural compact, relief fonctionnel abstrait. | Acier peint, composite médical ; 250 tris max ; deux variantes. | Travée murale ; saillie `≤ 0,20 m`. | Ne ressemble ni à une interaction ni à une commande jouable. |
 
+## Avenant - fiches accessoires
+
+| ID | Fonction / silhouette | Materiaux, budget, variantes | Implantation et contraintes | Critere de validation |
+|---|---|---|---|---|
+| MED-03 | Chariot medical bas a deux plateaux, avec bacs fixes et roues decoratives. | Acier peint, composite medical ; 450 tris max ; une variante. | Peripherie de l'entrepot, hors axe central ; aucune collision ni animation. | Logistique medicale lisible sans masquer une silhouette. |
+| SYN-03 | Console sur pied avec ecran cyan et voyant rouge ponctuel, purement decorative. | Acier peint, cyan, rouge ; 400 tris max ; une variante. | Mur ou renfoncement ; aucune interaction jouable. | Activite de synthese lisible sans ambiguite fonctionnelle. |
+| SYN-04 | Cadre d'observation vertical avec un seul vitrage renforce et balise rouge. | Acier peint, composite medical, rouge ; 500 tris max ; une variante. | Mur ou renfoncement ; sans transparences superposees ni collision. | Observation et confinement lisibles sans fermer la circulation. |
+
+Ces trois fiches completent le lot de phase 3 a treize assets et sont detaillees
+dans `complement_accessoires_phase3_v1.md`.
+
 ## Conditions de production et transmission
 
 Chaque asset ne peut être produit qu'après approbation de cette fiche. Avant transmission : export `.glb`, vérification de pivot, de matériau, de faces, d'absence de collision et de conformité aux vignettes approuvées. L'intégration dans `assets/` reste une session distincte.

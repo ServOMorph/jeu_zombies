@@ -22,10 +22,10 @@ assets intégrés.
 
 ## État actuel
 
-- Les phases 1 et 2 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
-- La phase 3 est en cours : dix accessoires et cinq zones visuelles GLB sont approuvés dans le laboratoire.
-- Le laboratoire propose un menu `F4`, des vignettes et des zones complètes FPS de validation.
-- Le chariot médical, la console et l'observation de synthèse restent à produire et valider pour clore la phase 3.
+- Les phases 1 à 3 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
+- La phase 3 comprend 13 accessoires et cinq zones visuelles GLB, contrôlés dans le laboratoire.
+- Le laboratoire propose le menu `F4`, des vignettes et des zones FPS complètes de validation.
+- La phase 4, zombie standard, attend `/compact` et confirmation écrite avant son démarrage.
 - Aucun asset DESIGN n'est intégré au projet jouable.
 
 ## Contrats techniques à préserver
@@ -37,7 +37,6 @@ assets intégrés.
 
 ## Décisions structurantes
 
-- 2026-07-26 : La conception graphique reste confinée à `DESIGN/`; l'import dans `assets/` et l'intégration Godot sont réalisés dans une session de code dédiée.
 - 2026-07-26 : Tout lot suit le flux `DESIGN → validation → assets/ → scènes Godot → tests`.
 - 2026-07-26 : La première passe environnementale habille le blockout sans remplacer ses collisions ni sa navigation.
 - 2026-07-26 : La cible validée est une 3D low-poly sombre, propre, modulaire et optimisée, conforme à `bible_direction_artistique.md`.
@@ -47,3 +46,4 @@ assets intégrés.
 - 2026-07-26 : Le kit modulaire structurel V1 est validé visuellement, exporté en `.glb` et prêt à transmettre ; ses 23 modules sont des créations internes sous licence propriétaire, tous droits réservés.
 - 2026-07-26 : Le lot matériaux et signalétique V1 est validé dans le laboratoire ; ses neuf matériaux et sa planche vectorielle restent dans `DESIGN/` jusqu'à intégration dédiée.
 - 2026-07-26 : Les zones visuelles de phase 3 restent des surcouches GLB sans collision, navigation ni logique ; le blockout fonctionnel doit être préservé lors de leur intégration.
+- 2026-07-26 : La phase 3 est approuvée avec 13 accessoires et cinq zones visuelles ; les exports restent confinés à DESIGN jusqu'à une intégration dédiée.

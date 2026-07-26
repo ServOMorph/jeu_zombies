@@ -41,6 +41,12 @@ Pour valider le lot :
 3. Examiner la vignette sous les ambiances froide, neutre et alerte avec `F2`.
 4. Vérifier la différenciation des matériaux, la lecture des secteurs et des états de porte à courte et moyenne distance.
 
+## Mise a jour phase 3
+
+Le laboratoire contient treize exports phase 3 : les dix precedents, le chariot
+medical, la console de synthese et l'observation de synthese. Le menu `F4` les
+propose individuellement.
+
 ## Validation phase 3
 
 Les dix exports de zone sont copiés dans `imports/phase3/`. Ils sont accessibles individuellement avec `Page préc./suiv.` et dans cinq vignettes via `F3` : accueil, confinement, entrepôt médical, synthèse et extraction.

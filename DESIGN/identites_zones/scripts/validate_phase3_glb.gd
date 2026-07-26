@@ -1,17 +1,20 @@
 extends SceneTree
 
-const EXPECTED_FILES := [
-	"np_z03_accueil_banque.glb",
-	"np_z03_accueil_portillon.glb",
-	"np_z03_confinement_barriere.glb",
-	"np_z03_medical_rayonnage.glb",
-	"np_z03_medical_bac.glb",
-	"np_z03_synthese_paillasse.glb",
-	"np_z03_synthese_cuve.glb",
-	"np_z03_extraction_balise.glb",
-	"np_z03_commun_cable_fixe.glb",
-	"np_z03_commun_equipement_mural.glb",
-]
+const EXPECTED_FILES := {
+	"np_z03_accueil_banque.glb": "NP_Z03_ACC_01_BanqueAccueil",
+	"np_z03_accueil_portillon.glb": "NP_Z03_ACC_02_Portillon",
+	"np_z03_confinement_barriere.glb": "NP_Z03_CON_01_BarriereRepliee",
+	"np_z03_medical_rayonnage.glb": "NP_Z03_MED_01_RayonnageBas",
+	"np_z03_medical_bac.glb": "NP_Z03_MED_02_BacScelle",
+	"np_z03_medical_chariot.glb": "NP_Z03_MED_03_ChariotMedical",
+	"np_z03_synthese_paillasse.glb": "NP_Z03_SYN_01_Paillasse",
+	"np_z03_synthese_cuve.glb": "NP_Z03_SYN_02_Cuve",
+	"np_z03_synthese_console.glb": "NP_Z03_SYN_03_Console",
+	"np_z03_synthese_observation.glb": "NP_Z03_SYN_04_Observation",
+	"np_z03_extraction_balise.glb": "NP_Z03_EXT_01_BaliseExtraction",
+	"np_z03_commun_cable_fixe.glb": "NP_Z03_COM_01_CableFixe",
+	"np_z03_commun_equipement_mural.glb": "NP_Z03_COM_02_EquipementMural",
+}
 
 
 func _init() -> void:
@@ -30,6 +33,9 @@ func _init() -> void:
 		var instance := document.generate_scene(state)
 		if not instance is Node3D:
 			_fail("Racine non 3D : %s" % file_name)
+			return
+		if instance.name != EXPECTED_FILES[file_name]:
+			_fail("Racine inattendue : %s" % file_name)
 			return
 		var meshes := _count_meshes(instance)
 		if meshes == 0:
