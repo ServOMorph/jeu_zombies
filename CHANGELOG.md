@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.13 — 2026-07-26
+
+### Ajouté
+
+- HUD autonome affichant les valeurs de session, l'invite contextuelle et le feedback d'achat par signaux.
+- Suite de tests HUD et rejet explicite des scripts de test non instanciables.
+
+### Modifié
+
+- M3.5 est validée après contrôles automatisés et manuels ; la porte de sortie M3 reste à qualifier en parcours actif.
+
 ## v0.12 — 2026-07-26
 
 ### Ajouté

@@ -489,10 +489,10 @@ Statut au 2026-07-26 : validé automatiquement et manuellement, y compris le pre
 
 ### M3.5 — HUD fonctionnel initial
 
-- [ ] Afficher santé, endurance, crédits, vague, arme, chargeur et réserve.
-- [ ] Relier l'invite contextuelle au système d'interaction.
-- [ ] Ancrer l'interface pour plusieurs résolutions.
-- [ ] Éviter toute mise à jour de texte inutile à chaque frame.
+- [x] Afficher santé, endurance, crédits, vague, arme, chargeur et réserve.
+- [x] Relier l'invite contextuelle au système d'interaction.
+- [x] Ancrer l'interface pour plusieurs résolutions.
+- [x] Éviter toute mise à jour de texte inutile à chaque frame.
 
 **Porte de sortie M3 :**
 

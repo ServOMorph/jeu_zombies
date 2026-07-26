@@ -491,3 +491,32 @@ Le refus avec 50 crédits reste visible sans débit, l'achat à 100 crédits ouv
 ### Résultat
 
 Les critères de M3.4 sont satisfaits.
+
+## M3.5 — HUD fonctionnel initial
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `ui/game_hud/game_hud.*` isole le HUD de la scène de test et affiche santé, endurance, crédits, vague, arme, chargeur, réserve, invite contextuelle et feedback d'achat.
+- Les changements viennent des signaux de santé, endurance, arme, munitions, crédits, vagues et interaction ; une valeur textuelle identique n'est pas réécrite.
+- Les ancrages séparent les informations vitales, la vague, l'arme et les messages bas d'écran.
+- Le lanceur headless refuse désormais un script de test non instanciable.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite HUD ciblée | `python test.py --test-file=res://tests/test_game_hud.gd` | code 0, valeurs de session, signaux, vague et invite vérifiés |
+| Tests headless | `python test.py` | code 0, 16 suites réussies |
+| Contrôle global | `python check.py` | code 0, import, 16 suites, intégration de porte et export réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur : HUD vérifié sur les résolutions prévues, valeurs lisibles et cohérentes, invite contextuelle et feedback d'achat conformes. La file `tests_manuels.md` a été vidée après validation.
+
+### Résultat
+
+Les critères de M3.5 sont satisfaits. La porte de sortie M3 conserve un contrôle de parcours complet avec vague active et mesure FPS avant le début de M4.

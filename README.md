@@ -43,4 +43,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1, M2 et M3.1 à M3.4 sont validés. `python check.py` contrôle l'import, 15 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. La porte M1 est validée par trois parcours VSync à faible charge, sans frame sous 50 FPS. La boucle de survie couvre cinq vagues, la défaite et le redémarrage. Le blockout comporte cinq zones, des crédits de session, des interactions caméra et cinq portes achetables ; M3.5, la qualification du HUD multi-résolutions, est la prochaine tâche.
+M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le HUD autonome observe les signaux de session et est validé sur plusieurs résolutions. Le blockout comporte cinq zones, des crédits de session, des interactions caméra et cinq portes achetables. La porte de sortie M3 attend un parcours complet avec vague active et mesure à au moins 50 FPS avant M4.
