@@ -633,3 +633,33 @@ Validation communiquée par l'utilisateur : placement dans l'Entrepôt médical,
 ### Résultat
 
 Les critères de M4.3 sont satisfaits.
+
+## M4.4 — Station d'amélioration
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `WeaponUpgradeStationDefinition` centralise l'identifiant et le prix (1 200 crédits).
+- Amélioration stockée par emplacement d'arme (`WeaponState.upgraded`) dans `WeaponController`, pas sur la ressource d'arme partagée : `upgrade_slot`/`is_slot_upgraded` refusent une seconde amélioration du même emplacement ; un multiplicateur de dégâts ×1,35 (`UPGRADE_DAMAGE_MULTIPLIER`) s'applique au tir hitscan.
+- `set_slot` crée une nouvelle `WeaponState` à chaque remplacement d'arme : l'amélioration est donc perdue au remplacement et conservée lors d'un simple changement d'emplacement actif.
+- `WeaponUpgradeStation` (extension d'`Interactable`) : flash émissif et tonalité originale en retour d'activation, refus silencieux (sans débit) si l'arme active est déjà améliorée ou si le couteau est actif ; `can_interact` reste vrai tant qu'un contrôleur d'armes existe pour que l'invite ("Déjà amélioré : ...") reste visible même quand l'action est refusée.
+- `HelixBlockout` place la station au Laboratoire de synthèse via `WEAPON_UPGRADE_STATIONS` et `weapon_upgrade_station_definitions`.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite station d'amélioration | `python test.py --test-file=res://tests/test_weapon_upgrade_station.gd` | code 0, wiring, flux d'achat, refus de doublon sans débit, refus avec couteau actif couverts |
+| Suite contrôleur d'armes | `python test.py --test-file=res://tests/test_weapon_controller.gd` | code 0, amélioration, refus de doublon et réinitialisation au remplacement d'arme couverts |
+| Contrôle global | `python check.py` | code 0, 20 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur : dégâts nettement supérieurs après amélioration, flash et son perceptibles, invite « Déjà amélioré » affichée en cas de nouvelle tentative, conservation au changement d'emplacement actif et perte au remplacement de l'arme.
+
+### Résultat
+
+Les critères de M4.4 sont satisfaits.

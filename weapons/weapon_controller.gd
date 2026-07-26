@@ -2,6 +2,7 @@ class_name WeaponController
 extends Node3D
 
 const WEAPON_DEFINITION := preload("res://weapons/weapon_definition.gd")
+const UPGRADE_DAMAGE_MULTIPLIER := 1.35
 
 signal weapon_changed(weapon_name: String)
 signal ammo_changed(magazine: int, reserve: int)
@@ -25,11 +26,15 @@ class WeaponState:
 	var reserve := 0
 	var cooldown_remaining := 0.0
 	var reload_remaining := 0.0
+	var upgraded := false
 
 	func _init(new_definition) -> void:
 		definition = new_definition
 		magazine = new_definition.magazine_capacity
 		reserve = new_definition.reserve_capacity
+
+	func get_damage_multiplier() -> float:
+		return WeaponController.UPGRADE_DAMAGE_MULTIPLIER if upgraded else 1.0
 
 
 var active_slot := 0
@@ -95,7 +100,7 @@ func try_fire(origin: Vector3, direction: Vector3) -> bool:
 	state.cooldown_remaining = state.definition.fire_interval_seconds
 	_emit_ammo(state)
 	shot_fired.emit(state.definition.weapon_name)
-	_perform_hitscan(origin, direction, state.definition)
+	_perform_hitscan(origin, direction, state.definition, state.get_damage_multiplier())
 	return true
 
 
@@ -198,6 +203,21 @@ func get_slot_ammo(slot_index: int) -> Vector2i:
 	return Vector2i(state.magazine, state.reserve)
 
 
+func is_slot_upgraded(slot_index: int) -> bool:
+	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
+		return false
+	return _slots[slot_index].upgraded
+
+
+func upgrade_slot(slot_index: int) -> bool:
+	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
+		return false
+	if _slots[slot_index].upgraded:
+		return false
+	_slots[slot_index].upgraded = true
+	return true
+
+
 func is_slot_reserve_full(slot_index: int) -> bool:
 	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
 		return false
@@ -246,13 +266,15 @@ func _emit_ammo(state) -> void:
 	ammo_changed.emit(state.magazine, state.reserve)
 
 
-func _perform_hitscan(origin: Vector3, direction: Vector3, definition) -> void:
+func _perform_hitscan(origin: Vector3, direction: Vector3, definition, damage_multiplier: float = 1.0) -> void:
 	if not is_inside_tree():
 		return
 	var world := get_world_3d()
 	if world == null:
 		return
-	var damage_budget: float = definition.max_damage_per_shot if definition.max_damage_per_shot > 0.0 else INF
+	var max_damage_per_shot: float = definition.max_damage_per_shot * damage_multiplier
+	var damage_budget: float = max_damage_per_shot if definition.max_damage_per_shot > 0.0 else INF
+	var pellet_damage_full: float = definition.damage * damage_multiplier
 	for i in maxi(1, definition.pellet_count):
 		if damage_budget <= 0.0:
 			return
@@ -265,7 +287,7 @@ func _perform_hitscan(origin: Vector3, direction: Vector3, definition) -> void:
 		var result := world.direct_space_state.intersect_ray(query)
 		if result.is_empty():
 			continue
-		var pellet_damage := minf(definition.damage, damage_budget)
+		var pellet_damage := minf(pellet_damage_full, damage_budget)
 		damage_budget -= pellet_damage
 		_perform_damage_result(result, pellet_damage)
 

@@ -541,12 +541,14 @@ Statut au 2026-07-26 : validé. Caisse placée dans l'Entrepôt médical (1 500 
 
 ### M4.4 — Station d'amélioration
 
-- [ ] Placer la station dans le Laboratoire de synthèse.
-- [ ] Définir une amélioration unique par arme.
-- [ ] Augmenter la puissance de façon clairement perceptible.
-- [ ] Ajouter un retour visuel et sonore original.
-- [ ] Refuser une seconde amélioration sans prélever de crédits.
-- [ ] Conserver l'amélioration lors d'un changement d'arme et la perdre si l'arme est remplacée.
+- [x] Placer la station dans le Laboratoire de synthèse.
+- [x] Définir une amélioration unique par arme.
+- [x] Augmenter la puissance de façon clairement perceptible.
+- [x] Ajouter un retour visuel et sonore original.
+- [x] Refuser une seconde amélioration sans prélever de crédits.
+- [x] Conserver l'amélioration lors d'un changement d'arme et la perdre si l'arme est remplacée.
+
+Statut au 2026-07-26 : validé. Station placée au Laboratoire de synthèse (1 200 crédits), amélioration ×1,35 des dégâts par emplacement d'arme, flash et son de retour, refus sans débit si déjà améliorée ou couteau actif. Preuves dans `_docs/validation_v1.md`.
 
 ### M4.5 — Quatre avantages
 
@@ -864,4 +866,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M4.4 — Station d'amélioration**.
+Réaliser **M4.5 — Quatre avantages**.

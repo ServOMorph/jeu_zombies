@@ -7,37 +7,37 @@
 ## Contexte chaud
 
 - Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 (8 188 Mio VRAM, seule carte graphique — le Ryzen 7 5700X n'a pas d'iGPU) à 60 Hz.
-- `python check.py` valide l'import, 19 suites Godot headless, le franchissement réel d'une porte par un zombie et l'export de contrôle `.pck`.
-- M4.1, M4.2 et M4.3 sont validés : arsenal des six armes, achats muraux, caisse d'armes aléatoire dans l'Entrepôt médical.
+- `python check.py` valide l'import, 20 suites Godot headless, le franchissement réel d'une porte par un zombie et l'export de contrôle `.pck`.
+- M4.1 à M4.4 sont validés : arsenal des six armes, achats muraux, caisse d'armes aléatoire dans l'Entrepôt médical, station d'amélioration au Laboratoire de synthèse.
 - Raccourcis de développement disponibles dans `dev_player_test.gd` (build debug uniquement) : `F1` cycle l'arsenal sur l'emplacement actif, `F2` crédite 5 000 crédits de test.
 - Le pool de zombies (`prewarm_pool_size = 8`) est inférieur à `wave_05.zombie_count` (12) et n'est jamais agrandi à la volée : cause possible de blocage à surveiller si le motif `POOL_EXHAUSTED` réapparaît.
+- Des changements DESIGN antérieurs à cette session (`DESIGN/laboratoire/README.md`, `DESIGN/laboratoire/scripts/laboratoire.gd`, `DESIGN/identites_zones/`, `DESIGN/laboratoire/imports/phase3/`) restent non commités ; non liés à M4.4, laissés tels quels.
 
 ## Dernière session
 
 # Session du 2026-07-26
 
 ## Décisions prises
-- La caisse d'armes aléatoire est placée dans l'Entrepôt médical (zone avancée moins chargée que le Laboratoire, qui accueillera la station d'amélioration M4.4 et la fabrication d'antidote M5.2), à 1 500 crédits.
-- Le tirage exclut le pistolet de départ (table de 5 armes : Frelon, Foudroyeur, Sentinelle, Œil-de-Nox, Broyeur) et exclut l'arme actuellement tenue tant qu'un autre résultat est possible (règle de production 3.1).
-- L'attribution de l'arme tirée exige une confirmation explicite après la séquence de tirage (1,4 s, non bloquante), y compris quand un emplacement est libre — plus strict que l'achat mural qui n'exige une confirmation qu'en cas d'emplacements pleins.
-- La perte de cible (éloignement du joueur) ne réinitialise pas un tirage ou une confirmation en attente, car les crédits sont déjà débités ; seule la remise à zéro de session (mort, nouvelle partie) les annule.
+- La station d'amélioration est placée au Laboratoire de synthèse à 1 200 crédits ; l'amélioration multiplie les dégâts par 1,35 et se stocke par emplacement d'arme (pas sur la ressource partagée), pour qu'un remplacement d'arme la réinitialise naturellement.
+- `can_interact` de la station reste vrai tant qu'un contrôleur d'armes existe (même arme déjà améliorée ou couteau actif) afin que l'invite contextuelle ("Déjà amélioré : ...") reste visible ; c'est `interact()` qui refuse silencieusement sans débiter de crédits.
 
 ## Livrables produits ou modifiés
-- `data/weapons/mystery_box_definition.gd` : ressource de définition (identifiant, prix, table d'armes).
-- `data/weapons/mystery_box_entrepot.tres` : instance de la caisse de l'Entrepôt (1 500 crédits, 5 armes).
-- `world/mystery_box.gd` : machine à états IDLE/SPINNING/AWAITING_CONFIRM, tirage pondéré-exclusion, confirmation, reset sur signal de session.
-- `world/helix_blockout.gd` : ajout de `MYSTERY_BOXES`, `mystery_box_definitions`, `_create_mystery_box`, `get_mystery_box`/`get_mystery_box_ids`.
-- `world/dev_player_test.tscn` : câblage de la ressource `mystery_box_entrepot.tres` dans le blockout.
-- `tests/test_mystery_box.gd` : nouvelle suite (wiring, débit unique, refus pendant tirage, confirmation, exclusion statistique, remise à zéro de session).
-- `_docs/validation_v1.md` : entrée M4.3 documentée.
-- `roadmap_v1.md` : M4.3 cochée ; section 18 pointe vers M4.4.
+- `weapons/weapon_controller.gd` : amélioration par emplacement (`WeaponState.upgraded`), `upgrade_slot`/`is_slot_upgraded`, multiplicateur de dégâts appliqué au tir hitscan.
+- `data/weapons/weapon_upgrade_station_definition.gd` et `weapon_upgrade_station_laboratoire.tres` : ressource de définition (1 200 crédits).
+- `world/weapon_upgrade_station.gd` : interactable avec flash émissif et tonalité de retour, refus sans débit si déjà amélioré ou couteau actif.
+- `world/helix_blockout.gd` : ajout de `WEAPON_UPGRADE_STATIONS`, `weapon_upgrade_station_definitions`, `_create_weapon_upgrade_station`, `get_weapon_upgrade_station`/`get_weapon_upgrade_station_ids`.
+- `world/dev_player_test.tscn` : câblage de la ressource `weapon_upgrade_station_laboratoire.tres` dans le blockout.
+- `tests/test_weapon_controller.gd` : ajout de la couverture amélioration/refus de doublon/réinitialisation au remplacement.
+- `tests/test_weapon_upgrade_station.gd` : nouvelle suite (wiring, flux d'achat, refus de doublon sans débit, refus avec couteau actif).
+- `_docs/validation_v1.md` : entrée M4.4 documentée.
+- `roadmap_v1.md` : M4.4 cochée ; section 18 pointe vers M4.5.
 
 ## Hypothèses validées / invalidées
-- VALIDE : placement, débit unique, séquence de tirage, confirmation et exclusion de l'arme tenue — confirmés par test manuel utilisateur.
+- VALIDE : dégâts nettement supérieurs après amélioration, flash et son perceptibles, invite affichée en cas de nouvelle tentative, conservation au changement d'emplacement actif, perte au remplacement de l'arme — confirmés par test manuel utilisateur.
 - EN ATTENTE : cause réelle de la chute FPS à 28 et du blocage du compteur en vague 5 (P3, inchangé).
 
 ## Prochaine étape exacte
-Démarrer M4.4 — Station d'amélioration (placement au Laboratoire de synthèse, une amélioration unique par arme, retour visuel/sonore, refus de seconde amélioration, conservation/perte lors du changement d'arme).
+Démarrer M4.5 — Quatre avantages (Constitution renforcée, Gestes précis, Réflexes stimulés, Réparation cellulaire ; achat unique par avantage, remise à zéro complète en fin de partie).
 
 ## Question bloquante pour la session suivante
 Aucune

@@ -38,14 +38,20 @@ const MYSTERY_BOXES: Array[Dictionary] = [
 	{"id": "entrepot_caisse", "zone": "entrepot", "position": Vector3(-5.0, 1.1, -4.0)},
 ]
 
+const WEAPON_UPGRADE_STATIONS: Array[Dictionary] = [
+	{"id": "laboratoire_station", "zone": "laboratoire", "position": Vector3(-5.0, 1.1, -4.0)},
+]
+
 var _doors: Dictionary = {}
 var _wall_buys: Dictionary = {}
 var _mystery_boxes: Dictionary = {}
+var _weapon_upgrade_stations: Dictionary = {}
 var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
 @export var wall_buy_definitions: Array[Resource] = []
 @export var mystery_box_definitions: Array[Resource] = []
+@export var weapon_upgrade_station_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -57,6 +63,8 @@ func _ready() -> void:
 		_create_wall_buy(wall_buy)
 	for mystery_box: Dictionary in MYSTERY_BOXES:
 		_create_mystery_box(mystery_box)
+	for weapon_upgrade_station: Dictionary in WEAPON_UPGRADE_STATIONS:
+		_create_weapon_upgrade_station(weapon_upgrade_station)
 	_create_navigation_regions()
 
 
@@ -88,6 +96,13 @@ static func get_mystery_box_ids() -> PackedStringArray:
 	return box_ids
 
 
+static func get_weapon_upgrade_station_ids() -> PackedStringArray:
+	var station_ids := PackedStringArray()
+	for weapon_upgrade_station: Dictionary in WEAPON_UPGRADE_STATIONS:
+		station_ids.append(str(weapon_upgrade_station["id"]))
+	return station_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -110,6 +125,10 @@ func get_wall_buy(buy_id: String) -> WallWeaponBuy:
 
 func get_mystery_box(box_id: String) -> MysteryBox:
 	return _mystery_boxes.get(box_id) as MysteryBox
+
+
+func get_weapon_upgrade_station(station_id: String) -> WeaponUpgradeStation:
+	return _weapon_upgrade_stations.get(station_id) as WeaponUpgradeStation
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -268,6 +287,31 @@ func _create_mystery_box(mystery_box: Dictionary) -> void:
 func _find_mystery_box_definition(box_id: String) -> Resource:
 	for definition: Resource in mystery_box_definitions:
 		if definition != null and str(definition.get("box_id")) == box_id:
+			return definition
+	return null
+
+
+func _create_weapon_upgrade_station(weapon_upgrade_station: Dictionary) -> void:
+	var station_id := str(weapon_upgrade_station["id"])
+	var definition := _find_weapon_upgrade_station_definition(station_id)
+	if definition == null:
+		push_error("Définition de station d'amélioration manquante : %s" % station_id)
+		return
+	var zone_root := _zone_roots.get(str(weapon_upgrade_station["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour la station d'amélioration : %s" % station_id)
+		return
+	var station := WeaponUpgradeStation.new()
+	station.name = "StationAmelioration_%s" % station_id
+	station.configure(definition)
+	station.position = weapon_upgrade_station["position"] as Vector3
+	zone_root.add_child(station)
+	_weapon_upgrade_stations[station_id] = station
+
+
+func _find_weapon_upgrade_station_definition(station_id: String) -> Resource:
+	for definition: Resource in weapon_upgrade_station_definitions:
+		if definition != null and str(definition.get("station_id")) == station_id:
 			return definition
 	return null
 

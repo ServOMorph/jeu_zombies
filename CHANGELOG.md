@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.25 — 2026-07-26
+
+### Ajouté
+
+- Station d'amélioration (M4.4) : placée au Laboratoire de synthèse, débit unique de 1 200 crédits, augmentation de dégâts ×1,35 stockée par emplacement d'arme, flash émissif et tonalité de retour, refus sans débit si l'arme est déjà améliorée ou si le couteau est actif.
+- Amélioration conservée lors d'un changement d'emplacement actif et perdue automatiquement au remplacement de l'arme (nouvel état par emplacement, pas sur la ressource d'arme partagée).
+
 ## v0.24 — 2026-07-26
 
 ### Ajouté

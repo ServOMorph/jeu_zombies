@@ -57,5 +57,34 @@ func run_tests() -> Array[String]:
 	controller.tick(controller.melee_cooldown_seconds)
 	if not controller.try_melee(Vector3.ZERO, Vector3.FORWARD):
 		failures.append("le couteau doit redevenir disponible apres son cooldown")
+	failures.append_array(_test_weapon_upgrade())
+	controller.free()
+	return failures
+
+
+func _test_weapon_upgrade() -> Array[String]:
+	var failures: Array[String] = []
+	var weapon := WEAPON_DEFINITION.new()
+	weapon.weapon_name = "Test Amélioration"
+	weapon.damage = 10.0
+	weapon.fire_interval_seconds = 0.1
+	weapon.magazine_capacity = 5
+	weapon.reserve_capacity = 5
+	var controller := WEAPON_CONTROLLER.new()
+	controller.configure_slots(weapon)
+
+	if controller.is_slot_upgraded(0):
+		failures.append("un emplacement neuf ne doit pas être marqué amélioré")
+	if not controller.upgrade_slot(0):
+		failures.append("la première amélioration d'un emplacement doit réussir")
+	if not controller.is_slot_upgraded(0):
+		failures.append("l'emplacement doit être marqué amélioré après upgrade_slot")
+	if controller.upgrade_slot(0):
+		failures.append("une seconde amélioration du même emplacement doit être refusée")
+
+	if controller.set_slot(0, weapon):
+		if controller.is_slot_upgraded(0):
+			failures.append("remplacer l'arme d'un emplacement doit réinitialiser son amélioration")
+
 	controller.free()
 	return failures
