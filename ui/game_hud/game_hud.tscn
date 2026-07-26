@@ -1,0 +1,139 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/game_hud/game_hud.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health"]
+bg_color = Color(0.72, 0.18, 0.16, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stamina"]
+bg_color = Color(0.2, 0.62, 0.42, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GameHud" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_script")
+
+[node name="VitalsPanel" type="VBoxContainer" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 320.0
+offset_bottom = 160.0
+theme_override_constants/separation = 4
+
+[node name="HealthLabel" type="Label" parent="VitalsPanel"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1, 0.83, 0.78, 1)
+theme_override_font_sizes/font_size = 20
+text = "Santé : 100 / 100"
+
+[node name="HealthBar" type="ProgressBar" parent="VitalsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 16)
+theme_override_styles/fill = SubResource("StyleBoxFlat_health")
+value = 100.0
+show_percentage = false
+
+[node name="StaminaLabel" type="Label" parent="VitalsPanel"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.78, 1, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+text = "Endurance : 100 / 100"
+
+[node name="StaminaBar" type="ProgressBar" parent="VitalsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 16)
+theme_override_styles/fill = SubResource("StyleBoxFlat_stamina")
+value = 100.0
+show_percentage = false
+
+[node name="CreditsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 172.0
+offset_right = 340.0
+offset_bottom = 206.0
+theme_override_colors/font_color = Color(1, 0.84, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "Crédits : 0"
+
+[node name="WaveLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -330.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 58.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.78, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Vague : 0 / 5"
+horizontal_alignment = 2
+
+[node name="WeaponPanel" type="VBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -370.0
+offset_top = -136.0
+offset_right = -24.0
+offset_bottom = -72.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="WeaponLabel" type="Label" parent="WeaponPanel"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.78, 0.94, 0.82, 1)
+theme_override_font_sizes/font_size = 20
+text = "Arme : Pistolet de secours"
+horizontal_alignment = 2
+
+[node name="AmmoLabel" type="Label" parent="WeaponPanel"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.9, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Munitions : 12 / 48"
+horizontal_alignment = 2
+
+[node name="InteractionPrompt" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -122.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PurchaseFeedback" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -190.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1

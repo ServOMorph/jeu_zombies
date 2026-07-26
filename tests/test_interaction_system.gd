@@ -18,12 +18,12 @@ func run_tests() -> Array[String]:
 		failures.append("la sonde doit détecter les zones d'interaction de la couche 2")
 	player.free()
 	var world := DEV_PLAYER_TEST.instantiate()
-	var interaction_prompt := world.get_node("CanvasLayer/InteractionPrompt") as Label
+	var interaction_prompt := world.get_node("GameHud/InteractionPrompt") as Label
 	if interaction_prompt.anchor_top != 1.0 or interaction_prompt.anchor_bottom != 1.0:
 		failures.append("l'invite d'interaction doit être ancrée en bas de l'écran")
 	if interaction_prompt.offset_top >= interaction_prompt.offset_bottom:
 		failures.append("l'invite d'interaction doit avoir une hauteur visible")
-	var purchase_feedback := world.get_node_or_null("CanvasLayer/PurchaseFeedback") as Label
+	var purchase_feedback := world.get_node_or_null("GameHud/PurchaseFeedback") as Label
 	if purchase_feedback == null or purchase_feedback.visible:
 		failures.append("le feedback d'achat dédié doit exister et être masqué au repos")
 	world.free()

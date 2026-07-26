@@ -62,8 +62,14 @@ func _run_test_file(test_file: String) -> Array[String]:
 	if test_script == null:
 		failures.append("%s : chargement impossible" % test_file)
 		return failures
+	if not test_script.can_instantiate():
+		failures.append("%s : script non instanciable" % test_file)
+		return failures
 
 	var test_suite: Object = test_script.new()
+	if test_suite == null:
+		failures.append("%s : instanciation impossible" % test_file)
+		return failures
 	if not test_suite.has_method("run_tests"):
 		failures.append("%s : méthode run_tests() absente" % test_file)
 		return failures

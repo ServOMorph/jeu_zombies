@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3]
+[gd_scene load_steps=37 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -21,6 +21,7 @@
 [ext_resource type="Resource" path="res://data/doors/couloirs_laboratoire.tres" id="19_door_laboratoire"]
 [ext_resource type="Resource" path="res://data/doors/entrepot_extraction.tres" id="20_door_entrepot_extraction"]
 [ext_resource type="Resource" path="res://data/doors/laboratoire_extraction.tres" id="21_door_laboratoire_extraction"]
+[ext_resource type="PackedScene" path="res://ui/game_hud/game_hud.tscn" id="22_hud"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -205,6 +206,8 @@ script = ExtResource("4_audio")
 
 [node name="DevMetricsOverlay" parent="." instance=ExtResource("5_overlay")]
 
+[node name="GameHud" parent="." instance=ExtResource("22_hud")]
+
 [node name="Crosshair" type="Label" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -249,26 +252,6 @@ offset_bottom = 140.0
 theme_override_colors/font_color = Color(0.8, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nF5 : choisir un scénario · F6 : subir des dégâts · F10 : test de charge · F11 : fermer portes · F12 : ouvrir portes · Entrée : recommencer après défaite · Échap : retour au menu"
-
-[node name="VitalsLabel" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-offset_left = 24.0
-offset_top = 150.0
-offset_right = 390.0
-offset_bottom = 330.0
-theme_override_colors/font_color = Color(1, 0.82, 0.62, 1)
-theme_override_font_sizes/font_size = 20
-text = "Santé : 100 / 100\nEndurance : 100 / 100\nCrédits : 0\nVitesse : 0.0 m/s\nCourse : REPOS\nÉtat : EN COURS"
-
-[node name="WeaponLabel" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-offset_left = 24.0
-offset_top = 350.0
-offset_right = 430.0
-offset_bottom = 450.0
-theme_override_colors/font_color = Color(0.72, 0.9, 0.76, 1)
-theme_override_font_sizes/font_size = 20
-text = "Arme : Pistolet de secours\nMunitions : 12 / 48\nCible : 100 / 100"
 
 [node name="TargetDummy" parent="." instance=ExtResource("3_target")]
 position = Vector3(3, 1, -7)
@@ -320,16 +303,6 @@ position = Vector3(0, 0.01, -62)
 script = ExtResource("8_spawn_point")
 zone_id = "extraction"
 
-[node name="SurvivalLabel" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-offset_left = 24.0
-offset_top = 530.0
-offset_right = 520.0
-offset_bottom = 620.0
-theme_override_colors/font_color = Color(0.78, 0.9, 1, 1)
-theme_override_font_sizes/font_size = 20
-text = "Vague : 0 / 5\nEn attente\nZombies : 0 / 8"
-
 [node name="DefeatLabel" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
 visible = false
@@ -375,36 +348,5 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.82, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "CHOISIR UN SCÉNARIO DE TEST\n\n1 — PARCOURS : portes, collisions et navigation sans zombies\n2 — SURVIE : vagues et zombies\n\nF5 permet de revenir à ce choix."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InteractionPrompt" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -122.0
-offset_bottom = -72.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0.9, 0.96, 1, 1)
-theme_override_font_sizes/font_size = 22
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PurchaseFeedback" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -190.0
-offset_bottom = -132.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1

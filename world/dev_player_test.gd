@@ -1,45 +1,36 @@
 extends Node3D
 
 const STARTUP_SCENE := "res://ui/dev_startup/dev_startup.tscn"
-const HUD_UPDATE_INTERVAL_SECONDS := 0.1
 const IMPACT_POOL_SIZE := 12
 const IMPACT_LIFETIME_SECONDS := 0.12
 const STRESS_TEST_WAVE_NUMBER := 5
-const PURCHASE_FEEDBACK_SECONDS := 2.5
 
 @onready var player = $Player
-@onready var vitals_label: Label = %VitalsLabel
-@onready var weapon_label: Label = %WeaponLabel
 @onready var hit_marker: Label = %HitMarker
 @onready var target = $TargetDummy
 @onready var zombie_spawner = $ZombieSpawner
 @onready var wave_manager: WaveManager = $WaveManager
 @onready var spawn_label: Label = %SpawnLabel
-@onready var survival_label: Label = %SurvivalLabel
 @onready var defeat_label: Label = %DefeatLabel
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/WeaponVisualRoot/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
 @onready var helix_blockout: HelixBlockout = $HelixBlockout
 @onready var test_scenario_label: Label = %TestScenarioLabel
-@onready var interaction_prompt: Label = %InteractionPrompt
-@onready var purchase_feedback: Label = %PurchaseFeedback
 @onready var interaction_controller = $Player/Head/Camera3D/InteractionController
+@onready var game_hud = $GameHud
 
 var _hit_marker_remaining := 0.0
 var _muzzle_flash_remaining := 0.0
-var _hud_update_elapsed := 0.0
 var _impact_pool: Array[MeshInstance3D] = []
 var _impact_lifetimes: Array[float] = []
 var _impact_pool_cursor := 0
 var _test_scenario := DevTestScenario.Mode.NONE
-var _purchase_feedback_remaining := 0.0
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	_create_impact_pool()
-	_refresh_hud()
 	player.weapon_controller.shot_fired.connect(_on_shot_fired)
 	player.weapon_controller.melee_swung.connect(_on_melee_swung)
 	player.weapon_controller.hit_confirmed.connect(_on_hit_confirmed)
@@ -51,9 +42,7 @@ func _ready() -> void:
 	wave_manager.wave_finished.connect(_on_wave_finished)
 	wave_manager.waves_completed.connect(_on_waves_completed)
 	GameSession.session_ended.connect(_on_session_ended)
-	GameSession.purchase_succeeded.connect(_on_purchase_succeeded)
-	GameSession.purchase_failed.connect(_on_purchase_failed)
-	interaction_controller.target_changed.connect(_on_interaction_target_changed)
+	game_hud.configure(player, wave_manager, interaction_controller)
 	player.set_physics_process(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	spawn_label.text = "Choisissez un scénario de test"
@@ -62,26 +51,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_transient_effects(delta)
-	_update_purchase_feedback(delta)
-	_hud_update_elapsed += delta
-	if _hud_update_elapsed >= HUD_UPDATE_INTERVAL_SECONDS:
-		_refresh_hud()
-		_hud_update_elapsed = 0.0
-
-
-func _update_purchase_feedback(delta: float) -> void:
-	if _purchase_feedback_remaining <= 0.0:
-		return
-	_purchase_feedback_remaining = maxf(0.0, _purchase_feedback_remaining - delta)
-	if _purchase_feedback_remaining == 0.0:
-		purchase_feedback.visible = false
-
-
-func _show_purchase_feedback(message: String, color: Color) -> void:
-	purchase_feedback.text = message
-	purchase_feedback.modulate = color
-	purchase_feedback.visible = true
-	_purchase_feedback_remaining = PURCHASE_FEEDBACK_SECONDS
 
 
 func _create_impact_pool() -> void:
@@ -117,39 +86,6 @@ func _update_transient_effects(delta: float) -> void:
 			_impact_pool[index].visible = false
 
 
-func _refresh_hud() -> void:
-	var state := "DÉFAITE" if player.vitals.is_dead else "EN COURS"
-	var sprint_state := "ACTIVE" if player.is_sprinting else "REPOS"
-	if player.vitals.is_exhausted:
-		sprint_state = "ÉPUISÉ"
-	vitals_label.text = "Santé : %.0f / %.0f\nEndurance : %.0f / %.0f\nCrédits : %d\nVitesse : %.1f m/s\nCourse : %s\nÉtat : %s" % [
-		player.vitals.health,
-		player.vitals.max_health,
-		player.vitals.stamina,
-		player.vitals.max_stamina,
-		GameSession.get_credits(),
-		player.get_horizontal_speed(),
-		sprint_state,
-		state,
-	]
-	var ammo: Vector2i = player.weapon_controller.get_current_ammo()
-	weapon_label.text = "Arme : %s\nMunitions : %d / %d\nCible : %.0f / %.0f" % [
-		player.weapon_controller.get_current_weapon_name(),
-		ammo.x,
-		ammo.y,
-		target.health,
-		target.max_health,
-	]
-	var wave_status := _get_wave_status_text()
-	survival_label.text = "Vague : %d / %d\n%s\nZombies : %d / %d" % [
-		wave_manager.current_wave_number,
-		wave_manager.wave_definitions.size(),
-		wave_status,
-		zombie_spawner.get_active_zombie_count(),
-		zombie_spawner.max_active_zombies,
-	]
-
-
 func _on_shot_fired(_weapon_name: String) -> void:
 	_muzzle_flash_remaining = 0.06
 	combat_audio.play_shot()
@@ -162,12 +98,6 @@ func _on_melee_swung() -> void:
 func _on_hit_confirmed(_damage: float) -> void:
 	_hit_marker_remaining = 0.12
 	combat_audio.play_hit()
-
-
-func _on_interaction_target_changed(target) -> void:
-	interaction_prompt.visible = target != null
-	if target != null:
-		interaction_prompt.text = target.get_interaction_prompt()
 
 
 func _on_impact_registered(position: Vector3, normal: Vector3) -> void:
@@ -295,22 +225,6 @@ func _on_zombie_reward_granted(credits: int) -> void:
 		spawn_label.text = "+%d crédits\nSolde : %d" % [credits, GameSession.get_credits()]
 
 
-func _on_purchase_succeeded(item_name: String, cost: int, remaining_credits: int) -> void:
-	_show_purchase_feedback("Achat réussi : %s\n-%d crédits — Solde : %d" % [
-		item_name,
-		cost,
-		remaining_credits,
-	], Color(0.45, 1.0, 0.58, 1.0))
-
-
-func _on_purchase_failed(item_name: String, cost: int, available_credits: int) -> void:
-	_show_purchase_feedback("Crédits insuffisants : %s\nCoût : %d — Solde : %d" % [
-		item_name,
-		cost,
-		available_credits,
-	], Color(1.0, 0.42, 0.32, 1.0))
-
-
 func _on_spawn_deferred(_zone_id: String) -> void:
 	spawn_label.text = "Apparition différée : aucun point valide ou plafond atteint\nZombies actifs : %d / %d" % [
 		zombie_spawner.get_active_zombie_count(),
@@ -365,15 +279,10 @@ func _start_test_scenario(mode: DevTestScenario.Mode) -> void:
 		spawn_label.text = "%s\nVague 1 en préparation" % DevTestScenario.title(mode)
 	else:
 		spawn_label.text = "%s\nAucun zombie ne sera généré" % DevTestScenario.title(mode)
-		_survival_label_for_sandbox()
 
 
 func _is_survival_scenario() -> bool:
 	return DevTestScenario.has_zombies(_test_scenario)
-
-
-func _survival_label_for_sandbox() -> void:
-	survival_label.text = "Scénario : Parcours\nZombies : désactivés"
 
 
 func _restart_survival_session() -> void:
@@ -392,22 +301,6 @@ func _start_stress_test() -> void:
 			STRESS_TEST_WAVE_NUMBER,
 			zombie_spawner.max_active_zombies,
 		]
-
-
-func _get_wave_status_text() -> String:
-	if not _is_survival_scenario():
-		return "Parcours sans zombies"
-	match wave_manager.state:
-		WaveManager.State.SPAWNING:
-			return "Apparitions en cours"
-		WaveManager.State.WAITING_FOR_CLEAR:
-			return "Éliminez les derniers zombies"
-		WaveManager.State.INTERMISSION:
-			return "Pause : %.1f s" % wave_manager.get_intermission_remaining_seconds()
-		WaveManager.State.COMPLETED:
-			return "Survie terminée"
-		_:
-			return "En attente"
 
 
 func _on_wave_finished(wave_number: int) -> void:
