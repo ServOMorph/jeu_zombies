@@ -175,7 +175,9 @@ func _input(event: InputEvent) -> void:
 		and event.keycode == KEY_F9
 		and _is_survival_scenario()
 	):
-		wave_manager.start_wave_for_test(2, player)
+		wave_manager.stop()
+		zombie_spawner.deactivate_all()
+		wave_manager.start_wave_for_test(5, player)
 		get_viewport().set_input_as_handled()
 	elif (
 		event is InputEventKey

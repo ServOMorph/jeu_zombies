@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.19 — 2026-07-26
+
+### Modifié
+
+- Porte de sortie M3 franchie après un retest ciblé (vague 5 forcée, zombies réduits à 1-2, FPS minimum 60, zéro frame sous 50, compteur cohérent) ; la cause initiale (FPS min 28, compteur figé) reste non diagnostiquée.
+- Raccourci de test `F9` : force désormais la vague 5 (arrêt propre de la vague en cours puis désactivation des zombies actifs avant de la forcer), au lieu de la vague 2.
+
 ## v0.18 — 2026-07-26
 
 ### Ajouté

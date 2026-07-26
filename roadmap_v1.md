@@ -501,7 +501,7 @@ Statut au 2026-07-26 : validé automatiquement et manuellement, y compris le pre
 - Chaque élément du HUD affiche la valeur réelle de la session.
 - Un parcours complet de la carte avec une vague active ne descend pas sous 50 FPS.
 
-Statut au 2026-07-26 : porte non franchie. Premier contrôle manuel échoué (FPS minimum 28, 3 frames sous 50) et compteur de zombies restants figé en vague 5. Instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif) ; cause non encore corrigée, contrôle à rejouer.
+Statut au 2026-07-26 : porte franchie. Premier contrôle manuel échoué (FPS minimum 28, 3 frames sous 50) et compteur de zombies restants figé en vague 5 ; instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif). Retest ciblé (vague 5 forcée, zombies réduits à 1-2) conforme : FPS minimum 60, zéro frame sous 50, compteur cohérent. La cause initiale (chute FPS à 28, blocage du compteur) n'a pas été diagnostiquée ; elle n'a pas été reproduite dans ce protocole, ce qui ne constitue pas une preuve de correction.
 
 ## 10. Jalon M4 — Arsenal, achats et avantages
 
@@ -862,4 +862,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M2.3 — Gestionnaire de vagues** : ressources de vagues, transitions, compteur, pause inter-vague et mode de test.
+Réaliser **M4.1 — Six armes distinctes** : finaliser le petit pistolet et créer les cinq armes restantes.
