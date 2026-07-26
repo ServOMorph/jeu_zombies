@@ -19,6 +19,7 @@ Jeu de tir à la première personne et de survie solo contre des vagues de zombi
 - `player/`, `enemies/`, `weapons/`, `world/` : scènes et logique de gameplay
 - `ui/` : scènes d’interface
 - `tests/` : validations automatisées
+- `DESIGN/` : direction artistique, références et spécifications d’intégration
 - `_docs/` : GDD, roadmap et preuves de validation
 
 ## Lancement
@@ -43,4 +44,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le HUD autonome observe les signaux de session et est validé sur plusieurs résolutions. Le blockout comporte cinq zones, des crédits de session, des interactions caméra et cinq portes achetables. La porte de sortie M3 attend le contrôle manuel consigné dans `tests_manuels.md` avant M4.
+M0, M1, M2 et M3.1 à M3.5 sont validés. `python check.py` contrôle l'import, 16 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. Le HUD autonome observe les signaux de session et est validé sur plusieurs résolutions. Le blockout comporte cinq zones, des crédits de session, des interactions caméra et cinq portes achetables. La porte de sortie M3 attend le contrôle manuel consigné dans `tests_manuels.md` avant M4. La conception graphique est isolée dans `DESIGN/` et suit un flux de validation avant toute intégration dans le jeu.

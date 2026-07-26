@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.15 — 2026-07-26
+
+### Ajouté
+
+- Zone DESIGN initialisée avec un workflow graphique, un ordre de production et des contrats d’intégration.
+
+### Modifié
+
+- Responsabilités séparées entre conception artistique dans `DESIGN/` et intégration technique dans les sessions de code.
+- README complété avec la zone de direction artistique.
+
 ## v0.14 — 2026-07-26
 
 ### Ajouté
