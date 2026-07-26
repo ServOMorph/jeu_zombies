@@ -12,7 +12,7 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - `python check.py` valide l'import, 16 suites Godot headless, le franchissement d'une porte et l'export `.pck`.
 - Le HUD autonome affiche les valeurs de session par signaux, avec ancrages multi-résolutions et feedback d'achat.
 - Le blockout comporte cinq zones et cinq portes achetables, avec navigation cohérente avant et après ouverture.
-- La porte de sortie M3 attend un parcours complet avec vague active, mesuré à au moins 50 FPS, avant M4.
+- La porte de sortie M3 attend le contrôle consigné dans `tests_manuels.md` avant M4.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
 - 2026-07-25 : La qualification FPS doit être reproductible avec le moins possible de charge CPU, GPU et disque en arrière-plan.

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.14 — 2026-07-26
+
+### Ajouté
+
+- Contrôle manuel de la porte de sortie M3, en attente dans `tests_manuels.md` : achats réels des cinq portes, parcours avec vague active, HUD, navigation et métriques FPS.
+
+### Modifié
+
+- Contexte et README alignés sur la qualification M3 à effectuer avant M4.
+
 ## v0.13 — 2026-07-26
 
 ### Ajouté
