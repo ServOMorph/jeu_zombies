@@ -31,3 +31,7 @@ func set_interaction_enabled(should_enable: bool) -> void:
 		return
 	interaction_enabled = should_enable
 	interaction_state_changed.emit()
+
+
+func on_target_lost() -> void:
+	pass

@@ -45,6 +45,7 @@ const WEAPON_VISUAL_CLEARANCE := 0.04
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var weapon_visual_root: Node3D = $Head/Camera3D/WeaponVisualRoot
+@onready var weapon_visual_mesh: MeshInstance3D = $Head/Camera3D/WeaponVisualRoot/WeaponVisual
 @onready var weapon_obstacle_probe: RayCast3D = $Head/Camera3D/WeaponObstacleProbe
 @onready var interaction_controller = $Head/Camera3D/InteractionController
 @onready var weapon_controller = $WeaponController
@@ -81,6 +82,8 @@ func _ready() -> void:
 	weapon_obstacle_probe.add_exception(self)
 	interaction_controller.configure(self)
 	weapon_controller.shot_fired.connect(_on_shot_fired)
+	weapon_controller.weapon_changed.connect(_on_weapon_changed)
+	_on_weapon_changed(weapon_controller.get_current_weapon_name())
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
@@ -202,6 +205,20 @@ func _update_weapon_visual(delta: float) -> void:
 			target_z,
 			weapon_extension_speed * delta
 		)
+
+
+func _on_weapon_changed(_weapon_name: String) -> void:
+	var definition = weapon_controller.get_current_definition()
+	if definition == null:
+		return
+	var mesh := BoxMesh.new()
+	mesh.size = definition.visual_size
+	weapon_visual_mesh.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.albedo_color = definition.visual_color
+	material.metallic = 0.6
+	material.roughness = 0.4
+	weapon_visual_mesh.material_override = material
 
 
 func _on_shot_fired(_weapon_name: String) -> void:

@@ -25,9 +25,21 @@ static var NAVIGATION_AREAS: Array[PackedVector3Array] = [
 	PackedVector3Array([Vector3(-11.0, 0.0, -55.0), Vector3(11.0, 0.0, -55.0), Vector3(11.0, 0.0, -71.0), Vector3(-11.0, 0.0, -71.0)]),
 ]
 
+const WALL_BUYS: Array[Dictionary] = [
+	{"id": "accueil_pistolet", "zone": "accueil", "position": Vector3(0.0, 1.1, 4.0)},
+	{"id": "couloirs_frelon", "zone": "couloirs", "position": Vector3(0.0, 1.1, 4.0)},
+	{"id": "entrepot_foudroyeur", "zone": "entrepot", "position": Vector3(0.0, 1.1, 4.0)},
+	{"id": "laboratoire_sentinelle", "zone": "laboratoire", "position": Vector3(0.0, 1.1, 4.0)},
+	{"id": "extraction_oeil_de_nox", "zone": "extraction", "position": Vector3(-5.0, 1.1, 4.0)},
+	{"id": "extraction_broyeur", "zone": "extraction", "position": Vector3(5.0, 1.1, 4.0)},
+]
+
 var _doors: Dictionary = {}
+var _wall_buys: Dictionary = {}
+var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
+@export var wall_buy_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -35,6 +47,8 @@ func _ready() -> void:
 		_create_zone(zone)
 	for connection: Dictionary in CONNECTIONS:
 		_create_door(connection)
+	for wall_buy: Dictionary in WALL_BUYS:
+		_create_wall_buy(wall_buy)
 	_create_navigation_regions()
 
 
@@ -52,6 +66,13 @@ static func get_door_ids() -> PackedStringArray:
 	return door_ids
 
 
+static func get_wall_buy_ids() -> PackedStringArray:
+	var buy_ids := PackedStringArray()
+	for wall_buy: Dictionary in WALL_BUYS:
+		buy_ids.append(str(wall_buy["id"]))
+	return buy_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -66,6 +87,10 @@ func are_all_doors_open() -> bool:
 
 func get_door(door_id: String) -> HelixDoor:
 	return _doors.get(door_id) as HelixDoor
+
+
+func get_wall_buy(buy_id: String) -> WallWeaponBuy:
+	return _wall_buys.get(buy_id) as WallWeaponBuy
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -97,6 +122,7 @@ func _create_zone(zone: Dictionary) -> void:
 	zone_root.name = "Zone_%s" % str(zone["id"]).capitalize()
 	zone_root.position = zone["position"] as Vector3
 	add_child(zone_root)
+	_zone_roots[str(zone["id"])] = zone_root
 
 	var floor := StaticBody3D.new()
 	floor.name = "Floor"
@@ -173,6 +199,31 @@ func _create_door(connection: Dictionary) -> void:
 func _find_door_definition(door_id: String) -> Resource:
 	for definition: Resource in door_definitions:
 		if definition != null and str(definition.get("door_id")) == door_id:
+			return definition
+	return null
+
+
+func _create_wall_buy(wall_buy: Dictionary) -> void:
+	var buy_id := str(wall_buy["id"])
+	var definition := _find_wall_buy_definition(buy_id)
+	if definition == null:
+		push_error("Définition d'achat mural manquante : %s" % buy_id)
+		return
+	var zone_root := _zone_roots.get(str(wall_buy["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour l'achat mural : %s" % buy_id)
+		return
+	var wall_weapon_buy := WallWeaponBuy.new()
+	wall_weapon_buy.name = "AchatMural_%s" % buy_id
+	wall_weapon_buy.configure(definition)
+	wall_weapon_buy.position = wall_buy["position"] as Vector3
+	zone_root.add_child(wall_weapon_buy)
+	_wall_buys[buy_id] = wall_weapon_buy
+
+
+func _find_wall_buy_definition(buy_id: String) -> Resource:
+	for definition: Resource in wall_buy_definitions:
+		if definition != null and str(definition.get("buy_id")) == buy_id:
 			return definition
 	return null
 

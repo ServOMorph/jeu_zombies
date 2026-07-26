@@ -520,3 +520,87 @@ Validation communiquée par l'utilisateur : HUD vérifié sur les résolutions p
 ### Résultat
 
 Les critères de M3.5 sont satisfaits. La porte de sortie M3 conserve un contrôle de parcours complet avec vague active et mesure FPS avant le début de M4.
+
+## Porte de sortie M3 — retest ciblé
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : franchie
+
+### Contexte
+
+Le premier contrôle manuel de la porte M3 a échoué (FPS minimum 28, 3 frames sous 50 ; compteur de zombies restants figé en vague 5). Une instrumentation de diagnostic a été ajoutée (motif de spawn différé, compteurs séparés, comptage actif) avant de rejouer le test.
+
+### Changement de comportement — `F9`
+
+Le raccourci `F9` (`world/dev_player_test.gd`) force désormais directement la vague 5 (et arrête proprement toute vague en cours avant de la forcer), au lieu de la vague 2 documentée en M2.3 (ligne 334) et dans le contrôle manuel de M2.3 (ligne 347). Ce changement vise à accélérer les contrôles manuels en fin de vagues ; les mentions de « vague 2 » aux entrées M2.3 ci-dessus restent l'état exact au moment de leur validation et ne sont pas rétroactivement modifiées.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Contrôle global | `python check.py` | code 0 |
+
+### Contrôle manuel
+
+Retest ciblé : vague 5 forcée via `F9`, zombies réduits à 1-2, parcours des cinq zones. FPS minimum 60, zéro frame sous 50, compteur de zombies restants cohérent jusqu'au bout.
+
+### Résultat
+
+La porte de sortie M3 est déclarée franchie sur la base de ce retest. La cause initiale de l'échec du premier contrôle (chute FPS à 28, compteur figé) n'a pas été diagnostiquée : le retest n'a simplement pas reproduit le problème, ce qui ne constitue pas une preuve de correction (voir action ouverte P3 dans `_contexte/signals.md`, rattachée à M7.2).
+
+## M4.1 — Six armes distinctes
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `WeaponDefinition` gagne `pellet_count`, `max_damage_per_shot`, et un profil modèle/son (`visual_size`, `visual_color`, `shot_tone_*`).
+- `WeaponController._perform_hitscan` tire plusieurs plombs par tir avec un budget de dégâts borné par tir.
+- Cinq armes créées avec rôles et valeurs distincts : Frelon (mitraillette), Foudroyeur (fusil à pompe, 8 plombs, dégâts bornés à 110), Sentinelle (fusil d'assaut), Œil-de-Nox (fusil de précision, un coup tue un zombie renforcé), Broyeur (arme lourde).
+- Chaque arme équipée affiche une silhouette (taille/couleur du bloc tenu) et un son de tir procédural distincts (`player_controller.gd`, `combat_audio_feedback.gd`).
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite arsenal | `python test.py --test-file=res://tests/test_weapon_arsenal.gd` | rôles distincts, changement rapide, rechargement interrompu, réserve épuisée couverts |
+| Contrôle global | `python check.py` | code 0, 18 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur via le raccourci de test `F1` (cycle des six armes) : modèle, son et comportement de chaque arme conformes.
+
+### Résultat
+
+Les critères de M4.1 sont satisfaits.
+
+## M4.2 — Armes murales et munitions
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `WallWeaponBuy` (achat mural) : achat initial dans un emplacement libre avec équipement immédiat, rachat de munitions plafonné à la capacité, remplacement de l'arme active à double confirmation (`interact` armé puis confirmé), aucune transaction ne débite sans effet.
+- `HelixBlockout` place six achats muraux dans les cinq zones (Accueil, Couloirs, Entrepôt, Laboratoire, deux en Extraction) via `WALL_BUYS` et `wall_buy_definitions`.
+- Raccourcis de développement `F1` (cycle arsenal) et `F2` (crédit de test) ajoutés à `dev_player_test.gd`.
+- Correction d'un bug découvert en test manuel : l'achat dans un emplacement libre ne changeait pas l'arme active (`set_slot` seul ne suffisait pas) ; `WallWeaponBuy` appelle désormais `equip_slot` après l'achat.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite achats muraux | `python test.py --test-file=res://tests/test_wall_weapon_buy.gd` | wiring des six achats, achat initial, rachat munitions, réserve pleine, remplacement confirmé, réinitialisation par perte de cible couverts |
+| Contrôle global | `python check.py` | code 0, 18 suites, import, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Validation communiquée par l'utilisateur après correction du bug d'équipement à l'achat.
+
+### Résultat
+
+Les critères de M4.2 sont satisfaits.

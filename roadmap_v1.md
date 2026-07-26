@@ -509,23 +509,23 @@ Statut au 2026-07-26 : porte franchie. Premier contrôle manuel échoué (FPS mi
 
 ### M4.1 — Six armes distinctes
 
-- [ ] Finaliser le petit pistolet.
-- [ ] Créer la mitraillette.
-- [ ] Créer le fusil à pompe avec plusieurs plombs et dégâts bornés par tir.
-- [ ] Créer le fusil d'assaut.
-- [ ] Créer le fusil de précision.
-- [ ] Créer l'arme lourde.
-- [ ] Donner à chaque arme un rôle, un nom original, un modèle lisible, un son et des valeurs distinctes.
-- [ ] Vérifier cadence, dégâts, portée, dispersion, recul, temps de rechargement et capacités de munitions.
-- [ ] Tester les changements rapides, rechargements interrompus et réserves vides.
+- [x] Finaliser le petit pistolet.
+- [x] Créer la mitraillette.
+- [x] Créer le fusil à pompe avec plusieurs plombs et dégâts bornés par tir.
+- [x] Créer le fusil d'assaut.
+- [x] Créer le fusil de précision.
+- [x] Créer l'arme lourde.
+- [x] Donner à chaque arme un rôle, un nom original, un modèle lisible, un son et des valeurs distinctes.
+- [x] Vérifier cadence, dégâts, portée, dispersion, recul, temps de rechargement et capacités de munitions.
+- [x] Tester les changements rapides, rechargements interrompus et réserves vides.
 
 ### M4.2 — Armes murales et munitions
 
-- [ ] Placer les achats muraux conformément à la progression de la carte.
-- [ ] Permettre l'achat initial, le remplacement confirmé et le rachat de munitions.
-- [ ] Afficher clairement le coût et la conséquence du remplacement.
-- [ ] Empêcher perte de crédits si la transaction ne peut pas aboutir.
-- [ ] Vérifier les six armes dans une partie réelle.
+- [x] Placer les achats muraux conformément à la progression de la carte.
+- [x] Permettre l'achat initial, le remplacement confirmé et le rachat de munitions.
+- [x] Afficher clairement le coût et la conséquence du remplacement.
+- [x] Empêcher perte de crédits si la transaction ne peut pas aboutir.
+- [x] Vérifier les six armes dans une partie réelle.
 
 ### M4.3 — Caisse d'armes aléatoire
 
@@ -862,4 +862,4 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M4.1 — Six armes distinctes** : finaliser le petit pistolet et créer les cinq armes restantes.
+Réaliser **M4.3 — Caisse d'armes aléatoire**.

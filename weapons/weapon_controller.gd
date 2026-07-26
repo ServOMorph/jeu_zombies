@@ -162,11 +162,59 @@ func get_current_weapon_name() -> String:
 	return "Aucun" if state == null else state.definition.weapon_name
 
 
+func get_current_definition():
+	if _knife_active:
+		return null
+	var state = _current_state()
+	return null if state == null else state.definition
+
+
 func get_current_ammo() -> Vector2i:
 	var state = _current_state()
 	if state == null or _knife_active:
 		return Vector2i.ZERO
 	return Vector2i(state.magazine, state.reserve)
+
+
+func find_slot_for_definition(definition) -> int:
+	for i in _slots.size():
+		var state = _slots[i]
+		if state != null and state.definition == definition:
+			return i
+	return -1
+
+
+func first_free_slot() -> int:
+	for i in _slots.size():
+		if _slots[i] == null:
+			return i
+	return -1
+
+
+func get_slot_ammo(slot_index: int) -> Vector2i:
+	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
+		return Vector2i.ZERO
+	var state = _slots[slot_index]
+	return Vector2i(state.magazine, state.reserve)
+
+
+func is_slot_reserve_full(slot_index: int) -> bool:
+	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
+		return false
+	var state = _slots[slot_index]
+	return state.reserve >= state.definition.reserve_capacity
+
+
+func refill_reserve(slot_index: int) -> bool:
+	if slot_index < 0 or slot_index > 1 or _slots[slot_index] == null:
+		return false
+	var state = _slots[slot_index]
+	if state.reserve >= state.definition.reserve_capacity:
+		return false
+	state.reserve = state.definition.reserve_capacity
+	if slot_index == active_slot and not _knife_active:
+		_emit_ammo(state)
+	return true
 
 
 func _current_state():
@@ -204,16 +252,22 @@ func _perform_hitscan(origin: Vector3, direction: Vector3, definition) -> void:
 	var world := get_world_3d()
 	if world == null:
 		return
-	var shot_direction := _apply_spread(direction, definition.spread_degrees)
-	var query := PhysicsRayQueryParameters3D.create(
-		origin,
-		origin + shot_direction * definition.range_meters
-	)
-	query.exclude = [get_parent().get_rid()]
-	var result := world.direct_space_state.intersect_ray(query)
-	if result.is_empty():
-		return
-	_perform_damage_result(result, definition.damage)
+	var damage_budget: float = definition.max_damage_per_shot if definition.max_damage_per_shot > 0.0 else INF
+	for i in maxi(1, definition.pellet_count):
+		if damage_budget <= 0.0:
+			return
+		var shot_direction := _apply_spread(direction, definition.spread_degrees)
+		var query := PhysicsRayQueryParameters3D.create(
+			origin,
+			origin + shot_direction * definition.range_meters
+		)
+		query.exclude = [get_parent().get_rid()]
+		var result := world.direct_space_state.intersect_ray(query)
+		if result.is_empty():
+			continue
+		var pellet_damage := minf(definition.damage, damage_budget)
+		damage_budget -= pellet_damage
+		_perform_damage_result(result, pellet_damage)
 
 
 func _perform_damage_ray(origin: Vector3, direction: Vector3, range_meters: float, damage: float) -> void:

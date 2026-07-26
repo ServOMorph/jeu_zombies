@@ -18,6 +18,15 @@ func play_shot() -> void:
 	_play_tone("shot")
 
 
+func play_weapon_shot(weapon_name: String, frequency: float, duration_seconds: float, amplitude: float) -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var key := "weapon:%s" % weapon_name
+	if not _players.has(key):
+		_register_tone(key, frequency, duration_seconds, amplitude)
+	_play_tone(key)
+
+
 func play_hit() -> void:
 	_play_tone("hit")
 

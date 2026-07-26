@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WallWeaponBuyDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://data/weapons/wall_weapon_buy_definition.gd" id="1_definition"]
+[ext_resource type="Resource" path="res://weapons/data/sniper_oeil_de_nox.tres" id="2_weapon"]
+
+[resource]
+script = ExtResource("1_definition")
+buy_id = "extraction_oeil_de_nox"
+weapon = ExtResource("2_weapon")
+price_credits = 2750
+ammo_price_credits = 350

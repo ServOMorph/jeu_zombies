@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.22 — 2026-07-26
+
+### Ajouté
+
+- Cinq nouvelles armes (Frelon, Foudroyeur, Sentinelle, Œil-de-Nox, Broyeur) avec rôles et valeurs distincts ; le fusil à pompe tire plusieurs plombs avec des dégâts bornés par tir.
+- Système d'achat mural complet : achat initial, rachat de munitions plafonné, remplacement de l'arme active à double confirmation, six présentoirs répartis dans les cinq zones.
+- Silhouette et son de tir procédural distincts pour chaque arme équipée.
+- Raccourcis de développement `F1` (cycle de l'arsenal) et `F2` (crédit de test) dans la scène de test joueur.
+
+### Corrigé
+
+- Un achat mural dans un emplacement libre n'équipait pas l'arme achetée ; elle est désormais équipée immédiatement.
+- La divergence entre le raccourci `F9` (vague 5) et sa documentation (vague 2) est résolue en documentant le nouveau comportement.
+
 ## v0.21 — 2026-07-26
 
 ### Ajouté

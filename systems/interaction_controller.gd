@@ -62,6 +62,8 @@ func _set_current_target(next_target) -> void:
 			_current_target.interaction_state_changed.disconnect(_on_target_state_changed)
 		if _current_target.tree_exiting.is_connected(_on_target_exiting):
 			_current_target.tree_exiting.disconnect(_on_target_exiting)
+		if _current_target.has_method("on_target_lost"):
+			_current_target.on_target_lost()
 	_current_target = next_target
 	if _current_target != null:
 		_current_target.interaction_state_changed.connect(_on_target_state_changed)

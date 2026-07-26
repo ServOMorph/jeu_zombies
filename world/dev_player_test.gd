@@ -4,6 +4,15 @@ const STARTUP_SCENE := "res://ui/dev_startup/dev_startup.tscn"
 const IMPACT_POOL_SIZE := 12
 const IMPACT_LIFETIME_SECONDS := 0.12
 const STRESS_TEST_WAVE_NUMBER := 5
+const DEV_CREDIT_GRANT := 5000
+const DEV_ARSENAL: Array[Resource] = [
+	preload("res://weapons/data/starter_pistol.tres"),
+	preload("res://weapons/data/smg_frelon.tres"),
+	preload("res://weapons/data/shotgun_foudroyeur.tres"),
+	preload("res://weapons/data/rifle_sentinelle.tres"),
+	preload("res://weapons/data/sniper_oeil_de_nox.tres"),
+	preload("res://weapons/data/heavy_broyeur.tres"),
+]
 
 @onready var player = $Player
 @onready var hit_marker: Label = %HitMarker
@@ -26,6 +35,7 @@ var _impact_pool: Array[MeshInstance3D] = []
 var _impact_lifetimes: Array[float] = []
 var _impact_pool_cursor := 0
 var _test_scenario := DevTestScenario.Mode.NONE
+var _dev_arsenal_index := 0
 
 
 func _ready() -> void:
@@ -86,9 +96,18 @@ func _update_transient_effects(delta: float) -> void:
 			_impact_pool[index].visible = false
 
 
-func _on_shot_fired(_weapon_name: String) -> void:
+func _on_shot_fired(weapon_name: String) -> void:
 	_muzzle_flash_remaining = 0.06
-	combat_audio.play_shot()
+	var definition = player.weapon_controller.get_current_definition()
+	if definition == null:
+		combat_audio.play_shot()
+	else:
+		combat_audio.play_weapon_shot(
+			weapon_name,
+			definition.shot_tone_frequency,
+			definition.shot_tone_duration_seconds,
+			definition.shot_tone_amplitude
+		)
 
 
 func _on_melee_swung() -> void:
@@ -142,6 +161,28 @@ func _input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		GameSession.return_to_menu()
 		get_tree().change_scene_to_file(STARTUP_SCENE)
+		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F1
+		and OS.is_debug_build()
+	):
+		_cycle_dev_weapon()
+		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F2
+		and OS.is_debug_build()
+	):
+		GameSession.add_credits(DEV_CREDIT_GRANT)
+		spawn_label.text = "Crédits de test : +%d (total %d)" % [
+			DEV_CREDIT_GRANT,
+			GameSession.get_credits(),
+		]
 		get_viewport().set_input_as_handled()
 	elif (
 		event is InputEventKey
@@ -208,6 +249,19 @@ func _input(event: InputEvent) -> void:
 		helix_blockout.set_all_doors_open(true)
 		spawn_label.text = "Test portes : OUVERTES\nNavigation entre zones active"
 		get_viewport().set_input_as_handled()
+
+
+func _cycle_dev_weapon() -> void:
+	var definition := DEV_ARSENAL[_dev_arsenal_index]
+	_dev_arsenal_index = (_dev_arsenal_index + 1) % DEV_ARSENAL.size()
+	var weapon_controller = player.weapon_controller
+	weapon_controller.set_slot(weapon_controller.active_slot, definition)
+	weapon_controller.equip_slot(weapon_controller.active_slot)
+	spawn_label.text = "Arme de test : %s (%d/%d)" % [
+		definition.weapon_name,
+		_dev_arsenal_index if _dev_arsenal_index > 0 else DEV_ARSENAL.size(),
+		DEV_ARSENAL.size(),
+	]
 
 
 func _on_zombie_spawned(zombie: Node3D, spawn_point: Node3D, used_fallback: bool) -> void:

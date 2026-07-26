@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://weapons/weapon_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+weapon_name = "Broyeur"
+damage = 38.0
+fire_interval_seconds = 0.1
+range_meters = 50.0
+spread_degrees = 2.6
+magazine_capacity = 75
+reserve_capacity = 225
+reload_duration_seconds = 4.2
+pellet_count = 1
+max_damage_per_shot = 0.0
+visual_size = Vector3(0.62, 0.34, 1.0)
+visual_color = Color(0.34, 0.22, 0.18, 1.0)
+shot_tone_frequency = 110.0
+shot_tone_duration_seconds = 0.09
+shot_tone_amplitude = 0.2

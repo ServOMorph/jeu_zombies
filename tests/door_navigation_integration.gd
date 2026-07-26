@@ -9,6 +9,14 @@ const DOOR_DEFINITIONS: Array[Resource] = [
 	preload("res://data/doors/entrepot_extraction.tres"),
 	preload("res://data/doors/laboratoire_extraction.tres"),
 ]
+const WALL_BUY_DEFINITIONS: Array[Resource] = [
+	preload("res://data/weapons/wall_buy_accueil_pistolet.tres"),
+	preload("res://data/weapons/wall_buy_couloirs_frelon.tres"),
+	preload("res://data/weapons/wall_buy_entrepot_foudroyeur.tres"),
+	preload("res://data/weapons/wall_buy_laboratoire_sentinelle.tres"),
+	preload("res://data/weapons/wall_buy_extraction_oeil_de_nox.tres"),
+	preload("res://data/weapons/wall_buy_extraction_broyeur.tres"),
+]
 
 const CLOSED_OBSERVATION_FRAMES := 240
 const OPEN_OBSERVATION_FRAMES := 480
@@ -19,6 +27,7 @@ const SECOND_REGION_ENTRY_Z := -9.0
 func _ready() -> void:
 	var blockout := HELIX_BLOCKOUT.new()
 	blockout.door_definitions = DOOR_DEFINITIONS
+	blockout.wall_buy_definitions = WALL_BUY_DEFINITIONS
 	add_child(blockout)
 
 	var target := Node3D.new()
