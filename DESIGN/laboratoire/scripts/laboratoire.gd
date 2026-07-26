@@ -15,6 +15,11 @@ var _preview_instance: Node3D
 var _asset_paths: PackedStringArray = []
 var _asset_index := -1
 var _asset_scale := 1.0
+var _architecture: Node3D
+var _validation_root: Node3D
+var _validation_vignettes: Array[Node3D] = []
+var _validation_index := -1
+var _player: CharacterBody3D
 var _light_mode := 0
 var _help_visible := true
 var _help_background: ColorRect
@@ -31,7 +36,9 @@ func _ready() -> void:
 	_create_player()
 	_create_interface()
 	_discover_assets()
+	_create_validation_vignettes()
 	print("NOX_PROTOCOL_DESIGN_LAB_READY")
+	print("NOX_PROTOCOL_VALIDATION_VIGNETTES_READY")
 
 
 func _process(_delta: float) -> void:
@@ -46,6 +53,8 @@ func _process(_delta: float) -> void:
 		_change_asset(-1)
 	if Input.is_action_just_pressed("lab_asset_next"):
 		_change_asset(1)
+	if Input.is_action_just_pressed("lab_validation_next"):
+		_change_validation_vignette()
 	if Input.is_action_just_pressed("lab_scale_down"):
 		_change_asset_scale(0.8)
 	if Input.is_action_just_pressed("lab_scale_up"):
@@ -65,6 +74,7 @@ func _register_inputs() -> void:
 	_bind_keys("lab_light", [KEY_F2])
 	_bind_keys("lab_asset_previous", [KEY_PAGEUP])
 	_bind_keys("lab_asset_next", [KEY_PAGEDOWN])
+	_bind_keys("lab_validation_next", [KEY_F3])
 	_bind_keys("lab_scale_down", [KEY_MINUS, KEY_KP_SUBTRACT])
 	_bind_keys("lab_scale_up", [KEY_EQUAL, KEY_KP_ADD])
 	_bind_keys("lab_rotate", [KEY_R])
@@ -122,48 +132,48 @@ func _create_environment() -> void:
 
 
 func _create_architecture() -> void:
-	var architecture := Node3D.new()
-	architecture.name = "ArchitectureTemoin"
-	add_child(architecture)
+	_architecture = Node3D.new()
+	_architecture.name = "ArchitectureTemoin"
+	add_child(_architecture)
 
 	_add_box(
-		architecture, "Sol", Vector3(12.0, 0.2, 38.0),
+		_architecture, "Sol", Vector3(12.0, 0.2, 38.0),
 		Vector3(0.0, -0.1, -8.0), _materials["concrete"], true
 	)
 	_add_box(
-		architecture, "MurGauche", Vector3(0.3, 4.0, 38.0),
+		_architecture, "MurGauche", Vector3(0.3, 4.0, 38.0),
 		Vector3(-6.0, 2.0, -8.0), _materials["concrete_dark"], true
 	)
 	_add_box(
-		architecture, "MurDroit", Vector3(0.3, 4.0, 38.0),
+		_architecture, "MurDroit", Vector3(0.3, 4.0, 38.0),
 		Vector3(6.0, 2.0, -8.0), _materials["concrete_dark"], true
 	)
 	_add_box(
-		architecture, "Fond", Vector3(12.0, 4.0, 0.3),
+		_architecture, "Fond", Vector3(12.0, 4.0, 0.3),
 		Vector3(0.0, 2.0, -27.0), _materials["concrete_dark"], true
 	)
 
 	for z_position: float in [9.0, 3.0, -3.0, -9.0, -15.0, -21.0, -26.5]:
-		_add_frame(architecture, z_position)
+		_add_frame(_architecture, z_position)
 
 	for z_position: float in [7.0, 1.0, -5.0, -11.0, -17.0, -23.0]:
 		_add_box(
-			architecture, "Plafond",
+			_architecture, "Plafond",
 			Vector3(10.8, 0.18, 2.8),
 			Vector3(0.0, 4.05, z_position),
 			_materials["steel_dark"]
 		)
 		_add_box(
-			architecture, "BandeauCyan",
+			_architecture, "BandeauCyan",
 			Vector3(0.12, 0.02, 4.0),
 			Vector3(0.0, 0.02, z_position),
 			_materials["cyan"]
 		)
 
-	_create_security_door(architecture)
-	_create_medical_alcove(architecture)
-	_create_preview_stage(architecture)
-	_create_scale_reference(architecture)
+	_create_security_door(_architecture)
+	_create_medical_alcove(_architecture)
+	_create_preview_stage(_architecture)
+	_create_scale_reference(_architecture)
 
 
 func _add_frame(parent: Node3D, z_position: float) -> void:
@@ -320,11 +330,11 @@ func _create_lighting() -> void:
 
 
 func _create_player() -> void:
-	var player := CharacterBody3D.new()
-	player.name = "VisiteurFPS"
-	player.set_script(preload("res://scripts/controleur_fps.gd"))
-	player.position = Vector3(0.0, 0.02, 9.5)
-	add_child(player)
+	_player = CharacterBody3D.new()
+	_player.name = "VisiteurFPS"
+	_player.set_script(preload("res://scripts/controleur_fps.gd"))
+	_player.position = Vector3(0.0, 0.02, 9.5)
+	add_child(_player)
 
 
 func _create_interface() -> void:
@@ -346,7 +356,7 @@ func _create_interface() -> void:
 		+ "Maj : course   Échap : libérer/capturer la souris\n"
 		+ "F2 : ambiance froide / neutre / alerte\n"
 		+ "Page préc./suiv. : changer d'asset   R : rotation 45°\n"
-		+ "- / + : échelle de prévisualisation"
+		+ "F3 : vignette assemblée suivante   - / + : échelle de prévisualisation"
 	)
 	_help_label.add_theme_color_override("font_color", Color("#d7e0e2"))
 	_help_label.add_theme_color_override("font_shadow_color", Color.BLACK)
@@ -394,6 +404,7 @@ func _discover_assets() -> void:
 
 
 func _change_asset(direction: int) -> void:
+	_exit_validation_mode()
 	if _asset_paths.is_empty():
 		_update_status()
 		return
@@ -406,21 +417,167 @@ func _show_asset() -> void:
 	if is_instance_valid(_preview_instance):
 		_preview_instance.queue_free()
 		_preview_instance = null
-	var resource := load(_asset_paths[_asset_index])
-	if resource is not PackedScene:
-		_update_status("Format chargé mais scène non instanciable")
-		return
-	var instance: Node = resource.instantiate()
-	if instance is not Node3D:
-		instance.queue_free()
+	var instance := _instantiate_asset(_asset_paths[_asset_index])
+	if instance == null:
 		_update_status("La racine de l'asset doit être un Node3D")
 		return
-	_preview_instance = instance as Node3D
+	_preview_instance = instance
 	_preview_instance.name = "AssetActif"
 	_preview_instance.scale = Vector3.ONE * _asset_scale
 	_asset_anchor.add_child(_preview_instance)
 	_placeholder.visible = false
 	_update_status()
+
+
+func _instantiate_asset(asset_path: String) -> Node3D:
+	var extension := asset_path.get_extension().to_lower()
+	if extension in ["glb", "gltf"]:
+		var document := GLTFDocument.new()
+		var state := GLTFState.new()
+		var parse_error := document.append_from_file(ProjectSettings.globalize_path(asset_path), state)
+		if parse_error != OK:
+			return null
+		var generated_scene := document.generate_scene(state)
+		if generated_scene is Node3D:
+			return generated_scene as Node3D
+		if generated_scene != null:
+			generated_scene.queue_free()
+		return null
+
+	var resource := load(asset_path)
+	if resource is not PackedScene:
+		return null
+	var instance := (resource as PackedScene).instantiate()
+	if instance is Node3D:
+		return instance as Node3D
+	instance.queue_free()
+	return null
+
+
+func _create_validation_vignettes() -> void:
+	_validation_root = Node3D.new()
+	_validation_root.name = "VignettesValidation"
+	add_child(_validation_root)
+	_validation_vignettes = [
+		_create_corridor_vignette(),
+		_create_corner_vignette(),
+		_create_room_vignette(),
+		_create_door_vignette(),
+	]
+	for vignette: Node3D in _validation_vignettes:
+		vignette.visible = false
+
+
+func _create_vignette(name: String) -> Node3D:
+	var vignette := Node3D.new()
+	vignette.name = name
+	_validation_root.add_child(vignette)
+	return vignette
+
+
+func _add_module(
+	parent: Node3D,
+	file_name: String,
+	module_position: Vector3,
+	rotation_y_degrees: float = 0.0
+) -> void:
+	var module_path := "%s/%s" % [IMPORTS_PATH, file_name]
+	var glb_path := "%s/%s.glb" % [IMPORTS_PATH, file_name.get_basename()]
+	if FileAccess.file_exists(glb_path):
+		module_path = glb_path
+	var node := _instantiate_asset(module_path)
+	if node == null:
+		push_error("Module de validation incompatible : %s" % module_path)
+		return
+	node.position = module_position
+	node.rotation_degrees.y = rotation_y_degrees
+	parent.add_child(node)
+
+
+func _create_corridor_vignette() -> Node3D:
+	var vignette := _create_vignette("VignetteCouloir")
+	for x_position: float in [-2.0, 0.0, 2.0]:
+		for z_position: float in [8.0, 6.0, 4.0, 2.0, 0.0, -2.0]:
+			_add_module(vignette, "np_kms_01_sol_droit.tscn", Vector3(x_position, 0.0, z_position))
+			_add_module(vignette, "np_kms_10_plafond_plein.tscn", Vector3(x_position, 3.5, z_position))
+	for z_position: float in [8.0, 6.0, 4.0, 2.0, 0.0, -2.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(-3.1, 0.0, z_position), 90.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(3.1, 0.0, z_position), -90.0)
+	for z_position: float in [9.0, 5.0, 1.0, -3.0]:
+		_add_module(vignette, "np_kms_20_pilier.tscn", Vector3(-3.1, 0.0, z_position))
+		_add_module(vignette, "np_kms_20_pilier.tscn", Vector3(3.1, 0.0, z_position))
+	for z_position: float in [9.0, -3.0]:
+		for x_position: float in [-2.0, 0.0, 2.0]:
+			_add_module(vignette, "np_kms_21_poutre.tscn", Vector3(x_position, 3.35, z_position))
+	for z_position: float in [5.0, 1.0]:
+		_add_module(vignette, "np_kms_22_couvre_joint_vertical.tscn", Vector3(-3.11, 0.0, z_position))
+		_add_module(vignette, "np_kms_22_couvre_joint_vertical.tscn", Vector3(3.11, 0.0, z_position))
+		_add_module(vignette, "np_kms_23_couvre_joint_horizontal.tscn", Vector3(-1.0, 3.34, z_position))
+		_add_module(vignette, "np_kms_23_couvre_joint_horizontal.tscn", Vector3(1.0, 3.34, z_position))
+	return vignette
+
+
+func _create_corner_vignette() -> Node3D:
+	var vignette := _create_vignette("VignetteAngle")
+	for x_position: float in [-2.0, 0.0, 2.0]:
+		for z_position: float in [8.0, 6.0, 4.0]:
+			_add_module(vignette, "np_kms_02_sol_angle.tscn", Vector3(x_position, 0.0, z_position))
+			_add_module(vignette, "np_kms_10_plafond_plein.tscn", Vector3(x_position, 3.5, z_position))
+	for z_position: float in [8.0, 6.0, 4.0]:
+		_add_module(vignette, "np_kms_07_angle_interieur.tscn", Vector3(-3.0, 0.0, z_position))
+		_add_module(vignette, "np_kms_08_angle_exterieur.tscn", Vector3(3.0, 0.0, z_position), 180.0)
+	return vignette
+
+
+func _create_room_vignette() -> Node3D:
+	var vignette := _create_vignette("VignetteSalle")
+	for x_position: float in [-3.0, -1.0, 1.0, 3.0]:
+		for z_position: float in [7.0, 5.0, 3.0, 1.0]:
+			_add_module(vignette, "np_kms_01_sol_droit.tscn", Vector3(x_position, 0.0, z_position))
+			_add_module(vignette, "np_kms_11_plafond_technique.tscn", Vector3(x_position, 3.5, z_position))
+	for x_position: float in [-3.0, -1.0, 1.0, 3.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(x_position, 0.0, 8.1), 180.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(x_position, 0.0, -0.1))
+	for z_position: float in [7.0, 5.0, 3.0, 1.0]:
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(-4.1, 0.0, z_position), 90.0)
+		_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(4.1, 0.0, z_position), -90.0)
+	return vignette
+
+
+func _create_door_vignette() -> Node3D:
+	var vignette := _create_vignette("VignettePorte")
+	for x_position: float in [-2.0, 0.0, 2.0]:
+		_add_module(vignette, "np_kms_01_sol_droit.tscn", Vector3(x_position, 0.0, 6.0))
+		_add_module(vignette, "np_kms_10_plafond_plein.tscn", Vector3(x_position, 3.5, 6.0))
+	for x_position: float in [-1.0, 1.0]:
+		_add_module(vignette, "np_kms_04_sol_transition.tscn", Vector3(x_position, 0.0, 4.5))
+	_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(-3.1, 0.0, 6.0), 90.0)
+	_add_module(vignette, "np_kms_05_mur_plein.tscn", Vector3(3.1, 0.0, 6.0), -90.0)
+	_add_module(vignette, "np_kms_13_encadrement_simple.tscn", Vector3(0.0, 0.0, 3.9), 180.0)
+	_add_module(vignette, "np_kms_15_porte_accueil_couloirs.tscn", Vector3(0.0, 0.0, 3.78), 180.0)
+	return vignette
+
+
+func _change_validation_vignette() -> void:
+	if _validation_vignettes.is_empty():
+		return
+	if _validation_index >= 0:
+		_validation_vignettes[_validation_index].visible = false
+	_validation_index = wrapi(_validation_index + 1, 0, _validation_vignettes.size())
+	_validation_vignettes[_validation_index].visible = true
+	_architecture.visible = false
+	_asset_anchor.visible = false
+	_player.position = Vector3(0.0, 0.02, 9.5)
+	_update_status()
+
+
+func _exit_validation_mode() -> void:
+	if _validation_index < 0:
+		return
+	_validation_vignettes[_validation_index].visible = false
+	_validation_index = -1
+	_architecture.visible = true
+	_asset_anchor.visible = true
 
 
 func _change_asset_scale(factor: float) -> void:
@@ -462,12 +619,14 @@ func _update_status(message: String = "") -> void:
 		return
 	var light_names := ["froide", "neutre", "alerte"]
 	var asset_name := "placeholder procédural"
-	if not _asset_paths.is_empty() and _asset_index >= 0:
+	if _validation_index >= 0:
+		asset_name = ["couloir", "angle", "petite salle", "porte"][_validation_index]
+	elif not _asset_paths.is_empty() and _asset_index >= 0:
 		asset_name = _asset_paths[_asset_index].get_file()
 	var suffix := ""
 	if not message.is_empty():
 		suffix = " — %s" % message
 	_status_label.text = (
-		"Asset : %s | Échelle : %.2f | Ambiance : %s%s"
+		"Vue : %s | Échelle : %.2f | Ambiance : %s%s"
 		% [asset_name, _asset_scale, light_names[_light_mode], suffix]
 	)

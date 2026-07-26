@@ -22,10 +22,10 @@ assets intégrés.
 
 ## État actuel
 
-- Les spécifications et la planche du kit modulaire structurel sont approuvées.
-- Vingt-trois prototypes `.tscn` sont produits dans `DESIGN/kit_modulaire/` et chargeables dans le laboratoire isolé.
-- La phase 1 reste en cours : la validation visuelle FPS et les exports `.glb` ne sont pas réalisés.
-- Le contrôle M3 en attente interdit toute nouvelle campagne manuelle DESIGN.
+- La phase 1, kit modulaire structurel, est terminée et approuvée.
+- Vingt-trois exports `.glb` sont produits dans `DESIGN/kit_modulaire/exports/` et contrôlés dans le laboratoire isolé.
+- Les modules sont des créations internes sous licence propriétaire, tous droits réservés.
+- La phase 2 attend le checkpoint `/compact` avant son démarrage.
 - Aucun asset final n'est intégré au projet jouable.
 
 ## Contrats techniques à préserver
@@ -44,3 +44,4 @@ assets intégrés.
 - 2026-07-26 : Les assets DESIGN sont contrôlés dans un laboratoire Godot autonome avant toute transmission au code.
 - 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.
 - 2026-07-26 : Le kit modulaire structurel V1 est approuvé comme spécification ; ses 23 prototypes restent confinés à DESIGN jusqu'à validation visuelle et export approuvé.
+- 2026-07-26 : Le kit modulaire structurel V1 est validé visuellement, exporté en `.glb` et prêt à transmettre ; ses 23 modules sont des créations internes sous licence propriétaire, tous droits réservés.

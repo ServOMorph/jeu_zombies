@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.20 — 2026-07-26
+
+### Ajouté
+
+- Vingt-trois exports `.glb` du kit modulaire structurel V1, accompagnés de copies de laboratoire et de scripts de contrôle GLTF.
+
+### Modifié
+
+- Phase 1 DESIGN validée : vignettes FPS approuvées sous trois ambiances, bordereau finalisé et licence propriétaire confirmée pour les 23 modules.
+
 ## v0.19 — 2026-07-26
 
 ### Modifié

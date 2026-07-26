@@ -2,7 +2,7 @@
 
 ## Contrat commun
 
-Chaque fiche ci-dessous est à produire comme asset original du projet. Provenance cible : création interne ; licence cible : propriétaire du projet. Les références sont la bible artistique et la planche du présent lot. État actuel de validation laboratoire : non testable tant que les fichiers `.glb` ne sont pas produits.
+Les 23 assets ci-dessous sont des créations internes. Licence : propriétaire, tous droits réservés. Les références sont la bible artistique et la planche du présent lot. Les exports `.glb` et leurs copies de laboratoire ont été validés le 2026-07-26.
 
 | IDs | Fonction et silhouette | Pivot / matériaux / budget | Variantes et contraintes | Ancrage, collision, export |
 |---|---|---|---|---|

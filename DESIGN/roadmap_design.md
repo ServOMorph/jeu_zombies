@@ -20,7 +20,7 @@ supplémentaires, cosmétiques persistants et rendu réaliste détaillé.
 - Laboratoire Godot autonome validé par l'utilisateur.
 - Flux obligatoire défini : `DESIGN → validation → assets/ → scènes Godot → tests`.
 - Conventions, inventaire, fiches et planche du kit modulaire structurel approuvés.
-- Vingt-trois prototypes `.tscn` du kit importables dans le laboratoire ; validation visuelle encore en attente.
+- Phase 1 validée : 23 exports `.glb` contrôlés et bordereau de transmission fermé.
 
 ## Règles de suivi
 
@@ -32,8 +32,6 @@ supplémentaires, cosmétiques persistants et rendu réaliste détaillé.
 - L'échelle native reste `1,00` dans le laboratoire.
 - Les validations fonctionnelles et de performance finales appartiennent à une
   session d'intégration distincte.
-- Aucun nouveau contrôle n'est ajouté à `tests_manuels.md` tant que la qualification
-  M3 déjà présente n'est pas terminée et retirée.
 
 ## Contrat commun à tous les lots
 
@@ -52,7 +50,7 @@ Chaque lot doit fournir :
 - résultat de validation dans le laboratoire ;
 - bordereau de transmission destiné à la session d'intégration.
 
-## Phase 1 — Kit modulaire structurel `[EN COURS]`
+## Phase 1 — Kit modulaire structurel `[FAIT]`
 
 ### But
 
@@ -89,9 +87,10 @@ ni la navigation du blockout.
 
 ### État au 2026-07-26
 
-- Spécifications, inventaire, fiches et planche approuvés par l'utilisateur.
-- Les 23 prototypes `.tscn` sont présents dans `kit_modulaire/prototypes/` et leurs copies sont importées sans erreur dans le laboratoire.
-- La validation visuelle FPS des quatre vignettes et les exports `.glb` restent bloqués tant que M3 figure dans `tests_manuels.md`.
+- Spécifications, inventaire, fiches, planche et bordereau approuvés par l'utilisateur.
+- Les 23 exports `.glb` sont produits dans `kit_modulaire/exports/` ; leurs copies sont contrôlées dans le laboratoire.
+- Les vignettes couloir, angle, salle et porte sont validées sous les ambiances froide, neutre et alerte.
+- Provenance confirmée : créations internes ; licence propriétaire, tous droits réservés.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
