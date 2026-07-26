@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "M_Composite_Medical"
+albedo_color = Color(0.843137, 0.878431, 0.886275, 1)
+metallic = 0.0
+roughness = 0.78

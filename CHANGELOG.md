@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.21 — 2026-07-26
+
+### Ajouté
+
+- Neuf matériaux mutualisés `.tres`, une planche SVG de signalétique, les fiches et le bordereau de transmission de la phase 2 DESIGN.
+- Vignette de validation FPS des matériaux, secteurs et états de porte dans le laboratoire autonome.
+
+### Modifié
+
+- Phase 2 DESIGN validée sous les ambiances froide, neutre et alerte ; le lot est prêt pour une session d'intégration dédiée.
+
 ## v0.20 — 2026-07-26
 
 ### Ajouté

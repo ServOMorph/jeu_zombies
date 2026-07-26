@@ -21,6 +21,7 @@ supplémentaires, cosmétiques persistants et rendu réaliste détaillé.
 - Flux obligatoire défini : `DESIGN → validation → assets/ → scènes Godot → tests`.
 - Conventions, inventaire, fiches et planche du kit modulaire structurel approuvés.
 - Phase 1 validée : 23 exports `.glb` contrôlés et bordereau de transmission fermé.
+- Phase 2 validée : neuf matériaux mutualisés et une planche de signalétique contrôlés dans le laboratoire.
 
 ## Règles de suivi
 
@@ -95,7 +96,7 @@ ni la navigation du blockout.
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 2 — Matériaux communs et signalétique `[TODO]`
+## Phase 2 — Matériaux communs et signalétique `[FAIT]`
 
 ### But
 
@@ -120,6 +121,12 @@ Créer le langage de surface commun du complexe et le système de guidage visuel
 - Vérifier que couleur, pictogramme et forme restent redondants.
 - Contrôler la répétition des textures et la sobriété des surfaces.
 - Obtenir l'approbation du lot et de sa palette finale.
+
+### État au 2026-07-26
+
+- Neuf matériaux `.tres`, une planche SVG, les fiches, le rapport de validation et le bordereau sont produits dans `materiaux_signaletique/`.
+- La cinquième vignette du laboratoire a été validée par l'utilisateur sous les ambiances froide, neutre et alerte.
+- Le lot est transmissible à une session d'intégration dédiée ; aucune intégration dans le projet jouable n'a été effectuée.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

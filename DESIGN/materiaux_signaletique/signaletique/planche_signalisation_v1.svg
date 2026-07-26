@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#111820"/>
+  <style>
+    .titre{font:700 40px Arial,sans-serif;fill:#d7e0e2;letter-spacing:4px}.sous{font:400 20px Arial,sans-serif;fill:#7d8992;letter-spacing:2px}.secteur{font:700 72px Arial,sans-serif;fill:#111820;text-anchor:middle}.libelle{font:700 22px Arial,sans-serif;fill:#d7e0e2;text-anchor:middle;letter-spacing:2px}.etat{font:700 26px Arial,sans-serif;fill:#111820;text-anchor:middle;letter-spacing:2px}.picto{fill:none;stroke:#d7e0e2;stroke-width:14;stroke-linecap:square;stroke-linejoin:miter}
+  </style>
+  <text x="80" y="84" class="titre">NOX PROTOCOL — SIGNALÉTIQUE V1</text>
+  <text x="80" y="124" class="sous">COULEUR + FORME + LIBELLÉ · LECTURE À MOYENNE DISTANCE</text>
+  <g transform="translate(80 185)">
+    <g transform="translate(0 0)"><rect width="260" height="160" rx="8" fill="#40d5db"/><text x="130" y="92" class="secteur">A</text><text x="130" y="196" class="libelle">ACCUEIL</text></g>
+    <g transform="translate(330 0)"><rect width="260" height="160" rx="8" fill="#f0a43a"/><text x="130" y="92" class="secteur">C</text><text x="130" y="196" class="libelle">CONFINEMENT</text></g>
+    <g transform="translate(660 0)"><rect width="260" height="160" rx="8" fill="#d7e0e2"/><text x="130" y="92" class="secteur">M</text><text x="130" y="196" class="libelle">MÉDICAL</text></g>
+    <g transform="translate(990 0)"><rect width="260" height="160" rx="8" fill="#d94b4b"/><text x="130" y="92" class="secteur">S</text><text x="130" y="196" class="libelle">SYNTHÈSE</text></g>
+    <g transform="translate(1320 0)"><rect width="260" height="160" rx="8" fill="#40d5db"/><text x="130" y="92" class="secteur">E</text><text x="130" y="196" class="libelle">EXTRACTION</text></g>
+  </g>
+  <g transform="translate(80 500)">
+    <g transform="translate(0 0)"><rect width="300" height="130" fill="#f0a43a"/><path d="M55 65h125m-45-42 45 42-45 42" stroke="#111820" stroke-width="16" fill="none"/><text x="240" y="75" class="etat">DIRECTION</text></g>
+    <g transform="translate(370 0)"><rect width="300" height="130" fill="#40d5db"/><rect x="42" y="30" width="55" height="72" class="picto"/><path d="M120 65h70m-35-35 35 35-35 35" class="picto"/><text x="240" y="75" class="etat">SORTIE</text></g>
+    <g transform="translate(740 0)"><rect width="300" height="130" fill="#d7e0e2"/><path d="M48 88h105V40H48zM86 64h1" class="picto"/><text x="235" y="75" class="etat">ACCÈS</text></g>
+    <g transform="translate(1110 0)"><rect width="300" height="130" fill="#d94b4b"/><path d="M55 100 105 25l50 75zm50-48v24m0 12v1" class="picto"/><text x="235" y="75" class="etat">DANGER</text></g>
+  </g>
+  <g transform="translate(80 760)">
+    <g transform="translate(0 0)"><rect width="300" height="120" fill="#7d8992"/><path d="M50 60h65m-32-32v64" class="picto"/><text x="220" y="72" class="etat">FERMÉ</text></g>
+    <g transform="translate(370 0)"><rect width="300" height="120" fill="#f0a43a"/><path d="M52 78V45a28 28 0 0 1 56 0v33M42 78h76v32H42z" class="picto"/><text x="220" y="72" class="etat">ACHETABLE</text></g>
+    <g transform="translate(740 0)"><rect width="300" height="120" fill="#d94b4b"/><path d="M45 25 115 95m0-70L45 95" class="picto"/><text x="220" y="72" class="etat">REFUSÉ</text></g>
+    <g transform="translate(1110 0)"><rect width="300" height="120" fill="#71c982"/><path d="m45 62 25 25 52-54" class="picto"/><text x="220" y="72" class="etat">ACHETÉ</text></g>
+    <g transform="translate(1480 0)"><rect width="300" height="120" fill="#40d5db"/><path d="M45 28v64h48M132 60h70m-35-35 35 35-35 35" class="picto"/><text x="240" y="72" class="etat">OUVERT</text></g>
+  </g>
+</svg>

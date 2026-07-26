@@ -1,12 +1,14 @@
 extends Node3D
 
 const IMPORTS_PATH := "res://imports"
+const PHASE2_MATERIALS_PATH := "res://imports/phase2"
 const ALLOWED_EXTENSIONS := ["glb", "gltf", "tscn"]
 const CYAN := Color("#40d5db")
 const AMBER := Color("#f0a43a")
 const RED := Color("#d94b4b")
 
 var _materials: Dictionary[String, StandardMaterial3D] = {}
+var _phase2_materials: Dictionary[String, Material] = {}
 var _world_environment: WorldEnvironment
 var _accent_lights: Array[OmniLight3D] = []
 var _asset_anchor: Node3D
@@ -98,6 +100,31 @@ func _create_materials() -> void:
 	_materials["cyan"] = _material(CYAN, 0.58, 0.05, CYAN * 0.18)
 	_materials["amber"] = _material(AMBER, 0.55, 0.05, AMBER * 0.35)
 	_materials["red"] = _material(RED, 0.55, 0.05, RED * 0.28)
+	_load_phase2_materials()
+
+
+func _load_phase2_materials() -> void:
+	for material_data: Dictionary in [
+		{"key": "concrete_light", "file": "m_concrete_sealed_light.tres"},
+		{"key": "concrete_dark", "file": "m_concrete_sealed_dark.tres"},
+		{"key": "steel_painted", "file": "m_steel_painted.tres"},
+		{"key": "steel_raw", "file": "m_steel_raw.tres"},
+		{"key": "clinical", "file": "m_composite_medical.tres"},
+		{"key": "glass", "file": "m_glass_reinforced.tres"},
+		{"key": "cyan", "file": "m_accent_cyan.tres"},
+		{"key": "amber", "file": "m_accent_amber.tres"},
+		{"key": "danger", "file": "m_accent_danger.tres"}
+	]:
+		var path := "%s/%s" % [PHASE2_MATERIALS_PATH, material_data.file]
+		var material := load(path) as Material
+		if material == null:
+			push_error("Matériau phase 2 introuvable : %s" % path)
+			continue
+		_phase2_materials[material_data.key] = material
+
+
+func _phase2_material(key: String) -> Material:
+	return _phase2_materials[key]
 
 
 func _material(
@@ -463,6 +490,7 @@ func _create_validation_vignettes() -> void:
 		_create_corner_vignette(),
 		_create_room_vignette(),
 		_create_door_vignette(),
+		_create_phase2_vignette(),
 	]
 	for vignette: Node3D in _validation_vignettes:
 		vignette.visible = false
@@ -558,6 +586,60 @@ func _create_door_vignette() -> Node3D:
 	return vignette
 
 
+func _create_phase2_vignette() -> Node3D:
+	var vignette := _create_vignette("VignetteMateriauxSignaletique")
+	_add_box(vignette, "SolBétonClair", Vector3(12.0, 0.2, 15.0), Vector3(0.0, -0.1, 2.0), _phase2_material("concrete_light"), true)
+	_add_box(vignette, "MurFondBétonSombre", Vector3(12.0, 4.0, 0.2), Vector3(0.0, 2.0, -5.0), _phase2_material("concrete_dark"), true)
+	_add_box(vignette, "MurGaucheAcierBrut", Vector3(0.2, 4.0, 15.0), Vector3(-5.9, 2.0, 2.0), _phase2_material("steel_raw"), true)
+	_add_box(vignette, "MurDroitAcierPeint", Vector3(0.2, 4.0, 15.0), Vector3(5.9, 2.0, 2.0), _phase2_material("steel_painted"), true)
+	_add_box(vignette, "PlafondAcierBrut", Vector3(12.0, 0.18, 15.0), Vector3(0.0, 4.1, 2.0), _phase2_material("steel_raw"))
+	_add_box(vignette, "PanneauCompositeMédical", Vector3(2.2, 2.2, 0.08), Vector3(-4.5, 1.8, 5.5), _phase2_material("clinical"))
+	_add_box(vignette, "VitreRenforcée", Vector3(2.2, 2.2, 0.08), Vector3(-4.35, 1.8, 5.35), _phase2_material("glass"))
+	_add_label3d(vignette, "COMPOSITE\nMÉDICAL", Vector3(-4.5, 1.8, 5.56), Color("#111820"), 44)
+	_add_label3d(vignette, "VERRE\nRENFORCÉ", Vector3(-4.5, 0.65, 5.56), Color("#d7e0e2"), 36)
+
+	_add_sector_panel(vignette, "A", "ACCUEIL", Vector3(-4.0, 2.15, -4.85), _phase2_material("cyan"))
+	_add_sector_panel(vignette, "C", "CONFINEMENT", Vector3(-2.0, 2.15, -4.85), _phase2_material("amber"))
+	_add_sector_panel(vignette, "M", "MÉDICAL", Vector3(0.0, 2.15, -4.85), _phase2_material("clinical"))
+	_add_sector_panel(vignette, "S", "SYNTHÈSE", Vector3(2.0, 2.15, -4.85), _phase2_material("danger"))
+	_add_sector_panel(vignette, "E", "EXTRACTION", Vector3(4.0, 2.15, -4.85), _phase2_material("cyan"))
+
+	_add_door_state_panel(vignette, "FERMÉ", Vector3(-4.0, 1.25, 2.2), _phase2_material("steel_painted"))
+	_add_door_state_panel(vignette, "ACHETABLE", Vector3(-2.0, 1.25, 2.2), _phase2_material("amber"))
+	_add_door_state_panel(vignette, "REFUSÉ", Vector3(0.0, 1.25, 2.2), _phase2_material("danger"))
+	_add_door_state_panel(vignette, "ACHETÉ", Vector3(2.0, 1.25, 2.2), _material(Color("#71c982"), 0.55, 0.05, Color("#71c982") * 0.18))
+	_add_door_state_panel(vignette, "OUVERT", Vector3(4.0, 1.25, 2.2), _phase2_material("cyan"))
+	_add_label3d(vignette, "PHASE 2 — MATÉRIAUX ET SIGNALÉTIQUE", Vector3(0.0, 3.65, 6.5), Color("#d7e0e2"), 38)
+	return vignette
+
+
+func _add_sector_panel(parent: Node3D, sector: String, label: String, position: Vector3, material: Material) -> void:
+	_add_box(parent, "Secteur%s" % sector, Vector3(1.6, 1.5, 0.08), position, material)
+	_add_label3d(parent, sector, position + Vector3(0.0, 0.28, 0.06), Color("#111820"), 96)
+	_add_label3d(parent, label, position + Vector3(0.0, -0.45, 0.06), Color("#111820"), 24)
+
+
+func _add_door_state_panel(parent: Node3D, label: String, position: Vector3, material: Material) -> void:
+	_add_box(parent, "État%s" % label, Vector3(1.6, 0.78, 0.08), position, material)
+	_add_label3d(parent, label, position + Vector3(0.0, 0.0, 0.06), Color("#111820"), 30)
+
+
+func _add_label3d(parent: Node3D, label_text: String, position: Vector3, color: Color, size: int) -> void:
+	var label := Label3D.new()
+	label.text = label_text
+	label.position = position
+	label.pixel_size = 0.005
+	label.font_size = size
+	label.outline_size = 6
+	label.modulate = color
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+	label.rotation_degrees.y = 180.0
+	label.scale.x = -1.0
+	label.no_depth_test = true
+	parent.add_child(label)
+
+
 func _change_validation_vignette() -> void:
 	if _validation_vignettes.is_empty():
 		return
@@ -620,7 +702,7 @@ func _update_status(message: String = "") -> void:
 	var light_names := ["froide", "neutre", "alerte"]
 	var asset_name := "placeholder procédural"
 	if _validation_index >= 0:
-		asset_name = ["couloir", "angle", "petite salle", "porte"][_validation_index]
+		asset_name = ["couloir", "angle", "petite salle", "porte", "matériaux et signalétique"][_validation_index]
 	elif not _asset_paths.is_empty() and _asset_index >= 0:
 		asset_name = _asset_paths[_asset_index].get_file()
 	var suffix := ""

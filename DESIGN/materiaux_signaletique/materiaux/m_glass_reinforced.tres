@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "M_Glass_Reinforced"
+transparency = 1
+albedo_color = Color(0.384314, 0.505882, 0.556863, 0.22)
+metallic = 0.0
+roughness = 0.18

@@ -22,10 +22,10 @@ assets intégrés.
 
 ## État actuel
 
-- La phase 1, kit modulaire structurel, est terminée et approuvée.
-- Vingt-trois exports `.glb` sont produits dans `DESIGN/kit_modulaire/exports/` et contrôlés dans le laboratoire isolé.
-- Les modules sont des créations internes sous licence propriétaire, tous droits réservés.
-- La phase 2 attend le checkpoint `/compact` avant son démarrage.
+- Les phases 1, kit modulaire, et 2, matériaux et signalétique, sont terminées et approuvées.
+- Les 23 exports `.glb` et les neuf matériaux restent confinés à `DESIGN/`.
+- Le laboratoire contient les vignettes du kit et la vignette phase 2 validée sous trois ambiances.
+- Les lots sont transmissibles à une session d'intégration dédiée, sans intégration automatique.
 - Aucun asset final n'est intégré au projet jouable.
 
 ## Contrats techniques à préserver
@@ -45,3 +45,4 @@ assets intégrés.
 - 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.
 - 2026-07-26 : Le kit modulaire structurel V1 est approuvé comme spécification ; ses 23 prototypes restent confinés à DESIGN jusqu'à validation visuelle et export approuvé.
 - 2026-07-26 : Le kit modulaire structurel V1 est validé visuellement, exporté en `.glb` et prêt à transmettre ; ses 23 modules sont des créations internes sous licence propriétaire, tous droits réservés.
+- 2026-07-26 : Le lot matériaux et signalétique V1 est validé dans le laboratoire ; ses neuf matériaux et sa planche vectorielle restent dans `DESIGN/` jusqu'à intégration dédiée.

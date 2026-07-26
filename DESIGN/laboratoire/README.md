@@ -27,3 +27,16 @@ Il ne valide pas les collisions, la navigation, les interactions ni les performa
 finales de la carte du jeu. Ces contrôles restent à effectuer lors de l’intégration
 du lot approuvé.
 
+## Validation phase 2
+
+La cinquième vignette, accessible avec `F3`, présente les neuf matériaux communs,
+les secteurs `A`, `C`, `M`, `S`, `E` et les cinq états de porte. Les ressources
+chargées sont des copies de laboratoire dans `imports/phase2/` ; les sources restent
+dans `DESIGN/materiaux_signaletique/`.
+
+Pour valider le lot :
+
+1. Lancer `python run_labo.py` depuis la racine du dépôt.
+2. Appuyer cinq fois sur `F3` jusqu'à afficher `matériaux et signalétique`.
+3. Examiner la vignette sous les ambiances froide, neutre et alerte avec `F2`.
+4. Vérifier la différenciation des matériaux, la lecture des secteurs et des états de porte à courte et moyenne distance.
