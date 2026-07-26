@@ -459,6 +459,8 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 - Les zombies peuvent atteindre les positions normales du joueur dans chaque zone.
 - La lumière permet de distinguer sols, sorties, zombies et interactions sans lampe torche.
 
+Statut au 2026-07-26 : les portes, collisions et chemins de navigation sont validés automatiquement ; le contrôle manuel du premier passage après déplacement du plafond bas reste requis avant de cocher M3.1.
+
 ### M3.2 — Système d'interaction unifié
 
 - [ ] Créer une détection d'interaction centrée sur la caméra.

@@ -384,27 +384,28 @@ Les critères de M2.4 et la porte de sortie M2 sont satisfaits sur la scène de 
 
 Date : 2026-07-26
 Version Godot : `4.5.stable.official.876b29033`
-Statut : partiel
+Statut : revalidation manuelle en attente
 
 ### Tranche implémentée
 
 - Les cinq zones prévues sont matérialisées : Accueil sécurisé, Couloirs de confinement, Entrepôt médical, Laboratoire de synthèse et Salle d'extraction.
-- Les zones sont reliées par des parcours lisibles, des cadres de porte visuels et une boucle passant par l'Entrepôt et le Laboratoire avant l'Extraction.
-- Chaque zone expose une décision de dépense future et possède au moins un point d'apparition ; les portes restent ouvertes et non interactives.
-- Le sol, les collisions et le maillage de navigation couvrent l'intégralité de l'Extraction.
+- Les cinq sols sont séparés et reliés uniquement par cinq passages ; les raccourcis autour des portes sont supprimés.
+- Chaque porte a un panneau collisionnable, un état ouvert/fermé et un lien de navigation bidirectionnel synchronisé avec son état.
+- La scène de test propose Parcours sans zombies ou Survie avec vagues ; `F5` revient au sélecteur par rechargement propre.
+- Le plafond bas de contrôle d'accroupissement a été déplacé hors du passage Accueil → Couloirs.
 
 ### Commandes et résultats
 
 | Contrôle | Commande | Résultat |
 |---|---|---|
-| Test de structure ciblé | `python test.py --test-file=res://tests/test_helix_blockout.gd` | code 0, cinq zones, points d'apparition et couverture du sol vérifiés |
-| Contrôle global | `python check.py` | code 0, import, 13 suites headless et export de contrôle réussis |
-| Chargement de la scène | `python run.py --headless res://world/dev_player_test.tscn --quit-after 5` | code 0, marqueur `NOX_PROTOCOL_DEV_PLAYER_TEST_READY` |
+| Test de structure ciblé | `python test.py --test-file=res://tests/test_helix_blockout.gd` | code 0, cinq zones, portes et sols collisionnables vérifiés |
+| Probe de navigation | `python run.py --headless --script res://tests/verify_helix_navigation.gd` | code 0, Accueil → Extraction atteignable portes ouvertes et interrompu portes fermées |
+| Contrôle global | `python check.py` | code 0, import, 14 suites headless et export de contrôle réussis |
 
 ### Contrôle manuel
 
-Les cinq zones sont accessibles et lisibles. Le joueur ne reste pas coincé, les zombies atteignent le joueur dans les zones vérifiées et la Salle d'extraction est accessible après extension du sol et de la navigation.
+Le contrôle initial a confirmé le choix Parcours sans zombies, les portes et le parcours des cinq zones. Il a ensuite signalé que le plafond bas de test gênait la première porte ; ce plafond a été déplacé après le contrôle et le passage doit donc être rejoué.
 
 ### Résultat
 
-Le blockout, les parcours ouverts et les points d'apparition sont validés. M3.1 reste ouverte : les portes n'ont pas encore d'état ouvert/fermé à vérifier avec la navigation ; cette partie doit être ajoutée avant de valider la tâche.
+Les portes et leur navigation sont validées automatiquement. M3.1 reste ouverte uniquement jusqu'à la revalidation visuelle et physique du premier passage après déplacement du plafond bas.

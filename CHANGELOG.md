@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.11 — 2026-07-26
+
+### Ajouté
+
+- Portes physiques d'Helix-9, liens de navigation ouverts/fermés et probe de navigation dédié.
+- Sélecteur de scénario de test : Parcours sans zombies ou Survie avec vagues.
+
+### Corrigé
+
+- Plafond bas de test déplacé hors du premier passage.
+
+### Modifié
+
+- Les cinq zones reposent sur des sols séparés, reliés uniquement par les passages de porte.
+- M3.1 attend une revalidation manuelle ciblée après ce déplacement.
+
 ## v0.10 — 2026-07-26
 
 ### Ajouté

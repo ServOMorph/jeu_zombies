@@ -88,18 +88,6 @@ rotation_degrees = Vector3(-52, -32, 0)
 light_energy = 1.4
 shadow_enabled = true
 
-[node name="Floor" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("PlaneMesh_floor")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-position = Vector3(0, -0.1, 0)
-shape = SubResource("BoxShape3D_floor")
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_test")
-
 [node name="HelixBlockout" type="Node3D" parent="."]
 script = ExtResource("15_blockout")
 
@@ -140,7 +128,7 @@ mesh = SubResource("BoxMesh_step")
 shape = SubResource("BoxShape3D_step")
 
 [node name="LowCeiling" type="StaticBody3D" parent="."]
-position = Vector3(0, 1.45, -7)
+position = Vector3(7, 1.45, 12)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LowCeiling"]
 mesh = SubResource("BoxMesh_ceiling")
@@ -225,7 +213,7 @@ offset_right = 900.0
 offset_bottom = 140.0
 theme_override_colors/font_color = Color(0.8, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 20
-text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nF6 : subir des dégâts · F10 : test de charge · Entrée : recommencer après défaite · Échap : retour au menu"
+text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nF5 : choisir un scénario · F6 : subir des dégâts · F10 : test de charge · F11 : fermer portes · F12 : ouvrir portes · Entrée : recommencer après défaite · Échap : retour au menu"
 
 [node name="VitalsLabel" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -335,3 +323,22 @@ offset_bottom = 510.0
 theme_override_colors/font_color = Color(0.9, 0.78, 0.44, 1)
 theme_override_font_sizes/font_size = 18
 text = "Vague 1 en préparation\nZombies restants : 0"
+
+[node name="TestScenarioLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -100.0
+offset_right = 330.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.82, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "CHOISIR UN SCÉNARIO DE TEST\n\n1 — PARCOURS : portes, collisions et navigation sans zombies\n2 — SURVIE : vagues et zombies\n\nF5 permet de revenir à ce choix."
+horizontal_alignment = 1
+vertical_alignment = 1

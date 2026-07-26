@@ -19,6 +19,8 @@ const STRESS_TEST_WAVE_NUMBER := 5
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
+@onready var helix_blockout: HelixBlockout = $HelixBlockout
+@onready var test_scenario_label: Label = %TestScenarioLabel
 
 var _hit_marker_remaining := 0.0
 var _muzzle_flash_remaining := 0.0
@@ -26,6 +28,7 @@ var _hud_update_elapsed := 0.0
 var _impact_pool: Array[MeshInstance3D] = []
 var _impact_lifetimes: Array[float] = []
 var _impact_pool_cursor := 0
+var _test_scenario := DevTestScenario.Mode.NONE
 
 
 func _ready() -> void:
@@ -43,9 +46,9 @@ func _ready() -> void:
 	wave_manager.wave_finished.connect(_on_wave_finished)
 	wave_manager.waves_completed.connect(_on_waves_completed)
 	GameSession.session_ended.connect(_on_session_ended)
-	if GameSession.state == GameSession.State.MENU:
-		GameSession.start_new_session()
-	call_deferred("_start_survival_loop")
+	player.set_physics_process(false)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	spawn_label.text = "Choisissez un scénario de test"
 	print("NOX_PROTOCOL_DEV_PLAYER_TEST_READY")
 
 
@@ -145,6 +148,26 @@ func _on_impact_registered(position: Vector3, normal: Vector3) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _test_scenario == DevTestScenario.Mode.NONE:
+		if event is InputEventKey and event.pressed and not event.echo:
+			if event.keycode == KEY_1:
+				_start_test_scenario(DevTestScenario.Mode.PARCOURS)
+				get_viewport().set_input_as_handled()
+			elif event.keycode == KEY_2:
+				_start_test_scenario(DevTestScenario.Mode.SURVIE)
+				get_viewport().set_input_as_handled()
+		return
+	if (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F5
+		and OS.is_debug_build()
+	):
+		GameSession.return_to_menu()
+		get_tree().reload_current_scene()
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ENTER and GameSession.state == GameSession.State.DEFEAT:
 		_restart_survival_session()
 		get_viewport().set_input_as_handled()
@@ -180,6 +203,7 @@ func _input(event: InputEvent) -> void:
 		and event.pressed
 		and not event.echo
 		and event.keycode == KEY_F8
+		and _is_survival_scenario()
 	):
 		wave_manager.start_next_wave(player)
 		get_viewport().set_input_as_handled()
@@ -188,6 +212,7 @@ func _input(event: InputEvent) -> void:
 		and event.pressed
 		and not event.echo
 		and event.keycode == KEY_F9
+		and _is_survival_scenario()
 	):
 		wave_manager.start_wave_for_test(2, player)
 		get_viewport().set_input_as_handled()
@@ -196,8 +221,29 @@ func _input(event: InputEvent) -> void:
 		and event.pressed
 		and not event.echo
 		and event.keycode == KEY_F10
+		and _is_survival_scenario()
 	):
 		_start_stress_test()
+		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F11
+		and OS.is_debug_build()
+	):
+		helix_blockout.set_all_doors_open(false)
+		spawn_label.text = "Test portes : FERMÉES\nNavigation entre zones bloquée"
+		get_viewport().set_input_as_handled()
+	elif (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_F12
+		and OS.is_debug_build()
+	):
+		helix_blockout.set_all_doors_open(true)
+		spawn_label.text = "Test portes : OUVERTES\nNavigation entre zones active"
 		get_viewport().set_input_as_handled()
 
 
@@ -251,6 +297,31 @@ func _start_survival_loop() -> void:
 	wave_manager.start_next_wave(player)
 
 
+func _start_test_scenario(mode: DevTestScenario.Mode) -> void:
+	_test_scenario = mode
+	test_scenario_label.visible = false
+	player.set_physics_process(true)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if GameSession.state != GameSession.State.MENU:
+		GameSession.return_to_menu()
+	if not GameSession.start_new_session():
+		return
+	if _is_survival_scenario():
+		call_deferred("_start_survival_loop")
+		spawn_label.text = "%s\nVague 1 en préparation" % DevTestScenario.title(mode)
+	else:
+		spawn_label.text = "%s\nAucun zombie ne sera généré" % DevTestScenario.title(mode)
+		_survival_label_for_sandbox()
+
+
+func _is_survival_scenario() -> bool:
+	return DevTestScenario.has_zombies(_test_scenario)
+
+
+func _survival_label_for_sandbox() -> void:
+	survival_label.text = "Scénario : Parcours\nZombies : désactivés"
+
+
 func _restart_survival_session() -> void:
 	if not GameSession.start_new_session():
 		return
@@ -258,7 +329,7 @@ func _restart_survival_session() -> void:
 
 
 func _start_stress_test() -> void:
-	if not OS.is_debug_build() or GameSession.state != GameSession.State.PLAYING:
+	if not OS.is_debug_build() or not _is_survival_scenario() or GameSession.state != GameSession.State.PLAYING:
 		return
 	wave_manager.stop()
 	zombie_spawner.deactivate_all()
@@ -270,6 +341,8 @@ func _start_stress_test() -> void:
 
 
 func _get_wave_status_text() -> String:
+	if not _is_survival_scenario():
+		return "Parcours sans zombies"
 	match wave_manager.state:
 		WaveManager.State.SPAWNING:
 			return "Apparitions en cours"
