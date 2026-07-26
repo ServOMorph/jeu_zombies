@@ -27,6 +27,8 @@ static var NAVIGATION_AREAS: Array[PackedVector3Array] = [
 
 var _doors: Dictionary = {}
 
+@export var door_definitions: Array[Resource] = []
+
 
 func _ready() -> void:
 	for zone: Dictionary in ZONES:
@@ -136,13 +138,20 @@ func _create_zone(zone: Dictionary) -> void:
 
 
 func _create_door(connection: Dictionary) -> void:
+	var door_id := str(connection["id"])
+	var definition := _find_door_definition(door_id)
+	if definition == null:
+		push_error("Définition de porte manquante : %s" % door_id)
+		return
 	var door := HelixDoor.new()
-	door.name = "Porte_%s" % str(connection["id"])
+	door.name = "Porte_%s" % door_id
+	door.configure(definition)
 	door.position = connection["position"] as Vector3
 	door.rotation.y = connection["rotation_y"] as float
 	add_child(door)
 	door.configure_navigation_link(connection["start"] as Vector3, connection["end"] as Vector3)
-	_doors[str(connection["id"])] = door
+	door.state_changed.connect(_on_door_state_changed)
+	_doors[door_id] = door
 	_create_connection_floor(connection)
 	var frame := Node3D.new()
 	frame.name = "Cadre"
@@ -161,6 +170,13 @@ func _create_door(connection: Dictionary) -> void:
 		frame.add_child(segment)
 
 
+func _find_door_definition(door_id: String) -> Resource:
+	for definition: Resource in door_definitions:
+		if definition != null and str(definition.get("door_id")) == door_id:
+			return definition
+	return null
+
+
 func _create_connection_floor(connection: Dictionary) -> void:
 	var start_point := connection["start"] as Vector3
 	var end_point := connection["end"] as Vector3
@@ -168,6 +184,7 @@ func _create_connection_floor(connection: Dictionary) -> void:
 	var passage := StaticBody3D.new()
 	passage.name = "Passage_%s" % str(connection["id"])
 	passage.position = start_point.lerp(end_point, 0.5)
+	passage.position.y = 0.01
 	passage.rotation.y = atan2(direction.x, direction.z)
 	add_child(passage)
 	var mesh := BoxMesh.new()
@@ -199,3 +216,7 @@ func _create_navigation_regions() -> void:
 		NavigationServer3D.region_set_enabled(region.get_region_rid(), true)
 		NavigationServer3D.region_set_map(region.get_region_rid(), get_world_3d().navigation_map)
 		NavigationServer3D.region_set_navigation_mesh(region.get_region_rid(), mesh)
+
+
+func _on_door_state_changed(_is_open: bool) -> void:
+	get_tree().call_group("zombies", "request_navigation_repath")

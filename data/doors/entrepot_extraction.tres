@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DoorDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/doors/door_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+door_id = "entrepot_extraction"
+display_name = "Porte Entrepôt — Extraction"
+price_credits = 500
+connected_zones = PackedStringArray("entrepot", "extraction")

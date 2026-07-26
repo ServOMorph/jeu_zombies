@@ -5,6 +5,7 @@ const HUD_UPDATE_INTERVAL_SECONDS := 0.1
 const IMPACT_POOL_SIZE := 12
 const IMPACT_LIFETIME_SECONDS := 0.12
 const STRESS_TEST_WAVE_NUMBER := 5
+const PURCHASE_FEEDBACK_SECONDS := 2.5
 
 @onready var player = $Player
 @onready var vitals_label: Label = %VitalsLabel
@@ -16,11 +17,14 @@ const STRESS_TEST_WAVE_NUMBER := 5
 @onready var spawn_label: Label = %SpawnLabel
 @onready var survival_label: Label = %SurvivalLabel
 @onready var defeat_label: Label = %DefeatLabel
-@onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/MuzzleFlash
+@onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/WeaponVisualRoot/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
 @onready var helix_blockout: HelixBlockout = $HelixBlockout
 @onready var test_scenario_label: Label = %TestScenarioLabel
+@onready var interaction_prompt: Label = %InteractionPrompt
+@onready var purchase_feedback: Label = %PurchaseFeedback
+@onready var interaction_controller = $Player/Head/Camera3D/InteractionController
 
 var _hit_marker_remaining := 0.0
 var _muzzle_flash_remaining := 0.0
@@ -29,6 +33,7 @@ var _impact_pool: Array[MeshInstance3D] = []
 var _impact_lifetimes: Array[float] = []
 var _impact_pool_cursor := 0
 var _test_scenario := DevTestScenario.Mode.NONE
+var _purchase_feedback_remaining := 0.0
 
 
 func _ready() -> void:
@@ -46,6 +51,9 @@ func _ready() -> void:
 	wave_manager.wave_finished.connect(_on_wave_finished)
 	wave_manager.waves_completed.connect(_on_waves_completed)
 	GameSession.session_ended.connect(_on_session_ended)
+	GameSession.purchase_succeeded.connect(_on_purchase_succeeded)
+	GameSession.purchase_failed.connect(_on_purchase_failed)
+	interaction_controller.target_changed.connect(_on_interaction_target_changed)
 	player.set_physics_process(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	spawn_label.text = "Choisissez un scénario de test"
@@ -54,10 +62,26 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_transient_effects(delta)
+	_update_purchase_feedback(delta)
 	_hud_update_elapsed += delta
 	if _hud_update_elapsed >= HUD_UPDATE_INTERVAL_SECONDS:
 		_refresh_hud()
 		_hud_update_elapsed = 0.0
+
+
+func _update_purchase_feedback(delta: float) -> void:
+	if _purchase_feedback_remaining <= 0.0:
+		return
+	_purchase_feedback_remaining = maxf(0.0, _purchase_feedback_remaining - delta)
+	if _purchase_feedback_remaining == 0.0:
+		purchase_feedback.visible = false
+
+
+func _show_purchase_feedback(message: String, color: Color) -> void:
+	purchase_feedback.text = message
+	purchase_feedback.modulate = color
+	purchase_feedback.visible = true
+	_purchase_feedback_remaining = PURCHASE_FEEDBACK_SECONDS
 
 
 func _create_impact_pool() -> void:
@@ -98,11 +122,12 @@ func _refresh_hud() -> void:
 	var sprint_state := "ACTIVE" if player.is_sprinting else "REPOS"
 	if player.vitals.is_exhausted:
 		sprint_state = "ÉPUISÉ"
-	vitals_label.text = "Santé : %.0f / %.0f\nEndurance : %.0f / %.0f\nVitesse : %.1f m/s\nCourse : %s\nÉtat : %s" % [
+	vitals_label.text = "Santé : %.0f / %.0f\nEndurance : %.0f / %.0f\nCrédits : %d\nVitesse : %.1f m/s\nCourse : %s\nÉtat : %s" % [
 		player.vitals.health,
 		player.vitals.max_health,
 		player.vitals.stamina,
 		player.vitals.max_stamina,
+		GameSession.get_credits(),
 		player.get_horizontal_speed(),
 		sprint_state,
 		state,
@@ -137,6 +162,12 @@ func _on_melee_swung() -> void:
 func _on_hit_confirmed(_damage: float) -> void:
 	_hit_marker_remaining = 0.12
 	combat_audio.play_hit()
+
+
+func _on_interaction_target_changed(target) -> void:
+	interaction_prompt.visible = target != null
+	if target != null:
+		interaction_prompt.text = target.get_interaction_prompt()
 
 
 func _on_impact_registered(position: Vector3, normal: Vector3) -> void:
@@ -247,7 +278,9 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func _on_zombie_spawned(_zombie: Node3D, spawn_point: Node3D, used_fallback: bool) -> void:
+func _on_zombie_spawned(zombie: Node3D, spawn_point: Node3D, used_fallback: bool) -> void:
+	if zombie.has_signal("reward_granted") and not zombie.reward_granted.is_connected(_on_zombie_reward_granted):
+		zombie.reward_granted.connect(_on_zombie_reward_granted)
 	var source := "repli" if used_fallback else "zone demandée"
 	spawn_label.text = "Apparition : %s (%s)\nZombies actifs : %d / %d" % [
 		spawn_point.name,
@@ -255,6 +288,27 @@ func _on_zombie_spawned(_zombie: Node3D, spawn_point: Node3D, used_fallback: boo
 		zombie_spawner.get_active_zombie_count(),
 		zombie_spawner.max_active_zombies,
 	]
+
+
+func _on_zombie_reward_granted(credits: int) -> void:
+	if GameSession.add_credits(credits):
+		spawn_label.text = "+%d crédits\nSolde : %d" % [credits, GameSession.get_credits()]
+
+
+func _on_purchase_succeeded(item_name: String, cost: int, remaining_credits: int) -> void:
+	_show_purchase_feedback("Achat réussi : %s\n-%d crédits — Solde : %d" % [
+		item_name,
+		cost,
+		remaining_credits,
+	], Color(0.45, 1.0, 0.58, 1.0))
+
+
+func _on_purchase_failed(item_name: String, cost: int, available_credits: int) -> void:
+	_show_purchase_feedback("Crédits insuffisants : %s\nCoût : %d — Solde : %d" % [
+		item_name,
+		cost,
+		available_credits,
+	], Color(1.0, 0.42, 0.32, 1.0))
 
 
 func _on_spawn_deferred(_zone_id: String) -> void:

@@ -2,6 +2,10 @@ class_name PlayerController
 extends CharacterBody3D
 
 const PLAYER_VITALS := preload("res://player/player_vitals.gd")
+const WEAPON_VISUAL_RESTING_Z := -0.62
+const WEAPON_VISUAL_CLOSEST_Z := 0.06
+const WEAPON_VISUAL_FRONT_OFFSET := 0.355
+const WEAPON_VISUAL_CLEARANCE := 0.04
 
 @export_category("Déplacement")
 @export var walk_speed := 5.5
@@ -21,6 +25,7 @@ const PLAYER_VITALS := preload("res://player/player_vitals.gd")
 @export_range(1.0, 30.0, 0.5) var fov_transition_speed := 10.0
 @export_range(0.1, 5.0, 0.1) var recoil_degrees := 0.7
 @export_range(1.0, 40.0, 0.5) var recoil_recovery_degrees_per_second := 9.0
+@export_range(1.0, 40.0, 0.5) var weapon_extension_speed := 8.0
 
 @export_category("Posture")
 @export_range(0.8, 2.4, 0.05) var standing_height := 1.8
@@ -39,6 +44,9 @@ const PLAYER_VITALS := preload("res://player/player_vitals.gd")
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var weapon_visual_root: Node3D = $Head/Camera3D/WeaponVisualRoot
+@onready var weapon_obstacle_probe: RayCast3D = $Head/Camera3D/WeaponObstacleProbe
+@onready var interaction_controller = $Head/Camera3D/InteractionController
 @onready var weapon_controller = $WeaponController
 
 var _standing_shape: CapsuleShape3D
@@ -70,6 +78,8 @@ func _ready() -> void:
 	floor_stop_on_slope = true
 	_apply_stance(false)
 	_base_fov = camera.fov
+	weapon_obstacle_probe.add_exception(self)
+	interaction_controller.configure(self)
 	weapon_controller.shot_fired.connect(_on_shot_fired)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -80,6 +90,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		is_sprinting = false
 		_update_camera_fov(delta)
+		_update_weapon_visual(delta)
 		return
 	weapon_controller.tick(delta)
 
@@ -138,6 +149,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("melee"):
 		weapon_controller.select_knife()
 		weapon_controller.try_melee(camera.global_position, -camera.global_transform.basis.z)
+	_update_weapon_visual(delta)
 
 
 func receive_damage(amount: float) -> bool:
@@ -159,6 +171,37 @@ func get_horizontal_speed() -> float:
 func _update_camera_fov(delta: float) -> void:
 	var target_fov := sprint_fov if is_sprinting else _base_fov
 	camera.fov = move_toward(camera.fov, target_fov, fov_transition_speed * delta)
+
+
+func _update_weapon_visual(delta: float) -> void:
+	var obstacle_distance := 0.0
+	if weapon_obstacle_probe.is_colliding():
+		obstacle_distance = camera.global_position.distance_to(
+			weapon_obstacle_probe.get_collision_point()
+		)
+	weapon_visual_root.visible = should_show_weapon_visual(
+		obstacle_distance,
+		WEAPON_VISUAL_FRONT_OFFSET,
+		WEAPON_VISUAL_CLEARANCE,
+		WEAPON_VISUAL_CLOSEST_Z
+	)
+	if not weapon_visual_root.visible:
+		return
+	var target_z := resolve_weapon_visual_z(
+		obstacle_distance,
+		WEAPON_VISUAL_RESTING_Z,
+		WEAPON_VISUAL_FRONT_OFFSET,
+		WEAPON_VISUAL_CLEARANCE,
+		WEAPON_VISUAL_CLOSEST_Z
+	)
+	if target_z > weapon_visual_root.position.z:
+		weapon_visual_root.position.z = target_z
+	else:
+		weapon_visual_root.position.z = move_toward(
+			weapon_visual_root.position.z,
+			target_z,
+			weapon_extension_speed * delta
+		)
 
 
 func _on_shot_fired(_weapon_name: String) -> void:
@@ -258,3 +301,27 @@ static func resolve_horizontal_velocity(
 
 static func is_slope_walkable(slope_angle_degrees: float, max_angle_degrees: float) -> bool:
 	return slope_angle_degrees <= max_angle_degrees
+
+
+static func resolve_weapon_visual_z(
+	obstacle_distance: float,
+	resting_z: float,
+	front_offset: float,
+	clearance: float,
+	closest_z: float
+) -> float:
+	if obstacle_distance <= 0.0:
+		return resting_z
+	var target_z := -(obstacle_distance - clearance - front_offset)
+	return clampf(target_z, resting_z, closest_z)
+
+
+static func should_show_weapon_visual(
+	obstacle_distance: float,
+	front_offset: float,
+	clearance: float,
+	closest_z: float
+) -> bool:
+	if obstacle_distance <= 0.0:
+		return true
+	return -(obstacle_distance - clearance - front_offset) <= closest_z

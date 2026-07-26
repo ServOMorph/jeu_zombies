@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://player/player_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://weapons/weapon_controller.gd" id="2_weapons"]
 [ext_resource type="Resource" path="res://weapons/data/starter_pistol.tres" id="3_pistol"]
+[ext_resource type="Script" path="res://systems/interaction_controller.gd" id="4_interaction"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.35
@@ -36,15 +37,30 @@ position = Vector3(0, 1.55, 0)
 current = true
 fov = 75.0
 
-[node name="WeaponVisual" type="MeshInstance3D" parent="Head/Camera3D"]
+[node name="WeaponVisualRoot" type="Node3D" parent="Head/Camera3D"]
 position = Vector3(0.36, -0.28, -0.62)
+
+[node name="WeaponVisual" type="MeshInstance3D" parent="Head/Camera3D/WeaponVisualRoot"]
 mesh = SubResource("BoxMesh_pistol")
 
-[node name="MuzzleFlash" type="MeshInstance3D" parent="Head/Camera3D"]
+[node name="MuzzleFlash" type="MeshInstance3D" parent="Head/Camera3D/WeaponVisualRoot"]
 visible = false
-position = Vector3(0.36, -0.28, -0.94)
+position = Vector3(0, 0, -0.32)
 mesh = SubResource("SphereMesh_muzzle_flash")
 material_override = SubResource("StandardMaterial3D_muzzle_flash")
+
+[node name="WeaponObstacleProbe" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -1.2)
+enabled = true
+
+[node name="InteractionController" type="Node3D" parent="Head/Camera3D"]
+script = ExtResource("4_interaction")
+
+[node name="InteractionProbe" type="RayCast3D" parent="Head/Camera3D/InteractionController"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 2
+collide_with_areas = true
+enabled = true
 
 [node name="WeaponController" type="Node3D" parent="."]
 script = ExtResource("2_weapons")

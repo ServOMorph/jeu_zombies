@@ -29,6 +29,18 @@ func run_tests() -> Array[String]:
 		failures.append("la pente de 30 degres doit rester praticable")
 	if PLAYER_CONTROLLER.is_slope_walkable(55.0, 46.0):
 		failures.append("la pente de 55 degres doit etre refusee")
+	var weapon_resting_z := PLAYER_CONTROLLER.resolve_weapon_visual_z(
+		1.2, -0.62, 0.355, 0.04, 0.06
+	)
+	if not is_equal_approx(weapon_resting_z, -0.62):
+		failures.append("l'arme doit conserver sa position normale sans obstacle proche")
+	var weapon_retracted_z := PLAYER_CONTROLLER.resolve_weapon_visual_z(
+		0.35, -0.62, 0.355, 0.04, 0.06
+	)
+	if -weapon_retracted_z + 0.355 > 0.35 - 0.04:
+		failures.append("l'arme retractee doit rester avant la porte")
+	if PLAYER_CONTROLLER.should_show_weapon_visual(0.3, 0.355, 0.04, 0.06):
+		failures.append("l'arme doit etre masquee si elle ne peut pas rester devant la porte")
 	return failures
 
 

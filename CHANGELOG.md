@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.12 — 2026-07-26
+
+### Ajouté
+
+- Interactions contextuelles centrées caméra, portefeuille de crédits et cinq portes achetables configurées par ressources.
+- Test d'intégration du franchissement réel d'une porte ouverte par un zombie, exécuté par `python check.py`.
+
+### Corrigé
+
+- Le refus d'achat est visible sans être écrasé par les notifications de vague.
+- Les zombies recalculent leur trajet après ouverture et traversent les liens de navigation sans se bloquer.
+
+### Modifié
+
+- M3.1 à M3.4 sont validés ; le HUD multi-résolutions M3.5 devient la prochaine tâche.
+
 ## v0.11 — 2026-07-26
 
 ### Ajouté

@@ -443,15 +443,15 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 
 ### M3.1 — Blockout complet d'Helix-9
 
-- [ ] Construire l'Accueil sécurisé.
-- [ ] Construire les Couloirs de confinement avec une boucle de déplacement.
-- [ ] Construire l'Entrepôt médical.
-- [ ] Construire le Laboratoire de synthèse.
-- [ ] Construire la Salle d'extraction.
-- [ ] Relier les zones par des portes et chemins lisibles.
-- [ ] Ajouter dans chaque zone des points d'apparition et au moins une décision de dépense.
-- [ ] Construire et vérifier la navigation pour tous les états de portes.
-- [ ] Éliminer trous, faces invisibles, collisions saillantes, zones de chute et raccourcis involontaires.
+- [x] Construire l'Accueil sécurisé.
+- [x] Construire les Couloirs de confinement avec une boucle de déplacement.
+- [x] Construire l'Entrepôt médical.
+- [x] Construire le Laboratoire de synthèse.
+- [x] Construire la Salle d'extraction.
+- [x] Relier les zones par des portes et chemins lisibles.
+- [x] Ajouter dans chaque zone des points d'apparition et au moins une décision de dépense.
+- [x] Construire et vérifier la navigation pour tous les états de portes.
+- [x] Éliminer trous, faces invisibles, collisions saillantes, zones de chute et raccourcis involontaires.
 
 **Acceptation :**
 
@@ -459,33 +459,33 @@ Statut au 2026-07-25 : la porte M1 est validée. Les trois parcours complets VSy
 - Les zombies peuvent atteindre les positions normales du joueur dans chaque zone.
 - La lumière permet de distinguer sols, sorties, zombies et interactions sans lampe torche.
 
-Statut au 2026-07-26 : les portes, collisions et chemins de navigation sont validés automatiquement ; le contrôle manuel du premier passage après déplacement du plafond bas reste requis avant de cocher M3.1.
+Statut au 2026-07-26 : validé automatiquement et manuellement, y compris le premier passage après déplacement du plafond bas.
 
 ### M3.2 — Système d'interaction unifié
 
-- [ ] Créer une détection d'interaction centrée sur la caméra.
-- [ ] Définir une interface commune pour ouvrir, acheter, récupérer, fabriquer et activer.
-- [ ] Afficher action, nom et prix éventuel.
-- [ ] N'autoriser qu'une cible d'interaction à la fois.
-- [ ] Masquer immédiatement l'invite lorsque la cible devient invalide.
-- [ ] Empêcher toute double activation par maintien ou répétition rapide de la touche.
+- [x] Créer une détection d'interaction centrée sur la caméra.
+- [x] Définir une interface commune pour ouvrir, acheter, récupérer, fabriquer et activer.
+- [x] Afficher action, nom et prix éventuel.
+- [x] N'autoriser qu'une cible d'interaction à la fois.
+- [x] Masquer immédiatement l'invite lorsque la cible devient invalide.
+- [x] Empêcher toute double activation par maintien ou répétition rapide de la touche.
 
 ### M3.3 — Crédits
 
-- [ ] Créer le portefeuille de session.
-- [ ] Créditer une élimination exactement une fois.
-- [ ] Centraliser la validation et la dépense atomique des achats.
-- [ ] Fournir un feedback distinct pour achat réussi et crédits insuffisants.
-- [ ] Empêcher solde négatif, dépassement et conservation entre deux parties.
-- [ ] Ajouter les tests automatisés.
+- [x] Créer le portefeuille de session.
+- [x] Créditer une élimination exactement une fois.
+- [x] Centraliser la validation et la dépense atomique des achats.
+- [x] Fournir un feedback distinct pour achat réussi et crédits insuffisants.
+- [x] Empêcher solde négatif, dépassement et conservation entre deux parties.
+- [x] Ajouter les tests automatisés.
 
 ### M3.4 — Portes achetables
 
-- [ ] Définir prix, état fermé/ouvert et zones débloquées.
-- [ ] Dépenser puis ouvrir de façon atomique.
-- [ ] Mettre à jour collision et navigation sans coincer joueur ou zombie.
-- [ ] Conserver la porte ouverte pendant la session.
-- [ ] Tester chaque porte avec assez et pas assez de crédits.
+- [x] Définir prix, état fermé/ouvert et zones débloquées.
+- [x] Dépenser puis ouvrir de façon atomique.
+- [x] Mettre à jour collision et navigation sans coincer joueur ou zombie.
+- [x] Conserver la porte ouverte pendant la session.
+- [x] Tester chaque porte avec assez et pas assez de crédits.
 
 ### M3.5 — HUD fonctionnel initial
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3]
+[gd_scene load_steps=36 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -15,6 +15,12 @@
 [ext_resource type="Resource" path="res://data/waves/wave_04.tres" id="13_wave_04"]
 [ext_resource type="Resource" path="res://data/waves/wave_05.tres" id="14_wave_05"]
 [ext_resource type="Script" path="res://world/helix_blockout.gd" id="15_blockout"]
+[ext_resource type="Script" path="res://world/interaction_test_terminal.gd" id="16_terminal"]
+[ext_resource type="Resource" path="res://data/doors/accueil_couloirs.tres" id="17_door_accueil"]
+[ext_resource type="Resource" path="res://data/doors/couloirs_entrepot.tres" id="18_door_entrepot"]
+[ext_resource type="Resource" path="res://data/doors/couloirs_laboratoire.tres" id="19_door_laboratoire"]
+[ext_resource type="Resource" path="res://data/doors/entrepot_extraction.tres" id="20_door_entrepot_extraction"]
+[ext_resource type="Resource" path="res://data/doors/laboratoire_extraction.tres" id="21_door_laboratoire_extraction"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -73,6 +79,12 @@ size = Vector3(2, 2.4, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_navigation_obstacle"]
 size = Vector3(2, 2.4, 0.5)
 
+[sub_resource type="BoxMesh" id="BoxMesh_interaction_terminal"]
+size = Vector3(0.8, 1.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_interaction_terminal"]
+size = Vector3(0.8, 1.6, 0.3)
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_test"]
 vertices = PackedVector3Array(-59, 0, -74, 59, 0, -74, 59, 0, 74, -59, 0, 74)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
@@ -90,9 +102,32 @@ shadow_enabled = true
 
 [node name="HelixBlockout" type="Node3D" parent="."]
 script = ExtResource("15_blockout")
+door_definitions = Array[Resource]([ExtResource("17_door_accueil"), ExtResource("18_door_entrepot"), ExtResource("19_door_laboratoire"), ExtResource("20_door_entrepot_extraction"), ExtResource("21_door_laboratoire_extraction")])
+
+[node name="InteractionTestTerminal" type="Area3D" parent="."]
+position = Vector3(2, 0.8, 2)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("16_terminal")
+action_label = "Activer"
+display_name = "Console de test"
+
+[node name="Visual" type="MeshInstance3D" parent="InteractionTestTerminal"]
+mesh = SubResource("BoxMesh_interaction_terminal")
+material_override = SubResource("StandardMaterial3D_gentle_slope")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionTestTerminal"]
+shape = SubResource("BoxShape3D_interaction_terminal")
+
+[node name="StatusLabel" type="Label3D" parent="InteractionTestTerminal"]
+position = Vector3(0, 1.35, 0)
+text = "CONSOLE\nD'INTERACTION"
+billboard = 1
+font_size = 40
+outline_size = 5
 
 [node name="NavigationObstacle" type="StaticBody3D" parent="."]
-position = Vector3(0, 1.2, -1)
+position = Vector3(46, 1.2, 43)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationObstacle"]
 mesh = SubResource("BoxMesh_navigation_obstacle")
@@ -101,7 +136,7 @@ mesh = SubResource("BoxMesh_navigation_obstacle")
 shape = SubResource("BoxShape3D_navigation_obstacle")
 
 [node name="LeftWall" type="StaticBody3D" parent="."]
-position = Vector3(-5, 1.5, 0)
+position = Vector3(41, 1.5, 44)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftWall"]
 mesh = SubResource("BoxMesh_wall")
@@ -110,7 +145,7 @@ mesh = SubResource("BoxMesh_wall")
 shape = SubResource("BoxShape3D_wall")
 
 [node name="RightWall" type="StaticBody3D" parent="."]
-position = Vector3(5, 1.5, 0)
+position = Vector3(51, 1.5, 44)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RightWall"]
 mesh = SubResource("BoxMesh_wall")
@@ -119,7 +154,7 @@ mesh = SubResource("BoxMesh_wall")
 shape = SubResource("BoxShape3D_wall")
 
 [node name="Step" type="StaticBody3D" parent="."]
-position = Vector3(0, 0.15, -3)
+position = Vector3(46, 0.15, 41)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Step"]
 mesh = SubResource("BoxMesh_step")
@@ -128,7 +163,7 @@ mesh = SubResource("BoxMesh_step")
 shape = SubResource("BoxShape3D_step")
 
 [node name="LowCeiling" type="StaticBody3D" parent="."]
-position = Vector3(7, 1.45, 12)
+position = Vector3(53, 1.45, 56)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LowCeiling"]
 mesh = SubResource("BoxMesh_ceiling")
@@ -137,7 +172,7 @@ mesh = SubResource("BoxMesh_ceiling")
 shape = SubResource("BoxShape3D_ceiling")
 
 [node name="GentleSlope30" type="StaticBody3D" parent="."]
-position = Vector3(-2.8, 1.35, 1)
+position = Vector3(43.2, 1.35, 45)
 rotation_degrees = Vector3(30, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GentleSlope30"]
@@ -148,7 +183,7 @@ material_override = SubResource("StandardMaterial3D_gentle_slope")
 shape = SubResource("BoxShape3D_gentle_slope")
 
 [node name="SteepSlope55" type="StaticBody3D" parent="."]
-position = Vector3(3.2, 1.75, 1.8)
+position = Vector3(49.2, 1.75, 45.8)
 rotation_degrees = Vector3(55, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SteepSlope55"]
@@ -220,17 +255,17 @@ unique_name_in_owner = true
 offset_left = 24.0
 offset_top = 150.0
 offset_right = 390.0
-offset_bottom = 310.0
+offset_bottom = 330.0
 theme_override_colors/font_color = Color(1, 0.82, 0.62, 1)
 theme_override_font_sizes/font_size = 20
-text = "Santé : 100 / 100\nEndurance : 100 / 100\nVitesse : 0.0 m/s\nCourse : REPOS\nÉtat : EN COURS"
+text = "Santé : 100 / 100\nEndurance : 100 / 100\nCrédits : 0\nVitesse : 0.0 m/s\nCourse : REPOS\nÉtat : EN COURS"
 
 [node name="WeaponLabel" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
 offset_left = 24.0
-offset_top = 330.0
+offset_top = 350.0
 offset_right = 430.0
-offset_bottom = 430.0
+offset_bottom = 450.0
 theme_override_colors/font_color = Color(0.72, 0.9, 0.76, 1)
 theme_override_font_sizes/font_size = 20
 text = "Arme : Pistolet de secours\nMunitions : 12 / 48\nCible : 100 / 100"
@@ -256,12 +291,12 @@ wave_definitions = [ExtResource("10_wave_01"), ExtResource("11_wave_02"), ExtRes
 intermission_seconds = 10.0
 
 [node name="SpawnPointAccueilA" type="Marker3D" parent="."]
-position = Vector3(-12, 0.01, -12)
+position = Vector3(-7, 0.01, 8)
 script = ExtResource("8_spawn_point")
 zone_id = "accueil"
 
 [node name="SpawnPointAccueilB" type="Marker3D" parent="."]
-position = Vector3(12, 0.01, -12)
+position = Vector3(7, 0.01, 8)
 script = ExtResource("8_spawn_point")
 zone_id = "accueil"
 
@@ -340,5 +375,36 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.82, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "CHOISIR UN SCÉNARIO DE TEST\n\n1 — PARCOURS : portes, collisions et navigation sans zombies\n2 — SURVIE : vagues et zombies\n\nF5 permet de revenir à ce choix."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractionPrompt" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -122.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PurchaseFeedback" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -190.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1

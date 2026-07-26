@@ -2,35 +2,35 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Revalider manuellement M3.1 — Blockout complet d'Helix-9. fait quand: le parcours Accueil → première porte → Couloirs est franchissable portes ouvertes et bloqué proprement portes fermées après le déplacement du plafond bas. réf: `tests_manuels.md` ; `world/dev_player_test.tscn` ; `_docs/validation_v1.md`, section « M3.1 — Blockout complet d'Helix-9 »
+- [P1|ouvert] Finaliser M3.5 — HUD fonctionnel initial. fait quand: le HUD est ancré et validé sur plusieurs résolutions, affiche les valeurs réelles et évite les mises à jour inutiles. réf: `roadmap_v1.md`, section « M3.5 » ; `world/dev_player_test.tscn` ; `_docs/validation_v1.md`
 
 ## Contexte chaud
 
 - Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 à 60 Hz.
-- `python check.py` valide l'import, 14 suites Godot headless et l'export de contrôle `.pck`.
-- La porte M1 est validée : trois parcours VSync à faible charge, pire résultat `60 / 55 / 18,06 ms`, aucune chute sous 50 FPS.
-- M2 est validé : la boucle de survie couvre cinq vagues, la défaite, le redémarrage et un test de charge à huit zombies conforme.
-- M3.1 a des portes collisionnables, des liens de navigation activables et des sols séparés ; le parcours initial reste à revalider après le déplacement du plafond bas.
-- La scène de test propose « Parcours » sans zombies ou « Survie » avec vagues ; `F5` réinitialise le choix.
+- `python check.py` valide l'import, 15 suites Godot headless, le franchissement réel d'une porte par un zombie et l'export de contrôle `.pck`.
+- M3.1 à M3.4 sont validés : blockout, interaction centrée caméra, crédits de session et cinq portes achetables.
+- Les portes sont fermées au début de chaque session, conservent leur ouverture pendant la partie, affichent les retours d'achat et déclenchent le recalcul de navigation des zombies.
 
 ## Dernière session
 
 # Session du 2026-07-26
 
 ## Décisions prises
-- Les essais de portes utilisent un scénario « Parcours » sans zombies ; le scénario « Survie » conserve les vagues pour les tests de combat.
+- Les portes sont des interactables payants pilotés par des ressources ; un zombie conserve son trajet pendant la traversée d'un lien de navigation.
 
 ## Livrables produits ou modifiés
-- `world/helix_door.gd`, `world/helix_blockout.gd` et `world/dev_player_test.tscn` : portes physiques, liens de navigation et sols séparés ajoutés ; plafond bas déplacé hors du premier passage.
-- `systems/dev_test_scenario.gd` et `world/dev_player_test.gd` : sélection réinitialisable Parcours/Survie ajoutée.
-- `tests/test_helix_blockout.gd`, `tests/test_dev_test_scenario.gd` et `tests/verify_helix_navigation.gd` : couverture de structure, scénarios et navigation ouverte/fermée ajoutée.
+- `systems/interactable.gd`, `systems/interaction_controller.gd` et `world/interaction_test_terminal.gd` : interaction contextuelle générique avec une seule cible et anti-répétition.
+- `core/game_session.gd`, `data/doors/` et `world/helix_door.gd` : crédits, achats atomiques et cinq portes configurables ajoutés.
+- `world/dev_player_test.*`, `enemies/zombie_standard.gd` et `world/helix_blockout.gd` : feedback d'achat, spawns sûrs et franchissement zombie corrigés.
+- `tests/door_navigation_integration.tscn`, les suites ciblées et `check.py` : couverture de l'achat et du franchissement d'une porte ajoutée.
 
 ## Hypothèses validées / invalidées
-- VALIDE : `python check.py` réussit l'import, 14 suites et l'export ; le probe couvre le trajet Accueil → Extraction portes ouvertes puis fermées.
-- EN ATTENTE : revalidation manuelle du premier passage après déplacement du plafond bas.
+- VALIDE : le joueur gagne des crédits, reçoit un refus visible sans débit, achète une porte et les zombies la franchissent après ouverture.
+- VALIDE : `python check.py` réussit avec 15 suites, le test d'intégration de porte et l'export.
+- EN ATTENTE : validation dédiée du HUD M3.5 sur plusieurs résolutions.
 
 ## Prochaine étape exacte
-Exécuter le contrôle unique de `tests_manuels.md`. Si conforme, vider le fichier et valider M3.1 avant de commencer M3.2.
+Implémenter et qualifier M3.5 : ancrages multi-résolutions, affichage des valeurs de session et cadence de mise à jour du HUD.
 
 ## Question bloquante pour la session suivante
 Aucune

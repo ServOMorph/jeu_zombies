@@ -10,6 +10,9 @@ class SignalObserver:
 	var paused := 0
 	var ended := 0
 	var reset := 0
+	var credits_events := 0
+	var purchase_successes := 0
+	var purchase_failures := 0
 	var last_pause_value := false
 	var last_final_state := -1
 
@@ -27,6 +30,15 @@ class SignalObserver:
 	func _on_session_reset() -> void:
 		reset += 1
 
+	func _on_credits_changed(_current_credits: int, _delta: int) -> void:
+		credits_events += 1
+
+	func _on_purchase_succeeded(_item_name: String, _cost: int, _remaining: int) -> void:
+		purchase_successes += 1
+
+	func _on_purchase_failed(_item_name: String, _cost: int, _available: int) -> void:
+		purchase_failures += 1
+
 
 func run_tests() -> Array[String]:
 	var failures: Array[String] = []
@@ -36,6 +48,9 @@ func run_tests() -> Array[String]:
 	session.session_paused.connect(observer._on_session_paused)
 	session.session_ended.connect(observer._on_session_ended)
 	session.session_reset.connect(observer._on_session_reset)
+	session.credits_changed.connect(observer._on_credits_changed)
+	session.purchase_succeeded.connect(observer._on_purchase_succeeded)
+	session.purchase_failed.connect(observer._on_purchase_failed)
 
 	if session.state != session.State.MENU:
 		failures.append("l'état initial doit être MENU")
@@ -53,6 +68,22 @@ func run_tests() -> Array[String]:
 		failures.append("la première session doit être initialisée avec ses valeurs par défaut")
 	if observer.started != 1 or observer.reset != 1:
 		failures.append("les signaux de début et de remise à zéro doivent être émis")
+	if not session.add_credits(100) or session.get_credits() != 100:
+		failures.append("une récompense positive doit créditer la session")
+	if session.add_credits(0) or session.add_credits(-1):
+		failures.append("une récompense nulle ou négative doit être refusée")
+	if not session.can_afford(100) or session.can_afford(101):
+		failures.append("le contrôle de solvabilité doit utiliser le solde réel")
+	if not session.try_purchase("Test", 40) or session.get_credits() != 60:
+		failures.append("un achat solvable doit être débité atomiquement")
+	if session.try_purchase("Test", 61) or session.get_credits() != 60:
+		failures.append("un achat non solvable doit être refusé sans débit")
+	if observer.purchase_successes != 1 or observer.purchase_failures != 1:
+		failures.append("les achats réussis et refusés doivent produire des feedbacks distincts")
+	if not session.add_credits(session.MAX_CREDITS) or session.get_credits() != session.MAX_CREDITS:
+		failures.append("le solde doit être borné sans dépassement")
+	if session.add_credits(1):
+		failures.append("un solde au maximum ne doit pas déborder")
 
 	if not session.toggle_pause() or session.state != session.State.PAUSED:
 		failures.append("PLAYING doit pouvoir passer à PAUSED")
@@ -63,7 +94,6 @@ func run_tests() -> Array[String]:
 	if observer.last_pause_value:
 		failures.append("le signal de reprise doit indiquer false")
 
-	session._session["credits"] = 999
 	session.return_to_menu()
 	if session.state != session.State.MENU or session.has_active_session():
 		failures.append("le retour au menu doit détruire toute session active")

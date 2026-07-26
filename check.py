@@ -36,6 +36,15 @@ def main() -> int:
             [sys.executable, str(PROJECT_ROOT / "test.py")],
         ),
         (
+            "Franchissement des portes par les zombies",
+            [
+                sys.executable,
+                str(PROJECT_ROOT / "run.py"),
+                "--headless",
+                "res://tests/door_navigation_integration.tscn",
+            ],
+        ),
+        (
             "Export de contrôle",
             [
                 sys.executable,

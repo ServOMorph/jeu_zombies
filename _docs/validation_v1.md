@@ -384,7 +384,7 @@ Les critères de M2.4 et la porte de sortie M2 sont satisfaits sur la scène de 
 
 Date : 2026-07-26
 Version Godot : `4.5.stable.official.876b29033`
-Statut : revalidation manuelle en attente
+Statut : validé
 
 ### Tranche implémentée
 
@@ -404,8 +404,90 @@ Statut : revalidation manuelle en attente
 
 ### Contrôle manuel
 
-Le contrôle initial a confirmé le choix Parcours sans zombies, les portes et le parcours des cinq zones. Il a ensuite signalé que le plafond bas de test gênait la première porte ; ce plafond a été déplacé après le contrôle et le passage doit donc être rejoué.
+Le choix Parcours sans zombies, les portes et le parcours des cinq zones ont été confirmés. Après déplacement du plafond bas, le premier passage a été rejoué et validé sans gêne de collision.
 
 ### Résultat
 
-Les portes et leur navigation sont validées automatiquement. M3.1 reste ouverte uniquement jusqu'à la revalidation visuelle et physique du premier passage après déplacement du plafond bas.
+Les critères de M3.1 sont satisfaits.
+
+## M3.2 — Système d'interaction unifié
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `Interactable` définit l'action, le nom, le prix optionnel, la validité et le signal d'activation.
+- Une sonde portée par la caméra sélectionne une unique cible sur la couche d'interaction ; l'appui maintenu sur `E` ne la réactive pas.
+- L'invite basse affiche l'action, le nom et le prix, puis disparaît lorsque la cible devient invalide.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite ciblée | `python test.py --test-file=res://tests/test_interaction_system.gd` | code 0, sonde, invite, cible et anti-répétition vérifiés |
+| Contrôle global | `python check.py` | code 0, import, 15 suites, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+La console d'interaction affiche correctement son invite lorsque visée. `E` active la console une fois par appui et l'affichage confirme les activations successives.
+
+### Résultat
+
+Les critères de M3.2 sont satisfaits.
+
+## M3.3 — Crédits
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `GameSession` porte le solde, les signaux de crédit et les achats atomiques bornés.
+- Chaque zombie accorde sa récompense une seule fois ; le solde est remis à zéro au démarrage de chaque session.
+- Le HUD affiche le solde courant et les achats émettent des retours distincts de réussite ou de refus.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite ciblée | `python test.py --test-file=res://tests/test_game_session.gd` | code 0, crédit, bornes, débit et remise à zéro vérifiés |
+| Contrôle global | `python check.py` | code 0, import, 15 suites, franchissement de porte et export réussis |
+
+### Contrôle manuel
+
+Le gain de crédits par élimination, le solde HUD et la remise à zéro d'une nouvelle partie ont été validés.
+
+### Résultat
+
+Les critères de M3.3 sont satisfaits.
+
+## M3.4 — Portes achetables
+
+Date : 2026-07-26
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- Cinq ressources définissent les portes, zones reliées et prix de `100` à `500` crédits.
+- Une porte ferme collision et navigation au début de session, débite atomiquement à l'achat puis se lève et reste ouverte jusqu'à la réinitialisation.
+- Le changement d'état force le recalcul des zombies ; la poursuite préserve le trajet pendant le franchissement du lien de navigation.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite ciblée | `python test.py --test-file=res://tests/test_helix_blockout.gd` | code 0, cinq prix, refus, débit exact, ouverture et navigation vérifiés |
+| Intégration zombie | `python run.py --headless res://tests/door_navigation_integration.tscn` | code 0, porte fermée infranchissable puis franchie après ouverture |
+| Contrôle global | `python check.py` | code 0, import, 15 suites, intégration de porte et export réussis |
+
+### Contrôle manuel
+
+Le refus avec 50 crédits reste visible sans débit, l'achat à 100 crédits ouvre la première porte sans collision invisible et un zombie la franchit. Après `F5`, le solde revient à zéro et la porte est de nouveau fermée.
+
+### Résultat
+
+Les critères de M3.4 sont satisfaits.
