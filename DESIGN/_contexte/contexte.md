@@ -22,11 +22,11 @@ assets intégrés.
 
 ## État actuel
 
-- Les phases 1 à 3 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
-- La phase 3 comprend 13 accessoires et cinq zones visuelles GLB, contrôlés dans le laboratoire.
-- Le laboratoire propose le menu `F4`, des vignettes et des zones FPS complètes de validation.
-- La phase 4, zombie standard, attend `/compact` et confirmation écrite avant son démarrage.
-- Aucun asset DESIGN n'est intégré au projet jouable.
+- Les phases 1 à 4 sont terminées et approuvées ; leurs exports restent dans `DESIGN/`.
+- La phase 4 fournit un zombie standard GLB skinné avec huit clips et un contrat `BodyVisual`.
+- Le laboratoire expose le zombie par `F4`, avec prévisualisation directe au socle.
+- La phase 5, arsenal et vue première personne, attend `/compact` et confirmation écrite.
+- Aucun asset DESIGN n’est intégré au projet jouable.
 
 ## Contrats techniques à préserver
 
@@ -37,7 +37,6 @@ assets intégrés.
 
 ## Décisions structurantes
 
-- 2026-07-26 : Tout lot suit le flux `DESIGN → validation → assets/ → scènes Godot → tests`.
 - 2026-07-26 : La première passe environnementale habille le blockout sans remplacer ses collisions ni sa navigation.
 - 2026-07-26 : La cible validée est une 3D low-poly sombre, propre, modulaire et optimisée, conforme à `bible_direction_artistique.md`.
 - 2026-07-26 : Les assets DESIGN sont contrôlés dans un laboratoire Godot autonome avant toute transmission au code.
@@ -46,4 +45,5 @@ assets intégrés.
 - 2026-07-26 : Le kit modulaire structurel V1 est validé visuellement, exporté en `.glb` et prêt à transmettre ; ses 23 modules sont des créations internes sous licence propriétaire, tous droits réservés.
 - 2026-07-26 : Le lot matériaux et signalétique V1 est validé dans le laboratoire ; ses neuf matériaux et sa planche vectorielle restent dans `DESIGN/` jusqu'à intégration dédiée.
 - 2026-07-26 : Les zones visuelles de phase 3 restent des surcouches GLB sans collision, navigation ni logique ; le blockout fonctionnel doit être préservé lors de leur intégration.
-- 2026-07-26 : La phase 3 est approuvée avec 13 accessoires et cinq zones visuelles ; les exports restent confinés à DESIGN jusqu'à une intégration dédiée.
+- 2026-07-26 : La phase 3 est approuvée avec 13 accessoires et cinq zones visuelles ; les exports restent confinés à DESIGN jusqu’à une intégration dédiée.
+- 2026-07-26 : Le zombie standard V1 est approuvé avec un GLB skinné, huit clips et un raccord `BodyVisual` ; son intégration reste une session de code distincte.

@@ -1,0 +1,5 @@
+[application]
+config/name="Nox Protocol — Phase 4 Zombie"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"

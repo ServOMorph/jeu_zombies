@@ -166,7 +166,7 @@ Différencier les zones sans rompre la cohérence du kit modulaire.
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 4 — Zombie standard `[TODO]`
+## Phase 4 — Zombie standard `[FAIT]`
 
 ### But
 
@@ -191,6 +191,12 @@ lisible sans gore explicite.
 - Contrôler toutes les animations sans glissement ou intersection majeure.
 - Vérifier que les variantes ne sont jamais confondues avec des ennemis spéciaux.
 - Valider le coût visuel prévu pour le plafond de zombies de la V1.
+
+### État au 2026-07-26
+
+- Le zombie standard est produit dans `zombie_standard/` : export GLB, fiches, contrat d’animation, référence, rapport et bordereau sont complets.
+- L’export contient 24 meshes, un skin GLTF et les huit clips requis ; sa copie est contrôlée dans le laboratoire via `F4`.
+- Le lot est approuvé par l’utilisateur et prêt à transmettre à une session d’intégration dédiée ; aucune ressource n’est intégrée au jeu.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

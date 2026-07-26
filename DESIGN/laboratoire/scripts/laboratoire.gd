@@ -4,6 +4,7 @@ const IMPORTS_PATH := "res://imports"
 const PHASE2_MATERIALS_PATH := "res://imports/phase2"
 const PHASE3_ASSETS_PATH := "res://imports/phase3"
 const PHASE3_ZONES_PATH := "res://imports/phase3/zones"
+const PHASE4_ASSETS_PATH := "res://imports/phase4"
 const ALLOWED_EXTENSIONS := ["glb", "gltf", "tscn"]
 const CYAN := Color("#40d5db")
 const AMBER := Color("#f0a43a")
@@ -469,6 +470,10 @@ func _create_selection_menu() -> void:
 	for asset_path: String in _asset_paths:
 		if asset_path.begins_with(PHASE3_ASSETS_PATH):
 			_add_menu_button(entries, asset_path.get_file(), Callable(self, "_select_asset_path").bind(asset_path))
+	_add_menu_title(entries, "Assets phase 4")
+	for asset_path: String in _asset_paths:
+		if asset_path.begins_with(PHASE4_ASSETS_PATH):
+			_add_menu_button(entries, asset_path.get_file(), Callable(self, "_select_asset_path").bind(asset_path))
 
 
 func _add_menu_title(parent: VBoxContainer, title: String) -> void:
@@ -520,6 +525,7 @@ func _select_asset_path(asset_path: String) -> void:
 	_asset_index = index
 	_asset_scale = 1.0
 	_show_asset()
+	_place_player_for_asset()
 	_set_selection_menu_visible(false)
 
 
@@ -538,6 +544,11 @@ func _discover_assets() -> void:
 		for file_name: String in phase3_directory.get_files():
 			if file_name.get_extension().to_lower() == "glb":
 				_asset_paths.append("%s/%s" % [PHASE3_ASSETS_PATH, file_name])
+	var phase4_directory := DirAccess.open(PHASE4_ASSETS_PATH)
+	if phase4_directory != null:
+		for file_name: String in phase4_directory.get_files():
+			if file_name.get_extension().to_lower() == "glb":
+				_asset_paths.append("%s/%s" % [PHASE4_ASSETS_PATH, file_name])
 	_asset_paths.sort()
 	if not _asset_paths.is_empty():
 		_asset_index = 0
@@ -904,6 +915,11 @@ func _place_player_for_vignette() -> void:
 		Vector3(0.0, 0.02, 8.0), Vector3(0.0, 0.02, 6.0), Vector3(0.0, 0.02, 8.0),
 	]
 	_player.position = positions[_validation_index]
+
+
+func _place_player_for_asset() -> void:
+	_player.position = Vector3(0.0, 0.02, -8.0)
+	_player.rotation = Vector3.ZERO
 
 
 func _exit_validation_mode() -> void:

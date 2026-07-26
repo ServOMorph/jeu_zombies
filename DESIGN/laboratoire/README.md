@@ -61,3 +61,10 @@ Pour valider le lot :
 2. Examiner les cinq vignettes de phase 3 avec `F3` sous les trois ambiances avec `F2`.
 3. Contrôler les lignes de tir, les circulations, les silhouettes et les accents de zone.
 4. Parcourir les dix assets avec `Page préc./suiv.` pour contrôler leur échelle et leur pivot.
+
+## Validation phase 4
+
+Le zombie standard est copié dans `imports/phase4/` et accessible avec `F4`, section
+« Assets phase 4 ». Sa sélection place directement le visiteur face au socle. Contrôler sa silhouette à l’échelle `1,00` sous les trois
+ambiances avec `F2`. Les huit clips, le raccord à `BodyVisual`, les collisions et les
+performances en situation relèvent de la session d’intégration dédiée.

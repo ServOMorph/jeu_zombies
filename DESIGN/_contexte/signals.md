@@ -2,35 +2,35 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Préparer la phase 4, zombie standard. fait quand: le modèle, les matériaux, les animations, les fiches et la validation laboratoire sont approuvés. réf: `roadmap_design.md` ; `workflow_graphique.md`
+- [P1|ouvert] Préparer la phase 5, arsenal et vue première personne. fait quand: les sept silhouettes, les fiches, les points d’ancrage et la validation laboratoire sont approuvés. réf: `roadmap_design.md` ; `workflow_graphique.md`
 
 ## Contexte chaud
 
-- Les 13 accessoires et les cinq zones visuelles de la phase 3 sont approuvés par l'utilisateur ; leurs exports restent dans `DESIGN/`.
-- Le laboratoire propose le menu `F4`, cinq vignettes de zone et cinq zones complètes de validation ; aucune ressource n'est intégrée au jeu.
+- Le zombie standard de phase 4 est approuvé ; son GLB, son skin et ses huit clips restent dans `DESIGN/zombie_standard/` jusqu’à intégration dédiée.
+- Le laboratoire propose cet asset dans le menu `F4`, section « Assets phase 4 », avec téléportation face au socle.
 
 ## Prochaine étape exacte
 
-Après `/compact` et confirmation écrite, démarrer la conception du zombie standard de la phase 4.
+Après `/compact` et confirmation écrite, démarrer la conception de l’arsenal et de la vue première personne de la phase 5.
 
 ## Dernière session
 
 # Session du 2026-07-26
 
 ## Décisions prises
-- Clore la phase 3 après validation utilisateur des 13 accessoires et des cinq zones visuelles.
-- Maintenir les exports comme surcouches visuelles, sans collision, navigation ni logique de jeu.
+- Clore la phase 4 après validation utilisateur du zombie standard.
+- Conserver le modèle, son skin et ses animations dans DESIGN jusqu’à une intégration de code dédiée.
 
 ## Livrables produits ou modifiés
-- `identites_zones/` : chariot médical, console et observation de synthèse, exports GLB, fiches, inventaire et contrôles structurels complétés.
-- `laboratoire/` : copies des trois exports, vignettes médicales et synthèse, menu `F4` et contrôle automatisé mis à jour.
+- `zombie_standard/` : référence, fiches, contrat d’animation, export GLB skinné, contrôles et bordereau produits.
+- `laboratoire/` : import phase 4, entrée F4, téléportation de prévisualisation et validation automatisée ajoutés.
 
 ## Hypothèses validées / invalidées
-- VALIDE : les 13 assets et les cinq zones de phase 3 sont validés dans le laboratoire par l'utilisateur.
-- VALIDE : les exports restent sans composant fonctionnel.
+- VALIDE : le zombie standard est lisible et approuvé dans le laboratoire.
+- VALIDE : le GLB contient 24 meshes, un skin et les huit clips requis.
 
 ## Prochaine étape exacte
-Après `/compact` et confirmation écrite, démarrer la phase 4 — zombie standard.
+Après `/compact` et confirmation écrite, démarrer la phase 5 — arsenal et vue première personne.
 
 ## Question bloquante pour la session suivante
 Aucune.

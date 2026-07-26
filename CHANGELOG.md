@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.27 — 2026-07-26
+
+### Ajouté
+
+- Zombie standard de phase 4 DESIGN : référence, fiches, contrat d’animation, export GLB skinné, huit clips et bordereau de transmission.
+- Import de laboratoire phase 4 et accès direct au modèle via le menu `F4`.
+
+### Modifié
+
+- Phase 4 DESIGN approuvée par l’utilisateur ; le lot reste dans `DESIGN/` jusqu’à son intégration dédiée.
+
 ## v0.26 — 2026-07-26
 
 ### Ajouté
