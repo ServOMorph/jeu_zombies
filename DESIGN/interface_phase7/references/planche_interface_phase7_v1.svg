@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Planche d'interface Nox Protocol V1</title>
+  <desc id="desc">Références pour le HUD, une interaction, les menus, la victoire et la défaite.</desc>
+  <defs>
+    <style>
+      .bg{fill:#111820}.panel{fill:#111820;fill-opacity:.86;stroke:#4a5561;stroke-width:2}.line{stroke:#4a5561;stroke-width:2}.text{fill:#d7e0e2;font-family:Arial,sans-serif}.muted{fill:#7d8992;font-family:Arial,sans-serif}.cyan{fill:#40d5db}.amber{fill:#f0a43a}.red{fill:#d94b4b}.green{fill:#71c982}.label{font-size:20px;letter-spacing:2px}.value{font-size:34px;font-weight:bold}.small{font-size:16px;letter-spacing:1px}.title{font-size:40px;font-weight:bold;letter-spacing:9px}.button{fill:#1b232c;stroke:#4a5561;stroke-width:2}.focus{stroke:#f0a43a;stroke-width:4}
+    </style>
+  </defs>
+  <rect class="bg" width="1920" height="1080"/>
+  <text x="48" y="54" class="muted small">PHASE 7 · RÉFÉRENCE 1920 × 1080 · ZONES SÛRES 48 / 36</text>
+
+  <g id="hud-combat" transform="translate(48 90)">
+    <rect class="panel" width="1150" height="590" rx="8"/>
+    <text x="32" y="42" class="text label">HUD COMBAT</text>
+    <line class="line" x1="32" y1="58" x2="1118" y2="58"/>
+    <text x="575" y="112" text-anchor="middle" class="text label">OBJECTIF : ASSEMBLER L’ANTIDOTE</text>
+    <text x="575" y="144" text-anchor="middle" class="amber value">03:42</text>
+    <circle cx="575" cy="302" r="17" fill="none" stroke="#d7e0e2" stroke-width="3"/>
+    <circle cx="575" cy="302" r="3" class="cyan"/>
+    <path d="M575 276v12M575 316v12M549 302h12M589 302h12" fill="none" stroke="#d7e0e2" stroke-width="3"/>
+    <g transform="translate(32 472)">
+      <text y="-16" class="text label">SANTÉ</text><text x="270" y="-16" text-anchor="end" class="text value">86</text>
+      <rect width="270" height="14" rx="7" fill="#4a5561"/><rect width="232" height="14" rx="7" class="green"/>
+      <text y="46" class="muted small">ENDURANCE</text><path d="M0 68h270" stroke="#40d5db" stroke-width="8" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(834 82)">
+      <text class="muted label">CRÉDITS</text><text y="38" class="cyan value">1 850</text>
+      <line class="line" y1="56" x2="260" y2="56"/><text y="88" class="muted label">VAGUE</text><text x="260" y="88" text-anchor="end" class="text value">12</text>
+    </g>
+    <g transform="translate(826 465)">
+      <text class="muted label">FUSIL D’ASSAUT</text><text y="50" class="text value">28</text><text x="78" y="50" class="muted value">/ 180</text>
+      <path d="M212 14h68l22 14-22 14h-68l-26-14z" fill="none" stroke="#d7e0e2" stroke-width="3"/>
+    </g>
+    <g transform="translate(360 488)">
+      <rect class="panel" width="430" height="72" rx="6"/><rect x="12" y="12" width="48" height="48" rx="4" fill="#f0a43a"/>
+      <text x="36" y="44" text-anchor="middle" class="bg value">E</text><text x="78" y="31" class="text label">INTERAGIR</text><text x="78" y="54" class="amber small">SUPPORT D’ARME · 1 000 CRÉDITS</text>
+    </g>
+  </g>
+
+  <g id="menu-principal" transform="translate(1232 90)">
+    <rect class="panel" width="640" height="590" rx="8"/>
+    <text x="320" y="100" text-anchor="middle" class="text title">NOX</text>
+    <path d="M176 118h288" stroke="#40d5db" stroke-width="4"/>
+    <text x="320" y="150" text-anchor="middle" class="cyan label">PROTOCOL</text>
+    <text x="72" y="230" class="muted small">COMPLEXE HELIX-9</text>
+    <g transform="translate(72 266)">
+      <rect class="button focus" width="496" height="58" rx="4"/><path d="M18 18l16 11-16 11z" class="amber"/><text x="58" y="37" class="text label">JOUER</text>
+      <rect class="button" y="72" width="496" height="58" rx="4"/><text x="58" y="109" class="text label">OPTIONS</text>
+      <rect class="button" y="144" width="496" height="58" rx="4"/><text x="58" y="181" class="text label">CRÉDITS</text>
+      <rect class="button" y="216" width="496" height="58" rx="4"/><text x="58" y="253" class="text label">QUITTER</text>
+    </g>
+    <text x="320" y="544" text-anchor="middle" class="muted small">ENTRÉE : VALIDER · ÉCHAP : RETOUR</text>
+  </g>
+
+  <g id="fin-partie" transform="translate(48 722)">
+    <rect class="panel" width="1824" height="310" rx="8"/>
+    <g transform="translate(48 42)">
+      <path d="M28 0l28 48H0z" class="cyan"/><path d="M22 27l5 5 11-14" fill="none" stroke="#111820" stroke-width="5"/>
+      <text x="76" y="28" class="cyan title">EXTRACTION RÉUSSIE</text><text x="76" y="60" class="text small">L’ANTIDOTE A QUITTÉ HELIX-9.</text>
+      <rect class="button focus" y="104" width="290" height="58" rx="4"/><text x="38" y="141" class="text label">REJOUER</text>
+      <rect class="button" x="310" y="104" width="330" height="58" rx="4"/><text x="348" y="141" class="text label">MENU PRINCIPAL</text>
+    </g>
+    <line class="line" x1="912" y1="36" x2="912" y2="274"/>
+    <g transform="translate(960 42)">
+      <path d="M28 0l28 48H0z" class="red"/><path d="M28 14v16M28 38v2" stroke="#111820" stroke-width="5"/>
+      <text x="76" y="28" class="red title">CONTAMINATION CRITIQUE</text><text x="76" y="60" class="text small">SIGNES VITAUX INTERROMPUS.</text>
+      <rect class="button focus" y="104" width="290" height="58" rx="4"/><text x="38" y="141" class="text label">REJOUER</text>
+      <rect class="button" x="310" y="104" width="330" height="58" rx="4"/><text x="348" y="141" class="text label">MENU PRINCIPAL</text>
+    </g>
+  </g>
+</svg>

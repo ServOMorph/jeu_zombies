@@ -33,6 +33,9 @@ var _help_background: ColorRect
 var _help_label: Label
 var _status_label: Label
 var _selection_menu: PanelContainer
+var _phase7_preview: Control
+var _phase7_preview_content: Control
+var _phase7_preview_index := -1
 
 
 func _ready() -> void:
@@ -43,6 +46,7 @@ func _ready() -> void:
 	_create_lighting()
 	_create_player()
 	_create_interface()
+	_create_phase7_preview()
 	_discover_assets()
 	_create_validation_vignettes()
 	_create_selection_menu()
@@ -56,7 +60,11 @@ func _process(_delta: float) -> void:
 		_help_background.visible = _help_visible
 		_help_label.visible = _help_visible
 	if Input.is_action_just_pressed("lab_menu"):
-		_set_selection_menu_visible(not _selection_menu.visible)
+		if _phase7_preview.visible:
+			_hide_phase7_preview()
+			_set_selection_menu_visible(true)
+		else:
+			_set_selection_menu_visible(not _selection_menu.visible)
 	if Input.is_action_just_pressed("lab_light"):
 		_light_mode = (_light_mode + 1) % 3
 		_apply_light_mode()
@@ -65,7 +73,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("lab_asset_next"):
 		_change_asset(1)
 	if Input.is_action_just_pressed("lab_validation_next"):
-		_change_validation_vignette()
+		if _phase7_preview.visible:
+			_change_phase7_preview(1)
+		else:
+			_change_validation_vignette()
 	if Input.is_action_just_pressed("lab_scale_down"):
 		_change_asset_scale(0.8)
 	if Input.is_action_just_pressed("lab_scale_up"):
@@ -392,7 +403,7 @@ func _create_interface() -> void:
 		+ "ZQSD / WASD / flèches : déplacement   Souris : regard\n"
 		+ "Maj : course   Échap : libérer/capturer la souris\n"
 		+ "F2 : ambiance froide / neutre / alerte\n"
-		+ "F3 : vignette suivante   F4 : menu de sélection\n"
+		+ "F3 : vignette / écran UI suivant   F4 : menu de sélection\n"
 		+ "Page préc./suiv. : changer d'asset   R : rotation 45°\n"
 		+ "- / + : échelle de prévisualisation"
 	)
@@ -423,6 +434,200 @@ func _create_interface() -> void:
 	canvas.add_child(crosshair)
 
 
+func _create_phase7_preview() -> void:
+	var canvas := CanvasLayer.new()
+	canvas.name = "InterfacePhase7"
+	add_child(canvas)
+	_phase7_preview = Control.new()
+	_phase7_preview.name = "Phase7Preview"
+	_phase7_preview.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_phase7_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_phase7_preview.visible = false
+	canvas.add_child(_phase7_preview)
+
+	var background := ColorRect.new()
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.color = Color("#111820")
+	_phase7_preview.add_child(background)
+
+	_phase7_preview_content = Control.new()
+	_phase7_preview_content.name = "Contenu"
+	_phase7_preview_content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_phase7_preview.add_child(_phase7_preview_content)
+
+
+func _create_ui_panel(
+	parent: Control,
+	rect: Rect2,
+	fill: Color = Color("#111820"),
+	border: Color = Color("#4a5561"),
+	border_width: int = 2
+) -> Panel:
+	var panel := Panel.new()
+	panel.position = rect.position
+	panel.size = rect.size
+	var style := StyleBoxFlat.new()
+	style.bg_color = fill
+	style.border_color = border
+	style.set_border_width_all(border_width)
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_left = 6
+	style.corner_radius_bottom_right = 6
+	panel.add_theme_stylebox_override("panel", style)
+	parent.add_child(panel)
+	return panel
+
+
+func _create_ui_label(
+	parent: Control,
+	text_value: String,
+	rect: Rect2,
+	color: Color = Color("#d7e0e2"),
+	font_size: int = 24,
+	alignment: HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT
+) -> Label:
+	var label := Label.new()
+	label.text = text_value
+	label.position = rect.position
+	label.size = rect.size
+	label.horizontal_alignment = alignment
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", color)
+	label.add_theme_font_size_override("font_size", font_size)
+	parent.add_child(label)
+	return label
+
+
+func _create_ui_button(parent: Control, text_value: String, position: Vector2, focused: bool = false, danger: bool = false) -> void:
+	var border := AMBER if focused else Color("#4a5561")
+	if danger:
+		border = RED
+	var button := _create_ui_panel(parent, Rect2(position, Vector2(430.0, 58.0)), Color("#1b232c"), border, 4 if focused else 2)
+	if focused:
+		_create_ui_label(button, "›", Rect2(16.0, 0.0, 32.0, 58.0), AMBER, 40, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(button, text_value, Rect2(56.0, 0.0, 350.0, 58.0), Color("#d7e0e2"), 24)
+
+
+func _show_phase7_preview(index: int) -> void:
+	_exit_validation_mode()
+	_phase7_preview_index = posmod(index, 6)
+	_phase7_preview.visible = true
+	_help_background.visible = false
+	_help_label.visible = false
+	_rebuild_phase7_preview()
+	_set_selection_menu_visible(false)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_update_status("Validation phase 7 — F3 : écran suivant, F4 : retour au menu")
+
+
+func _hide_phase7_preview() -> void:
+	_phase7_preview.visible = false
+	_phase7_preview_index = -1
+	_help_background.visible = _help_visible
+	_help_label.visible = _help_visible
+
+
+func _change_phase7_preview(direction: int) -> void:
+	_phase7_preview_index = posmod(_phase7_preview_index + direction, 6)
+	_rebuild_phase7_preview()
+	_update_status("Validation phase 7 — F3 : écran suivant, F4 : retour au menu")
+
+
+func _rebuild_phase7_preview() -> void:
+	for child: Node in _phase7_preview_content.get_children():
+		child.free()
+	match _phase7_preview_index:
+		0:
+			_build_phase7_hud(false)
+		1:
+			_build_phase7_hud(true)
+		2:
+			_build_phase7_main_menu()
+		3:
+			_build_phase7_pause()
+		4:
+			_build_phase7_end_screen(true)
+		5:
+			_build_phase7_end_screen(false)
+
+
+func _build_phase7_header(title: String, subtitle: String) -> void:
+	_create_ui_label(_phase7_preview_content, title, Rect2(48.0, 30.0, 1200.0, 48.0), CYAN, 30)
+	_create_ui_label(_phase7_preview_content, subtitle, Rect2(48.0, 76.0, 1400.0, 28.0), Color("#7d8992"), 18)
+
+
+func _build_phase7_hud(refused: bool) -> void:
+	_build_phase7_header("HUD COMBAT", "Santé, endurance, arme, crédits, vague, objectif et interaction")
+	_create_ui_label(_phase7_preview_content, "OBJECTIF : ASSEMBLER L’ANTIDOTE", Rect2(520.0, 122.0, 880.0, 36.0), Color("#d7e0e2"), 24, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(_phase7_preview_content, "03:42", Rect2(800.0, 160.0, 320.0, 48.0), AMBER, 34, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(_phase7_preview_content, "⊙", Rect2(920.0, 486.0, 80.0, 72.0), Color("#d7e0e2"), 52, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var vitals := _create_ui_panel(_phase7_preview_content, Rect2(48.0, 790.0, 340.0, 190.0))
+	_create_ui_label(vitals, "SANTÉ", Rect2(22.0, 16.0, 180.0, 30.0), Color("#d7e0e2"), 20)
+	_create_ui_label(vitals, "86", Rect2(248.0, 8.0, 68.0, 42.0), Color("#71c982"), 30, HORIZONTAL_ALIGNMENT_RIGHT)
+	_create_ui_panel(vitals, Rect2(22.0, 58.0, 296.0, 14.0), Color("#4a5561"), Color("#4a5561"), 0)
+	_create_ui_panel(vitals, Rect2(22.0, 58.0, 254.0, 14.0), Color("#71c982"), Color("#71c982"), 0)
+	_create_ui_label(vitals, "ENDURANCE", Rect2(22.0, 102.0, 180.0, 30.0), Color("#7d8992"), 18)
+	_create_ui_panel(vitals, Rect2(22.0, 142.0, 254.0, 8.0), CYAN, CYAN, 0)
+
+	var progression := _create_ui_panel(_phase7_preview_content, Rect2(1550.0, 122.0, 320.0, 150.0))
+	_create_ui_label(progression, "CRÉDITS", Rect2(22.0, 16.0, 150.0, 30.0), Color("#7d8992"), 18)
+	_create_ui_label(progression, "1 850", Rect2(22.0, 44.0, 276.0, 42.0), CYAN, 32)
+	_create_ui_label(progression, "VAGUE", Rect2(22.0, 102.0, 120.0, 28.0), Color("#7d8992"), 18)
+	_create_ui_label(progression, "12", Rect2(230.0, 96.0, 68.0, 34.0), Color("#d7e0e2"), 28, HORIZONTAL_ALIGNMENT_RIGHT)
+
+	var weapon := _create_ui_panel(_phase7_preview_content, Rect2(1530.0, 790.0, 340.0, 190.0))
+	_create_ui_label(weapon, "FUSIL D’ASSAUT", Rect2(22.0, 18.0, 286.0, 32.0), Color("#7d8992"), 20)
+	_create_ui_label(weapon, "28", Rect2(22.0, 65.0, 112.0, 66.0), Color("#d7e0e2"), 48)
+	_create_ui_label(weapon, "/ 180", Rect2(130.0, 78.0, 168.0, 44.0), Color("#7d8992"), 30)
+	_create_ui_label(weapon, "▰", Rect2(238.0, 128.0, 70.0, 38.0), Color("#d7e0e2"), 32, HORIZONTAL_ALIGNMENT_RIGHT)
+
+	var interaction_color := RED if refused else AMBER
+	var interaction := _create_ui_panel(_phase7_preview_content, Rect2(680.0, 860.0, 560.0, 82.0), Color("#111820"), interaction_color, 3)
+	_create_ui_panel(interaction, Rect2(18.0, 16.0, 48.0, 48.0), interaction_color, interaction_color, 0)
+	_create_ui_label(interaction, "E", Rect2(18.0, 16.0, 48.0, 48.0), Color("#111820"), 28, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(interaction, "CRÉDITS INSUFFISANTS" if refused else "INTERAGIR", Rect2(88.0, 10.0, 440.0, 32.0), Color("#d7e0e2"), 22)
+	_create_ui_label(interaction, "SUPPORT D’ARME · 1 000 CRÉDITS", Rect2(88.0, 42.0, 440.0, 26.0), interaction_color, 16)
+
+
+func _build_phase7_main_menu() -> void:
+	_build_phase7_header("MENU PRINCIPAL", "Navigation clavier et souris, focus ambre")
+	_create_ui_label(_phase7_preview_content, "NOX", Rect2(640.0, 165.0, 640.0, 78.0), Color("#d7e0e2"), 58, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(_phase7_preview_content, "PROTOCOL", Rect2(640.0, 240.0, 640.0, 44.0), CYAN, 28, HORIZONTAL_ALIGNMENT_CENTER)
+	for entry: Dictionary in [
+		{"text": "JOUER", "focus": true}, {"text": "OPTIONS", "focus": false},
+		{"text": "CRÉDITS", "focus": false}, {"text": "QUITTER", "focus": false}
+	]:
+		_create_ui_button(_phase7_preview_content, entry.text, Vector2(745.0, 360.0 + 76.0 * ["JOUER", "OPTIONS", "CRÉDITS", "QUITTER"].find(entry.text)), entry.focus)
+	_create_ui_label(_phase7_preview_content, "ENTRÉE : VALIDER · ÉCHAP : RETOUR", Rect2(600.0, 740.0, 720.0, 32.0), Color("#7d8992"), 18, HORIZONTAL_ALIGNMENT_CENTER)
+
+
+func _build_phase7_pause() -> void:
+	_build_phase7_header("PAUSE ET CONFIRMATION", "L’action destructive n’est jamais sélectionnée par défaut")
+	var modal := _create_ui_panel(_phase7_preview_content, Rect2(590.0, 244.0, 740.0, 560.0), Color("#111820"), Color("#4a5561"), 3)
+	_create_ui_label(modal, "PAUSE", Rect2(32.0, 30.0, 676.0, 48.0), CYAN, 32, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_button(modal, "REPRENDRE", Vector2(155.0, 110.0), true)
+	_create_ui_button(modal, "OPTIONS", Vector2(155.0, 186.0))
+	_create_ui_label(modal, "CONFIRMER L’ABANDON ?", Rect2(32.0, 300.0, 676.0, 36.0), Color("#d7e0e2"), 24, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(modal, "LA PROGRESSION DE CETTE PARTIE SERA PERDUE.", Rect2(32.0, 340.0, 676.0, 30.0), Color("#7d8992"), 18, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_button(modal, "ANNULER", Vector2(155.0, 400.0), true)
+	_create_ui_button(modal, "ABANDONNER LA PARTIE", Vector2(155.0, 470.0), false, true)
+
+
+func _build_phase7_end_screen(victory: bool) -> void:
+	var state_color := CYAN if victory else RED
+	var title := "EXTRACTION RÉUSSIE" if victory else "CONTAMINATION CRITIQUE"
+	var subtitle := "L’ANTIDOTE A QUITTÉ HELIX-9." if victory else "SIGNES VITAUX INTERROMPUS."
+	_build_phase7_header("ÉCRAN DE FIN", "Victoire cyan / coche ; défaite rouge / triangle")
+	var panel := _create_ui_panel(_phase7_preview_content, Rect2(390.0, 268.0, 1140.0, 500.0), Color("#111820"), state_color, 4)
+	_create_ui_label(panel, "✓" if victory else "▲", Rect2(40.0, 62.0, 120.0, 100.0), state_color, 76, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(panel, title, Rect2(180.0, 62.0, 880.0, 62.0), state_color, 42, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(panel, subtitle, Rect2(180.0, 132.0, 880.0, 34.0), Color("#d7e0e2"), 22, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_button(panel, "REJOUER", Vector2(150.0, 268.0), true)
+	_create_ui_button(panel, "MENU PRINCIPAL", Vector2(560.0, 268.0))
+
+
 func _create_selection_menu() -> void:
 	var menu_canvas := CanvasLayer.new()
 	menu_canvas.name = "InterfaceSelection"
@@ -442,6 +647,16 @@ func _create_selection_menu() -> void:
 	_add_menu_title(entries, "SÉLECTION DU LABORATOIRE")
 	_add_menu_button(entries, "Architecture témoin", Callable(self, "_select_architecture"))
 	_add_menu_title(entries, "Vignettes existantes")
+	_add_menu_title(entries, "Validation phase 7 — Interface")
+	for entry: Dictionary in [
+		{"label": "HUD combat", "index": 0},
+		{"label": "HUD — interaction refusée", "index": 1},
+		{"label": "Menu principal", "index": 2},
+		{"label": "Pause et abandon", "index": 3},
+		{"label": "Écran victoire", "index": 4},
+		{"label": "Écran défaite", "index": 5},
+	]:
+		_add_menu_button(entries, entry.label, Callable(self, "_show_phase7_preview").bind(entry.index))
 	for entry: Dictionary in [
 		{"label": "Couloir", "index": 0},
 		{"label": "Angle", "index": 1},
@@ -509,12 +724,14 @@ func _set_selection_menu_visible(visible: bool) -> void:
 
 
 func _select_architecture() -> void:
+	_hide_phase7_preview()
 	_exit_validation_mode()
 	_set_selection_menu_visible(false)
 	_update_status("Architecture témoin")
 
 
 func _select_validation_vignette(index: int) -> void:
+	_hide_phase7_preview()
 	if _validation_index >= 0:
 		_validation_vignettes[_validation_index].visible = false
 	_validation_index = index
@@ -527,6 +744,7 @@ func _select_validation_vignette(index: int) -> void:
 
 
 func _select_asset_path(asset_path: String) -> void:
+	_hide_phase7_preview()
 	var index := _asset_paths.find(asset_path)
 	if index < 0:
 		_update_status("Asset introuvable")

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="256" viewBox="0 0 512 256" role="img" aria-labelledby="title">
+  <title id="title">Sprite vectoriel d'icônes UI Nox Protocol</title>
+  <defs><style>.i{fill:none;stroke:#d7e0e2;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}.a{fill:none;stroke:#40d5db;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}</style></defs>
+  <g id="reticule" transform="translate(16 16)"><circle class="i" cx="16" cy="16" r="11"/><path class="i" d="M16 0v7M16 25v7M0 16h7M25 16h7"/><circle cx="16" cy="16" r="2" fill="#40d5db"/></g>
+  <g id="pistolet" transform="translate(80 16)"><path class="i" d="M2 10h27l4 7-17 2-4 12H6l2-13H2z"/></g>
+  <g id="mitraillette" transform="translate(144 16)"><path class="i" d="M1 12h31v7H17l5 13H15l-7-13H1zM25 12V6h7v6"/></g>
+  <g id="pompe" transform="translate(208 16)"><path class="i" d="M0 14h34M7 10v8M13 12l8 14M28 10v8"/></g>
+  <g id="assaut" transform="translate(272 16)"><path class="i" d="M0 12h35v7H19l6 13h-7l-7-13H0zM28 12V6h7v6"/></g>
+  <g id="precision" transform="translate(336 16)"><path class="i" d="M0 14h35M10 11v7M20 10l6 16M25 7h9v7h-9z"/></g>
+  <g id="lourde" transform="translate(400 16)"><path class="i" d="M0 9h31v12H0zM8 21l5 11M24 21l5 11M31 13h8"/></g>
+  <g id="couteau" transform="translate(464 16)"><path class="i" d="M2 30L25 7l5 5-23 23H2z"/></g>
+  <g id="constitution" transform="translate(80 96)"><path class="a" d="M16 1l14 7v16l-14 7-14-7V8z"/><path class="a" d="M16 8v16M9 16h14"/></g>
+  <g id="gestes" transform="translate(144 96)"><path class="a" d="M3 8h26M3 16h20M3 24h14"/></g>
+  <g id="reflexes" transform="translate(208 96)"><path class="a" d="M2 6l12 10L2 26M16 6l12 10-12 10"/></g>
+  <g id="reparation" transform="translate(272 96)"><circle class="a" cx="16" cy="16" r="13" stroke-dasharray="16 5"/><circle cx="16" cy="16" r="3" fill="#40d5db"/></g>
+  <g id="noyau" transform="translate(336 96)"><rect class="a" x="5" y="5" width="22" height="22" rx="2"/><path class="a" d="M11 11h10v10H11z"/></g>
+  <g id="serum" transform="translate(400 96)"><rect class="a" x="4" y="9" width="24" height="14" rx="2"/><path class="a" d="M10 9V5h12v4"/></g>
+  <g id="relais" transform="translate(464 96)"><path class="a" d="M4 28V12a12 12 0 0 1 24 0v16M8 28h16"/></g>
+  <g id="antidote" transform="translate(16 176)"><path class="a" d="M12 2h8v8l7 12a7 7 0 0 1-6 9H11a7 7 0 0 1-6-9l7-12z"/><path class="a" d="M9 23h14"/></g>
+</svg>

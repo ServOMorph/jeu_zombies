@@ -278,7 +278,7 @@ Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmati
 - Les copies sont contrôlées dans le laboratoire via `F4`, section « Assets phase 6 — Achats et quête ».
 - Le contrôle automatisé est réussi et le lot est approuvé par l’utilisateur ; aucune ressource n’est intégrée au jeu.
 
-## Phase 7 — HUD, menus et identité graphique `[TODO]`
+## Phase 7 — HUD, menus et identité graphique `[FAIT]`
 
 ### But
 
@@ -304,6 +304,12 @@ Finaliser l'interface française et l'identité de présentation de Nox Protocol
 - Contrôler clavier, souris, focus et contraste des états.
 - Vérifier les informations sans dépendance exclusive à la couleur.
 - Simuler combat, achat, quête, finale, victoire et défaite.
+
+### État au 2026-07-27
+
+- L’inventaire, les fiches, le guide responsive, les références SVG et le bordereau sont produits dans `interface_phase7/`.
+- Le laboratoire expose six écrans de validation via `F4`, section « Validation phase 7 — Interface » ; le contrôle Godot automatisé est réussi.
+- Le lot est approuvé par l’utilisateur et reste dans DESIGN jusqu’à une intégration de code dédiée.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

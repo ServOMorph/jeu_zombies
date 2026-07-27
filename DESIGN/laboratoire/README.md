@@ -68,3 +68,14 @@ Le zombie standard est copié dans `imports/phase4/` et accessible avec `F4`, se
 « Assets phase 4 ». Sa sélection place directement le visiteur face au socle. Contrôler sa silhouette à l’échelle `1,00` sous les trois
 ambiances avec `F2`. Les huit clips, le raccord à `BodyVisual`, les collisions et les
 performances en situation relèvent de la session d’intégration dédiée.
+
+## Validation phase 7
+
+Le menu `F4` contient la section « Validation phase 7 — Interface ». Elle propose six
+écrans : HUD combat, interaction refusée, menu principal, pause et abandon, victoire
+et défaite. `F3` parcourt les écrans tant que cette prévisualisation est ouverte ; `F4`
+revient au menu du laboratoire.
+
+Contrôler la hiérarchie des informations, la lecture des états sans la seule couleur,
+la lisibilité des libellés français et l’absence de recouvrement aux résolutions de la
+matrice décrite dans `DESIGN/interface_phase7/guide_interface_phase7_v1.md`.

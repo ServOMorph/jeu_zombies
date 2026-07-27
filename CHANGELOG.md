@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.31 — 2026-07-27
+
+### Ajouté
+
+- Phase 7 DESIGN : inventaire, fiches, guide responsive, références vectorielles et icônes pour le HUD, les menus, les interactions et les écrans de fin.
+- Laboratoire DESIGN : six écrans de validation UI accessibles par `F4`, avec navigation `F3` et contrôle Godot automatisé.
+
+### Modifié
+
+- Phase 7 DESIGN approuvée par l’utilisateur ; le lot reste dans `DESIGN/` jusqu’à son intégration de code dédiée.
+
 ## v0.30 — 2026-07-26
 
 ### Ajouté
