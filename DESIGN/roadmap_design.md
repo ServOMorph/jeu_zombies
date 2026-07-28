@@ -376,6 +376,11 @@ de vingt minutes.
 - Vérifier que les signaux de gameplay dominent ambiance et musique.
 - Produire un bordereau audio prêt pour l'intégration.
 
+### État au 2026-07-28
+
+- Les spécifications préparatoires sont produites dans `direction_audio_phase9/` : inventaire de 47 éléments, fiches d’intégration, palette sonore, bordereau et contrôle automatisé.
+- Aucun fichier audio final n’est produit, licencié, intégré ou validé ; la phase reste `[TODO]` tant que la phase 8 demeure `[EN COURS]`.
+
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
@@ -405,6 +410,11 @@ release Windows.
 - Rechercher incohérences, placeholders, textes non français et défauts visuels.
 - Confirmer que chaque ressource possède une licence et un propriétaire.
 - Faire valider la planche finale par l'utilisateur.
+
+### État au 2026-07-28
+
+- Les livrables préparatoires sont produits dans `presentation_livraison_phase10/` : registre des lots, écarts, guide de cohérence, planche SVG, bordereau consolidé et contrôle automatisé.
+- La livraison finale reste impossible tant que les validations des phases 8 et 9 et l’intégration des lots au projet jouable ne sont pas réalisées ; la phase reste `[TODO]`.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#111820"/>
+  <text x="80" y="92" fill="#D7E0E2" font-family="Arial, sans-serif" font-size="46" font-weight="700">NOX PROTOCOL — PLANCHE FINALE V1</text>
+  <text x="82" y="132" fill="#7D8992" font-family="Arial, sans-serif" font-size="22">Synthèse de direction — livrables DESIGN non intégrés</text>
+  <g id="environnement">
+    <rect x="80" y="190" width="430" height="250" rx="12" fill="#1B232C" stroke="#40D5DB" stroke-width="4"/>
+    <path d="M120 390V260H180V220H410V260H470V390H120" fill="#4A5561"/>
+    <path d="M180 220V390M300 220V390M410 220V390" stroke="#7D8992" stroke-width="16"/>
+    <text x="112" y="422" fill="#40D5DB" font-family="Arial, sans-serif" font-size="25">ENVIRONNEMENT MODULAIRE</text>
+  </g>
+  <g id="zombie">
+    <rect x="585" y="190" width="430" height="250" rx="12" fill="#1B232C" stroke="#D94B4B" stroke-width="4"/>
+    <circle cx="800" cy="264" r="42" fill="#4A5561"/>
+    <path d="M740 390V320Q800 278 860 320V390M760 330L700 376M840 330L900 376" fill="none" stroke="#7D8992" stroke-width="28" stroke-linecap="round"/>
+    <text x="620" y="422" fill="#D94B4B" font-family="Arial, sans-serif" font-size="25">ZOMBIE — SILHOUETTE LISIBLE</text>
+  </g>
+  <g id="arsenal">
+    <rect x="1090" y="190" width="430" height="250" rx="12" fill="#1B232C" stroke="#F0A43A" stroke-width="4"/>
+    <path d="M1160 330H1400L1450 300H1480V330H1430V350H1330V390H1270V350H1160Z" fill="#7D8992"/>
+    <rect x="1195" y="350" width="65" height="74" rx="8" fill="#4A5561"/>
+    <text x="1120" y="422" fill="#F0A43A" font-family="Arial, sans-serif" font-size="25">ARSENAL FPS — ACTION CLAIRE</text>
+  </g>
+  <g id="interactions">
+    <rect x="80" y="520" width="430" height="250" rx="12" fill="#1B232C" stroke="#F0A43A" stroke-width="4"/>
+    <rect x="195" y="575" width="190" height="130" fill="#4A5561" stroke="#7D8992" stroke-width="14"/>
+    <circle cx="290" cy="640" r="33" fill="#F0A43A"/>
+    <text x="112" y="752" fill="#F0A43A" font-family="Arial, sans-serif" font-size="25">OBJETS — FORME + SIGNAUX</text>
+  </g>
+  <g id="interface">
+    <rect x="585" y="520" width="430" height="250" rx="12" fill="#1B232C" stroke="#40D5DB" stroke-width="4"/>
+    <rect x="640" y="570" width="320" height="45" rx="5" fill="#4A5561"/>
+    <rect x="640" y="635" width="200" height="30" rx="5" fill="#7D8992"/>
+    <rect x="865" y="635" width="95" height="30" rx="5" fill="#D94B4B"/>
+    <text x="620" y="752" fill="#40D5DB" font-family="Arial, sans-serif" font-size="25">HUD — INFORMATION PRIORITAIRE</text>
+  </g>
+  <g id="effets_audio">
+    <rect x="1090" y="520" width="430" height="250" rx="12" fill="#1B232C" stroke="#D7E0E2" stroke-width="4"/>
+    <path d="M1160 660H1210L1250 600L1290 710L1330 580L1370 660H1450" fill="none" stroke="#40D5DB" stroke-width="10"/>
+    <circle cx="1410" cy="625" r="36" fill="none" stroke="#F0A43A" stroke-width="10"/>
+    <text x="1120" y="752" fill="#D7E0E2" font-family="Arial, sans-serif" font-size="25">EFFETS + AUDIO — RETOURS LOCAUX</text>
+  </g>
+</svg>

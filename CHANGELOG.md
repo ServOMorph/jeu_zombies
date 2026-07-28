@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.33 — 2026-07-28
+
+### Ajouté
+
+- Phase 9 DESIGN : inventaire de 47 éléments audio, fiches d’intégration, palette sonore, bordereau et contrôle automatisé.
+- Phase 10 DESIGN : registre des lots, écarts ouverts, guide de cohérence, planche SVG, bordereau consolidé et contrôle automatisé.
+
+### Modifié
+
+- Roadmap, contexte DESIGN et README alignés sur les livrables préparatoires des phases 9 et 10 ; la phase 8 reste non validée et aucun lot DESIGN n’est intégré.
+
 ## v0.32 — 2026-07-28
 
 ### Ajouté

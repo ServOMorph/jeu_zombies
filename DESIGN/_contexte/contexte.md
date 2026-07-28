@@ -23,10 +23,10 @@ assets intégrés.
 ## État actuel
 
 - Les phases 1 à 7 sont terminées et approuvées ; leurs exports et références restent dans `DESIGN/`.
-- La phase 8 est en cours : inventaire de 18 effets, contrats d’intégration, planche SVG et budget V1 sont produits.
-- Le laboratoire expose trois écrans phase 8 via `F4`, section « Validation phase 8 — Effets visuels ».
-- Les validations automatisées de la phase 8 et les non-régressions phase 6 et 7 sont réussies.
-- Aucun asset DESIGN n’est intégré au projet jouable ; la validation visuelle phase 8 reste ouverte.
+- La phase 8 reste en cours : ses 18 effets et trois écrans de prévisualisation sont produits, mais la validation visuelle utilisateur est en attente.
+- Les spécifications de la phase 9 couvrent 47 éléments audio, leurs contrats d’intégration et leurs budgets ; aucun fichier audio final n’est produit.
+- La phase 10 dispose d’un registre, d’un guide de cohérence, d’une planche SVG et d’un bordereau consolidé ; trois écarts restent ouverts.
+- Aucun asset DESIGN n’est intégré au projet jouable ; les validations et l’intégration finale restent à réaliser.
 
 ## Contrats techniques à préserver
 
@@ -37,8 +37,6 @@ assets intégrés.
 
 ## Décisions structurantes
 
-- 2026-07-26 : La production artistique V1 suit les dix phases de `roadmap_design.md`, avec le kit modulaire structurel en phase 1.
-- 2026-07-26 : Le kit modulaire structurel V1 est approuvé comme spécification ; ses 23 prototypes restent confinés à DESIGN jusqu'à validation visuelle et export approuvé.
 - 2026-07-26 : Le kit modulaire structurel V1 est validé visuellement, exporté en `.glb` et prêt à transmettre ; ses 23 modules sont des créations internes sous licence propriétaire, tous droits réservés.
 - 2026-07-26 : Le lot matériaux et signalétique V1 est validé dans le laboratoire ; ses neuf matériaux et sa planche vectorielle restent dans `DESIGN/` jusqu'à intégration dédiée.
 - 2026-07-26 : Les zones visuelles de phase 3 restent des surcouches GLB sans collision, navigation ni logique ; le blockout fonctionnel doit être préservé lors de leur intégration.
@@ -48,3 +46,4 @@ assets intégrés.
 - 2026-07-26 : Le lot phase 6 est approuvé avec 16 exports GLB ; les interactions restent pilotées par le code via `InteractionAnchor` et les six états documentés.
 - 2026-07-27 : La phase 7 est approuvée : les références UI vectorielles et six écrans de prévisualisation restent confinés à DESIGN jusqu’à l’intégration dédiée.
 - 2026-07-28 : La phase 8 est engagée avec des spécifications d’effets V1 et trois écrans de prévisualisation ; son intégration gameplay et performance reste une session de code distincte.
+- 2026-07-28 : Les spécifications des phases 9 et 10 sont préparées à la demande de l’utilisateur, sans valider ni changer le statut de la phase 8.
