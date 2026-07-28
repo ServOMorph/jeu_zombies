@@ -23,10 +23,10 @@ assets intégrés.
 ## État actuel
 
 - Les phases 1 à 7 sont terminées et approuvées ; leurs exports et références restent dans `DESIGN/`.
-- La phase 7 fournit le lot UI complet : HUD, menus, écrans de fin, guide responsive et icônes vectorielles.
-- Le laboratoire expose ses six écrans par `F4`, section « Validation phase 7 — Interface ».
-- La phase 8 attend `/compact` et confirmation écrite.
-- Aucun asset DESIGN n’est intégré au projet jouable.
+- La phase 8 est en cours : inventaire de 18 effets, contrats d’intégration, planche SVG et budget V1 sont produits.
+- Le laboratoire expose trois écrans phase 8 via `F4`, section « Validation phase 8 — Effets visuels ».
+- Les validations automatisées de la phase 8 et les non-régressions phase 6 et 7 sont réussies.
+- Aucun asset DESIGN n’est intégré au projet jouable ; la validation visuelle phase 8 reste ouverte.
 
 ## Contrats techniques à préserver
 
@@ -47,3 +47,4 @@ assets intégrés.
 - 2026-07-26 : L’arsenal FPS V1 est approuvé avec sept silhouettes, 14 variantes d’arme, 17 exports GLB et les raccords `WeaponVisualRoot` et `MuzzleFlash` ; son intégration reste une session de code distincte.
 - 2026-07-26 : Le lot phase 6 est approuvé avec 16 exports GLB ; les interactions restent pilotées par le code via `InteractionAnchor` et les six états documentés.
 - 2026-07-27 : La phase 7 est approuvée : les références UI vectorielles et six écrans de prévisualisation restent confinés à DESIGN jusqu’à l’intégration dédiée.
+- 2026-07-28 : La phase 8 est engagée avec des spécifications d’effets V1 et trois écrans de prévisualisation ; son intégration gameplay et performance reste une session de code distincte.

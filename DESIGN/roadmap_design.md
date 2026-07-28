@@ -314,7 +314,7 @@ Finaliser l'interface française et l'identité de présentation de Nox Protocol
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.
 
-## Phase 8 — Effets visuels et retours d'action `[TODO]`
+## Phase 8 — Effets visuels et retours d'action `[EN COURS]`
 
 ### But
 
@@ -339,6 +339,12 @@ Renforcer les actions sans masquer le combat ni dépasser le budget de performan
 - Écarter flash agressif, persistance inutile et transparence coûteuse.
 - Prévoir la réutilisation des effets susceptibles de provoquer des à-coups.
 - Valider une configuration de stress représentative avant transmission.
+
+### État au 2026-07-28
+
+- L’inventaire fermé de 18 effets, les contrats d’intégration, la planche SVG, le budget de stress et le bordereau sont produits dans `effets_visuels_phase8/`.
+- Trois écrans de prévisualisation sont accessibles dans le laboratoire via `F4`, section « Validation phase 8 — Effets visuels » ; le contrôle Godot automatisé est réussi.
+- La validation visuelle utilisateur reste ouverte dans `tests_manuels.md` ; aucune ressource n’est intégrée au jeu jouable.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmation.

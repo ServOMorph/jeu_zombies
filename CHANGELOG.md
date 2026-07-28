@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.32 — 2026-07-28
+
+### Ajouté
+
+- Phase 8 DESIGN : inventaire de 18 effets, fiches d’intégration, budget de stress, planche vectorielle, rapport et bordereau de transmission.
+- Laboratoire DESIGN : trois écrans de prévisualisation des effets accessibles par `F4`, avec navigation `F3` et contrôle Godot automatisé.
+- Trois contrôles visuels phase 8 ajoutés dans `tests_manuels.md`.
+
+### Modifié
+
+- Phase 8 DESIGN engagée ; le lot reste dans `DESIGN/` jusqu’à validation visuelle puis intégration de code dédiée.
+
 ## v0.31 — 2026-07-27
 
 ### Ajouté

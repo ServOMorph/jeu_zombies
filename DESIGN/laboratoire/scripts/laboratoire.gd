@@ -36,6 +36,9 @@ var _selection_menu: PanelContainer
 var _phase7_preview: Control
 var _phase7_preview_content: Control
 var _phase7_preview_index := -1
+var _phase8_preview: Control
+var _phase8_preview_content: Control
+var _phase8_preview_index := -1
 
 
 func _ready() -> void:
@@ -47,6 +50,7 @@ func _ready() -> void:
 	_create_player()
 	_create_interface()
 	_create_phase7_preview()
+	_create_phase8_preview()
 	_discover_assets()
 	_create_validation_vignettes()
 	_create_selection_menu()
@@ -63,6 +67,9 @@ func _process(_delta: float) -> void:
 		if _phase7_preview.visible:
 			_hide_phase7_preview()
 			_set_selection_menu_visible(true)
+		elif _phase8_preview.visible:
+			_hide_phase8_preview()
+			_set_selection_menu_visible(true)
 		else:
 			_set_selection_menu_visible(not _selection_menu.visible)
 	if Input.is_action_just_pressed("lab_light"):
@@ -75,6 +82,8 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("lab_validation_next"):
 		if _phase7_preview.visible:
 			_change_phase7_preview(1)
+		elif _phase8_preview.visible:
+			_change_phase8_preview(1)
 		else:
 			_change_validation_vignette()
 	if Input.is_action_just_pressed("lab_scale_down"):
@@ -534,6 +543,157 @@ func _change_phase7_preview(direction: int) -> void:
 	_update_status("Validation phase 7 — F3 : écran suivant, F4 : retour au menu")
 
 
+func _create_phase8_preview() -> void:
+	var canvas := CanvasLayer.new()
+	canvas.name = "InterfacePhase8"
+	add_child(canvas)
+	_phase8_preview = Control.new()
+	_phase8_preview.name = "Phase8Preview"
+	_phase8_preview.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_phase8_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_phase8_preview.visible = false
+	canvas.add_child(_phase8_preview)
+
+	var background := ColorRect.new()
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.color = Color("#111820")
+	_phase8_preview.add_child(background)
+
+	_phase8_preview_content = Control.new()
+	_phase8_preview_content.name = "Contenu"
+	_phase8_preview_content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_phase8_preview.add_child(_phase8_preview_content)
+
+
+func _show_phase8_preview(index: int) -> void:
+	_exit_validation_mode()
+	_phase8_preview_index = posmod(index, 3)
+	_phase8_preview.visible = true
+	_help_background.visible = false
+	_help_label.visible = false
+	_rebuild_phase8_preview()
+	_set_selection_menu_visible(false)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_update_status("Validation phase 8 — F3 : écran suivant, F4 : retour au menu")
+
+
+func _hide_phase8_preview() -> void:
+	_phase8_preview.visible = false
+	_phase8_preview_index = -1
+	_help_background.visible = _help_visible
+	_help_label.visible = _help_visible
+
+
+func _change_phase8_preview(direction: int) -> void:
+	_phase8_preview_index = posmod(_phase8_preview_index + direction, 3)
+	_rebuild_phase8_preview()
+	_update_status("Validation phase 8 — F3 : écran suivant, F4 : retour au menu")
+
+
+func _rebuild_phase8_preview() -> void:
+	for child: Node in _phase8_preview_content.get_children():
+		child.free()
+	match _phase8_preview_index:
+		0:
+			_build_phase8_weapons()
+		1:
+			_build_phase8_combat()
+		2:
+			_build_phase8_quest()
+
+
+func _build_phase8_header(title: String, subtitle: String) -> void:
+	_create_ui_label(_phase8_preview_content, title, Rect2(48.0, 30.0, 1200.0, 48.0), CYAN, 30)
+	_create_ui_label(_phase8_preview_content, subtitle, Rect2(48.0, 76.0, 1540.0, 28.0), Color("#aebbc1"), 18)
+
+
+func _create_effect_card(title: String, subtitle: String, position: Vector2, accent: Color) -> Panel:
+	var card := _create_ui_panel(_phase8_preview_content, Rect2(position, Vector2(420.0, 310.0)), Color("#1b232c"), Color("#4a5561"), 2)
+	_create_ui_label(card, title, Rect2(22.0, 14.0, 376.0, 34.0), Color("#d7e0e2"), 22)
+	_create_ui_label(card, subtitle, Rect2(22.0, 262.0, 376.0, 30.0), Color("#aebbc1"), 16)
+	var line := ColorRect.new()
+	line.position = Vector2(22.0, 56.0)
+	line.size = Vector2(376.0, 3.0)
+	line.color = accent
+	card.add_child(line)
+	return card
+
+
+func _build_phase8_weapons() -> void:
+	_build_phase8_header("EFFETS D’ARMES ET IMPACTS", "Prévisualisation de formes : émission locale, durée courte, aucun flash global")
+	var flash := _create_effect_card("FLASH D’ARME", "0,035–0,070 s · 1–2 sprites", Vector2(70.0, 165.0), AMBER)
+	_create_ui_label(flash, "✦", Rect2(105.0, 70.0, 210.0, 150.0), AMBER, 128, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(flash, "Pistolet · mitraillette · pompe\nassaut · précision · lourde", Rect2(52.0, 205.0, 316.0, 44.0), Color("#d7e0e2"), 17, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var smoke := _create_effect_card("FUMÉE DE BOUCHE", "0,18–0,32 s · 4 quads maximum", Vector2(500.0, 165.0), CYAN)
+	for smoke_data: Dictionary in [
+		{"position": Vector2(84.0, 120.0), "size": 56.0, "alpha": 0.45},
+		{"position": Vector2(145.0, 95.0), "size": 82.0, "alpha": 0.30},
+		{"position": Vector2(232.0, 122.0), "size": 48.0, "alpha": 0.18},
+	]:
+		var puff := ColorRect.new()
+		puff.position = smoke_data.position
+		puff.size = Vector2.ONE * smoke_data.size
+		puff.color = Color(0.78, 0.82, 0.84, smoke_data.alpha)
+		smoke.add_child(puff)
+
+	var impact := _create_effect_card("IMPACTS", "Métal 6 · béton 5 · organique 4", Vector2(930.0, 165.0), RED)
+	_create_ui_label(impact, "✹", Rect2(36.0, 72.0, 100.0, 100.0), AMBER, 68, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(impact, "◆", Rect2(154.0, 78.0, 100.0, 100.0), Color("#aebbc1"), 62, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(impact, "●", Rect2(272.0, 84.0, 100.0, 100.0), Color("#833d46"), 58, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(impact, "MÉTAL        BÉTON       ORGANIQUE", Rect2(22.0, 204.0, 376.0, 28.0), Color("#d7e0e2"), 14, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var budget := _create_ui_panel(_phase8_preview_content, Rect2(70.0, 545.0, 1280.0, 150.0), Color("#111820"), CYAN, 2)
+	_create_ui_label(budget, "GARDE-FOUS : 96 PARTICULES · 48 QUADS TRANSPARENTS · 0 LUMIÈRE DYNAMIQUE · 24 IMPACTS / S", Rect2(28.0, 20.0, 1224.0, 42.0), CYAN, 24, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(budget, "Les couleurs complètent la forme : elles ne portent jamais seules une information de gameplay.", Rect2(28.0, 76.0, 1224.0, 34.0), Color("#d7e0e2"), 19, HORIZONTAL_ALIGNMENT_CENTER)
+
+
+func _build_phase8_combat() -> void:
+	_build_phase8_header("JOUEUR, ZOMBIE ET INTERACTIONS", "Feedbacks courts : la menace, le réticule et l’objectif restent prioritaires")
+	var player := _create_effect_card("DÉGÂTS JOUEUR", "Vignette 0,22 s · opacité maximale 18 %", Vector2(70.0, 165.0), RED)
+	var danger_frame := _create_ui_panel(player, Rect2(72.0, 78.0, 276.0, 136.0), Color(0.15, 0.04, 0.05, 0.12), RED, 14)
+	_create_ui_label(danger_frame, "+", Rect2(96.0, 40.0, 84.0, 54.0), Color("#d7e0e2"), 42, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var zombie := _create_effect_card("ZOMBIE", "Apparition / réaction / mort : 0,12–0,45 s", Vector2(500.0, 165.0), Color("#833d46"))
+	_create_ui_label(zombie, "●", Rect2(155.0, 64.0, 110.0, 84.0), Color("#29323b"), 78, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(zombie, "▰", Rect2(110.0, 125.0, 200.0, 92.0), Color("#29323b"), 108, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(zombie, "·· ·· ·· ··", Rect2(70.0, 206.0, 280.0, 30.0), Color("#aebbc1"), 28, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var interaction := _create_effect_card("ACHAT, REFUS ET AVANTAGE", "Anneau / croix / forme d’avantage", Vector2(930.0, 165.0), CYAN)
+	_create_ui_label(interaction, "◯", Rect2(72.0, 76.0, 100.0, 100.0), CYAN, 82, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(interaction, "×", Rect2(160.0, 76.0, 100.0, 100.0), RED, 74, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(interaction, "✓", Rect2(250.0, 76.0, 100.0, 100.0), Color("#71c982"), 70, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(interaction, "ACTIF      REFUSÉ       VALIDÉ", Rect2(22.0, 204.0, 376.0, 28.0), Color("#d7e0e2"), 15, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var melee := _create_ui_panel(_phase8_preview_content, Rect2(70.0, 545.0, 1280.0, 150.0), Color("#111820"), Color("#71c982"), 2)
+	_create_ui_label(melee, "MÊLÉE : arc cyan 0,10 s hors du viseur, confirmation de touche 0,08 s. Aucun effet ne signale un ennemi hors champ.", Rect2(28.0, 30.0, 1224.0, 42.0), Color("#d7e0e2"), 21, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(melee, "Les morts arrêtent immédiatement leurs émissions lorsque le corps est retiré par le code.", Rect2(28.0, 82.0, 1224.0, 30.0), Color("#aebbc1"), 18, HORIZONTAL_ALIGNMENT_CENTER)
+
+
+func _build_phase8_quest() -> void:
+	_build_phase8_header("PORTE, QUÊTE ET EXTRACTION", "Les effets accompagnent les états fonctionnels sans les remplacer")
+	var door := _create_effect_card("OUVERTURE DE PORTE", "Balayage cyan et poussière : 0,30 s", Vector2(70.0, 165.0), CYAN)
+	_create_ui_label(door, "▐  │  │  ▌", Rect2(50.0, 78.0, 320.0, 100.0), Color("#7d8992"), 64, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(door, "↔", Rect2(120.0, 148.0, 180.0, 60.0), CYAN, 52, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var quest := _create_effect_card("FABRICATION ET DÉPLOIEMENT", "Anneaux cyan / vert : 0,70 s", Vector2(500.0, 165.0), Color("#71c982"))
+	_create_ui_label(quest, "◎", Rect2(102.0, 70.0, 216.0, 130.0), CYAN, 116, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(quest, "⊕", Rect2(110.0, 90.0, 200.0, 90.0), Color("#71c982"), 72, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var extraction := _create_effect_card("EXTRACTION", "Faisceau local : 1,20 s · 16 particules", Vector2(930.0, 165.0), CYAN)
+	var beam := ColorRect.new()
+	beam.position = Vector2(190.0, 70.0)
+	beam.size = Vector2(38.0, 142.0)
+	beam.color = Color(0.25, 0.84, 0.86, 0.35)
+	extraction.add_child(beam)
+	_create_ui_label(extraction, "◯", Rect2(117.0, 163.0, 185.0, 68.0), CYAN, 58, HORIZONTAL_ALIGNMENT_CENTER)
+
+	var stress := _create_ui_panel(_phase8_preview_content, Rect2(70.0, 545.0, 1280.0, 150.0), Color("#111820"), AMBER, 2)
+	_create_ui_label(stress, "SCÉNARIO DE STRESS À VALIDER", Rect2(28.0, 18.0, 1224.0, 34.0), AMBER, 24, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(stress, "Arme automatique · 8 zombies visibles · 2 impacts · dégâts joueur · achat · ouverture de porte", Rect2(28.0, 64.0, 1224.0, 34.0), Color("#d7e0e2"), 20, HORIZONTAL_ALIGNMENT_CENTER)
+	_create_ui_label(stress, "Contrôler sous ambiances froide, neutre et alerte avant transmission.", Rect2(28.0, 104.0, 1224.0, 26.0), Color("#aebbc1"), 17, HORIZONTAL_ALIGNMENT_CENTER)
+
+
 func _rebuild_phase7_preview() -> void:
 	for child: Node in _phase7_preview_content.get_children():
 		child.free()
@@ -657,6 +817,13 @@ func _create_selection_menu() -> void:
 		{"label": "Écran défaite", "index": 5},
 	]:
 		_add_menu_button(entries, entry.label, Callable(self, "_show_phase7_preview").bind(entry.index))
+	_add_menu_title(entries, "Validation phase 8 — Effets visuels")
+	for entry: Dictionary in [
+		{"label": "Effets d’armes et impacts", "index": 0},
+		{"label": "Joueur, zombie et interactions", "index": 1},
+		{"label": "Porte, quête et extraction", "index": 2},
+	]:
+		_add_menu_button(entries, entry.label, Callable(self, "_show_phase8_preview").bind(entry.index))
 	for entry: Dictionary in [
 		{"label": "Couloir", "index": 0},
 		{"label": "Angle", "index": 1},
