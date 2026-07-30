@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.34 — 2026-07-30
+
+### Ajouté
+
+- Deux planches multivues réalistes du futur zombie standard, dont une variante blonde à silhouette féminine marquée.
+
+### Modifié
+
+- Direction DESIGN séparée en deux niveaux : placeholders low-poly pour le prototype gameplay et futurs assets finaux réalistes optimisés, sans intégration anticipée.
+
 ## v0.33 — 2026-07-28
 
 ### Ajouté
