@@ -226,6 +226,183 @@ Tester au minimum :
 - clavier AZERTY avec les commandes affichées correctement ;
 - partie gagnée, partie perdue et seconde partie dans le même lancement.
 
+## Chantier urgent DI — Workflow d'insertion des designs
+
+**Priorité : urgente.** Ce chantier interrompt temporairement la validation manuelle de M5.1 et
+précède M5.2. Les contrôles M5.1 déjà en attente sont conservés et seront regroupés avec la campagne
+manuelle du premier import afin de réduire le goulot d'étranglement des tests humains.
+
+**But :** construire, éprouver et améliorer un workflow reproductible pour transférer les lots
+validés de `DESIGN/` vers le jeu, avec inventaire précis, approbation utilisateur, archives
+restaurables, qualification technique et consolidation des tests manuels.
+
+**Commande opératoire :** [`.claude/commands/insertion_designs.md`](./.claude/commands/insertion_designs.md)
+
+### DI.0 — Isoler le chantier et établir la référence `[EN COURS]`
+
+- [ ] Proposer la branche `feat/insertion-designs` et obtenir une confirmation explicite avant sa
+  création ou son activation.
+- [ ] Traiter explicitement l'état de travail déjà modifié ; aucun stash, nettoyage ou déplacement
+  implicite n'est autorisé.
+- [ ] Sélectionner un premier lot fermé à partir des bordereaux et inventaires de `DESIGN/`.
+- [ ] Exécuter le test d'import actuel du laboratoire et enregistrer commandes, versions, résultats,
+  erreurs, avertissements et durée comme référence avant modification.
+- [ ] Créer un identifiant de run immuable et un dossier de suivi dédié.
+- [ ] Vérifier qu'aucun fichier du jeu ou de `DESIGN/` n'a été modifié par l'établissement de la
+  référence, hors caches Godot identifiés.
+
+**Critère d'acceptation :** branche et lot confirmés, référence reproductible enregistrée, périmètre
+du premier run figé sans perte des changements existants.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.1 — Registre des designs et scripts fondamentaux `[TODO]`
+
+- [ ] Créer `_docs/design_imports/registry.json` avec schéma versionné, identifiants stables,
+  empreintes SHA-256, versions, sources, destinations, consommateurs, contrats, licences, statuts,
+  décisions et références d'archive.
+- [ ] Définir et tester les transitions de statut : détecté, précontrôlé, approuvé, à régénérer,
+  à revoir, bloqué, archivé, importé, validé et retour arrière.
+- [ ] Créer `tools/design_imports/design_import.py` avec les commandes idempotentes `scan`,
+  `preflight`, `plan`, `archive`, `apply`, `verify`, `rollback` et `report`.
+- [ ] Refuser les chemins hors dépôt, doublons, champs invalides, empreintes manquantes et dérives
+  entre approbation et application.
+- [ ] Garantir les écritures atomiques et la reprise après interruption.
+- [ ] Couvrir le registre et les scripts par des tests automatisés déterministes.
+
+**Critère d'acceptation :** un scan répété sans changement produit le même registre et le même plan,
+et les tests prouvent qu'aucune cible non approuvée ne peut être modifiée.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.2 — Inventaire, précontrôle et approbation du lot `[TODO]`
+
+- [ ] Inventorier le lot source et les assets actuels du jeu sans lire ni copier les caches `.godot`
+  ou fichiers `.import` du laboratoire.
+- [ ] Classer chaque design en ajout, remplacement, inchangé, conflit, orphelin ou destination inconnue.
+- [ ] Tester avant import la présence, le format, les doublons, les licences, dépendances, dimensions,
+  échelle, axes, pivots, matériaux, textures, animations, squelettes et ancrages applicables.
+- [ ] Générer un plan exhaustif listant chaque design, sa source, sa destination, l'action prévue,
+  la version remplacée, ses consommateurs, ses contrôles et ses risques.
+- [ ] Présenter à l'utilisateur la liste complète des designs candidats et obtenir son approbation
+  explicite liée à l'identifiant et à l'empreinte du run.
+- [ ] Invalider l'approbation et régénérer le plan dès qu'un fichier ou une décision change.
+
+**Critère d'acceptation :** chaque design est traçable et aucun candidat ne peut atteindre la phase
+suivante sans approbation explicite.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.3 — Qualification isolée et traitement des frictions `[TODO]`
+
+- [ ] Importer le lot approuvé dans un espace de test isolé, sans écraser les assets du jeu.
+- [ ] Exécuter les validateurs spécialisés du lot et contrôler les erreurs Godot, dépendances,
+  budgets, matériaux, animations, squelettes, ancrages et contrats des scènes consommatrices.
+- [ ] Enregistrer chaque friction avec preuve, cause probable, asset concerné et impact potentiel.
+- [ ] Pour tout échec, demander à l'utilisateur de choisir entre régénérer/corriger le design ou le
+  marquer `a_revoir` et l'exclure du run.
+- [ ] Refaire les tests et l'approbation du plan après toute régénération ou modification d'empreinte.
+- [ ] Tester que les designs exclus ne figurent plus dans le plan applicable.
+
+**Critère d'acceptation :** le lot applicable ne contient que des designs approuvés ayant réussi les
+contrôles isolés ; chaque exclusion est motivée et enregistrée.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.4 — Archivage restaurable des versions remplacées `[TODO]`
+
+- [ ] Créer `archives/design_imports/<run_id>/` en conservant les chemins relatifs de toutes les
+  destinations qui seront remplacées.
+- [ ] Générer un manifeste contenant chemin, empreinte, taille, commit source et destination de
+  restauration.
+- [ ] Vérifier les empreintes après copie et refuser l'import si une archive est incomplète.
+- [ ] Implémenter et tester un retour arrière à blanc sur l'intégralité du lot.
+- [ ] Tester un retour arrière réel sur un cas contrôlé, puis rétablir l'état approuvé.
+- [ ] Documenter la procédure de récupération sans dépendre de la mémoire de session.
+
+**Critère d'acceptation :** toute cible remplacée peut être restaurée à l'octet près par une commande
+testée avant l'insertion réelle.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.5 — Insertion et intégration dans le jeu `[TODO]`
+
+- [ ] Appliquer uniquement le plan confirmé et refuser toute dérive d'empreinte.
+- [ ] Copier les sources approuvées vers les chemins du jeu sans transférer les fichiers `.import`.
+- [ ] Laisser Godot régénérer les imports et intégrer les assets aux ressources et scènes consommatrices.
+- [ ] Préserver les collisions, la navigation, les signaux, les scripts, les points d'ancrage et les
+  règles de gameplay déjà validés.
+- [ ] Mettre à jour le registre de façon atomique après chaque opération réussie.
+- [ ] En cas d'échec, arrêter proprement et demander s'il faut corriger/régénérer le design ou le
+  marquer `a_revoir`, puis tester le retour à la version archivée.
+
+**Critère d'acceptation :** les fichiers réellement intégrés correspondent exactement au plan et au
+registre, sans design non approuvé ni contrat fonctionnel modifié silencieusement.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.6 — Qualification automatique de l'import `[TODO]`
+
+- [ ] Lancer l'import Godot et distinguer les erreurs nouvelles des avertissements de référence.
+- [ ] Exécuter les validateurs du lot, les tests ciblés des consommateurs et `python check.py`.
+- [ ] Vérifier selon les assets : rendu, matériaux, échelle, axes, pivots, animations, collisions,
+  navigation, ancrages FPS, interface, effets, audio et remise à zéro de session.
+- [ ] Mesurer les scènes affectées et comparer les résultats à la référence ; réserver la preuve FPS
+  finale à un test réel confirmé par l'utilisateur.
+- [ ] Pour chaque défaut, proposer correction/régénération ou classement `a_revoir`, puis retester.
+- [ ] Vérifier l'absence de référence cassée, d'erreur de script et d'asset orphelin nouveau.
+
+**Critère d'acceptation :** tous les tests automatiques applicables réussissent sans erreur connue et
+chaque écart restant est exclu ou assumé explicitement par l'utilisateur.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.7 — Campagne manuelle consolidée et automatisation visuelle `[TODO]`
+
+- [ ] Formaliser `_docs/design_imports/methode_tests_manuels.md` : regroupement par lancement, scène,
+  trajet et résolution, preuves attendues, durée humaine et critères non automatisables.
+- [ ] Fusionner sans perte les contrôles du lot avec les campagnes déjà présentes dans
+  `tests_manuels.md`, notamment M5.1 et DESIGN phase 8.
+- [ ] Générer un parcours ordonné couvrant apparence, lisibilité, superpositions, collisions ressenties,
+  animations, audio et FPS en minimisant les relances du jeu.
+- [ ] Prototyper des captures déterministes à caméra fixe avec graine et état connus.
+- [ ] Prototyper un pilote d'entrées scriptées, pauses sur événements et assertions d'état ; utiliser le
+  ralentissement uniquement comme aide de diagnostic.
+- [ ] Comparer des captures de référence avec des tolérances documentées, puis progresser des scénarios
+  ralentis vers une exécution proche du temps réel lorsque leur stabilité est prouvée.
+- [ ] Maintenir une validation humaine pour le ressenti, la lisibilité en mouvement et les défauts
+  visuels ambigus.
+
+**Critère d'acceptation :** l'utilisateur dispose d'une seule campagne ordonnée pour le lot et les
+tests en attente, tandis qu'un premier scénario visuel répétable produit captures et assertions.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+### DI.8 — Rétrospective et durcissement du workflow `[TODO]`
+
+- [ ] Consolider pour chaque friction : phase, symptôme, preuve, cause, décision, correction, temps
+  humain, relances et possibilité d'automatisation.
+- [ ] Mesurer designs détectés, approuvés, importés et écartés, nombre d'échecs, retours arrière,
+  interventions humaines et validations restantes.
+- [ ] Classer les améliorations par réduction attendue du temps humain, risque et coût de maintenance.
+- [ ] Proposer à l'utilisateur les améliorations de la commande et des scripts après le premier run.
+- [ ] Appliquer uniquement les améliorations approuvées et ajouter leurs tests de non-régression.
+- [ ] Rejouer un lot représentatif pour prouver que le workflow amélioré reste reproductible.
+
+**Critère d'acceptation :** le premier import est traçable de bout en bout et les améliorations
+retenues sont intégrées, testées et mesurées avant la reprise de M5.1/M5.2.
+
+**⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
+
+**Porte de sortie DI :**
+
+- Le registre correspond aux designs réellement présents dans le jeu.
+- Chaque remplacement possède une archive vérifiée et restaurable.
+- Aucun design non approuvé ou en révision n'est intégré.
+- Les tests automatiques réussissent sans erreur connue.
+- Les tests humains sont regroupés dans un parcours unique et traçable.
+- Le journal du run permet d'identifier les frictions et de prioriser leur automatisation.
+
 ## 6. Jalon M0 — Fondation reproductible
 
 **But :** obtenir un projet Godot propre, lançable et mesurable avant de produire du gameplay.
@@ -501,7 +678,7 @@ Statut au 2026-07-26 : validé automatiquement et manuellement, y compris le pre
 - Chaque élément du HUD affiche la valeur réelle de la session.
 - Un parcours complet de la carte avec une vague active ne descend pas sous 50 FPS.
 
-Statut au 2026-07-26 : porte franchie. Premier contrôle manuel échoué (FPS minimum 28, 3 frames sous 50) et compteur de zombies restants figé en vague 5 ; instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif). Retest ciblé (vague 5 forcée, zombies réduits à 1-2) conforme : FPS minimum 60, zéro frame sous 50, compteur cohérent. La cause initiale (chute FPS à 28, blocage du compteur) n'a pas été diagnostiquée ; elle n'a pas été reproduite dans ce protocole, ce qui ne constitue pas une preuve de correction.
+Statut au 2026-07-31 : porte franchie. Premier contrôle manuel échoué (FPS minimum 28, 3 frames sous 50) et compteur de zombies restants figé en vague 5 ; instrumentation de diagnostic ajoutée (motif de spawn différé, compteurs séparés, comptage actif). Retest ciblé (vague 5 forcée, zombies réduits à 1-2) conforme : FPS minimum 60, zéro frame sous 50, compteur cohérent. Validation manuelle complémentaire : après redémarrage du PC, plusieurs essais conservent des FPS conformes ; l'incident initial est attribué à une surcharge temporaire du PC.
 
 ## 10. Jalon M4 — Arsenal, achats et avantages
 

@@ -547,7 +547,7 @@ Retest ciblé : vague 5 forcée via `F9`, zombies réduits à 1-2, parcours des 
 
 ### Résultat
 
-La porte de sortie M3 est déclarée franchie sur la base de ce retest. La cause initiale de l'échec du premier contrôle (chute FPS à 28, compteur figé) n'a pas été diagnostiquée : le retest n'a simplement pas reproduit le problème, ce qui ne constitue pas une preuve de correction (voir action ouverte P3 dans `_contexte/signals.md`, rattachée à M7.2).
+La porte de sortie M3 est déclarée franchie sur la base de ce retest. Validation manuelle complémentaire communiquée par l'utilisateur le 2026-07-31 : la chute initiale était due à une surcharge temporaire du PC ; après redémarrage, plusieurs essais du jeu ont conservé des FPS conformes. Aucun défaut de performance ou compteur bloqué n'a été reproduit.
 
 ## M4.1 — Six armes distinctes
 

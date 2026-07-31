@@ -17,6 +17,18 @@ const WALL_BUY_DEFINITIONS: Array[Resource] = [
 	preload("res://data/weapons/wall_buy_extraction_oeil_de_nox.tres"),
 	preload("res://data/weapons/wall_buy_extraction_broyeur.tres"),
 ]
+const MYSTERY_BOX_DEFINITIONS: Array[Resource] = [
+	preload("res://data/weapons/mystery_box_entrepot.tres"),
+]
+const WEAPON_UPGRADE_STATION_DEFINITIONS: Array[Resource] = [
+	preload("res://data/weapons/weapon_upgrade_station_laboratoire.tres"),
+]
+const PERK_STATION_DEFINITIONS: Array[Resource] = [
+	preload("res://data/perks/perk_constitution_renforcee.tres"),
+	preload("res://data/perks/perk_gestes_precis.tres"),
+	preload("res://data/perks/perk_reflexes_stimules.tres"),
+	preload("res://data/perks/perk_reparation_cellulaire.tres"),
+]
 
 const CLOSED_OBSERVATION_FRAMES := 240
 const OPEN_OBSERVATION_FRAMES := 480
@@ -28,6 +40,9 @@ func _ready() -> void:
 	var blockout := HELIX_BLOCKOUT.new()
 	blockout.door_definitions = DOOR_DEFINITIONS
 	blockout.wall_buy_definitions = WALL_BUY_DEFINITIONS
+	blockout.mystery_box_definitions = MYSTERY_BOX_DEFINITIONS
+	blockout.weapon_upgrade_station_definitions = WEAPON_UPGRADE_STATION_DEFINITIONS
+	blockout.perk_station_definitions = PERK_STATION_DEFINITIONS
 	add_child(blockout)
 
 	var target := Node3D.new()

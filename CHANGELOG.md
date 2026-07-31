@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.35 — 2026-07-31
+
+### Ajouté
+
+- Commande `insertion_designs` et chantier urgent DI : registre de designs, précontrôles, approbations, qualification isolée, archives restaurables, intégration contrôlée et campagne manuelle consolidée.
+
+### Corrigé
+
+- Test de navigation des portes : les définitions de caisse, station et avantages sont désormais injectées comme dans la scène réelle, supprimant les erreurs Godot masquées par le code de sortie nul.
+
+### Modifié
+
+- La validation M3 est complétée : après redémarrage, plusieurs essais conformes attribuent l'incident FPS/compteur initial à une surcharge temporaire du PC.
+
 ## v0.34 — 2026-07-30
 
 ### Ajouté
