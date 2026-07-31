@@ -1,0 +1,3703 @@
+{
+  "classification_counts": {
+    "ajout": 34,
+    "destination_inconnue": 17
+  },
+  "designs": [
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-01-sol-droit",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_01_sol_droit.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "40a9615f8f19fb45f48c6f36fe203b23728b599f901728823e042110c2d30260",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_01_sol_droit.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.12,
+            2.0
+          ],
+          "max": [
+            1.0,
+            0.0599999986588955,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -0.0599999986588955,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_01_SolDroit",
+          "Dalle"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-02-sol-angle",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_02_sol_angle.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "052d6ed9abd98bff980e2abba41fbf6325a13e29a27dc2cfa8167855633a78e7",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_02_sol_angle.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.12,
+            2.0
+          ],
+          "max": [
+            1.0,
+            0.0599999986588955,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -0.0599999986588955,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_02_SolAngle",
+          "Dalle",
+          "GuideX",
+          "GuideZ"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": false,
+          "issues": [
+            "dimensions exportées [2.0, 0.18, 2.0] != dimensions nominales [2.0, 0.12, 2.0]"
+          ]
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-03-sol-bord",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_03_sol_bord.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "fd173f9c5d73405f94e5f079605ed04bce11a658281727408ace787b76310229",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_03_sol_bord.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.18,
+            2.0
+          ],
+          "max": [
+            1.0,
+            0.0900000035762787,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -0.0900000035762787,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_03_SolBord",
+          "Dalle",
+          "Bordure"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-04-sol-transition",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_04_sol_transition.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "396756d7cf293b7310bab158dd6b6b33632429c42f094c1e3628f24a1119429c",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_04_sol_transition.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.12,
+            1.0
+          ],
+          "max": [
+            1.0,
+            0.0599999986588955,
+            0.5
+          ],
+          "min": [
+            -1.0,
+            -0.0599999986588955,
+            -0.5
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_04_SolTransition",
+          "Dalle"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-05-mur-plein",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_05_mur_plein.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "580a23b9ca2d8586fc0100054362f7dea6eaaea8425e4efc1d68e92a163b3d08",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_05_mur_plein.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            3.5,
+            0.2
+          ],
+          "max": [
+            1.0,
+            1.75,
+            0.100000001490116
+          ],
+          "min": [
+            -1.0,
+            -1.75,
+            -0.100000001490116
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_05_MurPlein",
+          "Panneau",
+          "RailBas",
+          "Bandeau"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-06-demi-mur",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_06_demi_mur.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "d681e01ea596e27d7b5ae985a804d7aeef623e14ed9a2730e027f030a1c25d99",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_06_demi_mur.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            1.0,
+            3.5,
+            0.2
+          ],
+          "max": [
+            0.5,
+            1.75,
+            0.100000001490116
+          ],
+          "min": [
+            -0.5,
+            -1.75,
+            -0.100000001490116
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_06_DemiMur",
+          "Panneau",
+          "RailBas"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-07-angle-interieur",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_07_angle_interieur.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "d038029e65bfe4c50a948f779a71e1d534477a9902a4588de806ee81d8b56472",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_07_angle_interieur.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            3.5,
+            2.0
+          ],
+          "max": [
+            1.0,
+            1.75,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -1.75,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_07_AngleInterieur",
+          "MurX",
+          "MurZ"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-08-angle-exterieur",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_08_angle_exterieur.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "b03d0bf7de303c6baa1846dd9decea9d36f1bf1a6d74237e5afd9e01223c904a",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_08_angle_exterieur.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            3.5,
+            2.0
+          ],
+          "max": [
+            1.0,
+            1.75,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -1.75,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_08_AngleExterieur",
+          "MurX",
+          "MurZ"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-09-terminaison-mur",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_09_terminaison_mur.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "ff227d9ad63f4291c4b6ccd01cc4c32a88be1321ca9530ac116a8cef3a96ea24",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_09_terminaison_mur.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            0.2,
+            3.5,
+            2.0
+          ],
+          "max": [
+            0.100000001490116,
+            1.75,
+            1.0
+          ],
+          "min": [
+            -0.100000001490116,
+            -1.75,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_09_TerminaisonMur",
+          "Panneau",
+          "Capot"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-10-plafond-plein",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_10_plafond_plein.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "379c1a2bb0e224408737f9bac52517320caa47d2727e36c9d459072ddd09843a",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_10_plafond_plein.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.18,
+            2.0
+          ],
+          "max": [
+            1.0,
+            0.0900000035762787,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -0.0900000035762787,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_10_PlafondPlein",
+          "Dalle"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-11-plafond-technique",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_11_plafond_technique.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "9323dee2b29df3ad616988071a4f8f3c590086e806ec2dec7825b36f5faa597c",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_11_plafond_technique.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.18,
+            2.0
+          ],
+          "max": [
+            1.0,
+            0.0900000035762787,
+            1.0
+          ],
+          "min": [
+            -1.0,
+            -0.0900000035762787,
+            -1.0
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 2,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_11_PlafondTechnique",
+          "Dalle",
+          "Bandeau"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 24
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-12-plafond-transition",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_12_plafond_transition.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "eee68c071d244f53ea28641cb0c96e062c9564eb7dfdaccf05945f14558edcc9",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_12_plafond_transition.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.18,
+            1.0
+          ],
+          "max": [
+            1.0,
+            0.0900000035762787,
+            0.5
+          ],
+          "min": [
+            -1.0,
+            -0.0900000035762787,
+            -0.5
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_12_PlafondTransition",
+          "Dalle"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": false,
+          "issues": [
+            "dimensions exportées [4.6, 3.5, 0.22] != dimensions nominales [4.0, 3.5, 0.22]"
+          ]
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-13-encadrement-simple",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_13_encadrement_simple.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "4668ccbd8ffa0a6dea1053715457fc1901db5aacb014a824bba7db55912f41c6",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_13_encadrement_simple.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.6,
+            3.5,
+            0.22
+          ],
+          "max": [
+            2.29999995231628,
+            1.75,
+            0.109999999403954
+          ],
+          "min": [
+            -2.29999995231628,
+            -1.75,
+            -0.109999999403954
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_13_EncadrementSimple",
+          "MontantGauche",
+          "MontantDroit",
+          "Linteau"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": false,
+          "issues": [
+            "dimensions exportées [8.6, 3.5, 0.22] != dimensions nominales [8.0, 3.5, 0.22]"
+          ]
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-14-encadrement-double",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_14_encadrement_double.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "db23dbed8dd70259d83fb52dffed3f11a0035201582945bdaef7c906f68693d6",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_14_encadrement_double.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            8.6,
+            3.5,
+            0.22
+          ],
+          "max": [
+            4.30000019073486,
+            1.75,
+            0.109999999403954
+          ],
+          "min": [
+            -4.30000019073486,
+            -1.75,
+            -0.109999999403954
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 4,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_14_EncadrementDouble",
+          "MontantGauche",
+          "MontantCentral",
+          "MontantDroit",
+          "Linteau"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 48
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-15-porte-accueil-couloirs",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_15_porte_accueil_couloirs.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "d5b14c7ff6f7a2eb76ea6e6e2d24720e2c1be0f6e93bf2d802639ce5c1f31696",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_15_porte_accueil_couloirs.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.0,
+            3.5,
+            0.35
+          ],
+          "max": [
+            2.0,
+            1.75,
+            0.174999997019768
+          ],
+          "min": [
+            -2.0,
+            -1.75,
+            -0.174999997019768
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_15_PorteAccueilCouloirs",
+          "Panneau",
+          "Insert",
+          "VoyantAchat"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-16-porte-couloirs-entrepot",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_16_porte_couloirs_entrepot.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "cc2b62e81d4ab644669627c29e75e26d868234025ba809c8aa3879b302d2a66a",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_16_porte_couloirs_entrepot.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.0,
+            3.5,
+            0.35
+          ],
+          "max": [
+            2.0,
+            1.75,
+            0.174999997019768
+          ],
+          "min": [
+            -2.0,
+            -1.75,
+            -0.174999997019768
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_16_PorteCouloirsEntrepot",
+          "Panneau",
+          "InsertMedical",
+          "BandeauAmbre"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-17-porte-couloirs-laboratoire",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_17_porte_couloirs_laboratoire.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "e37eee4125b8072170bc328d3cb2cfa713a7b1a79cc8a297cc5927fcac681f03",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_17_porte_couloirs_laboratoire.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.0,
+            3.5,
+            0.35
+          ],
+          "max": [
+            2.0,
+            1.75,
+            0.174999997019768
+          ],
+          "min": [
+            -2.0,
+            -1.75,
+            -0.174999997019768
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_17_PorteCouloirsLaboratoire",
+          "Panneau",
+          "Verrou",
+          "VoyantVertical"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-18-porte-entrepot-extraction",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_18_porte_entrepot_extraction.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "a00fc4952e62d3c056a302320d15ff09564d91c948cda9253a26c57d4df467bf",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_18_porte_entrepot_extraction.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.0,
+            3.5,
+            0.35
+          ],
+          "max": [
+            2.0,
+            1.75,
+            0.174999997019768
+          ],
+          "min": [
+            -2.0,
+            -1.75,
+            -0.174999997019768
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_18_PorteEntrepotExtraction",
+          "Panneau",
+          "Insert",
+          "GuideExtraction"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-19-porte-laboratoire-extraction",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_19_porte_laboratoire_extraction.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "f0d4eca5a2879a86660a94a1fa8b276ed0bf194380ecd57b9d78168bab51a2d4",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_19_porte_laboratoire_extraction.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            4.0,
+            3.5,
+            0.35
+          ],
+          "max": [
+            2.0,
+            1.75,
+            0.174999997019768
+          ],
+          "min": [
+            -2.0,
+            -1.75,
+            -0.174999997019768
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 5,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_19_PorteLaboratoireExtraction",
+          "Panneau",
+          "RenfortHaut",
+          "RenfortBas",
+          "GuideGauche",
+          "GuideDroit"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 60
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": false,
+          "issues": [
+            "dimensions exportées [0.46, 3.5, 0.46] != dimensions nominales [0.3, 3.5, 0.3]"
+          ]
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-20-pilier",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_20_pilier.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "7da1fdd4929fb5a71faded132053bad2fd633a2e2bd64a5df8c502d88b291936",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_20_pilier.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            0.46,
+            3.5,
+            0.46
+          ],
+          "max": [
+            0.230000004172325,
+            1.75,
+            0.230000004172325
+          ],
+          "min": [
+            -0.230000004172325,
+            -1.75,
+            -0.230000004172325
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_20_Pilier",
+          "Montant",
+          "Embase",
+          "Tete"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-21-poutre",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_21_poutre.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "f6b175e76e49e2ebb7d1355a996b3a8f5ff92de0355af4cff98a3107d1866acd",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_21_poutre.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.3,
+            0.3
+          ],
+          "max": [
+            1.0,
+            0.150000005960464,
+            0.150000005960464
+          ],
+          "min": [
+            -1.0,
+            -0.150000005960464,
+            -0.150000005960464
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_21_Poutre",
+          "Traverse"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-22-couvre-joint-vertical",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_22_couvre_joint_vertical.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "d26b6a77c29a8ad4d9b69ab71105a8512f489a7b29924dced7ea86c043040c15",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_22_couvre_joint_vertical.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            0.08,
+            3.5,
+            0.1
+          ],
+          "max": [
+            0.0399999991059303,
+            1.75,
+            0.0500000007450581
+          ],
+          "min": [
+            -0.0399999991059303,
+            -1.75,
+            -0.0500000007450581
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_22_CouvreJointVertical",
+          "Joint"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/kit_modulaire/conventions_kit_v1.md"
+      ],
+      "design_id": "phase1:np-kms-23-couvre-joint-horizontal",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/kit_structurel/np_kms_23_couvre_joint_horizontal.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase1",
+      "source_hash": "71ac168ba5a8065368b53c8de80317213a1457cd8043bddf61219fec32c95d3b",
+      "source_path": "DESIGN/kit_modulaire/exports/np_kms_23_couvre_joint_horizontal.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            2.0,
+            0.08,
+            0.1
+          ],
+          "max": [
+            1.0,
+            0.0399999991059303,
+            0.0500000007450581
+          ],
+          "min": [
+            -1.0,
+            -0.0399999991059303,
+            -0.0500000007450581
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 1,
+        "meshes": 1,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_KMS_23_CouvreJointHorizontal",
+          "Joint"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 12
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/laboratoire --quit-after 2"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-accent-amber",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_accent_amber.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "52e9f629882c96e8367f05ac6e4def0ac18594f6d5b30ee504f02cc8f554a059",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_accent_amber.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-accent-cyan",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_accent_cyan.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "9bfb1070d9c5abff68dbeb2ed4a109f9c113af2457d384e97e459df3052d09ed",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_accent_cyan.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-accent-danger",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_accent_danger.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "6f3c18918a119d3aaa1a180b154dc8bd1ff0522865fd42e5a1bc5f78f7cebdaf",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_accent_danger.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-composite-medical",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_composite_medical.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "065669071db745f17e06d9e753aba4753ac1f43fcea6865ec21ddc40ccb8cd68",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_composite_medical.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-concrete-sealed-dark",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_concrete_sealed_dark.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "d114866af5727a744f703bf3ef9073ca5cfc9f7945d835c09b55a12959ce10cf",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_concrete_sealed_dark.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-concrete-sealed-light",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_concrete_sealed_light.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "ef4a2067331d8d4233bcb6e457c094d34a78417bf97011b087492ea46e7e5266",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_concrete_sealed_light.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-glass-reinforced",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_glass_reinforced.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "cb4d7d9ad81c8bce5722423c932a3bfea2eef0449a0d383212e1055b92a4da90",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_glass_reinforced.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-steel-painted",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_steel_painted.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "27ffafc756e222ddd05a68be43c8b0b0a6cbfe07b857ab015a08609d3f68bced",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_steel_painted.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "ressource_godot",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-materiaux:m-steel-raw",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/environment/helix9/materials/m_steel_raw.tres",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-materiaux",
+      "source_hash": "df5bbd0aaf59a080e12e4bd143aa92c7f2273c483df6cbef8aeaf0e38502c2c9",
+      "source_path": "DESIGN/materiaux_signaletique/materiaux/m_steel_raw.tres",
+      "source_version": "1",
+      "technical": {
+        "external_dependencies": [],
+        "format": "tres",
+        "resource_type": "StandardMaterial3D"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "vectoriel",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/materiaux_signaletique/guide_materiaux_signaletique_v1.md"
+      ],
+      "design_id": "phase2-signaletique:planche-signalisation-v1",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/ui/signaletique/planche_signalisation_v1.svg",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase2-signaletique",
+      "source_hash": "11b5945d60952688aa6f5096e890238b3f563af9cb573f07eb41534ffd24aa62",
+      "source_path": "DESIGN/materiaux_signaletique/signaletique/planche_signalisation_v1.svg",
+      "source_version": "1",
+      "technical": {
+        "format": "svg",
+        "height": "1080",
+        "root": "{http://www.w3.org/2000/svg}svg",
+        "view_box": "0 0 1920 1080",
+        "width": "1920"
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/materiaux_signaletique --script res://validation_phase2.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": false,
+          "issues": [
+            "6 matériaux > budget 4"
+          ]
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "ajout",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/zombie_standard/contrat_animation_phase4_v1.md",
+        "DESIGN/zombie_standard/fiches_integration_phase4_v1.md"
+      ],
+      "design_id": "phase4:np-z04-zombie-standard",
+      "destinations": [
+        {
+          "exists": false,
+          "path": "assets/characters/enemies/np_z04_zombie_standard.glb",
+          "sha256": null
+        }
+      ],
+      "license_status": "proprietaire",
+      "lot_id": "phase4",
+      "source_hash": "b42beab3ae485ef2993964565dc8548391babf9d01ac36149e8778ab106ef8b4",
+      "source_path": "DESIGN/zombie_standard/exports/np_z04_zombie_standard.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "attack",
+          "chase",
+          "death",
+          "disable",
+          "hit_reaction",
+          "idle",
+          "spawn",
+          "walk"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.61,
+            2.305,
+            0.37
+          ],
+          "max": [
+            0.305000007152557,
+            2.03999996185303,
+            0.185000002384186
+          ],
+          "min": [
+            -0.305000007152557,
+            -0.264999985694885,
+            -0.185000002384186
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 6,
+        "meshes": 24,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z04_ZOM_01_Standard",
+          "Hips",
+          "Spine",
+          "Chest",
+          "Neck",
+          "Head",
+          "UpperArm_L",
+          "LowerArm_L",
+          "Hand_L",
+          "UpperArm_R",
+          "LowerArm_R",
+          "Hand_R",
+          "UpperLeg_L",
+          "LowerLeg_L",
+          "Foot_L",
+          "Toe_L",
+          "UpperLeg_R",
+          "LowerLeg_R",
+          "Foot_R",
+          "Toe_R",
+          "SkinnedTorso",
+          "VisualRig",
+          "Hips2",
+          "Bassin",
+          "Spine2",
+          "VesteBas",
+          "Chest2",
+          "VesteHaut",
+          "SousCouche",
+          "Neck2",
+          "Cou",
+          "Head2",
+          "Tete",
+          "Machoire",
+          "UpperArm_L2",
+          "BrasHaut_L",
+          "LowerArm_L2",
+          "AvantBras_L",
+          "MancheDechiree",
+          "Hand_L2",
+          "Main_L",
+          "BraceletMedical",
+          "UpperArm_R2",
+          "BrasHaut_R",
+          "LowerArm_R2",
+          "AvantBras_R",
+          "Hand_R2",
+          "Main_R",
+          "UpperLeg_L2",
+          "Cuisse_L",
+          "LowerLeg_L2",
+          "Jambe_L",
+          "Foot_L2",
+          "Botte_L",
+          "Toe_L2",
+          "Pointe_L",
+          "UpperLeg_R2",
+          "Cuisse_R",
+          "LowerLeg_R2",
+          "Jambe_R",
+          "Foot_R2",
+          "Botte_R",
+          "Toe_R2",
+          "Pointe_R"
+        ],
+        "skins": 1,
+        "textures": 0,
+        "triangles_indexed": 392
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/zombie_standard --script res://scripts/validate_phase4_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase4_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-assaut",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "dfbb0888ea64bbc5c4a08f78a652114656aaaa7bf23492c2262a406d9aea0293",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_assaut.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.1272,
+            0.4896,
+            0.4488
+          ],
+          "max": [
+            0.0636000037193298,
+            0.244800001382828,
+            0.224399998784065
+          ],
+          "min": [
+            -0.0636000037193298,
+            -0.244800001382828,
+            -0.224399998784065
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 7,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_04_FusilAssaut",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 120
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-assaut-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "0ce904e7fa2267edf6f027ec3b4e3c6709dd400211abdadfd7dbccd0a7484e5d",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_assaut_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.132,
+            0.4896,
+            0.4488
+          ],
+          "max": [
+            0.0659999996423721,
+            0.244800001382828,
+            0.224399998784065
+          ],
+          "min": [
+            -0.0659999996423721,
+            -0.244800001382828,
+            -0.224399998784065
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 8,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_04_FusilAssaut_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 132
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-bras-scientifique",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "3fa4aa93d70f5347e538eb411d671a31491bf5e6ce581b900c80a4e28c3e99bf",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_bras_scientifique.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            0.15,
+            0.13,
+            0.46
+          ],
+          "max": [
+            0.0750000029802322,
+            0.0649999976158142,
+            0.230000004172325
+          ],
+          "min": [
+            -0.0750000029802322,
+            -0.0649999976158142,
+            -0.230000004172325
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 3,
+        "meshes": 6,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_FPS_BrasScientifique",
+          "Bras_G",
+          "AvantBras",
+          "Gant",
+          "Poignet",
+          "Bras_D",
+          "AvantBras2",
+          "Gant2",
+          "Poignet2"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 72
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-couteau",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "7771041982e2238c96f5b1b41b685b438bae6df845fa58c27edb4960088a3a6b",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_couteau.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.14,
+            0.07,
+            0.26
+          ],
+          "max": [
+            0.0700000002980232,
+            0.0350000001490116,
+            0.129999995231628
+          ],
+          "min": [
+            -0.0700000002980232,
+            -0.0350000001490116,
+            -0.129999995231628
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 4,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_07_Couteau",
+          "WeaponVisualRoot",
+          "Lame",
+          "Garde",
+          "Manche",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 48
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-couteau-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "6741718501fe129a1b98fc1b992ece2519cd5bdd35f4305580ab9065c0086957",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_couteau_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.14,
+            0.07,
+            0.26
+          ],
+          "max": [
+            0.0700000002980232,
+            0.0350000001490116,
+            0.129999995231628
+          ],
+          "min": [
+            -0.0700000002980232,
+            -0.0350000001490116,
+            -0.129999995231628
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 5,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_07_Couteau_Ameliore",
+          "WeaponVisualRoot",
+          "Lame",
+          "Garde",
+          "Manche",
+          "AccentFonctionnel",
+          "DorsaleRenforcee",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 60
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-lourde",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "3b756b0a0c73e8951668f9e87cd2d47485f2c98e3c483d3f83bdacf6ba3159f4",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_lourde.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.243,
+            0.528,
+            0.484
+          ],
+          "max": [
+            0.121500000357628,
+            0.263999998569489,
+            0.241999998688698
+          ],
+          "min": [
+            -0.121500000357628,
+            -0.263999998569489,
+            -0.241999998688698
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 9,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_06_ArmeLourde",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "Tambour",
+          "PoigneeAvant",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 144
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-lourde-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "fd2008c539287b0f9099918e753a4fa1daa13c6e3c6e4f0932dfecbdf7ed9057",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_lourde_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.243,
+            0.528,
+            0.484
+          ],
+          "max": [
+            0.121500000357628,
+            0.263999998569489,
+            0.241999998688698
+          ],
+          "min": [
+            -0.121500000357628,
+            -0.263999998569489,
+            -0.241999998688698
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 10,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_06_ArmeLourde_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "Tambour",
+          "PoigneeAvant",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 156
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-mitraillette",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "362467f8ae602377cdfccd899f2552552af6b4722b160e48b2dea650b6465958",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_mitraillette.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.1166,
+            0.3408,
+            0.3124
+          ],
+          "max": [
+            0.0582999996840954,
+            0.170399993658066,
+            0.156200006604195
+          ],
+          "min": [
+            -0.0582999996840954,
+            -0.170399993658066,
+            -0.156200006604195
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 7,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_02_Mitraillette",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 120
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-mitraillette-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "6ea1b6490da2e4f5c687caa38c695b3d9219ceeb1f8ff14b05e95cb326ba158c",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_mitraillette_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.121,
+            0.3408,
+            0.3124
+          ],
+          "max": [
+            0.0604999996721745,
+            0.170399993658066,
+            0.156200006604195
+          ],
+          "min": [
+            -0.0604999996721745,
+            -0.170399993658066,
+            -0.156200006604195
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 8,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_02_Mitraillette_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 132
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-pistolet",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "b58baed912c96031c589ce5178560701557511b3c1dfa92cdb5359e8c9fc1606",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_pistolet.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.0954,
+            0.2208,
+            0.2024
+          ],
+          "max": [
+            0.0476999990642071,
+            0.110399998724461,
+            0.101199999451637
+          ],
+          "min": [
+            -0.0476999990642071,
+            -0.110399998724461,
+            -0.101199999451637
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 6,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_01_Pistolet",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 108
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-pistolet-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "e41f11237ad8f05a9216f9ea7985043d9e1c341fc7c7c66f7920f0ccd9dbc723",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_pistolet_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.099,
+            0.2208,
+            0.2024
+          ],
+          "max": [
+            0.0494999997317791,
+            0.110399998724461,
+            0.101199999451637
+          ],
+          "min": [
+            -0.0494999997317791,
+            -0.110399998724461,
+            -0.101199999451637
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 7,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_01_Pistolet_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 120
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-pompe",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "4ded57f47093c275815cb50837f51ec5667b2c765ee7bf516694b3a01dcba796",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_pompe.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.1416,
+            0.5336,
+            0.4048
+          ],
+          "max": [
+            0.0707999989390373,
+            0.266799986362457,
+            0.202399998903275
+          ],
+          "min": [
+            -0.0707999989390373,
+            -0.266799986362457,
+            -0.202399998903275
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 7,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_03_FusilPompe",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Crosse",
+          "Pompe",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 120
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-pompe-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "d3b98a5fae1e56ad515f4cd7a85ab8eafe5b0db7d578f167b63fe3b74d6d7b5c",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_pompe_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.1416,
+            0.5336,
+            0.4048
+          ],
+          "max": [
+            0.0707999989390373,
+            0.266799986362457,
+            0.202399998903275
+          ],
+          "min": [
+            -0.0707999989390373,
+            -0.266799986362457,
+            -0.202399998903275
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 8,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_03_FusilPompe_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Crosse",
+          "Pompe",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 132
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-precision",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "2ebc6e8de5ac86a5a0bee324b81ffc4fde9086d75834199f76ac97c7df09fb9e",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_precision.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.0954,
+            0.6144,
+            0.5632
+          ],
+          "max": [
+            0.0476999990642071,
+            0.307200014591217,
+            0.281599998474121
+          ],
+          "min": [
+            -0.0476999990642071,
+            -0.307200014591217,
+            -0.281599998474121
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 8,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_05_FusilPrecision",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "Lunette",
+          "AccentFonctionnel",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 168
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-precision-ameliore",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "5becd3d97614b9decbeb30fc4193399ededfccb1979a0a6669dcddfb7d449f0b",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_precision_ameliore.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [
+          "equip",
+          "melee",
+          "rechargement",
+          "recul",
+          "tir"
+        ],
+        "bounds_locales": {
+          "dimensions": [
+            0.099,
+            0.6144,
+            0.5632
+          ],
+          "max": [
+            0.0494999997317791,
+            0.307200014591217,
+            0.281599998474121
+          ],
+          "min": [
+            -0.0494999997317791,
+            -0.307200014591217,
+            -0.281599998474121
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 9,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_WPN_05_FusilPrecision_Ameliore",
+          "WeaponVisualRoot",
+          "Corps",
+          "Culasse",
+          "Canon",
+          "Poignee",
+          "Chargeur",
+          "Crosse",
+          "Lunette",
+          "AccentFonctionnel",
+          "ModuleAmeliore",
+          "MuzzleFlash"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 180
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-presentation-murale",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "2267e31d22f1f4fae2ce21850c73cb4386c222ccae271a0f681338017b2de86e",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_presentation_murale.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            1.28,
+            0.72,
+            0.16
+          ],
+          "max": [
+            0.639999985694885,
+            0.360000014305115,
+            0.0799999982118607
+          ],
+          "min": [
+            -0.639999985694885,
+            -0.360000014305115,
+            -0.0799999982118607
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 4,
+        "meshes": 4,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_PresentationMurale",
+          "Panneau",
+          "Contour",
+          "Support",
+          "EtatDisponible"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 48
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    },
+    {
+      "action": "ajouter",
+      "asset_type": "modele_3d",
+      "checks": {
+        "contract": {
+          "a_qualifier_di3": [
+            "axes et pivot à confirmer par montage isolé"
+          ],
+          "automatique_ok": true,
+          "issues": []
+        },
+        "dependances_externes": [],
+        "doublon_source": false,
+        "echelle_unitaire": true,
+        "format_lisible": true,
+        "hash_registre": true,
+        "licence_proprietaire": true,
+        "presence": true
+      },
+      "classification": "destination_inconnue",
+      "consumers": [],
+      "contracts": [
+        "DESIGN/arsenal_premiere_personne/contrat_integration_fps_phase5_v1.md",
+        "DESIGN/arsenal_premiere_personne/fiches_integration_phase5_v1.md"
+      ],
+      "design_id": "phase5:np-z05-silhouette-sol",
+      "destinations": [],
+      "license_status": "proprietaire",
+      "lot_id": "phase5",
+      "source_hash": "009855d8f5102bc1fcbc7a6ec0a017278296cc211031bc139db9dada49a2d02f",
+      "source_path": "DESIGN/arsenal_premiere_personne/exports/np_z05_silhouette_sol.glb",
+      "source_version": "1",
+      "technical": {
+        "animations": [],
+        "bounds_locales": {
+          "dimensions": [
+            1.1,
+            0.014,
+            0.44
+          ],
+          "max": [
+            0.550000011920929,
+            0.00700000021606684,
+            0.219999998807907
+          ],
+          "min": [
+            -0.550000011920929,
+            -0.00700000021606684,
+            -0.219999998807907
+          ]
+        },
+        "external_dependencies": [],
+        "format": "glb_v2",
+        "materials": 2,
+        "meshes": 3,
+        "non_unit_scale_nodes": [],
+        "root_nodes": [
+          "NP_Z05_SilhouetteSol",
+          "PlaqueSol",
+          "Silhouette",
+          "RepereTete"
+        ],
+        "skins": 0,
+        "textures": 0,
+        "triangles_indexed": 36
+      },
+      "validation_commands": [
+        "godot --headless --path DESIGN/arsenal_premiere_personne --script res://scripts/validate_phase5_glb.gd",
+        "godot --headless --path DESIGN/laboratoire --script res://scripts/validate_phase5_laboratoire.gd"
+      ]
+    }
+  ],
+  "registry_sha256": "8a7b90db1a8e49f27ba00f343fcf865e99376684acead878a5e8a100645f490e",
+  "run_id": "2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435",
+  "schema_version": 1
+}

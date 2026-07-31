@@ -238,17 +238,17 @@ restaurables, qualification technique et consolidation des tests manuels.
 
 **Commande opératoire :** [`.claude/commands/insertion_designs.md`](./.claude/commands/insertion_designs.md)
 
-### DI.0 — Isoler le chantier et établir la référence `[EN COURS]`
+### DI.0 — Isoler le chantier et établir la référence `[FAIT]`
 
-- [ ] Proposer la branche `feat/insertion-designs` et obtenir une confirmation explicite avant sa
+- [x] Proposer la branche `feat/insertion-designs` et obtenir une confirmation explicite avant sa
   création ou son activation.
-- [ ] Traiter explicitement l'état de travail déjà modifié ; aucun stash, nettoyage ou déplacement
+- [x] Traiter explicitement l'état de travail déjà modifié ; aucun stash, nettoyage ou déplacement
   implicite n'est autorisé.
-- [ ] Sélectionner un premier lot fermé à partir des bordereaux et inventaires de `DESIGN/`.
-- [ ] Exécuter le test d'import actuel du laboratoire et enregistrer commandes, versions, résultats,
+- [x] Sélectionner un premier lot fermé à partir des bordereaux et inventaires de `DESIGN/`.
+- [x] Exécuter le test d'import actuel du laboratoire et enregistrer commandes, versions, résultats,
   erreurs, avertissements et durée comme référence avant modification.
-- [ ] Créer un identifiant de run immuable et un dossier de suivi dédié.
-- [ ] Vérifier qu'aucun fichier du jeu ou de `DESIGN/` n'a été modifié par l'établissement de la
+- [x] Créer un identifiant de run immuable et un dossier de suivi dédié.
+- [x] Vérifier qu'aucun fichier du jeu ou de `DESIGN/` n'a été modifié par l'établissement de la
   référence, hors caches Godot identifiés.
 
 **Critère d'acceptation :** branche et lot confirmés, référence reproductible enregistrée, périmètre
@@ -256,49 +256,49 @@ du premier run figé sans perte des changements existants.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.1 — Registre des designs et scripts fondamentaux `[TODO]`
+### DI.1 — Registre des designs et scripts fondamentaux `[FAIT]`
 
-- [ ] Créer `_docs/design_imports/registry.json` avec schéma versionné, identifiants stables,
+- [x] Créer `_docs/design_imports/registry.json` avec schéma versionné, identifiants stables,
   empreintes SHA-256, versions, sources, destinations, consommateurs, contrats, licences, statuts,
   décisions et références d'archive.
-- [ ] Définir et tester les transitions de statut : détecté, précontrôlé, approuvé, à régénérer,
+- [x] Définir et tester les transitions de statut : détecté, précontrôlé, approuvé, à régénérer,
   à revoir, bloqué, archivé, importé, validé et retour arrière.
-- [ ] Créer `tools/design_imports/design_import.py` avec les commandes idempotentes `scan`,
+- [x] Créer `tools/design_imports/design_import.py` avec les commandes idempotentes `scan`,
   `preflight`, `plan`, `archive`, `apply`, `verify`, `rollback` et `report`.
-- [ ] Refuser les chemins hors dépôt, doublons, champs invalides, empreintes manquantes et dérives
+- [x] Refuser les chemins hors dépôt, doublons, champs invalides, empreintes manquantes et dérives
   entre approbation et application.
-- [ ] Garantir les écritures atomiques et la reprise après interruption.
-- [ ] Couvrir le registre et les scripts par des tests automatisés déterministes.
+- [x] Garantir les écritures atomiques et la reprise après interruption.
+- [x] Couvrir le registre et les scripts par des tests automatisés déterministes.
 
 **Critère d'acceptation :** un scan répété sans changement produit le même registre et le même plan,
 et les tests prouvent qu'aucune cible non approuvée ne peut être modifiée.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.2 — Inventaire, précontrôle et approbation du lot `[TODO]`
+### DI.2 — Inventaire, précontrôle et approbation du lot `[FAIT]`
 
-- [ ] Inventorier le lot source et les assets actuels du jeu sans lire ni copier les caches `.godot`
+- [x] Inventorier le lot source et les assets actuels du jeu sans lire ni copier les caches `.godot`
   ou fichiers `.import` du laboratoire.
-- [ ] Classer chaque design en ajout, remplacement, inchangé, conflit, orphelin ou destination inconnue.
-- [ ] Tester avant import la présence, le format, les doublons, les licences, dépendances, dimensions,
+- [x] Classer chaque design en ajout, remplacement, inchangé, conflit, orphelin ou destination inconnue.
+- [x] Tester avant import la présence, le format, les doublons, les licences, dépendances, dimensions,
   échelle, axes, pivots, matériaux, textures, animations, squelettes et ancrages applicables.
-- [ ] Générer un plan exhaustif listant chaque design, sa source, sa destination, l'action prévue,
+- [x] Générer un plan exhaustif listant chaque design, sa source, sa destination, l'action prévue,
   la version remplacée, ses consommateurs, ses contrôles et ses risques.
-- [ ] Présenter à l'utilisateur la liste complète des designs candidats et obtenir son approbation
+- [x] Présenter à l'utilisateur la liste complète des designs candidats et obtenir son approbation
   explicite liée à l'identifiant et à l'empreinte du run.
-- [ ] Invalider l'approbation et régénérer le plan dès qu'un fichier ou une décision change.
+- [x] Invalider l'approbation et régénérer le plan dès qu'un fichier ou une décision change.
 
 **Critère d'acceptation :** chaque design est traçable et aucun candidat ne peut atteindre la phase
 suivante sans approbation explicite.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.3 — Qualification isolée et traitement des frictions `[TODO]`
+### DI.3 — Qualification isolée et traitement des frictions `[EN COURS]`
 
-- [ ] Importer le lot approuvé dans un espace de test isolé, sans écraser les assets du jeu.
-- [ ] Exécuter les validateurs spécialisés du lot et contrôler les erreurs Godot, dépendances,
+- [x] Importer le lot approuvé dans un espace de test isolé, sans écraser les assets du jeu.
+- [x] Exécuter les validateurs spécialisés du lot et contrôler les erreurs Godot, dépendances,
   budgets, matériaux, animations, squelettes, ancrages et contrats des scènes consommatrices.
-- [ ] Enregistrer chaque friction avec preuve, cause probable, asset concerné et impact potentiel.
+- [x] Enregistrer chaque friction avec preuve, cause probable, asset concerné et impact potentiel.
 - [ ] Pour tout échec, demander à l'utilisateur de choisir entre régénérer/corriger le design ou le
   marquer `a_revoir` et l'exclure du run.
 - [ ] Refaire les tests et l'approbation du plan après toute régénération ou modification d'empreinte.

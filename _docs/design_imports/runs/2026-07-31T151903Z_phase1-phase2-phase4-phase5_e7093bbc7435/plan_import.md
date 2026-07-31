@@ -1,0 +1,521 @@
+# Plan d’import
+
+- Run : `2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435`
+- Empreinte du registre : `8a7b90db1a8e49f27ba00f343fcf865e99376684acead878a5e8a100645f490e`
+
+## Synthèse
+
+- ajout : 34
+- destination_inconnue : 17
+
+## Candidats
+
+### phase1:np-kms-01-sol-droit
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_01_sol_droit.glb` (`40a9615f8f19fb45f48c6f36fe203b23728b599f901728823e042110c2d30260`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_01_sol_droit.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-02-sol-angle
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_02_sol_angle.glb` (`052d6ed9abd98bff980e2abba41fbf6325a13e29a27dc2cfa8167855633a78e7`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_02_sol_angle.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-03-sol-bord
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_03_sol_bord.glb` (`fd173f9c5d73405f94e5f079605ed04bce11a658281727408ace787b76310229`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_03_sol_bord.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : écarts: dimensions exportées [2.0, 0.18, 2.0] != dimensions nominales [2.0, 0.12, 2.0]
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-04-sol-transition
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_04_sol_transition.glb` (`396756d7cf293b7310bab158dd6b6b33632429c42f094c1e3628f24a1119429c`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_04_sol_transition.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-05-mur-plein
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_05_mur_plein.glb` (`580a23b9ca2d8586fc0100054362f7dea6eaaea8425e4efc1d68e92a163b3d08`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_05_mur_plein.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-06-demi-mur
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_06_demi_mur.glb` (`d681e01ea596e27d7b5ae985a804d7aeef623e14ed9a2730e027f030a1c25d99`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_06_demi_mur.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-07-angle-interieur
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_07_angle_interieur.glb` (`d038029e65bfe4c50a948f779a71e1d534477a9902a4588de806ee81d8b56472`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_07_angle_interieur.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-08-angle-exterieur
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_08_angle_exterieur.glb` (`b03d0bf7de303c6baa1846dd9decea9d36f1bf1a6d74237e5afd9e01223c904a`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_08_angle_exterieur.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-09-terminaison-mur
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_09_terminaison_mur.glb` (`ff227d9ad63f4291c4b6ccd01cc4c32a88be1321ca9530ac116a8cef3a96ea24`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_09_terminaison_mur.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-10-plafond-plein
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_10_plafond_plein.glb` (`379c1a2bb0e224408737f9bac52517320caa47d2727e36c9d459072ddd09843a`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_10_plafond_plein.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-11-plafond-technique
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_11_plafond_technique.glb` (`9323dee2b29df3ad616988071a4f8f3c590086e806ec2dec7825b36f5faa597c`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_11_plafond_technique.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-12-plafond-transition
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_12_plafond_transition.glb` (`eee68c071d244f53ea28641cb0c96e062c9564eb7dfdaccf05945f14558edcc9`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_12_plafond_transition.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-13-encadrement-simple
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_13_encadrement_simple.glb` (`4668ccbd8ffa0a6dea1053715457fc1901db5aacb014a824bba7db55912f41c6`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_13_encadrement_simple.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : écarts: dimensions exportées [4.6, 3.5, 0.22] != dimensions nominales [4.0, 3.5, 0.22]
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-14-encadrement-double
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_14_encadrement_double.glb` (`db23dbed8dd70259d83fb52dffed3f11a0035201582945bdaef7c906f68693d6`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_14_encadrement_double.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : écarts: dimensions exportées [8.6, 3.5, 0.22] != dimensions nominales [8.0, 3.5, 0.22]
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-15-porte-accueil-couloirs
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_15_porte_accueil_couloirs.glb` (`d5b14c7ff6f7a2eb76ea6e6e2d24720e2c1be0f6e93bf2d802639ce5c1f31696`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_15_porte_accueil_couloirs.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-16-porte-couloirs-entrepot
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_16_porte_couloirs_entrepot.glb` (`cc2b62e81d4ab644669627c29e75e26d868234025ba809c8aa3879b302d2a66a`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_16_porte_couloirs_entrepot.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-17-porte-couloirs-laboratoire
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_17_porte_couloirs_laboratoire.glb` (`e37eee4125b8072170bc328d3cb2cfa713a7b1a79cc8a297cc5927fcac681f03`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_17_porte_couloirs_laboratoire.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-18-porte-entrepot-extraction
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_18_porte_entrepot_extraction.glb` (`a00fc4952e62d3c056a302320d15ff09564d91c948cda9253a26c57d4df467bf`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_18_porte_entrepot_extraction.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-19-porte-laboratoire-extraction
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_19_porte_laboratoire_extraction.glb` (`f0d4eca5a2879a86660a94a1fa8b276ed0bf194380ecd57b9d78168bab51a2d4`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_19_porte_laboratoire_extraction.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-20-pilier
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_20_pilier.glb` (`7da1fdd4929fb5a71faded132053bad2fd633a2e2bd64a5df8c502d88b291936`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_20_pilier.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : écarts: dimensions exportées [0.46, 3.5, 0.46] != dimensions nominales [0.3, 3.5, 0.3]
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-21-poutre
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_21_poutre.glb` (`f6b175e76e49e2ebb7d1355a996b3a8f5ff92de0355af4cff98a3107d1866acd`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_21_poutre.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-22-couvre-joint-vertical
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_22_couvre_joint_vertical.glb` (`d26b6a77c29a8ad4d9b69ab71105a8512f489a7b29924dced7ea86c043040c15`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_22_couvre_joint_vertical.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase1:np-kms-23-couvre-joint-horizontal
+
+- Source : `DESIGN/kit_modulaire/exports/np_kms_23_couvre_joint_horizontal.glb` (`71ac168ba5a8065368b53c8de80317213a1457cd8043bddf61219fec32c95d3b`)
+- Destination : `assets/environment/helix9/kit_structurel/np_kms_23_couvre_joint_horizontal.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-accent-amber
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_accent_amber.tres` (`52e9f629882c96e8367f05ac6e4def0ac18594f6d5b30ee504f02cc8f554a059`)
+- Destination : `assets/environment/helix9/materials/m_accent_amber.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-accent-cyan
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_accent_cyan.tres` (`9bfb1070d9c5abff68dbeb2ed4a109f9c113af2457d384e97e459df3052d09ed`)
+- Destination : `assets/environment/helix9/materials/m_accent_cyan.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-accent-danger
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_accent_danger.tres` (`6f3c18918a119d3aaa1a180b154dc8bd1ff0522865fd42e5a1bc5f78f7cebdaf`)
+- Destination : `assets/environment/helix9/materials/m_accent_danger.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-composite-medical
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_composite_medical.tres` (`065669071db745f17e06d9e753aba4753ac1f43fcea6865ec21ddc40ccb8cd68`)
+- Destination : `assets/environment/helix9/materials/m_composite_medical.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-concrete-sealed-dark
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_concrete_sealed_dark.tres` (`d114866af5727a744f703bf3ef9073ca5cfc9f7945d835c09b55a12959ce10cf`)
+- Destination : `assets/environment/helix9/materials/m_concrete_sealed_dark.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-concrete-sealed-light
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_concrete_sealed_light.tres` (`ef4a2067331d8d4233bcb6e457c094d34a78417bf97011b087492ea46e7e5266`)
+- Destination : `assets/environment/helix9/materials/m_concrete_sealed_light.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-glass-reinforced
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_glass_reinforced.tres` (`cb4d7d9ad81c8bce5722423c932a3bfea2eef0449a0d383212e1055b92a4da90`)
+- Destination : `assets/environment/helix9/materials/m_glass_reinforced.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-steel-painted
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_steel_painted.tres` (`27ffafc756e222ddd05a68be43c8b0b0a6cbfe07b857ab015a08609d3f68bced`)
+- Destination : `assets/environment/helix9/materials/m_steel_painted.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-materiaux:m-steel-raw
+
+- Source : `DESIGN/materiaux_signaletique/materiaux/m_steel_raw.tres` (`df5bbd0aaf59a080e12e4bd143aa92c7f2273c483df6cbef8aeaf0e38502c2c9`)
+- Destination : `assets/environment/helix9/materials/m_steel_raw.tres`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase2-signaletique:planche-signalisation-v1
+
+- Source : `DESIGN/materiaux_signaletique/signaletique/planche_signalisation_v1.svg` (`11b5945d60952688aa6f5096e890238b3f563af9cb573f07eb41534ffd24aa62`)
+- Destination : `assets/ui/signaletique/planche_signalisation_v1.svg`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : qualification contractuelle DI.3 requise
+
+### phase4:np-z04-zombie-standard
+
+- Source : `DESIGN/zombie_standard/exports/np_z04_zombie_standard.glb` (`b42beab3ae485ef2993964565dc8548391babf9d01ac36149e8778ab106ef8b4`)
+- Destination : `assets/characters/enemies/np_z04_zombie_standard.glb`
+- Classement : ajout
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : écarts: 6 matériaux > budget 4
+- Risques : qualification contractuelle DI.3 requise
+
+### phase5:np-z05-assaut
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_assaut.glb` (`dfbb0888ea64bbc5c4a08f78a652114656aaaa7bf23492c2262a406d9aea0293`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-assaut-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_assaut_ameliore.glb` (`0ce904e7fa2267edf6f027ec3b4e3c6709dd400211abdadfd7dbccd0a7484e5d`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-bras-scientifique
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_bras_scientifique.glb` (`3fa4aa93d70f5347e538eb411d671a31491bf5e6ce581b900c80a4e28c3e99bf`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-couteau
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_couteau.glb` (`7771041982e2238c96f5b1b41b685b438bae6df845fa58c27edb4960088a3a6b`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-couteau-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_couteau_ameliore.glb` (`6741718501fe129a1b98fc1b992ece2519cd5bdd35f4305580ab9065c0086957`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-lourde
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_lourde.glb` (`3b756b0a0c73e8951668f9e87cd2d47485f2c98e3c483d3f83bdacf6ba3159f4`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-lourde-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_lourde_ameliore.glb` (`fd2008c539287b0f9099918e753a4fa1daa13c6e3c6e4f0932dfecbdf7ed9057`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-mitraillette
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_mitraillette.glb` (`362467f8ae602377cdfccd899f2552552af6b4722b160e48b2dea650b6465958`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-mitraillette-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_mitraillette_ameliore.glb` (`6ea1b6490da2e4f5c687caa38c695b3d9219ceeb1f8ff14b05e95cb326ba158c`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-pistolet
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_pistolet.glb` (`b58baed912c96031c589ce5178560701557511b3c1dfa92cdb5359e8c9fc1606`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-pistolet-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_pistolet_ameliore.glb` (`e41f11237ad8f05a9216f9ea7985043d9e1c341fc7c7c66f7920f0ccd9dbc723`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-pompe
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_pompe.glb` (`4ded57f47093c275815cb50837f51ec5667b2c765ee7bf516694b3a01dcba796`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-pompe-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_pompe_ameliore.glb` (`d3b98a5fae1e56ad515f4cd7a85ab8eafe5b0db7d578f167b63fe3b74d6d7b5c`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-precision
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_precision.glb` (`2ebc6e8de5ac86a5a0bee324b81ffc4fde9086d75834199f76ac97c7df09fb9e`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-precision-ameliore
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_precision_ameliore.glb` (`5becd3d97614b9decbeb30fc4193399ededfccb1979a0a6669dcddfb7d449f0b`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-presentation-murale
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_presentation_murale.glb` (`2267e31d22f1f4fae2ce21850c73cb4386c222ccae271a0f681338017b2de86e`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise
+
+### phase5:np-z05-silhouette-sol
+
+- Source : `DESIGN/arsenal_premiere_personne/exports/np_z05_silhouette_sol.glb` (`009855d8f5102bc1fcbc7a6ec0a017278296cc211031bc139db9dada49a2d02f`)
+- Destination : `destination inconnue`
+- Classement : destination_inconnue
+- Action : ajouter
+- Consommateurs : aucun détecté
+- Contrôles automatiques : OK
+- Risques : destination à définir, qualification contractuelle DI.3 requise

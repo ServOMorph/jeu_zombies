@@ -1,0 +1,319 @@
+{
+	"failed": 1,
+	"findings": [
+		{
+			"asset": "np_kms_01_sol_droit.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_02_sol_angle.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_03_sol_bord.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_04_sol_transition.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_05_mur_plein.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_06_demi_mur.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_07_angle_interieur.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_08_angle_exterieur.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_09_terminaison_mur.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_10_plafond_plein.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_11_plafond_technique.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_12_plafond_transition.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_13_encadrement_simple.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_14_encadrement_double.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_15_porte_accueil_couloirs.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_16_porte_couloirs_entrepot.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_17_porte_couloirs_laboratoire.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_18_porte_entrepot_extraction.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_19_porte_laboratoire_extraction.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_20_pilier.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_21_poutre.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_22_couvre_joint_vertical.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "np_kms_23_couvre_joint_horizontal.glb",
+			"detail": "GLB lisible, mesh et racine neutre",
+			"lot": "phase1",
+			"status": "passed"
+		},
+		{
+			"asset": "m_concrete_sealed_light.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_concrete_sealed_dark.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_steel_painted.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_steel_raw.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_composite_medical.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_glass_reinforced.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_accent_cyan.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_accent_amber.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "m_accent_danger.tres",
+			"detail": "Matériau conforme",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "planche_signalisation_v1.svg",
+			"detail": "Signalétique complète",
+			"lot": "phase2",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z04_zombie_standard.glb",
+			"detail": "GLB, meshes, animations et skin conformes",
+			"lot": "phase4",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z04_zombie_standard.glb",
+			"detail": "Budget matériaux dépassé: 6/4",
+			"lot": "phase4",
+			"status": "failed"
+		},
+		{
+			"asset": "np_z05_assaut.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_assaut_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_bras_scientifique.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_couteau.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_couteau_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_lourde.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_lourde_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_mitraillette.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_mitraillette_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_pistolet.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_pistolet_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_pompe.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_pompe_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_precision.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_precision_ameliore.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_presentation_murale.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		},
+		{
+			"asset": "np_z05_silhouette_sol.glb",
+			"detail": "GLB et contrat technique isolé conformes",
+			"lot": "phase5",
+			"status": "passed"
+		}
+	],
+	"passed": 51,
+	"schema_version": 1
+}

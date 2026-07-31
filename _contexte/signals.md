@@ -2,7 +2,7 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Le chantier urgent DI (workflow d'insertion des designs) est planifié et sa commande est créée, mais DI.0 attend une confirmation utilisateur avant de créer ou basculer sur la branche proposée `feat/insertion-designs`. Aucun import DESIGN n'a encore été lancé. fait quand: la branche et le premier lot DESIGN sont confirmés, puis la référence d'import du laboratoire est enregistrée dans un run traçable. réf: `.claude/commands/insertion_designs.md`, `roadmap_v1.md` section DI
+- [P1|bloqué] DI.3 attend les décisions utilisateur sur F-001 à F-005 : documentation de provenance phase 1 et 4, destinations des 17 exports FPS, quatre dimensions de modules et budget de matériaux du zombie. fait quand: chaque friction est corrigée ou marquée `a_revoir`, puis le plan applicable est régénéré et approuvé. réf: `_docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/friction_log.md`, `roadmap_v1.md` section DI.3
 - [P2|ouvert] M5.1 (machine d'état de quête) est implémentée et couverte par 23 suites headless (`python check.py` réussi), mais la validation manuelle utilisateur reste à faire : afficher l'objectif « Survivre aux vagues et gagner des crédits. » dans le HUD en jeu, sans troncature ni superposition avec la vague. Seul l'état SURVIVRE est atteignable pour l'instant (les déclencheurs des étapes suivantes sont prévus par M5.2 à M5.4). Cette campagne sera regroupée avec les contrôles du premier import DESIGN dans DI.7. fait quand: la section M5.1 de `tests_manuels.md` est validée et supprimée, permettant de cocher les tâches M5.1 dans `roadmap_v1.md` et de finaliser l'entrée correspondante dans `_docs/validation_v1.md`. réf: `tests_manuels.md`, `roadmap_v1.md` sections M5.1 et DI.7, `_docs/validation_v1.md`
 
 ## Contexte chaud
@@ -12,7 +12,8 @@
 - Le test de navigation des portes injecte désormais les définitions de caisse, station et avantages comme la scène réelle, ce qui supprime les erreurs Godot auparavant masquées par son code de sortie nul.
 - M4.1 à M4.5 sont validés (arsenal, achats muraux, caisse aléatoire, station d'amélioration, quatre avantages) ; la porte de sortie M4 est franchie.
 - M5.1 introduit l'autoload `QuestController` (`core/quest_controller.gd`) : neuf états de quête (`SURVIVRE` à `VICTOIRE`), transitions strictement séquentielles refusées sans effet de bord hors ordre, log dev `NOX_PROTOCOL_QUEST_TRANSITION`, objectif français affiché dans le HUD (`ObjectiveLabel`) et mis à jour par signal `state_changed`. Aucune étape suivant `SURVIVRE` n'est encore câblée à une action de jeu (prévu M5.2 à M5.4).
-- Le workflow urgent DI impose registre JSON, approbation exhaustive, qualification isolée, archivage restaurable, import contrôlé et regroupement des tests manuels ; il reste bloqué sur le choix de branche.
+- Le workflow urgent DI impose registre JSON, approbation exhaustive, qualification isolée, archivage restaurable, import contrôlé et regroupement des tests manuels.
+- DI.0 à DI.2 sont terminées sur `feat/insertion-designs` : 51 designs approuvés, plan hashé et qualification isolée produite sans modification d'assets du jeu. DI.3 relève 51 contrôles réussis et un dépassement de budget du zombie (`6/4` matériaux).
 - Raccourcis de développement disponibles dans `dev_player_test.gd` (build debug uniquement) : `F1` cycle l'arsenal sur l'emplacement actif, `F2` crédite 5 000 crédits de test.
 - Le pool de zombies (`prewarm_pool_size = 8`) est inférieur à `wave_05.zombie_count` (12) et n'est jamais agrandi à la volée : cause possible de blocage à surveiller si le motif `POOL_EXHAUSTED` réapparaît.
 
@@ -21,22 +22,21 @@
 # Session du 2026-07-31
 
 ## Décisions prises
-- La chute FPS initiale de M3 est attribuée par l'utilisateur à une surcharge temporaire du PC ; après redémarrage, plusieurs essais sont conformes. L'action P3 est clôturée.
-- Le chantier urgent DI est inséré avant la reprise de M5.1/M5.2 ; aucun import ne démarre avant confirmation de la branche dédiée.
+- La branche `feat/insertion-designs` porte le run DI approuvé de 51 designs.
+- Aucun asset du jeu n'est importé tant que les frictions DI.3 ne sont pas résolues.
 
 ## Livrables produits ou modifiés
-- `.claude/commands/insertion_designs.md` : workflow complet d'insertion DESIGN, décisions utilisateur et automatisation progressive des contrôles visuels.
-- `roadmap_v1.md` : chantier urgent DI en neuf phases, DI.0 actif et checkpoints `/compact`.
-- `tests/door_navigation_integration.gd` : montage du blockout aligné sur la scène réelle pour supprimer six erreurs de ressources manquantes.
-- `_docs/validation_v1.md` : validation M3 complétée avec le retest utilisateur.
+- `_docs/design_imports/` : registre, plan approuvé, inventaire, preuves et qualification isolée du run.
+- `tools/design_imports/` : workflow d'import contrôlé et tests déterministes.
+- `tests_manuels.md` : contrôle d'assemblage isolé du kit ajouté.
 
 ## Hypothèses validées / invalidées
-- VALIDE : après redémarrage du PC, plusieurs essais confirment des FPS conformes et l'absence de compteur bloqué ; l'incident M3 était une surcharge temporaire.
-- VALIDE : `python check.py` réussit avec 23 suites et le test de navigation sans erreur de ressources manquantes.
-- EN ATTENTE : confirmation de branche pour DI.0, puis validation manuelle de l'objectif HUD M5.1 dans la campagne consolidée.
+- VALIDE : les 51 sources approuvées se chargent dans l'espace isolé ; les matériaux phase 2 et les exports FPS passent leurs contrôles techniques.
+- INVALIDE : le zombie satisfait le budget de matériaux -> 6 matériaux pour un maximum de 4.
+- EN ATTENTE : décisions F-001 à F-005 et contrôle manuel des axes/pivots du kit.
 
 ## Prochaine étape exacte
-Confirmer la création ou la bascule vers `feat/insertion-designs`, sélectionner le premier lot DESIGN et exécuter sa référence d'import. Conserver M5.1 en attente jusqu'à DI.7.
+Décider pour F-001 à F-005, appliquer les exclusions ou corrections, puis régénérer et faire approuver le plan applicable.
 
 ## Question bloquante pour la session suivante
-Créer et basculer vers `feat/insertion-designs` ou utiliser une autre branche ?
+Quelles frictions doivent être corrigées et lesquelles doivent être marquées `a_revoir` ?

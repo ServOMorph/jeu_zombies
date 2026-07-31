@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.36 — 2026-07-31
+
+### Ajouté
+
+- Run DI traçable : registre de 51 designs, inventaire, plan approuvé, preuves de qualification isolée et test manuel d'assemblage du kit.
+
+### Modifié
+
+- DI.0 à DI.2 sont terminées ; DI.3 est en cours et bloque tout import dans les assets du jeu jusqu'à résolution explicite des frictions.
+
 ## v0.35 — 2026-07-31
 
 ### Ajouté

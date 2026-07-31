@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435",
+  "results": [
+    {
+      "command": "python -m unittest tools.design_imports.tests.test_design_import tests.test_check tests.test_run -v",
+      "result": "ok",
+      "tests": 12
+    },
+    {
+      "command": "python tools/design_imports/design_import.py preflight",
+      "result": "ok",
+      "precontrolled": 51
+    },
+    {
+      "command": "python tools/design_imports/design_import.py inventory --run-id 2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435 --output _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/inventory.json --plan-output _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/plan_import.md",
+      "result": "ok",
+      "designs": 51
+    },
+    {
+      "command": "python tools/design_imports/design_import.py approve --plan _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/plan.json --plan-sha256 bbec7a5f6d0f3644831b1843134021f7ec88568a44237ca73e456b5a7fb69212",
+      "result": "ok",
+      "approved": 51
+    },
+    {
+      "command": "godot --headless --path _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/isolated_project --script qualification.gd",
+      "result": "completed_with_findings",
+      "passed": 51,
+      "failed": 1
+    }
+  ]
+}

@@ -50,4 +50,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0 à M4.5 sont validés (porte de sortie M4 franchie). M3 est aussi validé : l'incident initial était une surcharge temporaire du PC, non reproduite après redémarrage. `python check.py` contrôle l'import, 23 suites headless, le franchissement réel d'une porte par un zombie et l'export `.pck`. M5.1 reste en attente de validation HUD. Le chantier urgent DI prépare l'insertion contrôlée des lots DESIGN (registre, approbation, archives, tests et campagne manuelle consolidée) et attend la confirmation d'une branche dédiée ; aucun asset DESIGN final n'est encore intégré au jeu.
+M0 à M4.5 sont validés (porte de sortie M4 franchie). M5.1 reste en attente de validation HUD. Le chantier urgent DI est actif sur `feat/insertion-designs` : 51 sources sont inventoriées, précontrôlées et approuvées, sans import dans les assets du jeu. DI.3 est bloquée par cinq frictions documentées, dont le budget du zombie (6 matériaux pour un maximum de 4) et l'absence de destinations pour les 17 exports FPS.
