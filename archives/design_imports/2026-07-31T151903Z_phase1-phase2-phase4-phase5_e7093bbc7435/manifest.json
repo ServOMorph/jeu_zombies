@@ -1,0 +1,244 @@
+{
+  "files": [
+    {
+      "design_id": "phase1:np-kms-01-sol-droit",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_01_sol_droit.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-02-sol-angle",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_02_sol_angle.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-03-sol-bord",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_03_sol_bord.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-04-sol-transition",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_04_sol_transition.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-05-mur-plein",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_05_mur_plein.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-06-demi-mur",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_06_demi_mur.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-07-angle-interieur",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_07_angle_interieur.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-08-angle-exterieur",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_08_angle_exterieur.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-09-terminaison-mur",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_09_terminaison_mur.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-10-plafond-plein",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_10_plafond_plein.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-11-plafond-technique",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_11_plafond_technique.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-12-plafond-transition",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_12_plafond_transition.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-13-encadrement-simple",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_13_encadrement_simple.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-14-encadrement-double",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_14_encadrement_double.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-15-porte-accueil-couloirs",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_15_porte_accueil_couloirs.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-16-porte-couloirs-entrepot",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_16_porte_couloirs_entrepot.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-17-porte-couloirs-laboratoire",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_17_porte_couloirs_laboratoire.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-18-porte-entrepot-extraction",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_18_porte_entrepot_extraction.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-19-porte-laboratoire-extraction",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_19_porte_laboratoire_extraction.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-20-pilier",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_20_pilier.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-21-poutre",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_21_poutre.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-22-couvre-joint-vertical",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_22_couvre_joint_vertical.glb"
+    },
+    {
+      "design_id": "phase1:np-kms-23-couvre-joint-horizontal",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/kit_structurel/np_kms_23_couvre_joint_horizontal.glb"
+    },
+    {
+      "design_id": "phase2-materiaux:m-accent-amber",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_accent_amber.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-accent-cyan",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_accent_cyan.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-accent-danger",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_accent_danger.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-composite-medical",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_composite_medical.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-concrete-sealed-dark",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_concrete_sealed_dark.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-concrete-sealed-light",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_concrete_sealed_light.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-glass-reinforced",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_glass_reinforced.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-steel-painted",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_steel_painted.tres"
+    },
+    {
+      "design_id": "phase2-materiaux:m-steel-raw",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/environment/helix9/materials/m_steel_raw.tres"
+    },
+    {
+      "design_id": "phase2-signaletique:planche-signalisation-v1",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/ui/signaletique/planche_signalisation_v1.svg"
+    },
+    {
+      "design_id": "phase4:np-z04-zombie-standard",
+      "original_exists": false,
+      "sha256": null,
+      "size": 0,
+      "target_path": "assets/characters/enemies/np_z04_zombie_standard.glb"
+    }
+  ],
+  "run_id": "2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435",
+  "schema_version": 1
+}

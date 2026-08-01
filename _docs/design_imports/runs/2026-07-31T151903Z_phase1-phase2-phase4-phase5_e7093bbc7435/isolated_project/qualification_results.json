@@ -1,5 +1,5 @@
 {
-	"failed": 1,
+	"failed": 0,
 	"findings": [
 		{
 			"asset": "np_kms_01_sol_droit.glb",
@@ -204,12 +204,6 @@
 			"detail": "GLB, meshes, animations et skin conformes",
 			"lot": "phase4",
 			"status": "passed"
-		},
-		{
-			"asset": "np_z04_zombie_standard.glb",
-			"detail": "Budget matériaux dépassé: 6/4",
-			"lot": "phase4",
-			"status": "failed"
 		},
 		{
 			"asset": "np_z05_assaut.glb",

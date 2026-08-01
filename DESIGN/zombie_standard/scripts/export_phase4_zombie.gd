@@ -28,8 +28,6 @@ func _create_materials() -> void:
 	materials["skin"] = _material(Color("#9da79a"), 0.84)
 	materials["jacket"] = _material(Color("#242b31"), 0.78)
 	materials["undershirt"] = _material(Color("#485866"), 0.82)
-	materials["trousers"] = _material(Color("#1b232b"), 0.80)
-	materials["boots"] = _material(Color("#11161b"), 0.70, 0.16)
 	materials["amber"] = _material(Color("#e6a33b"), 0.52, 0.04)
 
 
@@ -52,7 +50,7 @@ func _build_zombie() -> Node3D:
 	root.add_child(rig)
 
 	var hips := _joint(rig, "Hips", Vector3(0.0, 1.02, 0.0), Vector3(0.0, deg_to_rad(-7.0), 0.0))
-	_add_box(hips, "Bassin", Vector3(0.44, 0.23, 0.29), Vector3(0.0, 0.0, 0.0), materials["trousers"])
+	_add_box(hips, "Bassin", Vector3(0.44, 0.23, 0.29), Vector3(0.0, 0.0, 0.0), materials["jacket"])
 	var spine := _joint(hips, "Spine", Vector3(0.0, 0.20, 0.01))
 	_add_box(spine, "VesteBas", Vector3(0.52, 0.37, 0.31), Vector3(0.0, 0.15, 0.0), materials["jacket"])
 	var chest := _joint(spine, "Chest", Vector3(0.0, 0.31, -0.03), Vector3(deg_to_rad(8.0), 0.0, 0.0))
@@ -155,13 +153,13 @@ func _build_arm(chest: Node3D, side: String, direction: float, torn: bool) -> vo
 
 func _build_leg(hips: Node3D, side: String, direction: float) -> void:
 	var upper := _joint(hips, "UpperLeg_%s" % side, Vector3(0.19 * direction, -0.10, 0.0), Vector3(deg_to_rad(4.0), 0.0, deg_to_rad(2.0 * direction)))
-	_add_box(upper, "Cuisse_%s" % side, Vector3(0.25, 0.53, 0.26), Vector3(0.0, -0.26, 0.0), materials["trousers"])
+	_add_box(upper, "Cuisse_%s" % side, Vector3(0.25, 0.53, 0.26), Vector3(0.0, -0.26, 0.0), materials["jacket"])
 	var lower := _joint(upper, "LowerLeg_%s" % side, Vector3(0.0, -0.52, 0.0), Vector3(deg_to_rad(-4.0), 0.0, 0.0))
-	_add_box(lower, "Jambe_%s" % side, Vector3(0.20, 0.47, 0.22), Vector3(0.0, -0.23, 0.0), materials["trousers"])
+	_add_box(lower, "Jambe_%s" % side, Vector3(0.20, 0.47, 0.22), Vector3(0.0, -0.23, 0.0), materials["jacket"])
 	var foot := _joint(lower, "Foot_%s" % side, Vector3(0.0, -0.47, -0.03), Vector3(deg_to_rad(5.0), 0.0, 0.0))
-	_add_box(foot, "Botte_%s" % side, Vector3(0.23, 0.16, 0.37), Vector3(0.0, -0.06, -0.10), materials["boots"])
+	_add_box(foot, "Botte_%s" % side, Vector3(0.23, 0.16, 0.37), Vector3(0.0, -0.06, -0.10), materials["jacket"])
 	var toe := _joint(foot, "Toe_%s" % side, Vector3(0.0, -0.03, -0.24))
-	_add_box(toe, "Pointe_%s" % side, Vector3(0.22, 0.11, 0.14), Vector3(0.0, -0.01, -0.04), materials["boots"])
+	_add_box(toe, "Pointe_%s" % side, Vector3(0.22, 0.11, 0.14), Vector3(0.0, -0.01, -0.04), materials["jacket"])
 
 
 func _add_head(parent: Node3D) -> void:

@@ -19,4 +19,11 @@ Lancer `python run_labo.py`, ouvrir `F4`, puis sélectionner les trois entrées 
 
 Ouvrir `_docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/isolated_project` dans Godot et prévisualiser les exports de `assets/phase1`.
 
-- [ ] Les axes et pivots permettent l'alignement sans rotation ni décalage parasite des sols, murs, plafonds, cadres, portes, pilier et poutre ; consigner séparément les quatre écarts dimensionnels F-004.
+- [ ] Les axes et pivots permettent l'alignement sans rotation ni décalage parasite des sols, murs, plafonds, cadres, portes, pilier et poutre.
+- [ ] Les modules `03`, `13`, `14` et `20` s’alignent avec leurs dimensions corrigées : `2,00 × 0,12 × 2,00`, `4,00 × 3,50 × 0,22`, `8,00 × 3,50 × 0,22` et `0,30 × 3,50 × 0,30`.
+
+## DESIGN DI.3 — Zombie standard
+
+Lancer `python run_labo.py`, ouvrir `F4`, puis sélectionner le zombie dans « Assets phase 4 ». Utiliser `F2` pour les ambiances.
+
+- [ ] La silhouette reste lisible sous les ambiances froide, neutre et alerte ; les quatre familles de matériau (peau, tenue sombre, sous-couche bleu-gris, accent ambre) restent distinctes.

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "M_Concrete_Sealed_Dark"
+albedo_color = Color(0.105882, 0.137255, 0.172549, 1)
+metallic = 0.0
+roughness = 0.92

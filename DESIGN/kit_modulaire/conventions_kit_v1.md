@@ -2,7 +2,7 @@
 
 ## Statut
 
-Spécification approuvée par l'utilisateur le 2026-07-26. Aucun module final n'est encore produit ni intégré.
+Spécification approuvée par l'utilisateur le 2026-07-26. Les 23 modules finaux ont été produits et exportés au format `.glb` ; aucun n'est encore intégré dans le jeu.
 
 ## Référence de compatibilité
 

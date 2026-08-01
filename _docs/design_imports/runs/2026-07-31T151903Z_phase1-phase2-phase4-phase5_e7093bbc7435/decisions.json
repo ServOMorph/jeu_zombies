@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "run_id": "2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435",
-  "registry_sha256": "8a7b90db1a8e49f27ba00f343fcf865e99376684acead878a5e8a100645f490e",
-  "plan_sha256": "bbec7a5f6d0f3644831b1843134021f7ec88568a44237ca73e456b5a7fb69212",
+  "registry_sha256": "498d6247ff73fc103548694bd200acbacaa3a5be0e2ddeeffd3847fd5e6ba8de",
+  "plan_sha256": "b6b66273e666fa1f493f807783351a918161f00abb0a01bfede54e889137e193",
   "scope_selection": {
     "phase1": "sélectionné",
     "phase2": "sélectionné",
     "phase4": "sélectionné",
-    "phase5": "sélectionné"
+    "phase5": "exclu"
   },
   "plan_approval": {
     "decision": "approuve",
-    "approved_at": "2026-07-31T17:11:00Z",
-    "approved_designs": 51
+    "approved_at": "2026-08-01T10:25:57Z",
+    "approved_designs": 34
   },
-  "notes": "L’approbation porte sur la qualification isolée ; elle ne lève pas les blocages documentés."
+  "notes": "Le plan approuvé inclut 34 designs ; les 17 exports FPS de phase 5 sont exclus et marqués a_revoir."
 }

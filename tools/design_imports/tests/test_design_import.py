@@ -120,6 +120,31 @@ class DesignImportTests(unittest.TestCase):
         self.assertEqual(registry["designs"][0]["design_status"], "approuve")
         self.assertEqual(len(list(tool.plan_entries(registry, tool.load_plan(self.root / "run/plan.json", self.root)))), 1)
 
+    def test_approval_retains_already_approved_and_reviewed_designs(self) -> None:
+        for name in ("approved.glb", "review.glb", "pending.glb"):
+            (self.source.parent / name).write_bytes(b"source-" + name.encode("utf-8"))
+        self.command("scan", "--lot", "lot", "--source", "DESIGN/lot/exports", "--target", "assets/models")
+        self.command("preflight")
+        registry = tool.load_registry(self.registry_path, self.root)
+        entries = {entry["design_id"]: entry for entry in registry["designs"]}
+        tool.transition(entries["lot:approved"], "approuve")
+        entries["lot:approved"]["decision"] = "approuve"
+        entries["lot:approved"]["decision_at"] = "2026-07-31T15:19:03Z"
+        tool.transition(entries["lot:review"], "a_revoir")
+        tool.save_registry(self.registry_path, registry, self.root)
+        run_id = "2026-07-31T151903Z_lot_12345678"
+        self.command("plan", "--run-id", run_id, "--output", "run/plan.json")
+        plan_hash = tool.sha256_file(self.root / "run/plan.json")
+        self.assertEqual(self.command("approve", "--plan", "run/plan.json", "--plan-sha256", plan_hash), 0)
+        registry = tool.load_registry(self.registry_path, self.root)
+        statuses = {entry["design_id"]: entry["design_status"] for entry in registry["designs"]}
+        self.assertEqual(statuses["lot:approved"], "approuve")
+        self.assertEqual(statuses["lot:pending"], "approuve")
+        self.assertEqual(statuses["lot:review"], "a_revoir")
+        self.assertEqual(self.command("archive", "--plan", "run/plan.json"), 0)
+        self.assertEqual(self.command("apply", "--plan", "run/plan.json"), 0)
+        self.assertFalse((self.root / "assets/models/review.glb").exists())
+
     def test_registry_digest_is_unchanged_by_approval_state(self) -> None:
         self.command("scan", "--lot", "lot", "--source", "DESIGN/lot/exports", "--target", "assets/models")
         registry = tool.load_registry(self.registry_path, self.root)

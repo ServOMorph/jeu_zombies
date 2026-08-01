@@ -27,6 +27,37 @@
       "result": "completed_with_findings",
       "passed": 51,
       "failed": 1
+    },
+    {
+      "command": "python -m unittest tools.design_imports.tests.test_design_import -v",
+      "result": "ok",
+      "tests": 10
+    },
+    {
+      "command": "godot --headless --path DESIGN/zombie_standard --script res://scripts/validate_phase4_glb.gd",
+      "result": "ok",
+      "meshes": 24,
+      "animations": 8,
+      "skins": 1,
+      "materials": 4
+    },
+    {
+      "command": "godot --headless --path _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/isolated_project --script qualification.gd",
+      "result": "ok",
+      "passed": 51,
+      "failed": 0
+    },
+    {
+      "command": "python tools/design_imports/design_import.py archive/apply/verify --plan _docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/plan.json",
+      "result": "ok",
+      "archived": 34,
+      "applied": 34,
+      "verified": 34
+    },
+    {
+      "command": "python check.py",
+      "result": "ok",
+      "headless_suites": 23
     }
   ]
 }

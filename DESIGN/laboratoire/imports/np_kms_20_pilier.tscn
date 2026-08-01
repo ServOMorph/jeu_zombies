@@ -11,7 +11,7 @@ size = Vector3(0.3, 3.5, 0.3)
 
 [sub_resource type="BoxMesh" id="Cap"]
 material = SubResource("Steel")
-size = Vector3(0.46, 0.16, 0.46)
+size = Vector3(0.3, 0.16, 0.3)
 
 [node name="NP_KMS_20_Pilier" type="Node3D"]
 

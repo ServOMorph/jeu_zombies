@@ -2,7 +2,7 @@
 
 ## Statut
 
-À approuver avant production finale. La référence proposée est [np_z04_zombie_standard_concept_v1.png](references/np_z04_zombie_standard_concept_v1.png). Il s’agit d’une image de conception, non d’un asset de jeu.
+Approuvé par l’utilisateur le 2026-07-26. Le zombie final a été produit et exporté dans `exports/np_z04_zombie_standard.glb` ; il n’est pas encore intégré dans le jeu. La référence [np_z04_zombie_standard_concept_v1.png](references/np_z04_zombie_standard_concept_v1.png) est une image de conception, non un asset de jeu.
 
 ## Intention visuelle
 
@@ -30,7 +30,7 @@ Humanoïde adulte anonyme, légèrement voûté, immédiatement identifiable com
 
 ## Validation laboratoire
 
-À exécuter après production :
+Réalisée après production, avec validation visuelle approuvée par l’utilisateur le 2026-07-26 :
 
 1. Charger l’export à l’échelle `1,00` dans le laboratoire.
 2. Contrôler silhouette et pivot sous les ambiances froide, neutre et alerte.

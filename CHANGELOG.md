@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.37 — 2026-08-01
+
+### Ajouté
+
+- 34 designs de phases 1, 2 et 4 importés dans `assets/`, archivés et validés par empreinte.
+- Campagne manuelle consolidée pour le HUD M5.1, les effets, le kit modulaire et le zombie.
+
+### Corrigé
+
+- Frictions de provenance, dimensions du kit et budget de matériaux du zombie ; qualification isolée finale à zéro échec.
+
+### Modifié
+
+- Les 17 exports FPS de phase 5 sont exclus et marqués `a_revoir`.
+
 ## v0.36 — 2026-07-31
 
 ### Ajouté

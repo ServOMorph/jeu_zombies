@@ -546,6 +546,8 @@ def archive(registry: dict[str, Any], root: Path, plan: dict[str, Any], registry
     manifest: list[dict[str, Any]] = []
     already_archived = 0
     for entry, planned in plan_entries(registry, plan):
+        if entry["design_status"] == "a_revoir":
+            continue
         if entry["design_status"] == "archive" and entry["archive_run_id"] == plan["run_id"]:
             already_archived += 1
             continue
@@ -577,6 +579,8 @@ def apply(registry: dict[str, Any], root: Path, plan: dict[str, Any], registry_p
     completed: list[str] = []
     write_recovery(root, "apply", plan["run_id"], completed)
     for entry, planned in plan_entries(registry, plan):
+        if entry["design_status"] == "a_revoir":
+            continue
         source = repo_path(root, entry["source_path"], field="source_path")
         if not source.exists() or sha256_file(source) != entry["source_hash"]:
             raise DesignImportError(f"Dérive source détectée: {entry['design_id']}")
@@ -638,16 +642,20 @@ def approve(registry: dict[str, Any], root: Path, plan_path: Path, expected_plan
         raise DesignImportError("Empreinte de plan différente de l'approbation utilisateur")
     plan = load_plan(plan_path, root)
     approved = 0
+    retained = 0
     for entry, _ in plan_entries(registry, plan):
-        if entry["design_status"] != "precontrole_ok":
+        if entry["design_status"] == "precontrole_ok":
+            transition(entry, "approuve")
+            entry["decision"] = "approuve"
+            entry["decision_at"] = now_utc()
+            approved += 1
+        elif entry["design_status"] in {"approuve", "a_revoir"}:
+            retained += 1
+        else:
             raise DesignImportError(f"Approbation interdite depuis {entry['design_status']}: {entry['design_id']}")
-        transition(entry, "approuve")
-        entry["decision"] = "approuve"
-        entry["decision_at"] = now_utc()
-        approved += 1
     registry["updated_at"] = now_utc()
     save_registry(registry_path, registry, root)
-    return {"approved": approved, "run_id": plan["run_id"], "plan_sha256": expected_plan_hash}
+    return {"approved": approved, "retained": retained, "run_id": plan["run_id"], "plan_sha256": expected_plan_hash}
 
 
 def rollback(registry: dict[str, Any], root: Path, run_id: str, registry_path: Path) -> dict[str, Any]:

@@ -1,7 +1,7 @@
 # Plan d’import
 
 - Run : `2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435`
-- Empreinte du registre : `8a7b90db1a8e49f27ba00f343fcf865e99376684acead878a5e8a100645f490e`
+- Empreinte du registre : `498d6247ff73fc103548694bd200acbacaa3a5be0e2ddeeffd3847fd5e6ba8de`
 
 ## Synthèse
 
@@ -32,12 +32,12 @@
 
 ### phase1:np-kms-03-sol-bord
 
-- Source : `DESIGN/kit_modulaire/exports/np_kms_03_sol_bord.glb` (`fd173f9c5d73405f94e5f079605ed04bce11a658281727408ace787b76310229`)
+- Source : `DESIGN/kit_modulaire/exports/np_kms_03_sol_bord.glb` (`ac8b7e0d5333f20e6a1da450fc5eb66bcfe8cd32e1187788f67904c69f2c9fd6`)
 - Destination : `assets/environment/helix9/kit_structurel/np_kms_03_sol_bord.glb`
 - Classement : ajout
 - Action : ajouter
 - Consommateurs : aucun détecté
-- Contrôles automatiques : écarts: dimensions exportées [2.0, 0.18, 2.0] != dimensions nominales [2.0, 0.12, 2.0]
+- Contrôles automatiques : OK
 - Risques : qualification contractuelle DI.3 requise
 
 ### phase1:np-kms-04-sol-transition
@@ -132,22 +132,22 @@
 
 ### phase1:np-kms-13-encadrement-simple
 
-- Source : `DESIGN/kit_modulaire/exports/np_kms_13_encadrement_simple.glb` (`4668ccbd8ffa0a6dea1053715457fc1901db5aacb014a824bba7db55912f41c6`)
+- Source : `DESIGN/kit_modulaire/exports/np_kms_13_encadrement_simple.glb` (`56722d4c914e8d8244c5e25604174ed2bb41c85eea6cc9d43ee74bb837e9bcf1`)
 - Destination : `assets/environment/helix9/kit_structurel/np_kms_13_encadrement_simple.glb`
 - Classement : ajout
 - Action : ajouter
 - Consommateurs : aucun détecté
-- Contrôles automatiques : écarts: dimensions exportées [4.6, 3.5, 0.22] != dimensions nominales [4.0, 3.5, 0.22]
+- Contrôles automatiques : OK
 - Risques : qualification contractuelle DI.3 requise
 
 ### phase1:np-kms-14-encadrement-double
 
-- Source : `DESIGN/kit_modulaire/exports/np_kms_14_encadrement_double.glb` (`db23dbed8dd70259d83fb52dffed3f11a0035201582945bdaef7c906f68693d6`)
+- Source : `DESIGN/kit_modulaire/exports/np_kms_14_encadrement_double.glb` (`172869f9e08092cdef568603034db41aa0b4687341dc1efcec7c88eebafabf43`)
 - Destination : `assets/environment/helix9/kit_structurel/np_kms_14_encadrement_double.glb`
 - Classement : ajout
 - Action : ajouter
 - Consommateurs : aucun détecté
-- Contrôles automatiques : écarts: dimensions exportées [8.6, 3.5, 0.22] != dimensions nominales [8.0, 3.5, 0.22]
+- Contrôles automatiques : OK
 - Risques : qualification contractuelle DI.3 requise
 
 ### phase1:np-kms-15-porte-accueil-couloirs
@@ -202,12 +202,12 @@
 
 ### phase1:np-kms-20-pilier
 
-- Source : `DESIGN/kit_modulaire/exports/np_kms_20_pilier.glb` (`7da1fdd4929fb5a71faded132053bad2fd633a2e2bd64a5df8c502d88b291936`)
+- Source : `DESIGN/kit_modulaire/exports/np_kms_20_pilier.glb` (`4bf579342c60d27779a19bc20e33573c856f6a52013693ed1ed4deef8d6f09e3`)
 - Destination : `assets/environment/helix9/kit_structurel/np_kms_20_pilier.glb`
 - Classement : ajout
 - Action : ajouter
 - Consommateurs : aucun détecté
-- Contrôles automatiques : écarts: dimensions exportées [0.46, 3.5, 0.46] != dimensions nominales [0.3, 3.5, 0.3]
+- Contrôles automatiques : OK
 - Risques : qualification contractuelle DI.3 requise
 
 ### phase1:np-kms-21-poutre
@@ -342,12 +342,12 @@
 
 ### phase4:np-z04-zombie-standard
 
-- Source : `DESIGN/zombie_standard/exports/np_z04_zombie_standard.glb` (`b42beab3ae485ef2993964565dc8548391babf9d01ac36149e8778ab106ef8b4`)
+- Source : `DESIGN/zombie_standard/exports/np_z04_zombie_standard.glb` (`cc4d5c19a1f8280152975675eb88f7e238f4e54f5f5e68ee56cdcf231747ac88`)
 - Destination : `assets/characters/enemies/np_z04_zombie_standard.glb`
 - Classement : ajout
 - Action : ajouter
 - Consommateurs : aucun détecté
-- Contrôles automatiques : écarts: 6 matériaux > budget 4
+- Contrôles automatiques : OK
 - Risques : qualification contractuelle DI.3 requise
 
 ### phase5:np-z05-assaut

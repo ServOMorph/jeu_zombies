@@ -27,6 +27,9 @@ func _init() -> void:
 	if state.get_skins().is_empty():
 		_fail("Skin GLTF absent")
 		return
+	if state.get_materials().size() > 4:
+		_fail("Budget matériaux dépassé : %d/4" % state.get_materials().size())
+		return
 	print("NOX_PROTOCOL_PHASE4_GLB_VALIDATION_READY meshes=%d animations=%d skins=%d" % [meshes, state.get_animations().size(), state.get_skins().size()])
 	instance.free()
 	quit(0)

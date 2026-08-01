@@ -299,9 +299,9 @@ suivante sans approbation explicite.
 - [x] Exécuter les validateurs spécialisés du lot et contrôler les erreurs Godot, dépendances,
   budgets, matériaux, animations, squelettes, ancrages et contrats des scènes consommatrices.
 - [x] Enregistrer chaque friction avec preuve, cause probable, asset concerné et impact potentiel.
-- [ ] Pour tout échec, demander à l'utilisateur de choisir entre régénérer/corriger le design ou le
+- [x] Pour tout échec, demander à l'utilisateur de choisir entre régénérer/corriger le design ou le
   marquer `a_revoir` et l'exclure du run.
-- [ ] Refaire les tests et l'approbation du plan après toute régénération ou modification d'empreinte.
+- [x] Refaire les tests et l'approbation du plan après toute régénération ou modification d'empreinte.
 - [ ] Tester que les designs exclus ne figurent plus dans le plan applicable.
 
 **Critère d'acceptation :** le lot applicable ne contient que des designs approuvés ayant réussi les
@@ -309,16 +309,16 @@ contrôles isolés ; chaque exclusion est motivée et enregistrée.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.4 — Archivage restaurable des versions remplacées `[TODO]`
+### DI.4 — Archivage restaurable des versions remplacées `[FAIT]`
 
-- [ ] Créer `archives/design_imports/<run_id>/` en conservant les chemins relatifs de toutes les
+- [x] Créer `archives/design_imports/<run_id>/` en conservant les chemins relatifs de toutes les
   destinations qui seront remplacées.
-- [ ] Générer un manifeste contenant chemin, empreinte, taille, commit source et destination de
+- [x] Générer un manifeste contenant chemin, empreinte, taille, commit source et destination de
   restauration.
-- [ ] Vérifier les empreintes après copie et refuser l'import si une archive est incomplète.
-- [ ] Implémenter et tester un retour arrière à blanc sur l'intégralité du lot.
-- [ ] Tester un retour arrière réel sur un cas contrôlé, puis rétablir l'état approuvé.
-- [ ] Documenter la procédure de récupération sans dépendre de la mémoire de session.
+- [x] Vérifier les empreintes après copie et refuser l'import si une archive est incomplète.
+- [x] Implémenter et tester un retour arrière à blanc sur l'intégralité du lot.
+- [x] Tester un retour arrière réel sur un cas contrôlé, puis rétablir l'état approuvé.
+- [x] Documenter la procédure de récupération sans dépendre de la mémoire de session.
 
 **Critère d'acceptation :** toute cible remplacée peut être restaurée à l'octet près par une commande
 testée avant l'insertion réelle.
@@ -327,12 +327,12 @@ testée avant l'insertion réelle.
 
 ### DI.5 — Insertion et intégration dans le jeu `[TODO]`
 
-- [ ] Appliquer uniquement le plan confirmé et refuser toute dérive d'empreinte.
-- [ ] Copier les sources approuvées vers les chemins du jeu sans transférer les fichiers `.import`.
+- [x] Appliquer uniquement le plan confirmé et refuser toute dérive d'empreinte.
+- [x] Copier les sources approuvées vers les chemins du jeu sans transférer les fichiers `.import`.
 - [ ] Laisser Godot régénérer les imports et intégrer les assets aux ressources et scènes consommatrices.
-- [ ] Préserver les collisions, la navigation, les signaux, les scripts, les points d'ancrage et les
+- [x] Préserver les collisions, la navigation, les signaux, les scripts, les points d'ancrage et les
   règles de gameplay déjà validés.
-- [ ] Mettre à jour le registre de façon atomique après chaque opération réussie.
+- [x] Mettre à jour le registre de façon atomique après chaque opération réussie.
 - [ ] En cas d'échec, arrêter proprement et demander s'il faut corriger/régénérer le design ou le
   marquer `a_revoir`, puis tester le retour à la version archivée.
 
@@ -343,14 +343,14 @@ registre, sans design non approuvé ni contrat fonctionnel modifié silencieusem
 
 ### DI.6 — Qualification automatique de l'import `[TODO]`
 
-- [ ] Lancer l'import Godot et distinguer les erreurs nouvelles des avertissements de référence.
-- [ ] Exécuter les validateurs du lot, les tests ciblés des consommateurs et `python check.py`.
-- [ ] Vérifier selon les assets : rendu, matériaux, échelle, axes, pivots, animations, collisions,
+- [x] Lancer l'import Godot et distinguer les erreurs nouvelles des avertissements de référence.
+- [x] Exécuter les validateurs du lot, les tests ciblés des consommateurs et `python check.py`.
+- [x] Vérifier selon les assets : rendu, matériaux, échelle, axes, pivots, animations, collisions,
   navigation, ancrages FPS, interface, effets, audio et remise à zéro de session.
 - [ ] Mesurer les scènes affectées et comparer les résultats à la référence ; réserver la preuve FPS
   finale à un test réel confirmé par l'utilisateur.
-- [ ] Pour chaque défaut, proposer correction/régénération ou classement `a_revoir`, puis retester.
-- [ ] Vérifier l'absence de référence cassée, d'erreur de script et d'asset orphelin nouveau.
+- [x] Pour chaque défaut, proposer correction/régénération ou classement `a_revoir`, puis retester.
+- [x] Vérifier l'absence de référence cassée, d'erreur de script et d'asset orphelin nouveau.
 
 **Critère d'acceptation :** tous les tests automatiques applicables réussissent sans erreur connue et
 chaque écart restant est exclu ou assumé explicitement par l'utilisateur.
@@ -359,11 +359,11 @@ chaque écart restant est exclu ou assumé explicitement par l'utilisateur.
 
 ### DI.7 — Campagne manuelle consolidée et automatisation visuelle `[TODO]`
 
-- [ ] Formaliser `_docs/design_imports/methode_tests_manuels.md` : regroupement par lancement, scène,
+- [x] Formaliser `_docs/design_imports/methode_tests_manuels.md` : regroupement par lancement, scène,
   trajet et résolution, preuves attendues, durée humaine et critères non automatisables.
-- [ ] Fusionner sans perte les contrôles du lot avec les campagnes déjà présentes dans
+- [x] Fusionner sans perte les contrôles du lot avec les campagnes déjà présentes dans
   `tests_manuels.md`, notamment M5.1 et DESIGN phase 8.
-- [ ] Générer un parcours ordonné couvrant apparence, lisibilité, superpositions, collisions ressenties,
+- [x] Générer un parcours ordonné couvrant apparence, lisibilité, superpositions, collisions ressenties,
   animations, audio et FPS en minimisant les relances du jeu.
 - [ ] Prototyper des captures déterministes à caméra fixe avec graine et état connus.
 - [ ] Prototyper un pilote d'entrées scriptées, pauses sur événements et assertions d'état ; utiliser le

@@ -11,13 +11,13 @@ size = Vector3(0.3, 3.5, 0.22)
 
 [sub_resource type="BoxMesh" id="Linteau"]
 material = SubResource("Steel")
-size = Vector3(8.6, 0.3, 0.22)
+size = Vector3(8, 0.3, 0.22)
 
 [node name="NP_KMS_14_EncadrementDouble" type="Node3D"]
 
 [node name="MontantGauche" type="MeshInstance3D" parent="."]
 mesh = SubResource("Montant")
-position = Vector3(-4.15, 1.75, 0)
+position = Vector3(-3.85, 1.75, 0)
 
 [node name="MontantCentral" type="MeshInstance3D" parent="."]
 mesh = SubResource("Montant")
@@ -25,7 +25,7 @@ position = Vector3(0, 1.75, 0)
 
 [node name="MontantDroit" type="MeshInstance3D" parent="."]
 mesh = SubResource("Montant")
-position = Vector3(4.15, 1.75, 0)
+position = Vector3(3.85, 1.75, 0)
 
 [node name="Linteau" type="MeshInstance3D" parent="."]
 mesh = SubResource("Linteau")
