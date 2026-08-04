@@ -145,6 +145,22 @@ class DesignImportTests(unittest.TestCase):
         self.assertEqual(self.command("apply", "--plan", "run/plan.json"), 0)
         self.assertFalse((self.root / "assets/models/review.glb").exists())
 
+    def test_plan_excludes_designs_marked_a_revoir(self) -> None:
+        for name in ("kept.glb", "excluded.glb"):
+            (self.source.parent / name).write_bytes(b"source-" + name.encode("utf-8"))
+        self.command("scan", "--lot", "lot", "--source", "DESIGN/lot/exports", "--target", "assets/models")
+        self.command("preflight")
+        registry = tool.load_registry(self.registry_path, self.root)
+        entries = {entry["design_id"]: entry for entry in registry["designs"]}
+        tool.transition(entries["lot:excluded"], "a_revoir")
+        tool.save_registry(self.registry_path, registry, self.root)
+        run_id = "2026-07-31T151903Z_lot_12345678"
+        self.command("plan", "--run-id", run_id, "--output", "run/plan.json")
+        plan = json.loads((self.root / "run/plan.json").read_text(encoding="utf-8"))
+        planned_ids = {item["design_id"] for item in plan["designs"]}
+        self.assertNotIn("lot:excluded", planned_ids)
+        self.assertIn("lot:kept", planned_ids)
+
     def test_registry_digest_is_unchanged_by_approval_state(self) -> None:
         self.command("scan", "--lot", "lot", "--source", "DESIGN/lot/exports", "--target", "assets/models")
         registry = tool.load_registry(self.registry_path, self.root)

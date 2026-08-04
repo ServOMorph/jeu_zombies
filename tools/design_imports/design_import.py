@@ -489,6 +489,8 @@ def build_plan(registry: dict[str, Any], root: Path, run_id: str) -> dict[str, A
         raise DesignImportError(f"run_id invalide: {run_id}")
     designs = []
     for entry in sorted(registry["designs"], key=lambda value: value["design_id"]):
+        if entry["design_status"] == "a_revoir":
+            continue
         current_hashes = []
         for target in entry["target_paths"]:
             target_path = repo_path(root, target, field="target_paths")

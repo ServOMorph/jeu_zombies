@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.38 — 2026-08-04
+
+### Corrigé
+
+- `build_plan` exclut désormais les designs marqués `a_revoir` du plan applicable ; les 17 exports FPS de phase 5 n'y figurent plus.
+
+### Ajouté
+
+- Test `test_plan_excludes_designs_marked_a_revoir` couvrant l'exclusion.
+
 ## v0.37 — 2026-08-01
 
 ### Ajouté

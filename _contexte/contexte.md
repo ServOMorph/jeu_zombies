@@ -11,7 +11,7 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - M0 à M4.5 sont validés ; `python check.py` réussit avec 23 suites, navigation des portes et export `.pck`.
 - Le run DI a importé et validé par empreinte 34 designs de phases 1, 2 et 4 ; ils ne sont pas encore raccordés aux scènes de jeu.
 - Les frictions F-001 à F-005 sont résolues ; 17 exports FPS de phase 5 sont exclus et marqués `a_revoir`.
-- DI.3 reste ouverte : `plan.json` contient encore les exclusions, contrairement au critère du plan applicable.
+- DI.3 est terminée : le plan applicable régénéré n'inclut plus les 17 exclusions.
 - Les contrôles manuels M5.1, DESIGN phase 8, kit modulaire et zombie restent à valider.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
@@ -25,3 +25,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-07-31 : Le workflow urgent DI d'insertion DESIGN est créé : registre, précontrôle, approbation, qualification isolée, archives restaurables, intégration et campagne manuelle consolidée.
 - 2026-07-31 : DI.0 à DI.2 sont terminées sur `feat/insertion-designs` ; DI.3 n'autorise aucun import tant que F-001 à F-005 ne sont pas résolues ou exclues.
 - 2026-08-01 : 34 designs DI sont importés et validés ; les 17 exports FPS sont exclus, et le plan doit encore omettre ces exclusions.
+- 2026-08-04 : `build_plan` exclut désormais les designs `a_revoir` ; DI.3 est close, le plan applicable ne contient plus les 17 exports FPS exclus.

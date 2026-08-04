@@ -293,7 +293,7 @@ suivante sans approbation explicite.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.3 — Qualification isolée et traitement des frictions `[EN COURS]`
+### DI.3 — Qualification isolée et traitement des frictions `[FAIT]`
 
 - [x] Importer le lot approuvé dans un espace de test isolé, sans écraser les assets du jeu.
 - [x] Exécuter les validateurs spécialisés du lot et contrôler les erreurs Godot, dépendances,
@@ -302,7 +302,14 @@ suivante sans approbation explicite.
 - [x] Pour tout échec, demander à l'utilisateur de choisir entre régénérer/corriger le design ou le
   marquer `a_revoir` et l'exclure du run.
 - [x] Refaire les tests et l'approbation du plan après toute régénération ou modification d'empreinte.
-- [ ] Tester que les designs exclus ne figurent plus dans le plan applicable.
+- [x] Tester que les designs exclus ne figurent plus dans le plan applicable.
+
+### État au 2026-08-04
+
+`build_plan` excluait les designs `a_revoir` du hash mais pas de la liste ; corrigé, testé
+(`test_plan_excludes_designs_marked_a_revoir`), plan régénéré : 34 designs `valide`, 0 exclusion
+résiduelle. La commande `approve` ne s'applique pas à ces designs déjà `valide` (import déjà réalisé) ;
+aucune ré-approbation requise.
 
 **Critère d'acceptation :** le lot applicable ne contient que des designs approuvés ayant réussi les
 contrôles isolés ; chaque exclusion est motivée et enregistrée.

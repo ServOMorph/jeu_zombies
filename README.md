@@ -50,4 +50,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-M0 à M4.5 sont validés (porte de sortie M4 franchie). M5.1 reste en attente de validation HUD. Le chantier DI a importé et validé 34 designs dans `assets/` ; les 17 exports FPS de phase 5 restent exclus (`a_revoir`) faute de destinations et de consommateurs. DI.3 reste ouverte car `plan.json` doit encore omettre explicitement ces exclusions. Les assets importés ne sont pas encore raccordés aux scènes de jeu.
+M0 à M4.5 sont validés (porte de sortie M4 franchie). M5.1 reste en attente de validation HUD. Le chantier DI a importé et validé 34 designs dans `assets/` ; les 17 exports FPS de phase 5 restent exclus (`a_revoir`) faute de destinations et de consommateurs. DI.3 est terminée : le plan applicable n'inclut plus ces exclusions. Les assets importés ne sont pas encore raccordés aux scènes de jeu ; la campagne manuelle consolidée (M5.1, effets phase 8, kit modulaire, zombie) reste à valider.
