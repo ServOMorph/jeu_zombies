@@ -1,4 +1,4 @@
-# Signals — DESIGN (MAJ 2026-07-30)
+# Signals — DESIGN (MAJ 2026-08-06)
 
 ## Contexte chaud
 
@@ -7,8 +7,13 @@
 - Les spécifications préparatoires des phases 9 et 10 sont disponibles dans `direction_audio_phase9/` et `presentation_livraison_phase10/`, sans changer le statut de la phase 8.
 - Les assets low-poly restent les placeholders du prototype ; les futurs assets finaux suivent une nouvelle direction réaliste optimisée, sans intégration avant validation du gameplay.
 - La référence courante du futur zombie standard est `zombie_standard/references/zombie_chercheuse_realiste_reference_v2.png`.
+- Un pack Mixamo « Scary Zombie Pack » (13 FBX : 1 personnage + 12 animations, dont un second personnage `Zombiegirl W Kurniawan.fbx`) est déposé dans `DESIGN/mixamo/zombie/`, en source brute non qualifiée et non versionnée (37 Mo, hors suivi git dans l'attente d'un tri).
 
 ## Actions ouvertes
+
+- [P1] Qualifier le pack Mixamo déposé dans `DESIGN/mixamo/zombie/`.
+  fait quand: inventaire, licence et compatibilité rig/retargeting sont documentés, et la décision (référence complémentaire ou remplacement de la direction zombie standard) est actée avec l'utilisateur.
+  réf: `DESIGN/mixamo/zombie/`, contexte de la session du 2026-08-06
 
 - [P1] Valider la référence réaliste V2 du zombie et produire le prompt Claude Design.
   fait quand: la planche V2 est explicitement approuvée et un prompt de génération 3D conforme aux budgets du projet est prêt.
@@ -28,25 +33,23 @@
 
 ## Dernière session
 
-# Session du 2026-07-30
+# Session du 2026-08-06
 
 ## Décisions prises
-- Conserver les assets low-poly comme placeholders du prototype gameplay.
-- Produire séparément les futurs assets finaux dans une direction réaliste optimisée, sans intégration anticipée.
-- Retenir une chercheuse contaminée blonde à silhouette féminine marquée comme référence du futur zombie standard.
+- Le pack Mixamo « Scary Zombie Pack » est conservé en source brute dans `DESIGN/mixamo/`, en attente de qualification.
+- Les FBX Mixamo restent non versionnés (37 Mo) tant qu'aucun tri ni qualification n'est réalisé.
 
 ## Livrables produits ou modifiés
-- `zombie_standard/references/zombie_chercheuse_realiste_reference_v1.png` : première planche réaliste multivue.
-- `zombie_standard/references/zombie_chercheuse_realiste_reference_v2.png` : variante blonde aux formes plus marquées.
+- `DESIGN/mixamo/` : dossier créé pour accueillir les personnages et animations Mixamo (non suivi git).
+- `DESIGN/mixamo/zombie/Scary Zombie Pack/` : 1 personnage + 12 animations FBX déposés par l'utilisateur.
+- `DESIGN/mixamo/zombie/Zombiegirl W Kurniawan.fbx` : second personnage déposé.
 
 ## Hypothèses validées / invalidées
-- VALIDE : la cible est Windows PC, Godot 4.5 Forward+, caméra FPS à 75° et environ dix zombies simultanés.
-- INVALIDE : la direction low-poly comme rendu final -> pivot vers un réalisme optimisé après validation du gameplay.
-- EN ATTENTE : approbation définitive de la planche V2, prompt Claude Design et formalisation du workflow.
+- EN ATTENTE : qualification du pack Mixamo (inventaire, licence, compatibilité rig/retargeting Godot) avant toute fiche d'intégration.
+- EN ATTENTE : approbation de la planche V2 du zombie et validation visuelle phase 8 (non traitées cette session).
 
 ## Prochaine étape exacte
-Valider ou corriger la planche V2, puis rédiger le prompt Claude Design du zombie.
-Poursuivre ensuite l’analyse guidée avant de créer le workflow dans `DESIGN/_commands/`.
+Qualifier le pack Mixamo déposé (inventaire, licence, compatibilité rig) avant de produire une fiche d'intégration. Rappel : l'import Godot et le retargeting restent hors périmètre DESIGN (session de code dédiée).
 
 ## Question bloquante pour la session suivante
-La planche réaliste V2 est-elle approuvée comme référence définitive du zombie ?
+Le pack « Scary Zombie Pack » doit-il remplacer la direction zombie standard actuelle (low-poly V1 / réaliste V2 chercheuse) ou s'agit-il d'une référence complémentaire ?

@@ -27,6 +27,7 @@ assets intégrés.
 - La phase 8 reste en cours : ses 18 effets et trois écrans de prévisualisation sont produits, mais la validation visuelle utilisateur est en attente.
 - Une direction réaliste optimisée est actée pour les futurs assets finaux ; les assets low-poly restent les placeholders du prototype.
 - Deux planches réalistes du futur zombie standard sont produites ; la V2 blonde reste à approuver avant le prompt Claude Design et la formalisation du workflow.
+- Un pack Mixamo brut (« Scary Zombie Pack », 13 FBX) est déposé dans `DESIGN/mixamo/zombie/`, non qualifié et non versionné, en attente d'un arbitrage sur son rôle vis-à-vis de la direction zombie standard.
 - Les phases 9 et 10 restent préparatoires et aucun asset DESIGN n’est intégré au projet jouable.
 
 ## Contrats techniques à préserver
@@ -48,3 +49,4 @@ assets intégrés.
 - 2026-07-28 : La phase 8 est engagée avec des spécifications d’effets V1 et trois écrans de prévisualisation ; son intégration gameplay et performance reste une session de code distincte.
 - 2026-07-28 : Les spécifications des phases 9 et 10 sont préparées à la demande de l’utilisateur, sans valider ni changer le statut de la phase 8.
 - 2026-07-30 : Les assets low-poly restent les placeholders du prototype ; les futurs assets finaux adoptent un réalisme optimisé et restent séparés du jeu jusqu’à validation du gameplay.
+- 2026-08-06 : Un dossier `DESIGN/mixamo/` accueille les personnages et animations Mixamo déposés par l'utilisateur ; ces sources restent brutes, non versionnées et non qualifiées tant qu'aucune fiche d'intégration n'est produite.
