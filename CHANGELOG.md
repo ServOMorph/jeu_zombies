@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.40 — 2026-08-06
+
+### Ajouté
+
+- M5.2 : composants d'antidote (`QuestComponent`) dans les Couloirs, l'Entrepôt médical et la Salle d'extraction, station de fabrication (`QuestFabricationStation`) au Laboratoire de synthèse, avec progression automatique de `QuestController` (ouverture des zones, collecte des composants, fabrication).
+- Tests automatisés `test_quest_component.gd` et `test_quest_fabrication_station.gd` ; extension de `test_quest_controller.gd`, `test_helix_blockout.gd` et `door_navigation_integration.gd`.
+
+### Corrigé
+
+- Deux bugs de compilation/exécution GDScript introduits en cours de session : constante `PackedStringArray` non valide, accès au `Timer` de fabrication avant `_ready()`.
+
+### Modifié
+
+- DI.5/DI.6 sont clos sur leur périmètre administratif ; l'intégration visuelle des designs importés (kit modulaire, zombie) est reportée au jalon M6.4.
+
 ## v0.39 — 2026-08-06
 
 ### Corrigé

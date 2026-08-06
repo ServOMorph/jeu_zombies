@@ -38,7 +38,14 @@ const OBJECTIVE_TEXT: Dictionary = {
 	State.VICTOIRE: "Épidémie neutralisée.",
 }
 
+const REQUIRED_COMPONENT_IDS: PackedStringArray = [
+	"composant_couloirs",
+	"composant_entrepot",
+	"composant_extraction",
+]
+
 var state: State = State.SURVIVRE
+var _collected_components: Dictionary = {}
 
 
 func _ready() -> void:
@@ -59,6 +66,31 @@ func get_objective_text() -> String:
 	return String(OBJECTIVE_TEXT.get(state, ""))
 
 
+func collect_component(component_id: String) -> bool:
+	if state != State.RECUPERER_LES_COMPOSANTS:
+		return false
+	if not REQUIRED_COMPONENT_IDS.has(component_id):
+		return false
+	if _collected_components.has(component_id):
+		return false
+	_collected_components[component_id] = true
+	if _collected_components.size() == REQUIRED_COMPONENT_IDS.size():
+		try_advance(State.FABRIQUER_ANTIDOTE)
+	return true
+
+
+func has_component(component_id: String) -> bool:
+	return _collected_components.has(component_id)
+
+
+func get_collected_component_count() -> int:
+	return _collected_components.size()
+
+
+func has_all_components() -> bool:
+	return _collected_components.size() == REQUIRED_COMPONENT_IDS.size()
+
+
 func _is_valid_next(target_state: State) -> bool:
 	var current_index := ORDER.find(state)
 	var target_index := ORDER.find(target_state)
@@ -74,6 +106,7 @@ func _log_transition(previous_state: State, new_state: State) -> void:
 
 
 func _on_session_reset() -> void:
+	_collected_components.clear()
 	if state != State.SURVIVRE:
 		var previous_state := state
 		state = State.SURVIVRE

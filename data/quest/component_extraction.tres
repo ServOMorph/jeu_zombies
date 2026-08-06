@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="QuestComponentDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/quest/quest_component_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+component_id = "composant_extraction"
+display_name = "Composant d'antidote — Salle d'extraction"

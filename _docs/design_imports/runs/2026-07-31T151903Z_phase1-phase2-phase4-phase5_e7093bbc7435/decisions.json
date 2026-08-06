@@ -14,5 +14,10 @@
     "approved_at": "2026-08-01T10:25:57Z",
     "approved_designs": 34
   },
-  "notes": "Le plan approuvé inclut 34 designs ; les 17 exports FPS de phase 5 sont exclus et marqués a_revoir."
+  "notes": "Le plan approuvé inclut 34 designs ; les 17 exports FPS de phase 5 sont exclus et marqués a_revoir.",
+  "scene_integration_scope": {
+    "decision": "reporte_m6_4",
+    "decided_at": "2026-08-06",
+    "raison": "Les 34 designs sont copiés et qualifiés (integration_status=valide) mais aucune scène du jeu ne les instancie : la carte (world/helix_blockout.gd) est générée avec des BoxMesh procéduraux sans mur, et enemies/zombie_standard.tscn utilise une CapsuleMesh de substitution. Le placement/tuilage en scène est un travail de scène 3D distinct de la copie de fichiers couverte par ce run, explicitement prévu au jalon M6.4 (passe artistique) de roadmap_v1.md. DI.5/DI.6 sont considérés clos sur leur périmètre administratif (copie, régénération d'imports, qualification automatique) sans ce placement en scène."
+  }
 }

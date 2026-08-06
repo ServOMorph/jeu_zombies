@@ -58,4 +58,42 @@ func run_tests() -> Array[String]:
 		failures.append("la remise à zéro doit émettre une transition unique vers SURVIVRE")
 
 	quest.free()
+	failures.append_array(_test_component_collection())
+	return failures
+
+
+func _test_component_collection() -> Array[String]:
+	var failures: Array[String] = []
+	var quest := QUEST_CONTROLLER_SCRIPT.new()
+
+	if quest.collect_component("composant_couloirs"):
+		failures.append("la collecte doit être refusée hors de l'état RECUPERER_LES_COMPOSANTS")
+
+	quest.try_advance(quest.State.OUVRIR_LES_ZONES)
+	quest.try_advance(quest.State.RECUPERER_LES_COMPOSANTS)
+
+	if quest.collect_component("composant_inconnu"):
+		failures.append("un identifiant de composant inconnu doit être refusé")
+	if not quest.collect_component("composant_couloirs"):
+		failures.append("la collecte d'un composant valide en état RECUPERER_LES_COMPOSANTS doit réussir")
+	if quest.collect_component("composant_couloirs"):
+		failures.append("une double collecte du même composant doit être refusée")
+	if quest.state != quest.State.RECUPERER_LES_COMPOSANTS:
+		failures.append("la quête ne doit pas progresser avant la collecte des trois composants")
+
+	quest.collect_component("composant_entrepot")
+	if quest.state != quest.State.RECUPERER_LES_COMPOSANTS:
+		failures.append("la quête ne doit pas progresser avec seulement deux composants sur trois")
+
+	quest.collect_component("composant_extraction")
+	if quest.state != quest.State.FABRIQUER_ANTIDOTE:
+		failures.append("la collecte du troisième composant doit faire progresser la quête vers FABRIQUER_ANTIDOTE")
+	if not quest.has_all_components():
+		failures.append("has_all_components doit refléter la collecte complète")
+
+	quest._on_session_reset()
+	if quest.has_component("composant_couloirs") or quest.get_collected_component_count() != 0:
+		failures.append("la remise à zéro de session doit effacer les composants collectés")
+
+	quest.free()
 	return failures

@@ -86,6 +86,8 @@ func run_tests() -> Array[String]:
 			failures.append("chaque porte doit rester ouverte après son achat")
 		if not helix_blockout.can_navigate_between("accueil", "extraction"):
 			failures.append("les achats doivent rétablir la navigation entre toutes les zones")
+		if QuestController.state != QuestController.State.RECUPERER_LES_COMPOSANTS:
+			failures.append("l'ouverture de toutes les portes doit faire progresser la quête jusqu'à RECUPERER_LES_COMPOSANTS")
 	GameSession.return_to_menu()
 	for node_name: String in legacy_test_geometry:
 		var test_geometry := world.get_node_or_null(node_name) as Node3D

@@ -332,30 +332,32 @@ testée avant l'insertion réelle.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.5 — Insertion et intégration dans le jeu `[TODO]`
+### DI.5 — Insertion et intégration dans le jeu `[FAIT]`
 
 - [x] Appliquer uniquement le plan confirmé et refuser toute dérive d'empreinte.
 - [x] Copier les sources approuvées vers les chemins du jeu sans transférer les fichiers `.import`.
-- [ ] Laisser Godot régénérer les imports et intégrer les assets aux ressources et scènes consommatrices.
+- [x] Laisser Godot régénérer les imports (fichiers `.import` régénérés, `python check.py` réussit).
+  L'intégration aux ressources et scènes consommatrices (tuilage du kit modulaire, remplacement du
+  mesh du zombie) est hors périmètre administratif de DI.5 : reportée au jalon M6.4 sur décision
+  utilisateur du 2026-08-06 (voir `friction_log.md` F-006 du run).
 - [x] Préserver les collisions, la navigation, les signaux, les scripts, les points d'ancrage et les
   règles de gameplay déjà validés.
 - [x] Mettre à jour le registre de façon atomique après chaque opération réussie.
-- [ ] En cas d'échec, arrêter proprement et demander s'il faut corriger/régénérer le design ou le
-  marquer `a_revoir`, puis tester le retour à la version archivée.
+- [x] Aucun échec rencontré ; le retour arrière a été testé à blanc en DI.4.
 
 **Critère d'acceptation :** les fichiers réellement intégrés correspondent exactement au plan et au
 registre, sans design non approuvé ni contrat fonctionnel modifié silencieusement.
 
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
-### DI.6 — Qualification automatique de l'import `[TODO]`
+### DI.6 — Qualification automatique de l'import `[FAIT]`
 
 - [x] Lancer l'import Godot et distinguer les erreurs nouvelles des avertissements de référence.
 - [x] Exécuter les validateurs du lot, les tests ciblés des consommateurs et `python check.py`.
 - [x] Vérifier selon les assets : rendu, matériaux, échelle, axes, pivots, animations, collisions,
   navigation, ancrages FPS, interface, effets, audio et remise à zéro de session.
-- [ ] Mesurer les scènes affectées et comparer les résultats à la référence ; réserver la preuve FPS
-  finale à un test réel confirmé par l'utilisateur.
+- [x] Mesure de performance non applicable : aucun asset importé n'est encore instancié dans une
+  scène de jeu (intégration visuelle reportée à M6.4) ; rien à mesurer avant cette intégration.
 - [x] Pour chaque défaut, proposer correction/régénération ou classement `a_revoir`, puis retester.
 - [x] Vérifier l'absence de référence cassée, d'erreur de script et d'asset orphelin nouveau.
 
@@ -797,6 +799,17 @@ VICTOIRE
 - [ ] Donner un retour clair pendant et après la fabrication.
 - [ ] Empêcher la perte de progression si une vague commence pendant l'interaction.
 
+### État au 2026-08-06
+
+Implémentation faite : `QuestComponent` (3 composants — Couloirs, Entrepôt médical, Salle
+d'extraction) et `QuestFabricationStation` (Laboratoire de synthèse), avec progression automatique
+de `QuestController` (`OUVRIR_LES_ZONES` → `RECUPERER_LES_COMPOSANTS` → `FABRIQUER_ANTIDOTE` →
+`DEPLOYER_ANTIDOTE`). Tous les critères ci-dessus sont couverts par des tests automatisés
+(`test_quest_component.gd`, `test_quest_fabrication_station.gd`, `test_quest_controller.gd`) ;
+`python check.py` réussit sans erreur (25 suites). Les cases restent non cochées : validation
+manuelle en jeu réel (ressenti, feedback visuel/sonore) non encore effectuée, en attente dans
+`tests_manuels.md`.
+
 ### M5.3 — Déploiement et protocole d'extraction
 
 - [ ] Créer le point de déploiement de l'antidote.
@@ -1060,4 +1073,5 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M4.5 — Quatre avantages**.
+Valider manuellement M5.2 (`tests_manuels.md`), puis réaliser **M5.3 — Déploiement et protocole
+d'extraction**.

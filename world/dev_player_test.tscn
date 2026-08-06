@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3]
+[gd_scene load_steps=48 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -34,6 +34,10 @@
 [ext_resource type="Resource" path="res://data/perks/perk_gestes_precis.tres" id="32_perk_gestes_precis"]
 [ext_resource type="Resource" path="res://data/perks/perk_reflexes_stimules.tres" id="33_perk_reflexes_stimules"]
 [ext_resource type="Resource" path="res://data/perks/perk_reparation_cellulaire.tres" id="34_perk_reparation_cellulaire"]
+[ext_resource type="Resource" path="res://data/quest/component_couloirs.tres" id="35_component_couloirs"]
+[ext_resource type="Resource" path="res://data/quest/component_entrepot.tres" id="36_component_entrepot"]
+[ext_resource type="Resource" path="res://data/quest/component_extraction.tres" id="37_component_extraction"]
+[ext_resource type="Resource" path="res://data/quest/fabrication_station_laboratoire.tres" id="38_fabrication_station_laboratoire"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -120,6 +124,8 @@ wall_buy_definitions = Array[Resource]([ExtResource("23_wall_buy_accueil"), ExtR
 mystery_box_definitions = Array[Resource]([ExtResource("29_mystery_box_entrepot")])
 weapon_upgrade_station_definitions = Array[Resource]([ExtResource("30_weapon_upgrade_station_laboratoire")])
 perk_station_definitions = Array[Resource]([ExtResource("31_perk_constitution_renforcee"), ExtResource("32_perk_gestes_precis"), ExtResource("33_perk_reflexes_stimules"), ExtResource("34_perk_reparation_cellulaire")])
+quest_component_definitions = Array[Resource]([ExtResource("35_component_couloirs"), ExtResource("36_component_entrepot"), ExtResource("37_component_extraction")])
+fabrication_station_definitions = Array[Resource]([ExtResource("38_fabrication_station_laboratoire")])
 
 [node name="InteractionTestTerminal" type="Area3D" parent="."]
 position = Vector3(2, 0.8, 2)

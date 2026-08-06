@@ -29,6 +29,14 @@ const PERK_STATION_DEFINITIONS: Array[Resource] = [
 	preload("res://data/perks/perk_reflexes_stimules.tres"),
 	preload("res://data/perks/perk_reparation_cellulaire.tres"),
 ]
+const QUEST_COMPONENT_DEFINITIONS: Array[Resource] = [
+	preload("res://data/quest/component_couloirs.tres"),
+	preload("res://data/quest/component_entrepot.tres"),
+	preload("res://data/quest/component_extraction.tres"),
+]
+const FABRICATION_STATION_DEFINITIONS: Array[Resource] = [
+	preload("res://data/quest/fabrication_station_laboratoire.tres"),
+]
 
 const CLOSED_OBSERVATION_FRAMES := 240
 const OPEN_OBSERVATION_FRAMES := 480
@@ -43,6 +51,8 @@ func _ready() -> void:
 	blockout.mystery_box_definitions = MYSTERY_BOX_DEFINITIONS
 	blockout.weapon_upgrade_station_definitions = WEAPON_UPGRADE_STATION_DEFINITIONS
 	blockout.perk_station_definitions = PERK_STATION_DEFINITIONS
+	blockout.quest_component_definitions = QUEST_COMPONENT_DEFINITIONS
+	blockout.fabrication_station_definitions = FABRICATION_STATION_DEFINITIONS
 	add_child(blockout)
 
 	var target := Node3D.new()

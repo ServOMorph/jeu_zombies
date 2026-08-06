@@ -2,38 +2,41 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Reprendre DI.5 et DI.6 : laisser Godot régénérer les imports et les intégrer aux scènes consommatrices, puis mesurer les scènes affectées et comparer à la référence. fait quand: DI.5 et DI.6 sont cochées `[FAIT]` dans `roadmap_v1.md`. réf: `roadmap_v1.md` (sections DI.5, DI.6)
-- [P2|ouvert] DI.7 — prototyper les captures déterministes à caméra fixe et le pilote d'entrées scriptées pour automatiser une partie de la campagne visuelle. fait quand: les items non cochés de DI.7 dans `roadmap_v1.md` sont validés. réf: `roadmap_v1.md` (section DI.7)
+- [P1|ouvert] Valider manuellement M5.2 (collecte des composants, fabrication de l'antidote). fait quand: la file `tests_manuels.md` est vidée pour cette campagne. réf: `tests_manuels.md`
+- [P1|ouvert] Réaliser M5.3 — Déploiement et protocole d'extraction (point de déploiement, déverrouillage du terminal, démarrage unique de la défense finale). fait quand: les items de M5.3 sont cochés `[FAIT]` dans `roadmap_v1.md`. réf: `roadmap_v1.md` (section M5.3)
+- [P2|ouvert] Intégration visuelle du kit modulaire et du zombie standard dans les scènes de jeu (tuilage des murs, remplacement du mesh capsule). fait quand: le jalon M6.4 est complété avec preuve visuelle. réf: `roadmap_v1.md` (section M6.4), `_docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/friction_log.md` (F-006)
 
 ## Contexte chaud
 
-- Godot `4.5.stable.official.876b29033` est accessible dans le `PATH` ; Forward+ utilise Vulkan 1.4.312 sur la RTX 4060 à 60 Hz.
-- 34 designs (phase 1, phase 2 et zombie phase 4) sont dans `assets/` et validés par empreinte ; aucun n'est encore raccordé à une scène de jeu.
-- Les 17 exports FPS de phase 5 restent exclus, sans destination ni consommateur documentés, et n'apparaissent plus dans le plan applicable.
-- `python check.py` réussit : import, 23 suites headless, navigation des portes et export `.pck`.
-- La campagne manuelle consolidée est intégralement validée ; `tests_manuels.md` est vide.
-- Résidus non commités hors périmètre de session : `AGENTS.md` (modification antérieure), fichiers `.import`/`.uid` du laboratoire DESIGN (caches Godot), et le dossier `DESIGN/mixamo/` (dépôt brut non traité par cette session).
+- Godot `4.5.stable.official.876b29033` est accessible dans le `PATH`.
+- `python check.py` réussit : import, 25 suites headless, navigation des portes et export `.pck`. Aucune `SCRIPT ERROR` résiduelle.
+- Le chantier DI (insertion de designs) est clos sur son périmètre administratif (DI.5/DI.6 `[FAIT]`) ; l'intégration visuelle en scène est explicitement hors périmètre et reportée à M6.4.
+- La carte (`world/helix_blockout.gd`) reste construite avec des primitives Godot (`BoxMesh`) sans mur ; le zombie standard utilise une `CapsuleMesh` de substitution — aucun asset importé n'est encore visible en jeu.
+- Résidus non commités hors périmètre de session : `AGENTS.md` (modification antérieure), fichiers `.import`/`.uid` du laboratoire DESIGN (caches Godot), `DESIGN/mixamo/` et `DESIGN/MARBLE/` (dépôts non traités par cette session).
 
 ## Dernière session
 
 # Session du 2026-08-06
 
 ## Décisions prises
-- Le chevauchement du HUD de test avec le HUD réel est corrigé par repositionnement statique (Instructions en bas-gauche, métriques dev sous Vague/Objectif), sans touche de bascule supplémentaire.
-- Les dimensions et pivots des modules du kit modulaire sont vérifiables par lecture directe des GLB (script Python), en complément du contrôle visuel humain.
+- DI.5/DI.6 sont clos sur leur périmètre administratif (copie, régénération d'imports, qualification automatique) ; l'intégration visuelle en scène des 34 designs (tuilage kit modulaire, mesh du zombie) est explicitement reportée au jalon M6.4.
+- M5.2 (composants d'antidote et fabrication) est implémentée avec câblage de progression automatique de `QuestController` sur l'ouverture des zones et la collecte des composants.
 
 ## Livrables produits ou modifiés
-- `world/dev_player_test.tscn` : label Instructions repositionné en bas-gauche.
-- `ui/dev_overlay/dev_metrics_overlay.tscn` : panneau métriques repositionné sous Vague/Objectif.
-- `tests_manuels.md` : campagne manuelle consolidée entièrement validée, fichier vidé.
+- `data/quest/` : définitions `QuestComponentDefinition`, `FabricationStationDefinition` et 4 ressources `.tres`.
+- `world/quest_component.gd`, `world/quest_fabrication_station.gd` : nouveaux interactables.
+- `core/quest_controller.gd` : suivi des composants collectés, avancement automatique vers `FABRIQUER_ANTIDOTE`.
+- `world/helix_blockout.gd`, `world/dev_player_test.tscn` : câblage des 3 composants et de la station de fabrication ; avancement de quête à l'ouverture complète des zones.
+- `tests/test_quest_component.gd`, `tests/test_quest_fabrication_station.gd` (nouveaux) et `tests/test_quest_controller.gd`, `tests/test_helix_blockout.gd`, `tests/door_navigation_integration.gd` (étendus).
+- `_docs/design_imports/runs/.../decisions.json`, `friction_log.md` : décision de report de l'intégration visuelle à M6.4 (F-006).
+- `tests_manuels.md` : campagne M5.2 mise en file d'attente.
 
 ## Hypothèses validées / invalidées
-- VALIDE : les 4 dimensions critiques des modules 03/13/14/20 correspondent aux valeurs attendues (vérification programmatique sur les GLB).
-- VALIDE : la rotation détectée sur `np_kms_02_sol_angle.glb` est un repère d'orientation intentionnel (nœuds GuideX/GuideZ), pas un défaut de pivot — confirmé visuellement dans Godot.
-- EN ATTENTE : aucune, campagne manuelle close.
+- VALIDE : `python check.py` réussit sans erreur après correction de deux bugs réels (constante `PackedStringArray` non valide en GDScript ; accès au `Timer` de fabrication avant `_ready()`).
+- EN ATTENTE : validation manuelle de M5.2 en jeu réel (ressenti, feedback visuel/sonore).
 
 ## Prochaine étape exacte
-Reprendre DI.5 (régénération des imports Godot, intégration aux scènes consommatrices) puis DI.6 (mesure de performance réelle des scènes affectées).
+Valider manuellement M5.2 via `tests_manuels.md`, puis réaliser M5.3 (déploiement de l'antidote et déverrouillage du terminal d'extraction).
 
 ## Question bloquante pour la session suivante
 Aucune.

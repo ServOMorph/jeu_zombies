@@ -49,11 +49,23 @@ const PERK_STATIONS: Array[Dictionary] = [
 	{"id": "reparation_cellulaire", "zone": "accueil", "position": Vector3(6.0, 1.1, -3.0)},
 ]
 
+const QUEST_COMPONENTS: Array[Dictionary] = [
+	{"id": "composant_couloirs", "zone": "couloirs", "position": Vector3(5.0, 1.1, -4.0)},
+	{"id": "composant_entrepot", "zone": "entrepot", "position": Vector3(5.0, 1.1, -4.0)},
+	{"id": "composant_extraction", "zone": "extraction", "position": Vector3(0.0, 1.1, -4.0)},
+]
+
+const FABRICATION_STATIONS: Array[Dictionary] = [
+	{"id": "station_fabrication_laboratoire", "zone": "laboratoire", "position": Vector3(5.0, 1.1, -4.0)},
+]
+
 var _doors: Dictionary = {}
 var _wall_buys: Dictionary = {}
 var _mystery_boxes: Dictionary = {}
 var _weapon_upgrade_stations: Dictionary = {}
 var _perk_stations: Dictionary = {}
+var _quest_components: Dictionary = {}
+var _fabrication_stations: Dictionary = {}
 var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
@@ -61,6 +73,8 @@ var _zone_roots: Dictionary = {}
 @export var mystery_box_definitions: Array[Resource] = []
 @export var weapon_upgrade_station_definitions: Array[Resource] = []
 @export var perk_station_definitions: Array[Resource] = []
+@export var quest_component_definitions: Array[Resource] = []
+@export var fabrication_station_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -76,6 +90,10 @@ func _ready() -> void:
 		_create_weapon_upgrade_station(weapon_upgrade_station)
 	for perk_station: Dictionary in PERK_STATIONS:
 		_create_perk_station(perk_station)
+	for quest_component: Dictionary in QUEST_COMPONENTS:
+		_create_quest_component(quest_component)
+	for fabrication_station: Dictionary in FABRICATION_STATIONS:
+		_create_fabrication_station(fabrication_station)
 	_create_navigation_regions()
 
 
@@ -121,6 +139,20 @@ static func get_perk_station_ids() -> PackedStringArray:
 	return station_ids
 
 
+static func get_quest_component_ids() -> PackedStringArray:
+	var component_ids := PackedStringArray()
+	for quest_component: Dictionary in QUEST_COMPONENTS:
+		component_ids.append(str(quest_component["id"]))
+	return component_ids
+
+
+static func get_fabrication_station_ids() -> PackedStringArray:
+	var station_ids := PackedStringArray()
+	for fabrication_station: Dictionary in FABRICATION_STATIONS:
+		station_ids.append(str(fabrication_station["id"]))
+	return station_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -151,6 +183,14 @@ func get_weapon_upgrade_station(station_id: String) -> WeaponUpgradeStation:
 
 func get_perk_station(station_id: String) -> PerkStation:
 	return _perk_stations.get(station_id) as PerkStation
+
+
+func get_quest_component(component_id: String) -> QuestComponent:
+	return _quest_components.get(component_id) as QuestComponent
+
+
+func get_fabrication_station(station_id: String) -> QuestFabricationStation:
+	return _fabrication_stations.get(station_id) as QuestFabricationStation
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -363,6 +403,56 @@ func _find_perk_station_definition(station_id: String) -> Resource:
 	return null
 
 
+func _create_quest_component(quest_component: Dictionary) -> void:
+	var component_id := str(quest_component["id"])
+	var definition := _find_quest_component_definition(component_id)
+	if definition == null:
+		push_error("Définition de composant de quête manquante : %s" % component_id)
+		return
+	var zone_root := _zone_roots.get(str(quest_component["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour le composant de quête : %s" % component_id)
+		return
+	var component := QuestComponent.new()
+	component.name = "Composant_%s" % component_id
+	component.configure(definition)
+	component.position = quest_component["position"] as Vector3
+	zone_root.add_child(component)
+	_quest_components[component_id] = component
+
+
+func _find_quest_component_definition(component_id: String) -> Resource:
+	for definition: Resource in quest_component_definitions:
+		if definition != null and str(definition.get("component_id")) == component_id:
+			return definition
+	return null
+
+
+func _create_fabrication_station(fabrication_station: Dictionary) -> void:
+	var station_id := str(fabrication_station["id"])
+	var definition := _find_fabrication_station_definition(station_id)
+	if definition == null:
+		push_error("Définition de station de fabrication manquante : %s" % station_id)
+		return
+	var zone_root := _zone_roots.get(str(fabrication_station["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour la station de fabrication : %s" % station_id)
+		return
+	var station := QuestFabricationStation.new()
+	station.name = "StationFabrication_%s" % station_id
+	station.configure(definition)
+	station.position = fabrication_station["position"] as Vector3
+	zone_root.add_child(station)
+	_fabrication_stations[station_id] = station
+
+
+func _find_fabrication_station_definition(station_id: String) -> Resource:
+	for definition: Resource in fabrication_station_definitions:
+		if definition != null and str(definition.get("station_id")) == station_id:
+			return definition
+	return null
+
+
 func _create_connection_floor(connection: Dictionary) -> void:
 	var start_point := connection["start"] as Vector3
 	var end_point := connection["end"] as Vector3
@@ -406,3 +496,6 @@ func _create_navigation_regions() -> void:
 
 func _on_door_state_changed(_is_open: bool) -> void:
 	get_tree().call_group("zombies", "request_navigation_repath")
+	if are_all_doors_open():
+		QuestController.try_advance(QuestController.State.OUVRIR_LES_ZONES)
+		QuestController.try_advance(QuestController.State.RECUPERER_LES_COMPOSANTS)
