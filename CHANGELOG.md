@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.41 — 2026-08-06
+
+### Ajouté
+
+- Campagne manuelle M5.2 (collecte des 3 composants, fabrication de l'antidote) validée en jeu réel ; `tests_manuels.md` vidé.
+
+### Modifié
+
+- HUD de test : label `Instructions` repositionné au ras du bas de la fenêtre, police réduite de 20 à 13.
+- `roadmap_v1.md` : cases M5.2 cochées (5/6 ; le critère "vague pendant l'interaction" reste non couvert).
+
 ## v0.40 — 2026-08-06
 
 ### Ajouté

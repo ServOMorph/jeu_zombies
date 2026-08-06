@@ -271,12 +271,12 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -140.0
+offset_top = -82.0
 offset_right = 900.0
-offset_bottom = -24.0
+offset_bottom = -6.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.8, 0.92, 1, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 13
 text = "TEST FPS — ZQSD : déplacer · Maj : courir · Espace : sauter · Ctrl : s'accroupir\nClic gauche : tirer · R : recharger · Molette : changer d'arme · F7 : réinitialiser la cible\nF5 : choisir un scénario · F6 : subir des dégâts · F10 : test de charge · F11 : fermer portes · F12 : ouvrir portes · Entrée : recommencer après défaite · Échap : retour au menu"
 
 [node name="TargetDummy" parent="." instance=ExtResource("3_target")]

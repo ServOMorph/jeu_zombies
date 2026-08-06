@@ -792,11 +792,11 @@ VICTOIRE
 
 ### M5.2 — Composants et fabrication
 
-- [ ] Placer trois composants identifiables dans des zones distinctes.
-- [ ] Permettre leur collecte dans un ordre libre après accès à leur zone.
-- [ ] Empêcher double collecte ou disparition sans progression.
-- [ ] Activer la fabrication uniquement avec les trois composants.
-- [ ] Donner un retour clair pendant et après la fabrication.
+- [x] Placer trois composants identifiables dans des zones distinctes.
+- [x] Permettre leur collecte dans un ordre libre après accès à leur zone.
+- [x] Empêcher double collecte ou disparition sans progression.
+- [x] Activer la fabrication uniquement avec les trois composants.
+- [x] Donner un retour clair pendant et après la fabrication.
 - [ ] Empêcher la perte de progression si une vague commence pendant l'interaction.
 
 ### État au 2026-08-06
@@ -806,9 +806,10 @@ d'extraction) et `QuestFabricationStation` (Laboratoire de synthèse), avec prog
 de `QuestController` (`OUVRIR_LES_ZONES` → `RECUPERER_LES_COMPOSANTS` → `FABRIQUER_ANTIDOTE` →
 `DEPLOYER_ANTIDOTE`). Tous les critères ci-dessus sont couverts par des tests automatisés
 (`test_quest_component.gd`, `test_quest_fabrication_station.gd`, `test_quest_controller.gd`) ;
-`python check.py` réussit sans erreur (25 suites). Les cases restent non cochées : validation
-manuelle en jeu réel (ressenti, feedback visuel/sonore) non encore effectuée, en attente dans
-`tests_manuels.md`.
+`python check.py` réussit sans erreur (25 suites). Campagne manuelle validée par l'utilisateur en
+jeu réel (`tests_manuels.md` vidé). Reste non couverte : la case « vague pendant l'interaction »,
+absente du scénario manuel joué (aucune vague n'était active pendant la collecte/fabrication
+testée) ; à vérifier explicitement avant clôture complète de M5.2.
 
 ### M5.3 — Déploiement et protocole d'extraction
 
@@ -1073,5 +1074,6 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Valider manuellement M5.2 (`tests_manuels.md`), puis réaliser **M5.3 — Déploiement et protocole
-d'extraction**.
+Réaliser **M5.3 — Déploiement et protocole d'extraction** (point de déploiement, déverrouillage du
+terminal, démarrage unique de la défense finale). Vérifier en parallèle, si l'occasion se présente,
+le cas non couvert de M5.2 (vague active pendant collecte/fabrication).
