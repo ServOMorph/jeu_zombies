@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.42 — 2026-08-06
+
+### Modifié
+
+- M5.3 démarrée puis interrompue en cours de session : conception actée (point de déploiement en zone `laboratoire`, terminal d'extraction en zone `extraction`), interactables `QuestDeploymentPoint`/`QuestExtractionTerminal` écrits, mais `world/helix_blockout.gd` reste cassé (fonctions de câblage manquantes) et non commité. Aucun changement fonctionnel livré ; point de reprise détaillé dans `_contexte/signals.md`.
+
 ## v0.41 — 2026-08-06
 
 ### Ajouté
