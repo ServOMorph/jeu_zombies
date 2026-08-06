@@ -383,6 +383,14 @@ chaque écart restant est exclu ou assumé explicitement par l'utilisateur.
 **Critère d'acceptation :** l'utilisateur dispose d'une seule campagne ordonnée pour le lot et les
 tests en attente, tandis qu'un premier scénario visuel répétable produit captures et assertions.
 
+### État au 2026-08-06
+
+La campagne manuelle consolidée est intégralement validée : HUD M5.1, effets DESIGN phase 8, kit
+modulaire (axes/pivots et dimensions des modules 03/13/14/20, dimensions vérifiées par lecture
+directe des GLB en complément du contrôle visuel) et zombie standard. `tests_manuels.md` est vide.
+Les items d'automatisation visuelle (captures déterministes, pilote d'entrées scriptées, comparaison
+outillée) restent `[TODO]` et non prioritaires tant que DI.5/DI.6 ne sont pas clos.
+
 **⏸ Checkpoint** — Demander à l'utilisateur de faire `/compact` avant de continuer.
 
 ### DI.8 — Rétrospective et durcissement du workflow `[TODO]`

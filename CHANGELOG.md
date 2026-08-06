@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.39 — 2026-08-06
+
+### Corrigé
+
+- Chevauchement du HUD de test (label Instructions, panneau métriques dev) avec le HUD réel corrigé par repositionnement statique.
+
+### Ajouté
+
+- Campagne manuelle consolidée (HUD M5.1, effets DESIGN phase 8, kit modulaire, zombie standard) intégralement validée ; `tests_manuels.md` vidé.
+
 ## v0.38 — 2026-08-04
 
 ### Corrigé
