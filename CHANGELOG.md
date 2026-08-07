@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.44 — 2026-08-07
+
+### Modifié
+
+- M5.3 validée manuellement en jeu réel (scénario complet : refus hors étape, invites, déploiement, activation de l'extraction, refus de double activation, absence d'erreur console). Les 4 cases M5.3 sont cochées dans `roadmap_v1.md` ; `_docs/validation_v1.md` passe au statut « validé » ; `tests_manuels.md` est vidé.
+
 ## v0.43 — 2026-08-07
 
 ### Ajouté

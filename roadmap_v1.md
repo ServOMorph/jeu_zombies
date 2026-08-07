@@ -813,10 +813,10 @@ testée) ; à vérifier explicitement avant clôture complète de M5.2.
 
 ### M5.3 — Déploiement et protocole d'extraction
 
-- [ ] Créer le point de déploiement de l'antidote.
-- [ ] Déverrouiller le terminal d'extraction après déploiement.
-- [ ] Démarrer la défense finale une seule fois.
-- [ ] Verrouiller les transitions incompatibles pendant la finale.
+- [x] Créer le point de déploiement de l'antidote.
+- [x] Déverrouiller le terminal d'extraction après déploiement.
+- [x] Démarrer la défense finale une seule fois.
+- [x] Verrouiller les transitions incompatibles pendant la finale.
 
 ### État au 2026-08-07
 

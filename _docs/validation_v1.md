@@ -729,7 +729,7 @@ Les critères automatisables de M5.1 sont satisfaits. La case correspondante de 
 
 Date : 2026-08-07
 Version Godot : `4.5.stable.official.876b29033`
-Statut : implémenté, testé automatiquement, validation manuelle en attente
+Statut : validé
 
 ### Tranche implémentée
 
@@ -749,8 +749,8 @@ Statut : implémenté, testé automatiquement, validation manuelle en attente
 
 ### Contrôle manuel
 
-En attente : scénario ajouté à `tests_manuels.md` (refus avant fabrication/déploiement, invites, déploiement, activation de l'extraction, refus de double activation).
+Scénario de `tests_manuels.md` validé en jeu réel par l'utilisateur : refus d'interaction avant fabrication de l'antidote, invite « [E] Déployer l'antidote », déploiement avec retour visuel/sonore et progression de l'objectif HUD, refus de second déploiement, terminal d'extraction verrouillé avant déploiement avec invite cohérente, invite « [E] Activer le protocole d'extraction » puis activation avec retour visuel/sonore et démarrage de la défense finale, refus de seconde activation, aucune erreur console.
 
 ### Résultat
 
-Les critères automatisables de M5.3 sont satisfaits. Les cases correspondantes de `roadmap_v1.md` restent à cocher jusqu'à la validation manuelle en jeu réel.
+Les critères automatisables et le contrôle manuel de M5.3 sont satisfaits. Les 4 cases correspondantes de `roadmap_v1.md` sont cochées.
