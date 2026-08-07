@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.43 — 2026-08-07
+
+### Ajouté
+
+- M5.3 (déploiement de l'antidote, terminal d'extraction) implémentée et testée automatiquement : `helix_blockout.gd` complété (fonctions et getters manquants, sur le patron de la station de fabrication), `dev_player_test.tscn` câblé, deux suites de tests créées (`test_quest_deployment_point.gd`, `test_quest_extraction_terminal.gd`).
+
+### Modifié
+
+- `roadmap_v1.md` et `_docs/validation_v1.md` : état M5.3 documenté (implémenté, testé automatiquement, validation manuelle en attente) ; cases non cochées tant que le scénario manuel n'est pas joué.
+- `tests_manuels.md` : scénario M5.3 ajouté (7 contrôles).
+
 ## v0.42 — 2026-08-06
 
 ### Modifié

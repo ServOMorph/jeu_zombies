@@ -818,6 +818,20 @@ testée) ; à vérifier explicitement avant clôture complète de M5.2.
 - [ ] Démarrer la défense finale une seule fois.
 - [ ] Verrouiller les transitions incompatibles pendant la finale.
 
+### État au 2026-08-07
+
+Implémentation faite et testée automatiquement : `QuestDeploymentPoint` (zone `laboratoire`) et
+`QuestExtractionTerminal` (zone `extraction`) sont créés, câblés dans `helix_blockout.gd` (fonctions
+et getters sur le modèle de la station de fabrication) et dans `dev_player_test.tscn`. Transitions
+`DEPLOYER_ANTIDOTE` → `ACTIVER_EXTRACTION` → `DEFENSE_FINALE` réservées à `QuestController.try_advance`
+(adjacence stricte de `ORDER`), ce qui empêche nativement tout démarrage multiple ou saut d'étape —
+aucune garde supplémentaire ajoutée pour ce point. Tests automatisés créés
+(`test_quest_deployment_point.gd`, `test_quest_extraction_terminal.gd`) : câblage blockout, refus
+avant l'étape requise, flux complet, refus de double activation. `python check.py` réussit
+intégralement (import, 27 suites headless, navigation des portes, export `.pck`), aucune
+`SCRIPT ERROR` résiduelle. Les cases restent `[ ]` : validation manuelle en jeu réel non encore
+effectuée (voir `tests_manuels.md`).
+
 ### M5.4 — Défense finale
 
 - [ ] Implémenter un compte à rebours initial de 120 secondes.

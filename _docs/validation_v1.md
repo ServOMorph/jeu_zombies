@@ -724,3 +724,33 @@ En attente : affichage de l'objectif initial dans le HUD en jeu (voir `tests_man
 ### Résultat
 
 Les critères automatisables de M5.1 sont satisfaits. La case correspondante de `roadmap_v1.md` reste à cocher jusqu'à la validation manuelle de l'affichage HUD.
+
+## M5.3 — Déploiement et protocole d'extraction
+
+Date : 2026-08-07
+Version Godot : `4.5.stable.official.876b29033`
+Statut : implémenté, testé automatiquement, validation manuelle en attente
+
+### Tranche implémentée
+
+- `data/quest/deployment_point_definition.gd` + `deployment_point_laboratoire.tres` et `data/quest/extraction_terminal_definition.gd` + `extraction_terminal_salle.tres` centralisent identifiant et nom d'affichage.
+- `world/quest_deployment_point.gd` (`QuestDeploymentPoint`) : interactable, refuse hors état `DEPLOYER_ANTIDOTE`, fait progresser vers `ACTIVER_EXTRACTION` à l'interaction, retour visuel (émission) et sonore.
+- `world/quest_extraction_terminal.gd` (`QuestExtractionTerminal`) : interactable, refuse hors état `ACTIVER_EXTRACTION`, fait progresser vers `DEFENSE_FINALE` à l'interaction et émet `defense_finale_started`, retour visuel et sonore.
+- `world/helix_blockout.gd` : point de déploiement câblé dans la zone `laboratoire`, terminal d'extraction dans la zone `extraction`, sur le patron exact de la station de fabrication (fonctions de création, recherche de définition et getters).
+- `world/dev_player_test.tscn` : deux `ext_resource` et les exports `deployment_point_definitions`/`extraction_terminal_definitions` câblés sur `HelixBlockout`.
+- Démarrage unique de la défense finale et verrouillage des transitions incompatibles assurés nativement par `QuestController.try_advance` (adjacence stricte de `ORDER`), sans garde supplémentaire.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suites déploiement/extraction | `python test.py` (découverte automatique de `test_quest_deployment_point.gd` et `test_quest_extraction_terminal.gd`) | code 0, câblage blockout, refus avant l'étape requise, flux complet et refus de double activation couverts |
+| Contrôle global | `python check.py` | code 0, import, 27 suites headless, franchissement de porte et export `.pck` réussis |
+
+### Contrôle manuel
+
+En attente : scénario ajouté à `tests_manuels.md` (refus avant fabrication/déploiement, invites, déploiement, activation de l'extraction, refus de double activation).
+
+### Résultat
+
+Les critères automatisables de M5.3 sont satisfaits. Les cases correspondantes de `roadmap_v1.md` restent à cocher jusqu'à la validation manuelle en jeu réel.

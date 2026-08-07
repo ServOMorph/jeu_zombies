@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3]
+[gd_scene load_steps=50 format=3]
 
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://world/dev_player_test.gd" id="2_world"]
@@ -38,6 +38,8 @@
 [ext_resource type="Resource" path="res://data/quest/component_entrepot.tres" id="36_component_entrepot"]
 [ext_resource type="Resource" path="res://data/quest/component_extraction.tres" id="37_component_extraction"]
 [ext_resource type="Resource" path="res://data/quest/fabrication_station_laboratoire.tres" id="38_fabrication_station_laboratoire"]
+[ext_resource type="Resource" path="res://data/quest/deployment_point_laboratoire.tres" id="39_deployment_point_laboratoire"]
+[ext_resource type="Resource" path="res://data/quest/extraction_terminal_salle.tres" id="40_extraction_terminal_salle"]
 
 [sub_resource type="Environment" id="Environment_test"]
 background_mode = 1
@@ -126,6 +128,8 @@ weapon_upgrade_station_definitions = Array[Resource]([ExtResource("30_weapon_upg
 perk_station_definitions = Array[Resource]([ExtResource("31_perk_constitution_renforcee"), ExtResource("32_perk_gestes_precis"), ExtResource("33_perk_reflexes_stimules"), ExtResource("34_perk_reparation_cellulaire")])
 quest_component_definitions = Array[Resource]([ExtResource("35_component_couloirs"), ExtResource("36_component_entrepot"), ExtResource("37_component_extraction")])
 fabrication_station_definitions = Array[Resource]([ExtResource("38_fabrication_station_laboratoire")])
+deployment_point_definitions = Array[Resource]([ExtResource("39_deployment_point_laboratoire")])
+extraction_terminal_definitions = Array[Resource]([ExtResource("40_extraction_terminal_salle")])
 
 [node name="InteractionTestTerminal" type="Area3D" parent="."]
 position = Vector3(2, 0.8, 2)

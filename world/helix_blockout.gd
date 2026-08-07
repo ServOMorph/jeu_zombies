@@ -59,6 +59,14 @@ const FABRICATION_STATIONS: Array[Dictionary] = [
 	{"id": "station_fabrication_laboratoire", "zone": "laboratoire", "position": Vector3(5.0, 1.1, -4.0)},
 ]
 
+const DEPLOYMENT_POINTS: Array[Dictionary] = [
+	{"id": "point_deploiement_laboratoire", "zone": "laboratoire", "position": Vector3(-5.0, 1.1, 4.0)},
+]
+
+const EXTRACTION_TERMINALS: Array[Dictionary] = [
+	{"id": "terminal_extraction_salle", "zone": "extraction", "position": Vector3(0.0, 1.1, 4.0)},
+]
+
 var _doors: Dictionary = {}
 var _wall_buys: Dictionary = {}
 var _mystery_boxes: Dictionary = {}
@@ -66,6 +74,8 @@ var _weapon_upgrade_stations: Dictionary = {}
 var _perk_stations: Dictionary = {}
 var _quest_components: Dictionary = {}
 var _fabrication_stations: Dictionary = {}
+var _deployment_points: Dictionary = {}
+var _extraction_terminals: Dictionary = {}
 var _zone_roots: Dictionary = {}
 
 @export var door_definitions: Array[Resource] = []
@@ -75,6 +85,8 @@ var _zone_roots: Dictionary = {}
 @export var perk_station_definitions: Array[Resource] = []
 @export var quest_component_definitions: Array[Resource] = []
 @export var fabrication_station_definitions: Array[Resource] = []
+@export var deployment_point_definitions: Array[Resource] = []
+@export var extraction_terminal_definitions: Array[Resource] = []
 
 
 func _ready() -> void:
@@ -94,6 +106,10 @@ func _ready() -> void:
 		_create_quest_component(quest_component)
 	for fabrication_station: Dictionary in FABRICATION_STATIONS:
 		_create_fabrication_station(fabrication_station)
+	for deployment_point: Dictionary in DEPLOYMENT_POINTS:
+		_create_deployment_point(deployment_point)
+	for extraction_terminal: Dictionary in EXTRACTION_TERMINALS:
+		_create_extraction_terminal(extraction_terminal)
 	_create_navigation_regions()
 
 
@@ -153,6 +169,20 @@ static func get_fabrication_station_ids() -> PackedStringArray:
 	return station_ids
 
 
+static func get_deployment_point_ids() -> PackedStringArray:
+	var point_ids := PackedStringArray()
+	for deployment_point: Dictionary in DEPLOYMENT_POINTS:
+		point_ids.append(str(deployment_point["id"]))
+	return point_ids
+
+
+static func get_extraction_terminal_ids() -> PackedStringArray:
+	var terminal_ids := PackedStringArray()
+	for extraction_terminal: Dictionary in EXTRACTION_TERMINALS:
+		terminal_ids.append(str(extraction_terminal["id"]))
+	return terminal_ids
+
+
 func set_all_doors_open(should_open: bool) -> void:
 	for door: HelixDoor in _doors.values():
 		door.set_open(should_open)
@@ -191,6 +221,14 @@ func get_quest_component(component_id: String) -> QuestComponent:
 
 func get_fabrication_station(station_id: String) -> QuestFabricationStation:
 	return _fabrication_stations.get(station_id) as QuestFabricationStation
+
+
+func get_deployment_point(point_id: String) -> QuestDeploymentPoint:
+	return _deployment_points.get(point_id) as QuestDeploymentPoint
+
+
+func get_extraction_terminal(terminal_id: String) -> QuestExtractionTerminal:
+	return _extraction_terminals.get(terminal_id) as QuestExtractionTerminal
 
 
 func can_navigate_between(start_zone_id: String, end_zone_id: String) -> bool:
@@ -449,6 +487,56 @@ func _create_fabrication_station(fabrication_station: Dictionary) -> void:
 func _find_fabrication_station_definition(station_id: String) -> Resource:
 	for definition: Resource in fabrication_station_definitions:
 		if definition != null and str(definition.get("station_id")) == station_id:
+			return definition
+	return null
+
+
+func _create_deployment_point(deployment_point: Dictionary) -> void:
+	var point_id := str(deployment_point["id"])
+	var definition := _find_deployment_point_definition(point_id)
+	if definition == null:
+		push_error("Définition de point de déploiement manquante : %s" % point_id)
+		return
+	var zone_root := _zone_roots.get(str(deployment_point["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour le point de déploiement : %s" % point_id)
+		return
+	var point := QuestDeploymentPoint.new()
+	point.name = "PointDeploiement_%s" % point_id
+	point.configure(definition)
+	point.position = deployment_point["position"] as Vector3
+	zone_root.add_child(point)
+	_deployment_points[point_id] = point
+
+
+func _find_deployment_point_definition(point_id: String) -> Resource:
+	for definition: Resource in deployment_point_definitions:
+		if definition != null and str(definition.get("point_id")) == point_id:
+			return definition
+	return null
+
+
+func _create_extraction_terminal(extraction_terminal: Dictionary) -> void:
+	var terminal_id := str(extraction_terminal["id"])
+	var definition := _find_extraction_terminal_definition(terminal_id)
+	if definition == null:
+		push_error("Définition de terminal d'extraction manquante : %s" % terminal_id)
+		return
+	var zone_root := _zone_roots.get(str(extraction_terminal["zone"])) as Node3D
+	if zone_root == null:
+		push_error("Zone introuvable pour le terminal d'extraction : %s" % terminal_id)
+		return
+	var terminal := QuestExtractionTerminal.new()
+	terminal.name = "TerminalExtraction_%s" % terminal_id
+	terminal.configure(definition)
+	terminal.position = extraction_terminal["position"] as Vector3
+	zone_root.add_child(terminal)
+	_extraction_terminals[terminal_id] = terminal
+
+
+func _find_extraction_terminal_definition(terminal_id: String) -> Resource:
+	for definition: Resource in extraction_terminal_definitions:
+		if definition != null and str(definition.get("terminal_id")) == terminal_id:
 			return definition
 	return null
 
