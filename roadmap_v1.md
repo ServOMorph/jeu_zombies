@@ -770,11 +770,11 @@ Statut au 2026-07-26 : validé. Quatre stations dans l'Accueil sécurisé (1 000
 
 ### M5.1 — Machine d'état de quête
 
-- [ ] Définir explicitement tous les états et transitions de la quête.
-- [ ] Afficher un objectif français unique, court et exact pour l'état courant.
-- [ ] Refuser les interactions hors ordre sans modifier la progression.
-- [ ] Journaliser les transitions en développement.
-- [ ] Tester toutes les transitions valides et invalides.
+- [x] Définir explicitement tous les états et transitions de la quête.
+- [x] Afficher un objectif français unique, court et exact pour l'état courant.
+- [x] Refuser les interactions hors ordre sans modifier la progression.
+- [x] Journaliser les transitions en développement.
+- [x] Tester toutes les transitions valides et invalides.
 
 États minimaux :
 
@@ -834,20 +834,37 @@ effectuée (voir `tests_manuels.md`).
 
 ### M5.4 — Défense finale
 
-- [ ] Implémenter un compte à rebours initial de 120 secondes.
-- [ ] Configurer une pression élevée mais compatible avec le plafond de zombies.
-- [ ] Afficher le temps restant et l'objectif.
-- [ ] Gérer correctement le dernier zombie, la fin du chrono et les apparitions en cours.
-- [ ] Déverrouiller le point d'extraction après succès.
-- [ ] Faire de la mort pendant la finale une défaite normale.
+- [x] Implémenter un compte à rebours initial de 120 secondes.
+- [x] Configurer une pression élevée mais compatible avec le plafond de zombies.
+- [x] Afficher le temps restant et l'objectif.
+- [x] Gérer correctement le dernier zombie, la fin du chrono et les apparitions en cours.
+- [x] Déverrouiller le point d'extraction après succès.
+- [x] Faire de la mort pendant la finale une défaite normale.
+
+### État au 2026-08-07
+
+Implémentation faite, testée automatiquement (`test_defense_finale_controller.gd`, `python check.py`
+réussit intégralement, 28 suites) et validée manuellement en jeu réel par l'utilisateur (`tests_manuels.md`
+vidé) : compte à rebours affiché et lisible, pression de zombies continue pendant les 120 s sans chute
+de FPS anormale, apparitions arrêtées proprement à la fin du chrono, terminal déverrouillé
+(« [E] Rejoindre l'extraction ») et victoire déclenchée à l'interaction, mort pendant la finale traitée
+comme une défaite normale.
 
 ### M5.5 — Victoire, défaite et remise à zéro
 
-- [ ] Créer un écran de victoire avec retour au menu et nouvelle partie.
-- [ ] Finaliser l'écran de défaite avec les mêmes choix pertinents.
-- [ ] Bloquer déplacement, tir et interactions sous les écrans de fin.
-- [ ] Nettoyer zombies, timers, audio, effets, crédits, avantages, armes et état de quête.
-- [ ] Tester victoire → nouvelle partie, défaite → nouvelle partie et victoire → menu → nouvelle partie.
+- [x] Créer un écran de victoire avec retour au menu et nouvelle partie.
+- [x] Finaliser l'écran de défaite avec les mêmes choix pertinents.
+- [x] Bloquer déplacement, tir et interactions sous les écrans de fin.
+- [x] Nettoyer zombies, timers, audio, effets, crédits, avantages, armes et état de quête.
+- [x] Tester victoire → nouvelle partie, défaite → nouvelle partie et victoire → menu → nouvelle partie.
+
+### État au 2026-08-07
+
+Implémentation faite, testée automatiquement (`test_session_end_screens.gd`, `python check.py` réussit
+intégralement, 29 suites) et validée manuellement en jeu réel par l'utilisateur (`tests_manuels.md`
+vidé) : écran DÉFAITE bloquant tout, nouvelle partie propre depuis DÉFAITE, écran VICTOIRE bloquant
+tout, nouvelle partie propre depuis VICTOIRE, retour au menu depuis VICTOIRE puis nouvelle partie,
+aucune erreur console.
 
 **Porte de sortie M5 :**
 
@@ -855,6 +872,16 @@ effectuée (voir `tests_manuels.md`).
 - Chaque étape est compréhensible uniquement avec l'environnement et l'objectif affiché.
 - Il est impossible de sauter une étape, gagner trop tôt ou rendre la quête impossible à terminer.
 - La défense finale complète reste à au moins 50 FPS.
+
+### État au 2026-08-07
+
+M5.1 à M5.5 sont validées manuellement en jeu réel : les trois premiers critères fonctionnels de la
+porte de sortie sont satisfaits (partie complète jouable sans outil de développement, objectif
+toujours affiché, aucune étape contournable). Le critère de performance (« au moins 50 FPS » pendant
+la défense finale) n'a été observé que qualitativement (« sans chute de FPS anormale » via l'overlay
+dev) et non mesuré formellement selon le protocole de la section 4 ; la mesure rigoureuse est différée
+à M7 (Équilibrage, optimisation et robustesse), qui couvre explicitement les six scènes de
+qualification.
 
 ## 12. Jalon M6 — Menus, options, présentation et audio
 
@@ -1088,6 +1115,6 @@ La release ne peut être approuvée que lorsque chaque ligne est cochée :
 
 ## 18. Premier travail à exécuter
 
-Réaliser **M5.3 — Déploiement et protocole d'extraction** (point de déploiement, déverrouillage du
-terminal, démarrage unique de la défense finale). Vérifier en parallèle, si l'occasion se présente,
-le cas non couvert de M5.2 (vague active pendant collecte/fabrication).
+Le jalon M5 (Quête, finale et fins de partie) est intégralement validé (M5.1 à M5.5). Réaliser
+**M6.1 — Menu principal et pause**. Vérifier en parallèle, si l'occasion se présente, le cas non
+couvert de M5.2 (vague active pendant collecte/fabrication).

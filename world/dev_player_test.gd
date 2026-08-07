@@ -19,8 +19,10 @@ const DEV_ARSENAL: Array[Resource] = [
 @onready var target = $TargetDummy
 @onready var zombie_spawner = $ZombieSpawner
 @onready var wave_manager: WaveManager = $WaveManager
+@onready var defense_finale_controller: DefenseFinaleController = $DefenseFinaleController
 @onready var spawn_label: Label = %SpawnLabel
 @onready var defeat_label: Label = %DefeatLabel
+@onready var victory_label: Label = %VictoryLabel
 @onready var muzzle_flash: MeshInstance3D = $Player/Head/Camera3D/WeaponVisualRoot/MuzzleFlash
 @onready var impact_effects: Node3D = $ImpactEffects
 @onready var combat_audio = $CombatAudioFeedback
@@ -52,7 +54,8 @@ func _ready() -> void:
 	wave_manager.wave_finished.connect(_on_wave_finished)
 	wave_manager.waves_completed.connect(_on_waves_completed)
 	GameSession.session_ended.connect(_on_session_ended)
-	game_hud.configure(player, wave_manager, interaction_controller)
+	defense_finale_controller.configure(player)
+	game_hud.configure(player, wave_manager, interaction_controller, defense_finale_controller)
 	player.set_physics_process(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	spawn_label.text = "Choisissez un scénario de test"
@@ -148,7 +151,13 @@ func _input(event: InputEvent) -> void:
 		get_tree().reload_current_scene()
 		get_viewport().set_input_as_handled()
 		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ENTER and GameSession.state == GameSession.State.DEFEAT:
+	if (
+		event is InputEventKey
+		and event.pressed
+		and not event.echo
+		and event.keycode == KEY_ENTER
+		and (GameSession.state == GameSession.State.DEFEAT or GameSession.state == GameSession.State.VICTORY)
+	):
 		_restart_survival_session()
 		get_viewport().set_input_as_handled()
 		return
@@ -327,12 +336,16 @@ func _on_waves_completed() -> void:
 
 
 func _on_session_ended(final_state: int) -> void:
-	if final_state != GameSession.State.DEFEAT:
+	if final_state != GameSession.State.DEFEAT and final_state != GameSession.State.VICTORY:
 		return
 	wave_manager.stop()
 	zombie_spawner.deactivate_all()
-	defeat_label.visible = true
-	spawn_label.text = "Défaite\nEntrée : recommencer une session neuve"
+	if final_state == GameSession.State.DEFEAT:
+		defeat_label.visible = true
+		spawn_label.text = "Défaite\nEntrée : nouvelle partie · Échap : menu principal"
+	else:
+		victory_label.visible = true
+		spawn_label.text = "Victoire\nEntrée : nouvelle partie · Échap : menu principal"
 
 
 func _start_survival_loop() -> void:

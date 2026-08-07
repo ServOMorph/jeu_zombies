@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.45 — 2026-08-07
+
+### Ajouté
+
+- M5.4 (défense finale) implémentée et validée manuellement en jeu réel : `world/defense_finale_controller.gd` pilote un chrono de 120 s et un `WaveManager` dédié à pression élevée capé par le plafond de zombies existant ; `world/quest_extraction_terminal.gd` déverrouille l'extraction (`REJOINDRE_EXTRACTION` → `VICTOIRE`) après succès ; `ui/game_hud/game_hud.gd` affiche le compte à rebours.
+- M5.5 (victoire/défaite/remise à zéro) implémentée et validée manuellement en jeu réel : `player/player_controller.gd` bloque déplacement, tir et interactions à toute fin de partie via `GameSession.session_ended` (auparavant seule la mort bloquait réellement, la victoire ne bloquait rien) ; redémarrage possible depuis `DEFEAT` et `VICTORY` ; `VictoryLabel` ajouté en miroir de `DefeatLabel`.
+- `tests/test_defense_finale_controller.gd`, `tests/test_session_end_screens.gd` : nouvelles suites automatisées.
+
+### Modifié
+
+- M5.1 (machine d'état de quête) validée manuellement a posteriori : implémentation et tests automatisés dataient du 2026-07-26, seul le contrôle HUD manquait, désormais joué sur une partie complète jusqu'à la victoire.
+- `roadmap_v1.md` : cases M5.1, M5.4 et M5.5 cochées ; jalon M5 intégralement validé sur son périmètre fonctionnel (le critère de performance de la porte de sortie reste différé à M7).
+- `_docs/validation_v1.md` : statuts M5.1, M5.4 et M5.5 passés à « validé ».
+- `_contexte/signals.md` : correction d'une inexactitude affirmant à tort que M5.1 avait été validée manuellement en même temps que M5.2/M5.3.
+- `tests_manuels.md` : vidé après validation des trois campagnes (M5.4, M5.5, M5.1).
+
 ## v0.44 — 2026-08-07
 
 ### Modifié

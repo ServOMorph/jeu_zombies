@@ -19,6 +19,7 @@ const HEALTH_BAR_BASE_WIDTH := 250.0
 var _player: PlayerController
 var _wave_manager: WaveManager
 var _interaction_controller: InteractionController
+var _defense_finale_controller: DefenseFinaleController
 var _feedback_remaining := 0.0
 var _base_max_health := 100.0
 
@@ -37,11 +38,13 @@ func _ready() -> void:
 func configure(
 	player: PlayerController,
 	wave_manager: WaveManager,
-	interaction_controller: InteractionController
+	interaction_controller: InteractionController,
+	defense_finale_controller: DefenseFinaleController = null
 ) -> void:
 	_player = player
 	_wave_manager = wave_manager
 	_interaction_controller = interaction_controller
+	_defense_finale_controller = defense_finale_controller
 	_base_max_health = maxf(1.0, _player.max_health)
 	_player.vitals.health_changed.connect(_on_health_changed)
 	_player.vitals.stamina_changed.connect(_on_stamina_changed)
@@ -50,6 +53,8 @@ func configure(
 	_wave_manager.wave_started.connect(_on_wave_started)
 	_wave_manager.waves_completed.connect(_on_waves_completed)
 	_interaction_controller.target_changed.connect(_on_interaction_target_changed)
+	if _defense_finale_controller != null:
+		_defense_finale_controller.countdown_changed.connect(_on_defense_finale_countdown_changed)
 	_refresh_current_values()
 
 
@@ -142,6 +147,15 @@ func _on_session_changed(_value: Variant = null) -> void:
 
 func _on_quest_state_changed(_previous_state: int, _new_state: int) -> void:
 	_set_text(objective_label, "Objectif : %s" % QuestController.get_objective_text())
+
+
+func _on_defense_finale_countdown_changed(remaining_seconds: float) -> void:
+	if QuestController.state != QuestController.State.DEFENSE_FINALE:
+		return
+	_set_text(objective_label, "Objectif : %s (%d s)" % [
+		QuestController.get_objective_text(),
+		int(remaining_seconds),
+	])
 
 
 func _show_purchase_feedback(message: String, color: Color) -> void:

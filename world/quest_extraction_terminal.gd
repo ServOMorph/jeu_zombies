@@ -4,6 +4,7 @@ extends "res://systems/interactable.gd"
 const COMBAT_AUDIO_FEEDBACK := preload("res://weapons/combat_audio_feedback.gd")
 
 signal defense_finale_started
+signal victory_triggered
 
 var terminal_id := ""
 var _visual_material: StandardMaterial3D
@@ -31,18 +32,30 @@ func configure(terminal_definition: Resource) -> void:
 func can_interact(player: Node) -> bool:
 	if not super(player):
 		return false
-	return QuestController.state == QuestController.State.ACTIVER_EXTRACTION
+	return (
+		QuestController.state == QuestController.State.ACTIVER_EXTRACTION
+		or QuestController.state == QuestController.State.REJOINDRE_EXTRACTION
+	)
 
 
 func interact(player: Node) -> bool:
 	if not can_interact(player):
 		return false
-	if not QuestController.try_advance(QuestController.State.DEFENSE_FINALE):
+	var target_state := (
+		QuestController.State.DEFENSE_FINALE
+		if QuestController.state == QuestController.State.ACTIVER_EXTRACTION
+		else QuestController.State.VICTOIRE
+	)
+	if not QuestController.try_advance(target_state):
 		return false
 	if _audio_player != null:
 		_audio_player.play()
 	interaction_activated.emit(player)
-	defense_finale_started.emit()
+	if target_state == QuestController.State.DEFENSE_FINALE:
+		defense_finale_started.emit()
+	else:
+		GameSession.finish_session(GameSession.State.VICTORY)
+		victory_triggered.emit()
 	_refresh_state()
 	return true
 
@@ -50,6 +63,8 @@ func interact(player: Node) -> bool:
 func get_interaction_prompt() -> String:
 	if QuestController.state == QuestController.State.ACTIVER_EXTRACTION:
 		return "[E] Activer le protocole d'extraction"
+	if QuestController.state == QuestController.State.REJOINDRE_EXTRACTION:
+		return "[E] Rejoindre l'extraction"
 	if _state_index() < _activate_index():
 		return "Terminal verrouillé — déployez l'antidote"
 	return "Protocole d'extraction activé"

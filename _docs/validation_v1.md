@@ -697,9 +697,9 @@ Les critères de M4.5 et la porte de sortie M4 sont satisfaits.
 
 ## M5.1 — Machine d'état de quête
 
-Date : 2026-07-26
+Date : 2026-07-26 (implémentation), validation manuelle 2026-08-07
 Version Godot : `4.5.stable.official.876b29033`
-Statut : implémenté, testé automatiquement, validation manuelle en attente
+Statut : validé
 
 ### Tranche implémentée
 
@@ -719,11 +719,11 @@ Statut : implémenté, testé automatiquement, validation manuelle en attente
 
 ### Contrôle manuel
 
-En attente : affichage de l'objectif initial dans le HUD en jeu (voir `tests_manuels.md`). Seul l'état `SURVIVRE` est actuellement atteignable en jeu, les déclencheurs des étapes suivantes étant prévus par M5.2 à M5.4.
+Scénario de `tests_manuels.md` validé en jeu réel par l'utilisateur le 2026-08-07 (après implémentation complète de M5.2 à M5.5, rendant tous les états atteignables) : objectif initial correct au lancement, refus d'interaction hors ordre sans changement d'objectif, texte français exact affiché à chaque transition sur une partie complète jusqu'à la victoire, journalisation console `NOX_PROTOCOL_QUEST_TRANSITION` conforme à chaque étape, aucune erreur console.
 
 ### Résultat
 
-Les critères automatisables de M5.1 sont satisfaits. La case correspondante de `roadmap_v1.md` reste à cocher jusqu'à la validation manuelle de l'affichage HUD.
+Les critères automatisables et le contrôle manuel de M5.1 sont satisfaits. Les 5 cases correspondantes de `roadmap_v1.md` sont cochées.
 
 ## M5.3 — Déploiement et protocole d'extraction
 
@@ -754,3 +754,62 @@ Scénario de `tests_manuels.md` validé en jeu réel par l'utilisateur : refus d
 ### Résultat
 
 Les critères automatisables et le contrôle manuel de M5.3 sont satisfaits. Les 4 cases correspondantes de `roadmap_v1.md` sont cochées.
+
+## M5.4 — Défense finale
+
+Date : 2026-08-07
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `data/waves/wave_defense_finale.tres` : définition de vague à pression élevée dédiée (zone `extraction`, `zombie_count = 999` pour ne jamais s'épuiser sur 120 s, `spawn_interval_seconds = 0.5`, `health_multiplier = 1.5`), throttlée nativement par le plafond `ZombieSpawner.max_active_zombies` déjà en place.
+- `world/defense_finale_controller.gd` (`DefenseFinaleController`) : démarre un chrono de 120 s (`duration_seconds` exporté) à l'entrée en `DEFENSE_FINALE` (écoute `QuestController.state_changed`), pilote un `WaveManager` dédié (`DefenseWaveManager`) pour la pression continue, annule proprement les apparitions en cours à la fin du chrono (`WaveManager.stop()`) puis fait progresser la quête vers `REJOINDRE_EXTRACTION`. S'arrête sur défaite (`GameSession.session_ended` = `DEFEAT`) ou remise à zéro de session.
+- `world/dev_player_test.tscn` / `.gd` : nouveaux nœuds `DefenseWaveManager` et `DefenseFinaleController` câblés sur le joueur, `VictoryLabel` ajouté en miroir de `DefeatLabel`.
+- `world/quest_extraction_terminal.gd` : le terminal reconnaît désormais aussi l'état `REJOINDRE_EXTRACTION` (invite « [E] Rejoindre l'extraction ») et fait progresser la quête vers `VICTOIRE` à l'interaction, ce qui déverrouille concrètement le point d'extraction après le succès de la défense ; déclenche `GameSession.finish_session(VICTORY)`.
+- `ui/game_hud/game_hud.gd` : affiche le temps restant à côté de l'objectif pendant `DEFENSE_FINALE` (`Objectif : Tenir la défense finale. (n s)`), mis à jour par signal `countdown_changed` sans réécriture inutile.
+- Mort du joueur pendant la finale : aucune garde supplémentaire nécessaire, `PlayerController._on_died()` déclenche déjà `GameSession.finish_session(DEFEAT)` pour tout état de session `PLAYING`/`PAUSED`, y compris pendant `DEFENSE_FINALE` ; vérifié par test automatisé.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite dédiée | `python test.py --test-file=res://tests/test_defense_finale_controller.gd` | code 0 : chrono annoncé immédiatement, pression maintenue (vague dédiée active), fin de chrono annule les apparitions en cours et déverrouille `REJOINDRE_EXTRACTION`, interaction au terminal déclenche `VICTOIRE`/`GameSession.VICTORY`, mort pendant la finale déclenche `GameSession.DEFEAT` et arrête le contrôleur |
+| Contrôle global | `python check.py` | code 0, import, 28 suites headless, franchissement de porte et export `.pck` réussis, aucune `SCRIPT ERROR` |
+
+### Contrôle manuel
+
+Scénario de `tests_manuels.md` validé en jeu réel par l'utilisateur : compte à rebours affiché et lisible dans le HUD, pression de zombies continue pendant les 120 s dans la Salle d'extraction sans dépassement du plafond ni chute de FPS anormale, zombie tué immédiatement remplacé, apparitions arrêtées proprement à la fin du chrono, invite du terminal passée à « [E] Rejoindre l'extraction », victoire déclenchée à l'interaction sans erreur console, mort pendant la finale traitée comme une défaite normale.
+
+### Résultat
+
+Les critères automatisables et le contrôle manuel de M5.4 sont satisfaits. Les 6 cases correspondantes de `roadmap_v1.md` sont cochées.
+
+## M5.5 — Victoire, défaite et remise à zéro
+
+Date : 2026-08-07
+Version Godot : `4.5.stable.official.876b29033`
+Statut : validé
+
+### Tranche implémentée
+
+- `player/player_controller.gd` : `_on_died()` ne fait plus que déclencher `GameSession.finish_session(DEFEAT)` ; un nouveau `_on_session_ended(final_state)` (écoute `GameSession.session_ended`) centralise le blocage — `set_physics_process(false)`, `weapon_controller.disable_combat()`, souris visible — pour **tout** état de fin de partie (`DEFEAT` et `VICTORY`), alors qu'auparavant seule la mort du joueur coupait effectivement le déplacement/tir (la victoire ne bloquait rien).
+- `systems/interaction_controller.gd` bloquait déjà les interactions dès que `GameSession.state != PLAYING` (aucune modification nécessaire).
+- `world/dev_player_test.gd` : la touche Entrée relance désormais une session neuve depuis `DEFEAT` **et** `VICTORY` (auparavant limitée à `DEFEAT`) ; les textes de `DefeatLabel`/`VictoryLabel` et du `spawn_label` annoncent les deux choix (« Entrée : nouvelle partie · Échap : menu principal »). Échap ramène déjà au menu depuis n'importe quel état.
+- `world/defense_finale_controller.gd` : `_on_session_ended` arrête désormais le contrôleur sur `DEFEAT` **et** `VICTORY` (auparavant seulement `DEFEAT`), par cohérence défensive.
+- Nettoyage crédits/quête/systèmes de vagues : déjà assuré par l'architecture existante — `GameSession.reset_session()` vide les crédits, `QuestController._on_session_reset()` remet `SURVIVRE`, `dev_player_test.gd._on_session_ended` arrête `WaveManager`/`ZombieSpawner` ; `get_tree().reload_current_scene()` (nouvelle partie) et le changement de scène vers le menu (Échap) recréent/détruisent intégralement l'arbre de la partie, donc `WeaponController`/`PlayerPerks` repartent neufs sans écouteur dédié supplémentaire nécessaire.
+
+### Commandes et résultats
+
+| Contrôle | Commande | Résultat |
+|---|---|---|
+| Suite dédiée | `python test.py --test-file=res://tests/test_session_end_screens.gd` | code 0 : défaite bloque déplacement/tir/souris et affiche l'écran, victoire bloque déplacement/tir et affiche l'écran, nouvelle partie possible après défaite et après victoire (état PLAYING, crédits à zéro, quête à SURVIVRE), retour au menu après victoire puis nouvelle partie fonctionnent |
+| Contrôle global | `python check.py` | code 0, import, 29 suites headless, franchissement de porte et export `.pck` réussis, aucune `SCRIPT ERROR` |
+
+### Contrôle manuel
+
+Scénario de `tests_manuels.md` validé en jeu réel par l'utilisateur : mort déclenchant l'écran DÉFAITE bloquant intégralement le joueur, nouvelle partie propre depuis DÉFAITE, victoire complète déclenchant l'écran VICTOIRE bloquant intégralement le joueur, nouvelle partie propre depuis VICTOIRE, retour au menu depuis VICTOIRE puis nouvelle partie fonctionnelle, aucune erreur console.
+
+### Résultat
+
+Les critères automatisables et le contrôle manuel de M5.5 sont satisfaits. Les 5 cases correspondantes de `roadmap_v1.md` sont cochées.

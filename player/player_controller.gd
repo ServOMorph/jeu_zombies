@@ -75,6 +75,7 @@ func _ready() -> void:
 		stamina_reactivation_threshold
 	)
 	vitals.died.connect(_on_died)
+	GameSession.session_ended.connect(_on_session_ended)
 	perks.perk_purchased.connect(_on_perk_purchased)
 	_apply_perk_effects()
 	_standing_shape = (collision_shape.shape as CapsuleShape3D).duplicate() as CapsuleShape3D
@@ -166,10 +167,14 @@ func receive_damage(amount: float) -> bool:
 
 func _on_died() -> void:
 	velocity = Vector3.ZERO
-	weapon_controller.disable_combat()
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if GameSession.state == GameSession.State.PLAYING or GameSession.state == GameSession.State.PAUSED:
 		GameSession.finish_session(GameSession.State.DEFEAT)
+
+
+func _on_session_ended(_final_state: int) -> void:
+	set_physics_process(false)
+	weapon_controller.disable_combat()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func get_horizontal_speed() -> float:
