@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.46 — 2026-08-08
+
+### Corrigé
+
+- Bug bloquant : les zombies se figeaient définitivement en poursuite, soit contre le mobilier des zones (racks muraux, caisse, stations), soit dans les passages inter-zones. Cause : `world/helix_blockout.gd` construisait la navmesh à partir de cinq quads codés en dur sans découpe des obstacles, et les passages n'étaient reliés que par un `NavigationLink3D` ponctuel porté par chaque porte.
+- La navmesh est désormais bakée sur la géométrie de collision réelle de la carte (`agent_radius` 0,5, `agent_height` 2,0, `agent_max_climb` 0,25, alignés sur le `cell_height` de la map), avec un re-bake différé à chaque changement d'état de porte (~8 ms mesurés en headless).
+- `world/helix_door.gd` : le `NavigationLink3D` de porte est remplacé par un `NavigationObstacle3D` qui creuse ou comble la navmesh selon l'état ouvert/fermé.
+- `enemies/zombie_standard.gd` : correction de `request_navigation_repath()` qui ciblait la position du zombie lui-même au lieu de celle du joueur ; suppression de `_is_traversing_navigation_link()`, devenue sans objet ; ajout d'un filet évitant qu'un zombie s'arrête net dès que la navigation se déclare terminée alors que sa cible est encore hors de portée d'attaque.
+
+### Ajouté
+
+- `tests/zombie_navigation_integration.gd`/`.tscn` : test de non-régression headless couvrant les deux scénarios de blocage constatés, intégré à `check.py`.
+
 ## v0.45 — 2026-08-07
 
 ### Ajouté

@@ -97,7 +97,7 @@ func deactivate() -> void:
 func request_navigation_repath() -> void:
 	_path_refresh_remaining = 0.0
 	if navigation_agent != null and is_instance_valid(_target):
-		navigation_agent.target_position = global_position
+		navigation_agent.target_position = _target.global_position
 
 
 func receive_damage(amount: float) -> bool:
@@ -157,18 +157,20 @@ func _physics_process(delta: float) -> void:
 
 func _move_toward_target(delta: float) -> void:
 	_path_refresh_remaining -= delta
-	if (
-		should_refresh_path(_path_refresh_remaining, definition.path_refresh_seconds)
-		and not _is_traversing_navigation_link()
-	):
+	if should_refresh_path(_path_refresh_remaining, definition.path_refresh_seconds):
 		navigation_agent.target_position = _target.global_position
 		_path_refresh_remaining = definition.path_refresh_seconds
 	var next_position := _target.global_position
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) > 0:
 		if navigation_agent.is_navigation_finished():
-			_stop_horizontal_motion()
-			return
-		next_position = navigation_agent.get_next_path_position()
+			if is_target_within_reach(
+				global_position.distance_to(_target.global_position),
+				definition.attack_range_meters,
+			):
+				_stop_horizontal_motion()
+				return
+		else:
+			next_position = navigation_agent.get_next_path_position()
 	var direction := global_position.direction_to(next_position)
 	direction.y = 0.0
 	if direction.length_squared() == 0.0:
@@ -178,18 +180,6 @@ func _move_toward_target(delta: float) -> void:
 	velocity.x = direction.x * definition.move_speed
 	velocity.z = direction.z * definition.move_speed
 	_separate_from_neighbours()
-
-
-func _is_traversing_navigation_link() -> bool:
-	var path_index := navigation_agent.get_current_navigation_path_index()
-	if path_index <= 0:
-		return false
-	var path_types := navigation_agent.get_current_navigation_result().path_types
-	return (
-		path_index - 1 < path_types.size()
-		and path_types[path_index - 1]
-		== NavigationPathQueryResult3D.PATH_SEGMENT_TYPE_LINK
-	)
 
 
 func _apply_gravity(delta: float) -> void:
@@ -281,6 +271,10 @@ static func is_attack_valid(distance: float, attack_range: float, has_clear_line
 
 static func should_refresh_path(remaining_seconds: float, refresh_seconds: float) -> bool:
 	return remaining_seconds <= 0.0 and refresh_seconds > 0.0
+
+
+static func is_target_within_reach(distance: float, attack_range: float) -> bool:
+	return distance <= attack_range
 
 
 static func resolve_vertical_velocity(

@@ -8,12 +8,14 @@ signal state_changed(is_open: bool)
 @export_range(1.0, 8.0, 0.1) var width := 4.0
 @export_range(2.0, 6.0, 0.1) var height := 3.5
 
+const NAVIGATION_OBSTACLE_EXTENT := 3.0
+
 var is_open := false
 
 var _panel: MeshInstance3D
 var _collision_shape: CollisionShape3D
 var _interaction_collision_shape: CollisionShape3D
-var _navigation_link: NavigationLink3D
+var _navigation_obstacle: NavigationObstacle3D
 
 
 func _ready() -> void:
@@ -54,20 +56,25 @@ func set_open(should_open: bool, emit_change := true) -> void:
 	if _interaction_collision_shape != null:
 		_interaction_collision_shape.set_deferred("disabled", is_open)
 	set_interaction_enabled(not is_open)
-	if _navigation_link != null:
-		_navigation_link.enabled = is_open
+	if _navigation_obstacle != null:
+		_navigation_obstacle.affect_navigation_mesh = not is_open
 	if emit_change:
 		state_changed.emit(is_open)
 
 
-func configure_navigation_link(start_point: Vector3, end_point: Vector3) -> void:
-	_navigation_link = NavigationLink3D.new()
-	_navigation_link.name = "NavigationLink3D"
-	_navigation_link.start_position = to_local(start_point)
-	_navigation_link.end_position = to_local(end_point)
-	_navigation_link.bidirectional = true
-	add_child(_navigation_link)
-	_navigation_link.enabled = is_open
+func configure_navigation_obstacle() -> void:
+	_navigation_obstacle = NavigationObstacle3D.new()
+	_navigation_obstacle.name = "NavigationObstacle3D"
+	_navigation_obstacle.avoidance_enabled = false
+	_navigation_obstacle.height = height
+	_navigation_obstacle.vertices = PackedVector3Array([
+		Vector3(-NAVIGATION_OBSTACLE_EXTENT, 0.0, -NAVIGATION_OBSTACLE_EXTENT),
+		Vector3(NAVIGATION_OBSTACLE_EXTENT, 0.0, -NAVIGATION_OBSTACLE_EXTENT),
+		Vector3(NAVIGATION_OBSTACLE_EXTENT, 0.0, NAVIGATION_OBSTACLE_EXTENT),
+		Vector3(-NAVIGATION_OBSTACLE_EXTENT, 0.0, NAVIGATION_OBSTACLE_EXTENT),
+	])
+	add_child(_navigation_obstacle)
+	_navigation_obstacle.affect_navigation_mesh = not is_open
 
 
 func _create_panel() -> void:

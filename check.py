@@ -45,6 +45,15 @@ def main() -> int:
             ],
         ),
         (
+            "Poursuite des zombies autour des obstacles et dans les passages",
+            [
+                sys.executable,
+                str(PROJECT_ROOT / "run.py"),
+                "--headless",
+                "res://tests/zombie_navigation_integration.tscn",
+            ],
+        ),
+        (
             "Export de contrôle",
             [
                 sys.executable,

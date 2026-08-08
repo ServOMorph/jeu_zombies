@@ -17,13 +17,12 @@ static var CONNECTIONS: Array[Dictionary] = [
 	{"id": "laboratoire_extraction", "position": Vector3(14.5, 0.0, -50.0), "rotation_y": -2.31, "start": Vector3(22.5, 0.0, -44.5), "end": Vector3(6.5, 0.0, -55.5), "zones": PackedStringArray(["laboratoire", "extraction"])},
 ]
 
-static var NAVIGATION_AREAS: Array[PackedVector3Array] = [
-	PackedVector3Array([Vector3(-10.0, 0.0, -1.0), Vector3(10.0, 0.0, -1.0), Vector3(10.0, 0.0, 16.0), Vector3(-10.0, 0.0, 16.0)]),
-	PackedVector3Array([Vector3(-11.0, 0.0, -9.0), Vector3(11.0, 0.0, -9.0), Vector3(11.0, 0.0, -23.0), Vector3(-11.0, 0.0, -23.0)]),
-	PackedVector3Array([Vector3(-40.0, 0.0, -32.0), Vector3(-22.0, 0.0, -32.0), Vector3(-22.0, 0.0, -47.0), Vector3(-40.0, 0.0, -47.0)]),
-	PackedVector3Array([Vector3(22.0, 0.0, -32.0), Vector3(40.0, 0.0, -32.0), Vector3(40.0, 0.0, -47.0), Vector3(22.0, 0.0, -47.0)]),
-	PackedVector3Array([Vector3(-11.0, 0.0, -55.0), Vector3(11.0, 0.0, -55.0), Vector3(11.0, 0.0, -71.0), Vector3(-11.0, 0.0, -71.0)]),
-]
+const NAVIGATION_SOURCE_GROUP := "navigation_source"
+const NAVIGATION_AGENT_RADIUS := 0.5
+const NAVIGATION_AGENT_HEIGHT := 2.0
+const NAVIGATION_AGENT_MAX_CLIMB := 0.25
+const NAVIGATION_AGENT_MAX_SLOPE := 45.0
+const NAVIGATION_GEOMETRY_COLLISION_MASK := 1
 
 const WALL_BUYS: Array[Dictionary] = [
 	{"id": "accueil_pistolet", "zone": "accueil", "position": Vector3(0.0, 1.1, 4.0)},
@@ -77,6 +76,8 @@ var _fabrication_stations: Dictionary = {}
 var _deployment_points: Dictionary = {}
 var _extraction_terminals: Dictionary = {}
 var _zone_roots: Dictionary = {}
+var _navigation_region: NavigationRegion3D
+var _navigation_rebake_requested := false
 
 @export var door_definitions: Array[Resource] = []
 @export var wall_buy_definitions: Array[Resource] = []
@@ -110,7 +111,9 @@ func _ready() -> void:
 		_create_deployment_point(deployment_point)
 	for extraction_terminal: Dictionary in EXTRACTION_TERMINALS:
 		_create_extraction_terminal(extraction_terminal)
-	_create_navigation_regions()
+	add_to_group(NAVIGATION_SOURCE_GROUP)
+	_create_navigation_region()
+	bake_navigation()
 
 
 static func get_zone_ids() -> PackedStringArray:
@@ -313,7 +316,7 @@ func _create_door(connection: Dictionary) -> void:
 	door.position = connection["position"] as Vector3
 	door.rotation.y = connection["rotation_y"] as float
 	add_child(door)
-	door.configure_navigation_link(connection["start"] as Vector3, connection["end"] as Vector3)
+	door.configure_navigation_obstacle()
 	door.state_changed.connect(_on_door_state_changed)
 	_doors[door_id] = door
 	_create_connection_floor(connection)
@@ -568,21 +571,45 @@ func _create_connection_floor(connection: Dictionary) -> void:
 	passage.add_child(collision)
 
 
-func _create_navigation_regions() -> void:
-	for index in NAVIGATION_AREAS.size():
-		var region := NavigationRegion3D.new()
-		region.name = "NavigationRegion_%s" % str(ZONES[index]["id"])
-		var mesh := NavigationMesh.new()
-		mesh.vertices = NAVIGATION_AREAS[index]
-		mesh.add_polygon(PackedInt32Array([0, 3, 2, 1]))
-		region.navigation_mesh = mesh
-		add_child(region)
-		NavigationServer3D.region_set_enabled(region.get_region_rid(), true)
-		NavigationServer3D.region_set_map(region.get_region_rid(), get_world_3d().navigation_map)
-		NavigationServer3D.region_set_navigation_mesh(region.get_region_rid(), mesh)
+func _create_navigation_region() -> void:
+	var navigation_mesh := NavigationMesh.new()
+	var map := get_world_3d().navigation_map
+	navigation_mesh.cell_size = NavigationServer3D.map_get_cell_size(map)
+	navigation_mesh.cell_height = NavigationServer3D.map_get_cell_height(map)
+	navigation_mesh.agent_radius = NAVIGATION_AGENT_RADIUS
+	navigation_mesh.agent_height = NAVIGATION_AGENT_HEIGHT
+	navigation_mesh.agent_max_climb = NAVIGATION_AGENT_MAX_CLIMB
+	navigation_mesh.agent_max_slope = NAVIGATION_AGENT_MAX_SLOPE
+	navigation_mesh.geometry_parsed_geometry_type = (
+		NavigationMesh.PARSED_GEOMETRY_STATIC_COLLIDERS
+	)
+	navigation_mesh.geometry_collision_mask = NAVIGATION_GEOMETRY_COLLISION_MASK
+	navigation_mesh.geometry_source_geometry_mode = (
+		NavigationMesh.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
+	)
+	navigation_mesh.geometry_source_group_name = NAVIGATION_SOURCE_GROUP
+	_navigation_region = NavigationRegion3D.new()
+	_navigation_region.name = "NavigationRegion_helix"
+	_navigation_region.navigation_mesh = navigation_mesh
+	add_child(_navigation_region)
+
+
+func bake_navigation() -> void:
+	_navigation_rebake_requested = false
+	if _navigation_region == null:
+		return
+	_navigation_region.bake_navigation_mesh(false)
+
+
+func _request_navigation_rebake() -> void:
+	if _navigation_rebake_requested:
+		return
+	_navigation_rebake_requested = true
+	bake_navigation.call_deferred()
 
 
 func _on_door_state_changed(_is_open: bool) -> void:
+	_request_navigation_rebake()
 	get_tree().call_group("zombies", "request_navigation_repath")
 	if are_all_doors_open():
 		QuestController.try_advance(QuestController.State.OUVRIR_LES_ZONES)
