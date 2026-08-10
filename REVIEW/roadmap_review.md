@@ -126,7 +126,7 @@ Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmati
 
 ---
 
-## Phase 3 — Frontière développement / production `[TODO]`
+## Phase 3 — Frontière développement / production `[FAIT]`
 
 Environ 700 lignes d'outillage de dev vivent dans les mêmes dossiers que le
 code de jeu, dont le fichier le plus modifié du projet.

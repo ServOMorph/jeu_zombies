@@ -1,7 +1,7 @@
 # Backlog — Audit REVIEW
 
 *Généré par l'agent REVIEW. Format standardisé : [SEV] <titre>.*
-*Phase en cours : 2 (État global, vagues et quête). Phases terminées : 1.*
+*Phase en cours : 3 (Frontière développement / production). Phases terminées : 1, 2.*
 
 ---
 
@@ -186,3 +186,50 @@
 - **Impact** : Baisse de FPS inutile, surtout avec beaucoup d'entités.
 - **Piste** : Désactiver `move_and_slide` si le joueur est mort. Optimiser `_try_step_up` (ne l'appeler que si `is_on_wall()` et `horizontal_motion.length_squared() > 0`). Cache la liste des zombies dans `ZombieSpawner` et mettre à jour uniquement quand nécessaire.
 - **Phase** : 1
+
+---
+
+## Phase 3 — Frontière développement / production
+
+### [BUG] Raccourcis de test actifs hors build debug (F6, F7, F8, F9)
+- **Fichier** : `world/dev_player_test.gd:196-231`
+- **Symptôme** : Dans `_input()`, les branches `KEY_F6` (inflige 25 dégâts au joueur), `KEY_F7` (réinitialise la cible d'entraînement), `KEY_F8` (force le démarrage de la vague suivante) et `KEY_F9` (arrête la vague en cours et force la vague 5) ne sont conditionnées que par `_is_survival_scenario()` ou rien du tout — jamais par `OS.is_debug_build()`, contrairement à `F1`, `F2`, `F5`, `F11`, `F12` du même fichier qui le sont explicitement.
+- **Impact** : Dans un build release, un joueur peut se blesser volontairement, réinitialiser la cible d'entraînement ou sauter directement à la vague 5, cassant la progression prévue par les vagues — sans avoir besoin d'un build debug.
+- **Piste** : Ajouter `and OS.is_debug_build()` aux quatre conditions, à l'identique de `F1`/`F2`/`F5`/`F11`/`F12`.
+- **Phase** : 3
+
+---
+
+### [BUG] Le point d'entrée de production charge la scène de développement, atteignable sans garde
+- **Fichier** : `project.godot:15`, `ui/dev_startup/dev_startup.gd:68-70`, `export_presets.cfg` (`export_filter="all_resources"`)
+- **Symptôme** : `run/main_scene="res://ui/dev_startup/dev_startup.tscn"`. Dans cette scène, la touche `F2` (ligne 68) bascule vers `world/dev_player_test.tscn` sans aucun garde `OS.is_debug_build()` — contrairement au `F2` symétrique de `dev_player_test.gd` qui, lui, est gardé. `export_filter="all_resources"` inclut ces scripts et scènes dans l'export release.
+- **Impact** : Un export release livré tel quel démarre sur un écran de développement, et une simple touche donne accès à la scène de test complète (armes de triche via `F1`, crédits illimités via `F2` côté `dev_player_test`, portes forcées via `F11`/`F12`, plus les hotkeys non gardées du finding précédent). Contredit directement `roadmap_v1.md` § 2 (« aucun bouton factice, écran inaccessible ni outil de développement dans la release »).
+- **Piste** : Couvert en principe par la phase P5 de `roadmap_m6.md` (nouvelle scène de release séparée). Ce finding documente que, tant que P5 n'est pas traitée, **tout export actuel est déjà non conforme** — ce n'est pas un risque futur mais l'état présent du build.
+- **Phase** : 3
+
+---
+
+### [DETTE] `dev_player_test.gd` mélange logique de production et outillage de développement dans un seul fichier
+- **Fichier** : `world/dev_player_test.gd` (399 lignes, 12 modifications — record du projet)
+- **Symptôme** : La même classe et le même `_input()` portent à la fois de la logique utile en release (relance après défaite/victoire, retour au menu par Échap, câblage des vagues/quête/HUD) et dix raccourcis de développement (`F1`, `F2`, `F5` à `F12`) avec des gardes `OS.is_debug_build()` posées au cas par cas plutôt que centralisées.
+- **Impact** : Toute modification de la logique de production oblige à retoucher un fichier saturé d'outillage de dev — ce qui explique le taux de modification le plus élevé du projet — et augmente le risque d'oubli de garde, comme démontré par les deux findings BUG ci-dessus.
+- **Piste** : Extraire la logique de production dans une scène/script de release distinct (déjà planifié en P5 de `roadmap_m6.md`), et regrouper les hotkeys de dev dans un composant unique activé une seule fois en tête de fichier par `OS.is_debug_build()`, plutôt que dispersées dans chaque branche.
+- **Phase** : 3
+
+---
+
+### [NETTOYAGE] Marqueurs `print()` non gardés visibles dans la console de l'export release
+- **Fichier** : `ui/dev_startup/dev_startup.gd:52`, `world/dev_player_test.gd:62`
+- **Symptôme** : Ces deux `print("NOX_PROTOCOL_..._READY")` (marqueurs de synchronisation, probablement consommés par l'outillage de test headless) ne sont pas conditionnés par `OS.is_debug_build()`, contrairement à `ui/dev_overlay/dev_metrics_overlay.gd:37` qui l'est via le garde de `_ready()`. L'export Windows a `debug/export_console_wrapper=1` (`export_presets.cfg`), donc une fenêtre console accompagne l'exécutable release.
+- **Impact** : Bruit de développement visible par le joueur final dans la console de l'exécutable release. Mineur, mais incohérent avec le seul autre marqueur du même dossier, déjà gardé.
+- **Piste** : Conditionner ces deux `print()` par `OS.is_debug_build()`, ou les supprimer si l'outillage de test ne les consomme pas réellement — à trancher en Phase 4 (outillage Python) en vérifiant ce qui les lit.
+- **Phase** : 3
+
+---
+
+### [NETTOYAGE] Dossier `autoload/` vide, vestige d'une convention non suivie
+- **Fichier** : `autoload/` (dossier racine, vide)
+- **Symptôme** : Le dossier existe mais ne contient aucun fichier. Les autoloads réellement déclarés dans `project.godot` (`GameSession`, `QuestController`) pointent vers `core/game_session.gd` et `core/quest_controller.gd`, pas vers `autoload/`.
+- **Impact** : Aucun effet fonctionnel (un dossier vide n'est pas chargé), mais source de confusion pour quiconque cherche les autoloads à l'endroit conventionnel de leur nom.
+- **Piste** : Supprimer le dossier, ou y déplacer les deux scripts d'autoload si cette convention est celle retenue à terme.
+- **Phase** : 3

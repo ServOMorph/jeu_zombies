@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.52 — 2026-08-11
+
+### Modifié
+- REVIEW/backlog.md : 5 findings Phase 3 (Frontière développement/production) ajoutés (2 BUG, 1 DETTE, 2 NETTOYAGE) — dont un accès non gardé à la scène de développement depuis le point d'entrée de production, et quatre hotkeys de test actives sans garde `OS.is_debug_build()`.
+- REVIEW/roadmap_review.md : Phase 3 marquée [FAIT]
+- REVIEW/_contexte/signals.md et contexte.md : mise à jour après clôture Phase 3
+- README.md : État actuel mis à jour (Phase 3 REVIEW terminée)
+- _contexte/synthese_agents.md : entrée pour la session review 2026-08-11 ajoutée
+
 ## v0.51 — 2026-08-11
 
 ### Corrigé
