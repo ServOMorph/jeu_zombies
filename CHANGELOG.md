@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.49 — 2026-08-10
+
+### Modifié
+- REVIEW/backlog.md : 10 findings Phase 1 (Boucle de combat) ajoutés (2 BUG/RISQUE, 4 DETTE, 4 NETTOYAGE)
+- REVIEW/roadmap_review.md : Phase 1 marquée [FAIT]
+- REVIEW/_contexte/signals.md et contexte.md : mise à jour après clôture Phase 1
+
+---
+
 ## v0.48 — 2026-08-11
 
 ### Ajouté

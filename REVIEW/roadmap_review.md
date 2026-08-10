@@ -71,7 +71,7 @@ est le garde-fou contre l'audit qui gonfle pour se justifier.
 
 ---
 
-## Phase 1 — Boucle de combat `[TODO]`
+## Phase 1 — Boucle de combat `[FAIT]`
 
 Le code le plus churné du projet, donc celui où la dette s'accumule le plus
 vite. Insensible à M6.4, d'où sa position en tête.
