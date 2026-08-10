@@ -1,6 +1,8 @@
 class_name HelixBlockout
 extends Node3D
 
+const ZONE_WALLS := preload("res://world/zone_walls.gd")
+
 const ZONES: Array[Dictionary] = [
 	{"id": "accueil", "name": "ACCUEIL SÉCURISÉ", "position": Vector3(0.0, 0.01, 7.5), "floor_size": Vector3(20.0, 0.12, 17.0), "color": Color(0.16, 0.34, 0.48, 1.0), "decision": "Pistolet mural — 500 crédits"},
 	{"id": "couloirs", "name": "COULOIRS DE CONFINEMENT", "position": Vector3(0.0, 0.01, -16.0), "floor_size": Vector3(22.0, 0.12, 14.0), "color": Color(0.42, 0.3, 0.16, 1.0), "decision": "Porte nord — 750 crédits"},
@@ -302,6 +304,8 @@ func _create_zone(zone: Dictionary) -> void:
 		marker.material_override = floor_material
 		marker.position = offset
 		zone_root.add_child(marker)
+
+	ZONE_WALLS.build_zone_walls(str(zone["id"]), zone_root)
 
 
 func _create_door(connection: Dictionary) -> void:

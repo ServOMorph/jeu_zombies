@@ -8,16 +8,14 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- M0 à M4.5 sont validés. `python check.py` réussit intégralement (import, 30 suites headless, navigation des portes, poursuite des zombies, export `.pck`).
-- Le chantier DI est clos sur son périmètre administratif (DI.0 à DI.6 `[FAIT]`) ; l'intégration visuelle des 34 designs importés (kit modulaire, zombie) est reportée au jalon M6.4.
-- Jalon M5 (Quête, finale et fins de partie) intégralement clos : M5.1 à M5.5 sont implémentées, testées automatiquement et validées manuellement en jeu réel, toutes les cases cochées dans `roadmap_v1.md`. Le dernier critère (M5.2, vague pendant l'interaction) a été validé le 2026-08-10.
-- Bug de navigation zombie corrigé (session du 2026-08-08) : la carte bake désormais sa navmesh sur la géométrie de collision réelle ; les portes creusent/comblent la navmesh via `NavigationObstacle3D` au lieu d'un `NavigationLink3D`.
-- La carte reste construite avec des primitives Godot (pas de murs) et le zombie standard avec une capsule de substitution ; aucun asset importé n'est visible en jeu avant M6.4.
-- Prochaine étape : jalon M6 — Menus, options, présentation et audio, en commençant par M6.1 (menu principal et pause).
+- M0 à M5 sont validés. `python check.py` réussit intégralement (import, 30 suites headless, navigation des portes, poursuite des zombies, export `.pck`).
+- Jalon M6 en cours, piloté par `roadmap_m6.md` (fait foi ; remplace `roadmap_m6_4_integration_graphismes.md`, conservé pour trace). Phase P1 `[EN COURS]` : zone pilote `couloirs` murée (`world/zone_walls.gd`, module de pose data-driven réutilisable), collision de mur découplée des modules décoratifs du kit, navmesh mesurée sans régression (7,36 ms vs 7,15 ms avant, réf. historique 7,9 ms).
+- Les baies en biais de `couloirs` (vers entrepôt/laboratoire) sont traitées par troncature du mur avant le coin plutôt que par module d'angle ou baie élargie orthogonale — décision actée après calcul d'empreinte montrant qu'une baie élargie déborderait sur le mur adjacent ; ce cas se reproduira sur 3 des 4 autres zones en P2.
+- Reste en attente avant de clore P1 : 2 contrôles manuels dans `tests_manuels.md` (z-fighting/chevauchements, FPS/appels de rendu de la zone pilote).
+- La carte hors zone `couloirs` reste construite avec des primitives Godot (pas de murs) et le zombie standard avec une capsule de substitution ; aucun autre asset importé n'est visible en jeu.
+- Prochaine étape : contrôles manuels de P1 (`tests_manuels.md`), puis P2 (généralisation du tuilage aux 4 zones restantes).
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée, archiver au-delà)
-- 2026-08-06 : DI.5/DI.6 sont clos sur leur périmètre administratif ; l'intégration visuelle en scène des designs importés (tuilage kit modulaire, mesh zombie) est reportée au jalon M6.4, décision utilisateur motivée par l'absence de tout mur/mesh réel dans la carte actuelle (uniquement des primitives procédurales).
-- 2026-08-06 : M5.2 est implémentée (composants d'antidote, station de fabrication, progression automatique de `QuestController`), testée automatiquement et validée manuellement par l'utilisateur ; le critère "vague pendant l'interaction" reste non testé.
 - 2026-08-06 : M5.3 commencée : point de déploiement affecté à la zone `laboratoire`, terminal d'extraction à la zone `extraction` (conforme au GDD, section 4). Le verrouillage des transitions incompatibles pendant la finale est assuré nativement par `QuestController.try_advance` (transitions strictement adjacentes de `ORDER`), sans garde supplémentaire à ajouter.
 - 2026-08-07 : M5.3 complétée fonctionnellement et testée automatiquement (câblage `helix_blockout.gd`/`dev_player_test.tscn`, deux suites de tests créées). Cases roadmap non cochées tant que la validation manuelle en jeu réel n'est pas faite, conformément à la règle du projet.
 - 2026-08-07 : M5.3 validée manuellement en jeu réel ; les 4 cases sont cochées dans `roadmap_v1.md` et `tests_manuels.md` est vidé.
@@ -27,3 +25,5 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-08-08 : Bug de navigation zombie diagnostiqué (blocage définitif contre le mobilier et dans les passages inter-zones) et corrigé par bake de navmesh sur la géométrie de collision réelle plutôt que des zones codées en dur, avec obstacles de porte (`NavigationObstacle3D`) remplaçant les liens ponctuels ; approche choisie car alignée avec la passe artistique M6.4 à venir (le bake suivra la nouvelle géométrie sans réécriture).
 - 2026-08-08 : Le repositionnement du re-bake sur la géométrie réelle rend inutile `_is_traversing_navigation_link()` (supprimé) et corrige un bug latent de `request_navigation_repath()` qui ciblait la position du zombie lui-même au lieu de celle du joueur.
 - 2026-08-10 : M5.2 clôturé (dernier critère « vague pendant l'interaction » validé manuellement) ; jalon M5 intégralement clos.
+- 2026-08-11 : `roadmap_m6.md` retenu comme plan de référence de M6 (remplace `roadmap_m6_4_integration_graphismes.md`), car ce dernier posait une contrainte « aucune collision » incompatible avec des murs solides ; `roadmap_m6.md` la corrige en découplant collision de mur (code) et modules décoratifs (kit).
+- 2026-08-11 : Baies en biais de `couloirs` traitées par troncature du mur avant le coin (pas de module d'angle, pas de baie orthogonale élargie) — une baie élargie calculée précisément déborderait du mur adjacent ; redresser les connexions a été écarté pour ne pas toucher la navmesh validée le 2026-08-08.

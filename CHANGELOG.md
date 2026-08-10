@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.48 — 2026-08-11
+
+### Ajouté
+
+- `world/zone_walls.gd` : module de pose réutilisable, séparé de `helix_blockout.gd`, tuilant murs, angles, terminaisons, encadrement de baie et bordures de sol du kit modulaire importé (data-driven, réutilisable pour les autres zones).
+- Zone pilote `couloirs` murée (jalon M6, phase P1 de `roadmap_m6.md`) : modules décoratifs du kit sans collision, collision de mur ajoutée séparément sous forme de 5 boîtes interrompues à la baie nord et aux deux coins ouverts sur les couloirs en biais (vers entrepôt et laboratoire).
+- `tests/test_zone_walls.gd` : test automatisé de la géométrie de collision et des ouvertures, intégré au runner headless.
+- `tests/benchmark_navigation_rebake.gd`/`.tscn` : benchmark headless du bake de navmesh (7,36 ms après mur vs 7,15 ms avant, référence historique 7,9 ms — aucune régression).
+
+### Modifié
+
+- `roadmap_m6.md` retenu comme plan de référence du jalon M6 ; `roadmap_m6_4_integration_graphismes.md` marqué remplacé (contrainte « aucune collision » incompatible avec des murs solides), conservé pour trace.
+
+### Décision
+
+- Les baies en biais de la zone `couloirs` (vers entrepôt/laboratoire) sont traitées par troncature du mur avant le coin plutôt que par module d'angle ou baie orthogonale élargie — une baie élargie calculée précisément déborderait sur le mur adjacent.
+
 ## v0.47 — 2026-08-10
 
 ### Validé

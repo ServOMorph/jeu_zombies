@@ -1,3 +1,8 @@
+> **Remplacée le 2026-08-11 par [`roadmap_m6.md`](./roadmap_m6.md).** Ce document ne couvrait que
+> M6.4 et posait une contrainte intenable (« aucune modification des collisions ») incompatible avec
+> des murs réellement solides ; `roadmap_m6.md` couvre M6.1 à M6.5 et corrige ce point (collision de
+> mur découplée des modules décoratifs, cf. sa décision D3). Conservé pour trace, ne plus suivre.
+
 # Roadmap — M6.4 Intégration graphique du kit modulaire et du zombie standard
 
 > Périmètre confirmé par l'utilisateur le 2026-08-10 : câbler dans les scènes les 34 designs déjà
