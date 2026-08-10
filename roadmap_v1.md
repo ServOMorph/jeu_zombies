@@ -797,7 +797,7 @@ VICTOIRE
 - [x] Empêcher double collecte ou disparition sans progression.
 - [x] Activer la fabrication uniquement avec les trois composants.
 - [x] Donner un retour clair pendant et après la fabrication.
-- [ ] Empêcher la perte de progression si une vague commence pendant l'interaction.
+- [x] Empêcher la perte de progression si une vague commence pendant l'interaction.
 
 ### État au 2026-08-06
 
@@ -807,9 +807,14 @@ de `QuestController` (`OUVRIR_LES_ZONES` → `RECUPERER_LES_COMPOSANTS` → `FAB
 `DEPLOYER_ANTIDOTE`). Tous les critères ci-dessus sont couverts par des tests automatisés
 (`test_quest_component.gd`, `test_quest_fabrication_station.gd`, `test_quest_controller.gd`) ;
 `python check.py` réussit sans erreur (25 suites). Campagne manuelle validée par l'utilisateur en
-jeu réel (`tests_manuels.md` vidé). Reste non couverte : la case « vague pendant l'interaction »,
-absente du scénario manuel joué (aucune vague n'était active pendant la collecte/fabrication
-testée) ; à vérifier explicitement avant clôture complète de M5.2.
+jeu réel (`tests_manuels.md` vidé).
+
+### État au 2026-08-10
+
+Critère « vague pendant l'interaction » validé manuellement en jeu réel (6 cas : collecte et
+fabrication sous vague active, interruption par zombie sans perte d'état, mort pendant
+collecte/fabrication avec réinitialisation propre, absence d'erreur console). M5.2 est
+intégralement clos. `tests_manuels.md` vidé.
 
 ### M5.3 — Déploiement et protocole d'extraction
 

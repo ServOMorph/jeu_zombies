@@ -2,7 +2,6 @@
 
 ## Actions ouvertes
 
-- [P1|ouvert] Rejouer les tests manuels M5.2 en attente (progression pendant une vague active), débloqués par la correction du bug de navigation zombie de cette session. fait quand: `tests_manuels.md` est vidé et la case correspondante est cochée dans `roadmap_v1.md` (section M5.2). réf: `tests_manuels.md`, `roadmap_v1.md` (section M5.2)
 - [P2|ouvert] Ligne d'attaque des zombies potentiellement bloquée par leurs congénères : `_has_clear_attack_line()` (enemies/zombie_standard.gd) exclut uniquement le zombie lui-même du rayon, or tous les zombies partagent le layer de collision 1 — un zombie masqué par un autre pourrait ne jamais valider sa ligne d'attaque. Non prouvé par un test cette session. fait quand: un test dédié confirme ou infirme le défaut, et corrige si confirmé. réf: `enemies/zombie_standard.gd:230-238`
 - [P2|ouvert] Intégration visuelle du kit modulaire et du zombie standard dans les scènes de jeu (tuilage des murs, remplacement du mesh capsule). fait quand: le jalon M6.4 est complété avec preuve visuelle. réf: `roadmap_v1.md` (section M6.4), `_docs/design_imports/runs/2026-07-31T151903Z_phase1-phase2-phase4-phase5_e7093bbc7435/friction_log.md` (F-006)
 
@@ -18,28 +17,17 @@
 
 ## Dernière session
 
-# Session du 2026-08-08 — Diagnostic et correction du blocage de navigation des zombies
+# Session du 2026-08-10 — Validation manuelle M5.2, clôture du jalon M5
 
 ## Décisions prises
-- Diagnostic reproductible en headless : deux causes indépendantes du gel des zombies (obstacles absents de la navmesh, passages inter-zones non navigables).
-- Approche retenue après validation technique préalable (bake headless fonctionnel, coût mesuré ~8 ms) : baker la navmesh sur la géométrie de collision réelle plutôt que des zones codées en dur, alignée avec la refonte artistique prévue à M6.4.
-- Remplacement des `NavigationLink3D` de porte par des `NavigationObstacle3D` qui creusent/comblent la navmesh selon l'état ouvert/fermé, avec re-bake différé sur changement d'état.
-- Correction d'un bug latent dans `request_navigation_repath()` (ciblait la position du zombie au lieu de celle du joueur) et ajout d'un filet : un zombie dont la navigation se déclare terminée continue en ligne droite tant que la cible n'est pas à portée d'attaque, au lieu de s'arrêter net.
+- Les 6 cas de tests manuels M5.2 (vague active pendant collecte/fabrication, interruption par zombie, mort pendant l'interaction) sont validés en jeu réel par l'utilisateur.
 
 ## Livrables produits ou modifiés
-- `world/helix_blockout.gd` : bake de navmesh remplaçant `NAVIGATION_AREAS`, re-bake différé sur `_on_door_state_changed`.
-- `world/helix_door.gd` : `NavigationObstacle3D` remplace `NavigationLink3D`.
-- `enemies/zombie_standard.gd` : correction de `request_navigation_repath()`, suppression de `_is_traversing_navigation_link()`, filet anti-blocage dans `_move_toward_target()`.
-- `tests/zombie_navigation_integration.gd`/`.tscn` : nouveau test de non-régression (deux scénarios de blocage constatés), ajouté à `check.py`.
-- `check.py` : nouvelle étape de contrôle.
-
-## Hypothèses validées / invalidées
-- VALIDE : le bake de `NavigationMesh` fonctionne en mode headless (`region.bake_navigation_mesh()`), condition préalable à toute l'approche.
-- VALIDE : les deux scénarios de blocage sont résolus après correction (distance finale ramenée de ~4,3-4,6 m à ~1,2 m, dans la portée d'attaque de 1,6 m).
-- EN ATTENTE : le coût du re-bake (~8 ms) en conditions réelles de jeu (mesure FPS différée à M7).
+- `roadmap_v1.md` : case M5.2 « vague pendant l'interaction » cochée, section M5.2 mise à jour, jalon M5 désormais intégralement clos (M5.1 à M5.5).
+- `tests_manuels.md` : vidé.
 
 ## Prochaine étape exacte
-Rejouer les tests manuels M5.2 en attente dans `tests_manuels.md` (débloqués par cette correction), puis reprendre le jalon M6 (M6.1 — menu principal et pause).
+Jalon M6 — Menus, options, présentation et audio, en commençant par M6.1 (menu principal et pause).
 
 ## Question bloquante pour la session suivante
 Aucune.

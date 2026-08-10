@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.47 — 2026-08-10
+
+### Validé
+
+- M5.2 clos : dernier critère (progression pendant une vague active) validé manuellement en jeu réel sur les 6 scénarios de `tests_manuels.md` (collecte, fabrication, interruption par zombie, mort pendant l'interaction, absence d'erreur console). Jalon M5 (Quête, finale et fins de partie) intégralement clos.
+
+### Ajouté
+
+- `roadmap_m6_4_integration_graphismes.md` : roadmap dédiée au câblage en scène des 34 designs déjà importés (kit modulaire structurel, zombie standard, matériaux), périmètre M6.4, découpée en 6 phases avec checkpoints.
+
 ## v0.46 — 2026-08-08
 
 ### Corrigé
