@@ -5,6 +5,98 @@
 
 ---
 
+## Phase 2 — État global, vagues et quête
+
+### [BUG] Reset de session : résidus dans `WaveManager` (`current_wave_number`)
+- **Fichier** : `systems/wave_manager.gd:74-82`
+- **Symptôme** : `WaveManager.stop()` réinitialise `_wave_zombies.clear()` et `_set_state(State.IDLE)`, mais ne réinitialise pas `current_wave_number` (reste à la dernière vague terminée) ni `_target` (reste à la dernière cible). `DefenseFinaleController._start_defense_wave()` force `wave_manager.current_wave_number = 0` (ligne 79), ce qui contredit l'état interne de `WaveManager`.
+- **Impact** : Incohérence de l'état des vagues après un reset. Bug de progression : un joueur pourrait se retrouver à la vague 5 alors que `WaveManager` pense être à la vague 1.
+- **Piste** : Corriger `WaveManager.stop()` pour réinitialiser **tous** les champs (`current_wave_number = 0`, `_target = null`). Supprimer la ligne 79 de `DefenseFinaleController` (`wave_manager.current_wave_number = 0`).
+- **Phase** : 2
+
+---
+
+### [RISQUE] Machine d'état de quête : transitions non exhaustives
+- **Fichier** : `core/quest_controller.gd:94-97`
+- **Symptôme** : `_is_valid_next(target_state: State)` ne permet que les transitions séquentielles (`current_index + 1`), via l'array `ORDER`. Problèmes : (1) Impossible de revenir à `SURVIVRE` depuis un état avancé (sauf via `GameSession.session_reset`). (2) `collect_component` (ligne 78) appelle `try_advance(FABRIQUER_ANTIDOTE)` en ignorant les états intermédiaires. (3) Une fois `VICTOIRE` atteint, aucune transition n'est possible.
+- **Impact** : Comportement bloquant. Incohérence si des composants sont collectés hors ordre (ex: via un cheat).
+- **Piste** : Étendre `_is_valid_next` pour autoriser les transitions valides non séquentielles (ex: `SURVIVRE` → `FABRIQUER_ANTIDOTE` si tous les composants sont collectés). Ajouter une méthode `reset_quest()` explicite. Documenter les transitions valides dans un diagramme d'états.
+- **Phase** : 2
+
+---
+
+### [RISQUE] `WaveManager` : logique de spawn dépendante des FPS
+- **Fichier** : `systems/wave_manager.gd:104-124`
+- **Symptôme** : `_process_spawning` utilise `_spawn_remaining_seconds` pour espacer les spawns, mais aucune synchronisation avec le temps réel : si le jeu lag, `_spawn_remaining_seconds` peut devenir négatif (ligne 105 : `maxf(0.0, ...)`). Pas de compensation de lag.
+- **Impact** : Déséquilibre de gameplay : sur un PC lent, les vagues seront plus lentes (moins de zombies par seconde).
+- **Piste** : Utiliser `Time.get_ticks_msec()` pour mesurer le temps écoulé indépendamment des FPS. Compenser le lag en accumulant le temps écoulé et en spawning plusieurs zombies si nécessaire.
+- **Phase** : 2
+
+---
+
+### [RISQUE] `GameSession` : état mutable accessible globalement
+- **Fichier** : `core/game_session.gd:21,23,114-115`
+- **Symptôme** : `_session` est un `Dictionary` mutable (ligne 23) accessible via `get_session_snapshot()` (ligne 114-115), qui retourne une copie superficielle (`duplicate(true)`). Aucune protection contre les modifications directes de `_session` depuis l'extérieur.
+- **Impact** : Bugs d'ordre d'exécution (un script pourrait modifier `_session` pendant qu'un autre le lit). Risque de cheat (ex: `GameSession._session["credits"] = 9999`).
+- **Piste** : Rendre `_session` privé et n'exposer que des getters/setters contrôlés. Utiliser une classe `SessionState` avec des propriétés en lecture seule. Vérifier que `duplicate(true)` produit une copie profonde.
+- **Phase** : 2
+
+---
+
+### [DETTE] Couplage fort entre `GameSession` et `QuestController`
+- **Fichier** : `core/game_session.gd`, `core/quest_controller.gd`, `world/defense_finale_controller.gd:19-21`
+- **Symptôme** : `QuestController` écoute `GameSession.session_reset` (ligne 52) et réinitialise son état. `DefenseFinaleController` écoute **les deux** `GameSession.session_reset`, `GameSession.session_ended`, et `QuestController.state_changed` (lignes 19-21). Les deux singletons sont déclarés comme autoloads dans `project.godot` (lignes 20-21).
+- **Impact** : Violation du principe de responsabilité unique. Risque de dépendances circulaires. Difficile à tester (impossible de tester `QuestController` sans `GameSession`).
+- **Piste** : Introduire un `EventBus` ou un `GameStateService` pour centraliser les événements globaux. `GameSession` ne devrait émettre que des événements liés à la session, tandis que `QuestController` gère uniquement la progression de la quête. Supprimer les connexions directes entre `DefenseFinaleController` et les deux singletons.
+- **Phase** : 2
+
+---
+
+### [DETTE] `WaveManager` : dépendance forte à `ZombieSpawner` sans fallback
+- **Fichier** : `systems/wave_manager.gd:18,86-87,112-116`
+- **Symptôme** : `zombie_spawner` est un `@export` (ligne 18) et doit être assigné manuellement. Aucune vérification que `zombie_spawner` est valide avant de l'utiliser : `_start_wave_at_index` (ligne 86) vérifie `zombie_spawner == null`, mais pas `is_instance_valid(zombie_spawner)`. `_process_spawning` (ligne 112) appelle `zombie_spawner.request_spawn()` sans fallback si le spawn échoue (ligne 118 : `if zombie == null: return`).
+- **Impact** : Silent failure : les vagues ne démarrent pas, sans message d'erreur (sauf en debug, ligne 90).
+- **Piste** : Ajouter une vérification explicite dans `_start_wave_at_index` (`if zombie_spawner == null or not is_instance_valid(zombie_spawner): push_error(...)`). Fallback : si `request_spawn` échoue, émettre un signal `spawn_failed` et logger l'erreur. Rendre `zombie_spawner` obligatoire via un `@warning_if_null`.
+- **Phase** : 2
+
+---
+
+### [DETTE] Ressources dans `data/` : granularité excessive et duplication
+- **Fichier** : `data/doors/*.tres`, `data/perks/*.tres`, `data/quest/*.tres`, `data/waves/*.tres`
+- **Symptôme** : 19 fichiers `.tres` pour des ressources très simples (ex: `wave_01.tres` a seulement 5 champs). Duplication de structure : chaque `wave_X.tres` a la même structure (dérivée de `WaveDefinition`). Ajouter un champ à `WaveDefinition` nécessite de mettre à jour tous les fichiers `.tres` manuellement.
+- **Impact** : Fragilité (une modification de `WaveDefinition` peut casser tous les fichiers `.tres`). Difficile à versionner (conflits de merge fréquents sur les fichiers binaires `.tres`).
+- **Piste** : Utiliser un format déclaratif (JSON/YAML) pour les données statiques, avec un loader qui les convertit en `Resource` à l'exécution. Générer les `.tres` via un script (ex: `tools/generate_resources.py`). Regrouper les ressources similaires dans un seul fichier (ex: `waves.tres` contenant un array de `WaveDefinition`).
+- **Phase** : 2
+
+---
+
+### [DETTE] `QuestComponent` : dépendance directe à `QuestController`
+- **Fichier** : `world/quest_component.gd:22,25,29,31,39,49`
+- **Symptôme** : `QuestComponent` appelle directement `QuestController` dans `can_interact` (ligne 25), `interact` (ligne 31), `get_interaction_prompt` (ligne 39), et `_refresh_state` (ligne 49). `QuestComponent` ne peut pas fonctionner sans `QuestController` (autoload).
+- **Impact** : Couplage fort. Impossible de réutiliser `QuestComponent` dans un autre contexte (ex: un mode tutoriel sans quête principale). Difficile à tester (nécessite de mock `QuestController`).
+- **Piste** : Injecter `QuestController` comme dépendance via un setter ou le constructeur. Utiliser des signaux pour notifier les changements d'état de la quête. Rendre `QuestComponent` agnostique de `QuestController` en utilisant une interface (ex: `IQuestService`).
+- **Phase** : 2
+
+---
+
+### [DETTE] `DefenseFinaleController` : dépendance directe à `WaveManager`
+- **Fichier** : `world/defense_finale_controller.gd:9,76-80,84-86`
+- **Symptôme** : `wave_manager` est un `@export` (ligne 9) et doit être assigné manuellement. `DefenseFinaleController` appelle directement `wave_manager.stop()` (ligne 41, 86) et `wave_manager.start_next_wave()` (ligne 80). Aucune vérification que `wave_manager` est valide.
+- **Impact** : Silent failure : la défense finale ne démarrera pas, sans explication. Couplage fort : impossible de réutiliser `DefenseFinaleController` sans `WaveManager`.
+- **Piste** : Ajouter une vérification dans `_start_defense_wave()` et `_finish_success()` (`if wave_manager == null or not is_instance_valid(wave_manager): push_error(...)`). Utiliser des signaux pour découpler `DefenseFinaleController` de `WaveManager`.
+- **Phase** : 2
+
+---
+
+### [NETTOYAGE] `DefenseFinaleController` : durée de défense codée en dur
+- **Fichier** : `world/defense_finale_controller.gd:7,10-11`
+- **Symptôme** : `DEFAULT_DURATION_SECONDS := 120.0` (ligne 7) est une constante codée en dur. `duration_seconds` est un `@export` (ligne 10), mais aucune validation n'existe pour s'assurer qu'il est > 0.
+- **Impact** : Moins flexible (impossible de modifier la durée via un fichier de configuration). Risque d'erreur : un designer pourrait mettre `duration_seconds = 0`, ce qui rendrait la défense instantanément réussie.
+- **Piste** : Déplacer `DEFAULT_DURATION_SECONDS` dans une ressource de configuration (ex: `data/defense_finale_config.tres`). Ajouter une validation dans `_ready()` (`if duration_seconds <= 0: duration_seconds = DEFAULT_DURATION_SECONDS`).
+- **Phase** : 2
+
+---
+
 ## Phase 1 — Boucle de combat
 
 ### [BUG] Régénération de santé dépendante de la FPS

@@ -100,7 +100,7 @@ Attendre sa réponse écrite. Ne pas commencer la phase suivante sans confirmati
 
 ---
 
-## Phase 2 — État global, vagues et quête `[TODO]`
+## Phase 2 — État global, vagues et quête `[FAIT]`
 
 Les deux autoloads sont le point de couplage universel du projet.
 

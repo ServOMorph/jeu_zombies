@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.50 — 2026-08-10
+
+### Modifié
+- REVIEW/backlog.md : 10 findings Phase 2 (État global, vagues et quête) ajoutés (1 BUG, 3 RISQUE, 5 DETTE, 1 NETTOYAGE)
+- REVIEW/roadmap_review.md : Phase 2 marquée [FAIT]
+- REVIEW/_contexte/signals.md et contexte.md : mise à jour après clôture Phase 2
+- README.md : État actuel mis à jour (Phase 2 REVIEW terminée)
+- _contexte/synthese_agents.md : Entrée pour la session review 2026-08-10 ajoutée
+
+---
+
 ## v0.49 — 2026-08-10
 
 ### Modifié
