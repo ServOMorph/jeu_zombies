@@ -296,15 +296,6 @@ func _create_zone(zone: Dictionary) -> void:
 	sign.modulate = Color(0.9, 0.95, 1.0, 1.0)
 	zone_root.add_child(sign)
 
-	for offset: Vector3 in [Vector3(-9.0, 1.2, -5.5), Vector3(9.0, 1.2, -5.5)]:
-		var marker := MeshInstance3D.new()
-		var marker_mesh := BoxMesh.new()
-		marker_mesh.size = Vector3(0.5, 2.4, 0.5)
-		marker.mesh = marker_mesh
-		marker.material_override = floor_material
-		marker.position = offset
-		zone_root.add_child(marker)
-
 	ZONE_WALLS.build_zone_walls(str(zone["id"]), zone_root)
 
 

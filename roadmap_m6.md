@@ -166,8 +166,11 @@ module de transition).
   orthogonal ni de baie élargie : le mur sud et les murs ouest/est sont tronqués avant le coin,
   laissant l'ouverture au couloir en biais (calcul d'empreinte du couloir, décision actée cette
   session — une baie orthogonale aurait débordé du mur adjacent).
-- [x] Conserver le sol existant comme boîte unique et n'y poser que les modules de bordure
-  (`np_kms_02_sol_angle`, `np_kms_03_sol_bord`), conformément à D3 point 1.
+- [x] Conserver le sol existant comme boîte unique, sans y poser de module de bordure.
+  D3 point 1 révisé le 2026-08-11 : `np_kms_02_sol_angle`/`np_kms_03_sol_bord` sont des dalles
+  pleines de 2 × 2 × 0,12 conçues pour un sol entièrement tuilé — posées sur la dalle unique
+  conservée par D3, elles produisent soit une marche de 0,12 m, soit du z-fighting coplanaire sur
+  toute leur surface. Le raccord sol/mur reste nu, traité par le matériau en P3.
 - [x] Ajouter la collision des murs sous forme de quelques longues boîtes interrompues aux baies,
   sans collision sur les modules du kit : l'état ouvert/fermé des baies reste géré par `HelixDoor`,
   conformément au contrat du kit et à D3 point 4.
@@ -177,9 +180,13 @@ module de transition).
   Mesuré (`tests/benchmark_navigation_rebake.gd`, 5 échantillons) : 7,36 ms après vs 7,15 ms avant
   cette session (référence historique 7,9 ms) — aucune régression. `python check.py` intégralement
   réussi, franchissement des portes et poursuite des zombies non régressés.
-- [ ] Vérifier l'absence de z-fighting aux raccords et de chevauchement coplanaire (tolérance de
+- [x] Vérifier l'absence de z-fighting aux raccords et de chevauchement coplanaire (tolérance de
   retrait 0,01 m du contrat).
-  En attente de contrôle visuel manuel — ajouté à `tests_manuels.md`.
+  Validé manuellement le 2026-08-10, après correction de trois défauts de pose détectés au premier
+  contrôle : coins nord ouverts (module d'angle mal pivoté), terminaisons de mur posées en travers
+  (mauvaise lecture de l'emprise du module) et bordures de sol débordant dans la baie nord —
+  ces deux derniers points ayant motivé le retrait des bordures ci-dessus. Détail dans
+  `world/zone_walls.gd` et le test d'emprise ajouté à `tests/test_zone_walls.gd`.
 - [ ] Relever appels de rendu, nombre de nœuds et FPS sur la zone pilote, puis confirmer ou infirmer
   D3 sur preuve chiffrée. Ne passer les murs en `MultiMeshInstance3D` par (zone, type) que si la
   mesure le justifie, jamais en MultiMesh global.

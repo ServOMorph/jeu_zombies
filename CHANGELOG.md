@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.51 — 2026-08-11
+
+### Corrigé
+- `world/zone_walls.gd` : trois défauts de pose corrigés dans la zone pilote `couloirs`, détectés par mesure directe des AABB des modules du kit — coins nord ouverts (module d'angle mal pivoté, débordait de 1,9 m hors zone), terminaisons de mur posées en travers (l'emprise réelle du module `np_kms_09` avait été mal lue), bordures de sol débordant dans la baie nord.
+- `world/helix_blockout.gd` : retrait des deux marqueurs `BoxMesh` de blockout M1, posés en plein dans les baies en biais de chaque zone.
+
+### Modifié
+- D3 point 1 (`roadmap_m6.md`) révisé : les bordures de sol du kit sont retirées de la pose, incompatibles avec la dalle de sol unique conservée par D3 (dalles pleines conçues pour un sol entièrement tuilé).
+- `tests/test_zone_walls.gd` : contrôle d'emprise réelle ajouté, vérifié par mutation qu'il attrape l'ancienne pose défectueuse — la vérification précédente par nom de nœud ne détectait aucun des trois défauts.
+- `tests_manuels.md` : contrôle visuel de la zone `couloirs` validé et retiré ; contrôle FPS/appels de rendu toujours en attente.
+
 ## v0.50 — 2026-08-10
 
 ### Modifié

@@ -6,42 +6,54 @@ const WALL_DEMI := preload("res://assets/environment/helix9/kit_structurel/np_km
 const CORNER_EXTERIEUR := preload("res://assets/environment/helix9/kit_structurel/np_kms_08_angle_exterieur.glb")
 const WALL_END := preload("res://assets/environment/helix9/kit_structurel/np_kms_09_terminaison_mur.glb")
 const DOOR_FRAME := preload("res://assets/environment/helix9/kit_structurel/np_kms_13_encadrement_simple.glb")
-const FLOOR_EDGE := preload("res://assets/environment/helix9/kit_structurel/np_kms_03_sol_bord.glb")
-const FLOOR_CORNER := preload("res://assets/environment/helix9/kit_structurel/np_kms_02_sol_angle.glb")
 
 const MODULE_LENGTH := 2.0
 const HALF_MODULE_LENGTH := 1.0
 const WALL_HEIGHT := 3.5
 const WALL_THICKNESS := 0.2
+const CORNER_PIVOT_INSET := 0.1
 const NAVIGATION_COLLISION_LAYER := 1
 
 # Coordonnées locales à la zone (relatives à zone_root). Une baie en biais (couloirs_entrepot,
 # couloirs_laboratoire) traverse le coin de la zone : le mur sud et les murs ouest/est sont
 # tronqués avant le coin plutôt que refermés par un module d'angle, laissant l'ouverture au
 # passage diagonal (voir roadmap_m6.md P1, calcul de l'empreinte du couloir en biais).
+#
+# Emprises réelles des modules, mesurées sur les GLB importés :
+#   np_kms_05_mur_plein   : X [-1,00 ; 1,00], Z [-0,14 ; 0,10]  — axe long X, face de référence -Z
+#   np_kms_08_angle_ext.  : L de 2 x 2, sommet à l'origine, branches vers -X et -Z,
+#                           débord de 0,10 derrière le sommet (d'où CORNER_PIVOT_INSET)
+#   np_kms_09_terminaison : mur de 2 m d'axe long Z + capot sur la grande face -X.
+#                           Ce n'est pas un bouchon d'about : il remplace le dernier module
+#                           d'un run, il ne s'y ajoute pas. Les runs sont raccourcis d'autant.
 const WALL_RUNS: Dictionary = {
 	"couloirs": [
 		{"id": "nord_ouest", "start": Vector3(-9.0, 0.0, 7.0), "direction": Vector3(1.0, 0.0, 0.0), "length": 7.0, "rotation_y": 0.0},
 		{"id": "nord_est", "start": Vector3(9.0, 0.0, 7.0), "direction": Vector3(-1.0, 0.0, 0.0), "length": 7.0, "rotation_y": 0.0},
-		{"id": "sud", "start": Vector3(-7.0, 0.0, -7.0), "direction": Vector3(1.0, 0.0, 0.0), "length": 14.0, "rotation_y": PI},
-		{"id": "ouest", "start": Vector3(-11.0, 0.0, 5.0), "direction": Vector3(0.0, 0.0, -1.0), "length": 10.0, "rotation_y": -PI / 2.0},
-		{"id": "est", "start": Vector3(11.0, 0.0, 5.0), "direction": Vector3(0.0, 0.0, -1.0), "length": 10.0, "rotation_y": PI / 2.0},
+		{"id": "sud", "start": Vector3(-5.0, 0.0, -7.0), "direction": Vector3(1.0, 0.0, 0.0), "length": 10.0, "rotation_y": PI},
+		{"id": "ouest", "start": Vector3(-11.0, 0.0, 5.0), "direction": Vector3(0.0, 0.0, -1.0), "length": 8.0, "rotation_y": -PI / 2.0},
+		{"id": "est", "start": Vector3(11.0, 0.0, 5.0), "direction": Vector3(0.0, 0.0, -1.0), "length": 8.0, "rotation_y": PI / 2.0},
 	],
 }
 
+# Le pivot du module d'angle est rentré de CORNER_PIVOT_INSET vers l'intérieur de la zone sur
+# chaque axe, pour que ses deux branches de 1,90 m rejoignent exactement le début des runs
+# voisins (x = +-9,0 au nord, z = 5,0 à l'ouest et à l'est).
 const CORNERS: Dictionary = {
 	"couloirs": [
-		{"id": "nord_ouest", "position": Vector3(-11.0, 0.0, 7.0), "rotation_y": 0.0},
-		{"id": "nord_est", "position": Vector3(11.0, 0.0, 7.0), "rotation_y": -PI / 2.0},
+		{"id": "nord_ouest", "position": Vector3(-11.0 + CORNER_PIVOT_INSET, 0.0, 7.0 - CORNER_PIVOT_INSET), "rotation_y": -PI / 2.0},
+		{"id": "nord_est", "position": Vector3(11.0 - CORNER_PIVOT_INSET, 0.0, 7.0 - CORNER_PIVOT_INSET), "rotation_y": 0.0},
 	],
 }
 
+# Chaque terminaison occupe la case de 2 m retirée du run correspondant, capot tourné vers
+# l'intérieur de la zone.
 const WALL_ENDS: Dictionary = {
 	"couloirs": [
-		{"id": "sud_ouest", "position": Vector3(-7.0, 0.0, -7.0), "rotation_y": PI},
-		{"id": "sud_est", "position": Vector3(7.0, 0.0, -7.0), "rotation_y": PI},
-		{"id": "ouest_sud", "position": Vector3(-11.0, 0.0, -5.0), "rotation_y": -PI / 2.0},
-		{"id": "est_sud", "position": Vector3(11.0, 0.0, -5.0), "rotation_y": PI / 2.0},
+		{"id": "sud_ouest", "position": Vector3(-6.0, 0.0, -7.0), "rotation_y": PI / 2.0},
+		{"id": "sud_est", "position": Vector3(6.0, 0.0, -7.0), "rotation_y": PI / 2.0},
+		{"id": "ouest_sud", "position": Vector3(-11.0, 0.0, -4.0), "rotation_y": PI},
+		{"id": "est_sud", "position": Vector3(11.0, 0.0, -4.0), "rotation_y": 0.0},
 	],
 }
 
@@ -78,7 +90,6 @@ static func build_zone_walls(zone_id: String, zone_root: Node3D) -> void:
 		_place_single(habillage, WALL_END, "TerminaisonMur_%s" % wall_end["id"], wall_end["position"], wall_end["rotation_y"])
 	for door_frame: Dictionary in DOOR_FRAMES.get(zone_id, []):
 		_place_single(habillage, DOOR_FRAME, "EncadrementSimple_%s" % door_frame["id"], door_frame["position"], door_frame["rotation_y"])
-	_place_floor_borders(habillage, zone_id)
 
 	var murs := Node3D.new()
 	murs.name = "Murs"
@@ -113,30 +124,6 @@ static func _place_single(parent: Node3D, scene: PackedScene, node_name: String,
 	instance.position = local_position
 	instance.rotation.y = rotation_y
 	parent.add_child(instance)
-
-
-static func _place_floor_borders(parent: Node3D, zone_id: String) -> void:
-	for run: Dictionary in WALL_RUNS.get(zone_id, []):
-		var start: Vector3 = run["start"]
-		var direction: Vector3 = run["direction"]
-		var length: float = run["length"]
-		var rotation_y: float = run["rotation_y"]
-		var offset := 0.0
-		var index := 0
-		while offset < length - 0.001:
-			var instance := FLOOR_EDGE.instantiate() as Node3D
-			instance.name = "SolBord_%s_%d" % [run["id"], index]
-			instance.position = start + direction * (offset + MODULE_LENGTH * 0.5)
-			instance.rotation.y = rotation_y
-			parent.add_child(instance)
-			offset += MODULE_LENGTH
-			index += 1
-	for corner: Dictionary in CORNERS.get(zone_id, []):
-		var instance := FLOOR_CORNER.instantiate() as Node3D
-		instance.name = "SolAngle_%s" % corner["id"]
-		instance.position = corner["position"]
-		instance.rotation.y = corner["rotation_y"]
-		parent.add_child(instance)
 
 
 static func _build_wall_collision(parent: Node3D, box: Dictionary) -> void:

@@ -21,6 +21,7 @@ func run_tests() -> Array[String]:
 	_check_collision_boxes(zone_root, failures)
 	_check_baie_and_corner_openings(zone_root, failures)
 	_check_habillage_nodes(zone_root, failures)
+	_check_habillage_footprints(zone_root, failures)
 
 	world.free()
 	return failures
@@ -101,3 +102,53 @@ func _check_habillage_nodes(zone_root: Node3D, failures: Array[String]) -> void:
 			failures.append("l'habillage de couloirs doit inclure %s" % expected_name)
 	if habillage.get_child_count() < expected_names.size():
 		failures.append("l'habillage de couloirs doit inclure les modules de mur tuilés")
+
+
+# Contrôle d'emprise : la vérification par nom de nœud ne prouve rien sur la géométrie posée.
+# Ces bornes attrapent les modules mal orientés ou mal ancrés, qui débordent hors de la dalle
+# de sol ou obstruent la baie nord.
+func _check_habillage_footprints(zone_root: Node3D, failures: Array[String]) -> void:
+	var habillage := zone_root.get_node_or_null("Habillage") as Node3D
+	if habillage == null:
+		return
+	var zone_half_x := 11.0 + ZONE_WALLS.WALL_THICKNESS
+	var zone_half_z := 7.0 + ZONE_WALLS.WALL_THICKNESS
+	var to_zone := zone_root.global_transform.affine_inverse()
+	for child in habillage.get_children():
+		var node_3d := child as Node3D
+		if node_3d == null:
+			continue
+		var has := [false]
+		var box := _module_aabb(node_3d, to_zone, AABB(), has)
+		if not has[0]:
+			continue
+		var mn := box.position
+		var mx := box.end
+		if mn.x < -zone_half_x or mx.x > zone_half_x or mn.z < -zone_half_z or mx.z > zone_half_z:
+			failures.append(
+				"%s déborde de l'emprise de la zone : min(%.2f, %.2f) max(%.2f, %.2f)"
+				% [node_3d.name, mn.x, mn.z, mx.x, mx.z]
+			)
+		if node_3d.name.begins_with("EncadrementSimple"):
+			continue
+		var overlaps_baie_x := mx.x > -BAIE_HALF_WIDTH + 0.01 and mn.x < BAIE_HALF_WIDTH - 0.01
+		if overlaps_baie_x and mx.z > 6.5:
+			failures.append(
+				"%s obstrue la baie nord : min(%.2f, %.2f) max(%.2f, %.2f)"
+				% [node_3d.name, mn.x, mn.z, mx.x, mx.z]
+			)
+
+
+func _module_aabb(node: Node, to_zone: Transform3D, accum: AABB, has: Array) -> AABB:
+	if node is MeshInstance3D:
+		var mesh_instance := node as MeshInstance3D
+		if mesh_instance.mesh != null:
+			var box: AABB = to_zone * mesh_instance.global_transform * mesh_instance.mesh.get_aabb()
+			if has[0]:
+				accum = accum.merge(box)
+			else:
+				accum = box
+				has[0] = true
+	for child in node.get_children():
+		accum = _module_aabb(child, to_zone, accum, has)
+	return accum
