@@ -18,13 +18,17 @@ enum DeferReason {
 @export_range(0.0, 30.0, 0.5) var player_exclusion_radius_meters := 6.0
 @export_range(0.1, 10.0, 0.1) var navigation_projection_max_distance := 2.0
 @export_range(0, 128, 1) var prewarm_pool_size := 8
+@export var randomize_valid_spawn_points := false
 
 var _active_zombies: Array[ZombieStandard] = []
 var _pooled_zombies: Array[ZombieStandard] = []
 var _last_spawn_used_fallback := false
+var _rng := RandomNumberGenerator.new()
+var _random_spawn_bag: Array[Node3D] = []
 
 
 func _ready() -> void:
+	_rng.randomize()
 	for _index in prewarm_pool_size:
 		var zombie := _create_pooled_zombie()
 		if zombie == null:
@@ -109,8 +113,44 @@ func _find_first_valid_point(points: Array[Node3D], target: Node3D) -> Node3D:
 	for point: Node3D in points:
 		distances.append(point.global_position.distance_to(target.global_position))
 		paths_valid.append(_has_navigation_path(point, target))
-	var index := select_candidate_index(distances, paths_valid, player_exclusion_radius_meters)
+	if randomize_valid_spawn_points:
+		return _take_cycled_random_point(points, distances, paths_valid)
+	var index := _select_candidate_index(distances, paths_valid)
 	return points[index] if index >= 0 else null
+
+
+func _take_cycled_random_point(
+	points: Array[Node3D],
+	distances: Array[float],
+	paths_valid: Array[bool]
+) -> Node3D:
+	var valid_points: Array[Node3D] = []
+	for index in mini(points.size(), mini(distances.size(), paths_valid.size())):
+		if paths_valid[index] and is_outside_player_exclusion(distances[index], player_exclusion_radius_meters):
+			valid_points.append(points[index])
+	if valid_points.is_empty():
+		return null
+	for index in range(_random_spawn_bag.size() - 1, -1, -1):
+		if not valid_points.has(_random_spawn_bag[index]):
+			_random_spawn_bag.remove_at(index)
+	if _random_spawn_bag.is_empty():
+		_random_spawn_bag = valid_points.duplicate()
+		for index in range(_random_spawn_bag.size() - 1, 0, -1):
+			var swap_index := _rng.randi_range(0, index)
+			var point := _random_spawn_bag[index]
+			_random_spawn_bag[index] = _random_spawn_bag[swap_index]
+			_random_spawn_bag[swap_index] = point
+	return _random_spawn_bag.pop_back()
+
+
+func _select_candidate_index(distances: Array[float], paths_valid: Array[bool]) -> int:
+	if not randomize_valid_spawn_points:
+		return select_candidate_index(distances, paths_valid, player_exclusion_radius_meters)
+	var candidates: Array[int] = []
+	for index in mini(distances.size(), paths_valid.size()):
+		if paths_valid[index] and is_outside_player_exclusion(distances[index], player_exclusion_radius_meters):
+			candidates.append(index)
+	return -1 if candidates.is_empty() else candidates[_rng.randi_range(0, candidates.size() - 1)]
 
 
 func _has_navigation_path(point: Node3D, target: Node3D) -> bool:

@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.53 — 2026-09-16
+
+### Ajouté
+- Niveau 2 Port : carte 200 × 200 m, accueil de sélection, trois entrepôts jouables, stations, extraction obligatoire et progression de manche persistante.
+- Blockout Port : conteneurs, grues, bateaux en réparation, semi-remorques, parking et entrepôts décoratifs.
+- Menu F3 Port : équilibrage sauvegardé, mode vol, commentaires persistants, captures et fils de validation.
+
+### Corrigé
+- Apparitions Port réparties par cycle mélangé des points navigables ; première manche réglée à 40 zombies.
+
+### Modifié
+- Documentation de session, README, tests manuels et roadmap Port alignés sur la qualification en cours.
+
 ## v0.52 — 2026-08-11
 
 ### Modifié

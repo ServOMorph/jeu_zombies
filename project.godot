@@ -12,13 +12,16 @@ config_version=5
 
 config/name="Nox Protocol"
 config/description="Jeu de survie FPS solo dans le Complexe Helix-9."
-run/main_scene="res://ui/dev_startup/dev_startup.tscn"
+run/main_scene="res://ui/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
 GameSession="*res://core/game_session.gd"
 QuestController="*res://core/quest_controller.gd"
+PortProgress="*res://core/port_progress.gd"
+PortBalance="*res://core/port_balance.gd"
+PortDebugNotes="*res://core/port_debug_notes.gd"
 
 [display]
 
