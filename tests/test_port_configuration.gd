@@ -35,4 +35,12 @@ func run_tests() -> Array[String]:
 		failures.append("La résistance doit augmenter de 10 % par manche.")
 	if int(PortBalance.DEFAULTS["extraction_duration"]) != 90:
 		failures.append("La durée par défaut de l'extraction doit être de 90 secondes.")
+	var blockout_source := FileAccess.get_file_as_string("res://world/port_blockout.gd")
+	for visual_marker: String in ["_create_port_ambience", "HarborPole", "CraneBeacon", "container_colors"]:
+		if not blockout_source.contains(visual_marker):
+			failures.append("Le repère visuel Port %s est absent." % visual_marker)
+	var port_scene_source := FileAccess.get_file_as_string("res://world/port_level.tscn")
+	for environment_marker: String in ["glow_enabled = true", "background_color = Color(0.012, 0.025, 0.045, 1)"]:
+		if not port_scene_source.contains(environment_marker):
+			failures.append("L'ambiance nocturne du Port est absente.")
 	return failures

@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.54 — 2026-09-16
+
+### Modifié
+- `world/port_blockout.gd`, `world/port_level.tscn` : passe graphique industrielle nocturne du Port, avec palette maritime, conteneurs différenciés, balises de sécurité, éclairage et détails décoratifs sans collision.
+- `tests/test_port_configuration.gd` : contrôles de présence des repères visuels et de l'ambiance Port.
+
 ## v0.53 — 2026-09-16
 
 ### Ajouté

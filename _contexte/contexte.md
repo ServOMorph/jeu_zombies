@@ -8,11 +8,11 @@ Godot 4.5 stable / GDScript typé / Forward+ (Vulkan) / Windows PC clavier-souri
 Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualité `check.py`.
 
 ## État actuel (réécrit intégralement à chaque /close)
-- Le niveau 1 Helix-9 reste inchangé ; l'accueil permet désormais de choisir Helix-9 ou le Port.
-- Le Port est une carte 200 × 200 m avec trois entrepôts jouables, progression persistante (objectif 3 à 10), vagues, extraction et stations existantes.
-- Le F3 Port fournit l'équilibrage sauvegardé, le mode vol, les commentaires persistants et les captures de débogage.
-- `python check.py` réussit : import, 31 suites headless, navigation et export ; le chargement headless du Port réussit.
-- La qualification manuelle du Port est entièrement listée dans `tests_manuels.md` ; la phase 5 de `roadmap_second_niveau_port.md` reste en cours.
+- Le niveau 1 Helix-9 reste inchangé ; l'accueil permet de choisir Helix-9 ou le Port.
+- Le Port est une carte 200 × 200 m avec trois entrepôts jouables, progression persistante, vagues, extraction et stations.
+- Sa passe graphique industrielle nocturne ajoute palette maritime, conteneurs différenciés, balisage cyan/ambre, grues et entrepôts signalés sans changer les collisions.
+- `python check.py` réussit : import, 31 suites, navigation et export ; le chargement headless du Port réussit.
+- La qualification manuelle du Port reste entièrement listée dans `tests_manuels.md`.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée)
 - 2026-08-07 : M5.4 implémentée : chrono 120 s, `WaveManager` dédié à pression élevée capé par le plafond de zombies existant, extraction déverrouillée après succès via `REJOINDRE_EXTRACTION` ; validée manuellement en jeu réel.
@@ -25,3 +25,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-08-11 : Baies en biais de `couloirs` traitées par troncature du mur avant le coin.
 - 2026-08-11 : Bordures de sol du kit retirées ; deux marqueurs blockout retirés.
 - 2026-09-16 : Le Port est un niveau indépendant sans impact sur Helix-9, avec progression cible persistante, extraction obligatoire et réglages F3 sauvegardés.
+- 2026-09-16 : Le Port reçoit une passe graphique nocturne légère, construite sur les primitives existantes et sans impact sur la navigation ni les collisions.

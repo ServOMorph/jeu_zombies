@@ -60,6 +60,7 @@ func _ready() -> void:
 	_rng.randomize()
 	_create_ground()
 	_create_boundaries()
+	_create_port_ambience()
 	for warehouse: Dictionary in WAREHOUSES:
 		_create_warehouse(warehouse)
 	_create_port_cover()
@@ -125,7 +126,7 @@ func apply_balance(key: String) -> void:
 
 
 func _create_ground() -> void:
-	_create_static_box("PortFloor", Vector3(0, -0.15, 0), Vector3(MAP_SIZE, 0.3, MAP_SIZE), Color(0.16, 0.2, 0.23, 1.0))
+	_create_static_box("PortFloor", Vector3(0, -0.15, 0), Vector3(MAP_SIZE, 0.3, MAP_SIZE), Color(0.055, 0.075, 0.095, 1.0))
 
 
 func _create_boundaries() -> void:
@@ -135,9 +136,45 @@ func _create_boundaries() -> void:
 	_create_static_box("EastBoundary", Vector3(100, 3, 0), Vector3(1, 6, 200), Color(0.05, 0.07, 0.08, 1.0))
 
 
+func _create_port_ambience() -> void:
+	var cyan := Color(0.05, 0.72, 0.95, 1.0)
+	var amber := Color(1.0, 0.42, 0.06, 1.0)
+	var safety := Color(0.82, 0.12, 0.05, 1.0)
+	_create_decor_box("DockLineNorth", Vector3(0, 0.025, -91), Vector3(176, 0.05, 0.32), cyan, true)
+	_create_decor_box("DockLineSouth", Vector3(0, 0.025, 91), Vector3(176, 0.05, 0.32), cyan, true)
+	_create_decor_box("DockLineWest", Vector3(-91, 0.025, 0), Vector3(0.32, 0.05, 176), cyan, true)
+	_create_decor_box("DockLineEast", Vector3(91, 0.025, 0), Vector3(0.32, 0.05, 176), cyan, true)
+	for warehouse: Dictionary in WAREHOUSES:
+		var center := warehouse["position"] as Vector3
+		_create_decor_box("Guide_%s" % warehouse["id"], center + Vector3(0, 0.03, 22), Vector3(4.5, 0.06, 20), amber, true)
+		_create_decor_box("Header_%s" % warehouse["id"], center + Vector3(0, 7.2, 13.45), Vector3(13.0, 0.28, 0.12), amber, true)
+	for index in 9:
+		var x := -72.0 + index * 18.0
+		_create_light_pole("HarborPoleNorth%d" % index, Vector3(x, 0, -88), amber)
+		if index % 2 == 0:
+			_create_light_pole("HarborPoleSouth%d" % index, Vector3(x, 0, 88), cyan)
+	for index in 12:
+		var angle := TAU * float(index) / 12.0
+		var bollard_position := Vector3(cos(angle) * 89.0, 0.8, sin(angle) * 89.0)
+		_create_decor_box("Bollard_%d" % index, bollard_position, Vector3(0.7, 1.6, 0.7), safety, false)
+
+
+func _create_light_pole(pole_name: String, position_value: Vector3, color: Color) -> void:
+	_create_decor_box("%sPost" % pole_name, position_value + Vector3(0, 4.0, 0), Vector3(0.28, 8.0, 0.28), Color(0.09, 0.12, 0.15, 1.0), false)
+	_create_decor_box("%sLamp" % pole_name, position_value + Vector3(0, 7.8, 0), Vector3(1.2, 0.28, 0.7), color, true)
+	var light := OmniLight3D.new()
+	light.name = "%sGlow" % pole_name
+	light.position = position_value + Vector3(0, 7.4, 0)
+	light.light_color = color
+	light.light_energy = 2.2
+	light.omni_range = 15.0
+	light.shadow_enabled = false
+	add_child(light)
+
+
 func _create_warehouse(definition: Dictionary) -> void:
 	var center := definition["position"] as Vector3
-	var material_color := Color(0.24, 0.31, 0.34, 1.0)
+	var material_color := Color(0.12, 0.18, 0.23, 1.0)
 	_create_static_box("%sBack" % definition["id"], center + Vector3(0, 4, -14), Vector3(32, 8, 1), material_color)
 	_create_static_box("%sFrontLeft" % definition["id"], center + Vector3(-9, 4, 14), Vector3(14, 8, 1), material_color)
 	_create_static_box("%sFrontRight" % definition["id"], center + Vector3(9, 4, 14), Vector3(14, 8, 1), material_color)
@@ -157,13 +194,13 @@ func _create_warehouse(definition: Dictionary) -> void:
 	var light := OmniLight3D.new()
 	light.position = center + Vector3(0, 6.5, 0)
 	light.light_color = Color(0.78, 0.9, 1.0, 1.0)
-	light.light_energy = 4.0
+	light.light_energy = 3.0
 	light.omni_range = 22.0
 	add_child(light)
 
 
 func _create_port_cover() -> void:
-	var container_color := Color(0.28, 0.42, 0.46, 1.0)
+	var container_colors := [Color(0.035, 0.24, 0.38, 1.0), Color(0.66, 0.16, 0.08, 1.0), Color(0.72, 0.38, 0.06, 1.0), Color(0.12, 0.36, 0.28, 1.0)]
 	var container_index := 1
 	for zone: Dictionary in PORT_COORDINATES["container_zones"]:
 		var origin := zone["origin"] as Vector3
@@ -171,7 +208,9 @@ func _create_port_cover() -> void:
 		for row in int(zone["rows"]):
 			for column in int(zone["columns"]):
 				var position_value := origin + Vector3(column * spacing.x, 0, row * spacing.z)
-				_create_static_box("Container_%s_%d" % [str(zone["id"]), container_index], position_value, Vector3(5.2, 3.0, 2.5), container_color)
+				var container_name := "Container_%s_%d" % [str(zone["id"]), container_index]
+				_create_static_box(container_name, position_value, Vector3(5.2, 3.0, 2.5), container_colors[(column + row * 2) % container_colors.size()])
+				_create_decor_box("%sStripe" % container_name, position_value + Vector3(0, 0.9, -1.28), Vector3(4.6, 0.26, 0.06), Color(0.82, 0.84, 0.8, 1.0), false)
 				container_index += 1
 
 
@@ -185,6 +224,7 @@ func _create_port_cranes() -> void:
 		_create_static_box("CraneTower_%s" % crane_id, position_value + Vector3(0, 12, 0), Vector3(3, 21, 3), crane_color)
 		_create_static_box("CraneBeam_%s" % crane_id, position_value + Vector3(0, 22, 0), Vector3(30, 2, 2), crane_color)
 		_create_static_box("CraneCargo_%s" % crane_id, position_value + Vector3(9, 2, 7), Vector3(7, 4, 7), cargo_color)
+		_create_decor_box("CraneBeacon_%s" % crane_id, position_value + Vector3(0, 23.8, 0), Vector3(0.9, 0.45, 0.9), Color(1.0, 0.08, 0.03, 1.0), true)
 
 
 func _create_repair_boats() -> void:
@@ -311,6 +351,25 @@ func _create_static_box(node_name: String, box_position: Vector3, box_size: Vect
 	shape.size = box_size
 	collision.shape = shape
 	body.add_child(collision)
+
+
+func _create_decor_box(node_name: String, box_position: Vector3, box_size: Vector3, color: Color, emissive: bool) -> void:
+	var visual := MeshInstance3D.new()
+	visual.name = node_name
+	visual.position = box_position
+	var mesh := BoxMesh.new()
+	mesh.size = box_size
+	visual.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color
+	material.metallic = 0.55
+	material.roughness = 0.45
+	if emissive:
+		material.emission_enabled = true
+		material.emission = color
+		material.emission_energy_multiplier = 4.0
+	visual.material_override = material
+	add_child(visual)
 
 
 func _create_navigation() -> void:

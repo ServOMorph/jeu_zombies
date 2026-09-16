@@ -50,4 +50,4 @@ Le contrôle s’arrête au premier échec et transmet un code de sortie non nul
 
 ## État actuel
 
-Le niveau 1 Helix-9 reste disponible. Le niveau 2 Port est fonctionnel : carte 200 × 200 m, vagues, extraction obligatoire, progression persistante, stations et menu F3 de réglage/débogage. `python check.py` réussit et le Port charge en headless. La qualification manuelle du Port reste à exécuter ; voir `tests_manuels.md` et `roadmap_second_niveau_port.md`.
+Le niveau 1 Helix-9 reste disponible. Le niveau 2 Port est fonctionnel : carte 200 × 200 m, vagues, extraction obligatoire, progression persistante, stations et menu F3 de réglage/débogage. Sa présentation industrielle nocturne utilise une palette maritime, du balisage cyan/ambre et des détails de quai légers. `python check.py` réussit et le Port charge en headless. La qualification manuelle du Port reste à exécuter ; voir `tests_manuels.md`.

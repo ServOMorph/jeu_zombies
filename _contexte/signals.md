@@ -21,21 +21,18 @@
 # Session du 2026-09-16
 
 ## Décisions prises
-- Le niveau 1 Helix-9 reste inchangé ; le Port est accessible depuis un nouvel accueil.
-- La victoire Port exige l'extraction après la manche cible ; l'objectif persistant commence à 3 et plafonne à 10.
-- La première manche est portée à 40 zombies.
+- Le Port adopte une direction industrielle nocturne, en conservant la géométrie et les collisions existantes.
 
 ## Livrables produits ou modifiés
-- `world/port_level.gd`, `world/port_blockout.gd`, `world/port_level.tscn` : niveau Port, blockout et HUD.
-- `core/port_*.gd`, `ui/main_menu/`, `tools/port_debug_notes.py` : persistance, accueil et débogage F3.
-- `enemies/zombie_spawner.gd`, `tests/test_port_configuration.gd` : répartition des spawns et couverture automatisée.
+- `world/port_blockout.gd`, `world/port_level.tscn` : palette maritime, balises, éclairage et détails décoratifs sans collision.
+- `tests/test_port_configuration.gd`, `roadmap_port_graphismes.md` : couverture anti-régression et suivi de la passe graphique.
 
 ## Hypothèses validées / invalidées
-- VALIDE : 31 suites automatisées et chargement headless du Port réussissent.
-- EN ATTENTE : qualification manuelle de l'intégralité du parcours Port.
+- VALIDE : `python check.py` réussit (31 suites, navigation et export) ; le Port charge en headless.
+- EN ATTENTE : qualification manuelle de l'intégralité du parcours Port, incluant la lisibilité en mouvement.
 
 ## Prochaine étape exacte
-Exécuter les contrôles Port de `tests_manuels.md`, valider ou rouvrir les fils F3, puis clôturer la phase 5.
+Exécuter les contrôles Port de `tests_manuels.md`, avec attention sur la lisibilité des repères nocturnes en jeu réel.
 
 ## Question bloquante pour la session suivante
 Aucune.
