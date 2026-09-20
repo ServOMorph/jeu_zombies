@@ -51,7 +51,11 @@ func run_tests() -> Array[String]:
 	zombie.died.connect(observer._on_died)
 	zombie.reward_granted.connect(observer._on_reward)
 	zombie.activate()
-	if not zombie.receive_damage(40.0):
+	if not zombie.receive_damage(10.0):
+		failures.append("un zombie actif doit recevoir les dégâts non létaux")
+	if observer.deaths != 0 or observer.rewards != 0:
+		failures.append("un dégât non létal ne doit pas accorder de crédits")
+	if not zombie.receive_damage(30.0):
 		failures.append("un zombie actif doit recevoir les dégâts")
 	if zombie.state != ZOMBIE_STANDARD.State.DYING:
 		failures.append("un dégât létal doit faire mourir le zombie")
@@ -61,6 +65,10 @@ func run_tests() -> Array[String]:
 		failures.append("un zombie mort ne doit plus recevoir de dégâts")
 	if observer.deaths != 1 or observer.rewards != 1:
 		failures.append("un zombie mort ne doit pas réémettre sa mort ou sa récompense")
+	var zombie_source := FileAccess.get_file_as_string("res://enemies/zombie_standard.gd")
+	for vfx_marker: String in ["_spawn_combat_burst", "CombatVfxBurst"]:
+		if not zombie_source.contains(vfx_marker):
+			failures.append("l'effet visuel de combat %s est absent" % vfx_marker)
 	zombie._physics_process(definition.death_feedback_seconds + 0.1)
 	if zombie.state != ZOMBIE_STANDARD.State.INACTIVE or zombie.visible:
 		failures.append("un zombie mort doit être désactivé et masqué après son feedback")

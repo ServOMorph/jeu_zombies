@@ -104,6 +104,8 @@ func receive_damage(amount: float) -> bool:
 	if amount <= 0.0 or state == State.INACTIVE or state == State.DYING:
 		return false
 	health = maxf(0.0, health - amount)
+	if is_inside_tree():
+		_spawn_combat_burst(global_position + Vector3.UP * 1.0, Color(1.0, 0.34, 0.08, 1.0), 0.32, 0.16)
 	health_changed.emit(health, definition.max_health)
 	if health == 0.0:
 		_die()
@@ -206,6 +208,8 @@ func _try_attack(delta: float) -> void:
 		_set_state(State.CHASING)
 		return
 	if _target.has_method("receive_damage") and _target.call("receive_damage", definition.attack_damage):
+		if _target is Node3D:
+			_spawn_combat_burst((_target as Node3D).global_position + Vector3.UP, Color(0.9, 0.03, 0.02, 1.0), 0.42, 0.2)
 		attacked.emit(_target, definition.attack_damage)
 	_attack_cooldown_remaining = definition.attack_cooldown_seconds
 
@@ -246,6 +250,8 @@ func _die() -> void:
 	if state == State.DYING:
 		return
 	velocity = Vector3.ZERO
+	if is_inside_tree():
+		_spawn_combat_burst(global_position + Vector3.UP, Color(0.48, 0.95, 0.22, 1.0), 0.9, 0.34)
 	_death_remaining = definition.death_feedback_seconds
 	_set_state(State.DYING)
 	if collision_shape != null:
@@ -254,6 +260,32 @@ func _die() -> void:
 		_reward_has_been_granted = true
 		reward_granted.emit(definition.credit_reward)
 	died.emit()
+
+
+func _spawn_combat_burst(world_position: Vector3, color: Color, radius: float, duration: float) -> void:
+	if not is_inside_tree() or get_tree().current_scene == null:
+		return
+	var burst := MeshInstance3D.new()
+	burst.name = "CombatVfxBurst"
+	var mesh := SphereMesh.new()
+	mesh.radius = radius
+	mesh.height = radius * 2.0
+	burst.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color = color
+	material.emission_enabled = true
+	material.emission = color
+	material.emission_energy_multiplier = 2.4
+	burst.material_override = material
+	get_tree().current_scene.add_child(burst)
+	burst.global_position = world_position
+	burst.scale = Vector3.ONE * 0.35
+	var tween := burst.create_tween()
+	tween.tween_property(burst, "scale", Vector3.ONE * 1.35, duration)
+	tween.parallel().tween_property(material, "albedo_color", Color(color.r, color.g, color.b, 0.0), duration)
+	tween.finished.connect(burst.queue_free)
 
 
 func _set_state(new_state: State) -> void:

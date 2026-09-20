@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://world/port_level.gd" id="1"]
 [ext_resource type="Script" path="res://world/port_blockout.gd" id="2"]
@@ -9,16 +9,29 @@
 [ext_resource type="Script" path="res://world/port_extraction_controller.gd" id="7"]
 [ext_resource type="Script" path="res://world/port_extraction_terminal.gd" id="8"]
 [ext_resource type="PackedScene" path="res://ui/game_hud/game_hud.tscn" id="9"]
+[ext_resource type="Script" path="res://weapons/combat_audio_feedback.gd" id="10"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_port_sunset"]
+sky_top_color = Color(0.12, 0.045, 0.11, 1)
+sky_horizon_color = Color(1, 0.31, 0.09, 1)
+ground_bottom_color = Color(0.012, 0.018, 0.03, 1)
+ground_horizon_color = Color(0.22, 0.075, 0.055, 1)
+sun_angle_max = 12.0
+sun_curve = 0.08
+
+[sub_resource type="Sky" id="Sky_port_sunset"]
+sky_material = SubResource("ProceduralSkyMaterial_port_sunset")
 
 [sub_resource type="Environment" id="Environment_port"]
-background_mode = 1
-background_color = Color(0.012, 0.025, 0.045, 1)
+background_mode = 2
+sky = SubResource("Sky_port_sunset")
+background_color = Color(0.12, 0.045, 0.11, 1)
 ambient_light_source = 3
-ambient_light_color = Color(0.17, 0.28, 0.42, 1)
-ambient_light_energy = 0.8
+ambient_light_color = Color(0.42, 0.14, 0.09, 1)
+ambient_light_energy = 1.15
 tonemap_mode = 2
 glow_enabled = true
-glow_intensity = 0.8
+glow_intensity = 1.05
 fog_enabled = false
 
 [node name="PortLevel" type="Node3D"]
@@ -28,9 +41,9 @@ script = ExtResource("1")
 environment = SubResource("Environment_port")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-rotation_degrees = Vector3(-52, -32, 0)
-light_color = Color(0.42, 0.62, 0.9, 1)
-light_energy = 1.18
+rotation_degrees = Vector3(-18, -122, 0)
+light_color = Color(1, 0.38, 0.12, 1)
+light_energy = 1.45
 shadow_enabled = true
 
 [node name="PortBlockout" type="Node3D" parent="."]
@@ -38,12 +51,17 @@ script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("3")]
 
+[node name="CombatAudioFeedback" type="Node" parent="."]
+script = ExtResource("10")
+
 [node name="ZombieSpawner" type="Node3D" parent="."]
 script = ExtResource("5")
 zombie_scene = ExtResource("4")
 max_active_zombies = 18
 prewarm_pool_size = 18
 randomize_valid_spawn_points = true
+prefer_nearest_valid_spawn_point = true
+nearest_candidate_pool_size = 5
 
 [node name="WaveManager" type="Node" parent="." node_paths=PackedStringArray("zombie_spawner")]
 script = ExtResource("6")

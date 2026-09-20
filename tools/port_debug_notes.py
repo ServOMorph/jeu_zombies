@@ -52,6 +52,9 @@ def main() -> int:
     status = subparsers.add_parser("status")
     status.add_argument("id")
     status.add_argument("value", choices=STATUSES)
+    rename = subparsers.add_parser("rename")
+    rename.add_argument("id")
+    rename.add_argument("title")
     args = parser.parse_args()
     notes = load_notes()
     if args.action == "list":
@@ -61,8 +64,10 @@ def main() -> int:
     if args.action == "reply":
         note["messages"].append({"role": "assistant", "content": args.message, "created_at": datetime.now().isoformat(timespec="seconds")})
         note["status"] = args.status
-    else:
+    elif args.action == "status":
         note["status"] = args.value
+    else:
+        note["title"] = args.title.strip()[:64]
     save_notes(notes)
     return 0
 

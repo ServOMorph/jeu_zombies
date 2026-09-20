@@ -2,6 +2,7 @@ extends Node3D
 
 const STARTUP_SCENE := "res://ui/main_menu/main_menu.tscn"
 const MAX_WAVES := 10
+const RESTART_REQUEST_PATH := "user://port_restart_request.json"
 
 @onready var player: PlayerController = $Player
 @onready var blockout: PortBlockout = $PortBlockout
@@ -14,11 +15,13 @@ const MAX_WAVES := 10
 @onready var port_status: Label = %PortStatus
 @onready var extraction_status: Label = %ExtractionStatus
 @onready var end_label: Label = %EndLabel
+@onready var combat_audio: CombatAudioFeedback = $CombatAudioFeedback
 
 var _target_wave := 3
 var _victory_recorded := false
 var _dev_panel: PanelContainer
 var _dev_toggle: Button
+var _dev_tabs: TabContainer
 var _dev_inputs: Dictionary = {}
 var _debug_note_input: TextEdit
 var _debug_note_status: Label
@@ -30,6 +33,10 @@ var _selected_debug_note_id := ""
 var _flight_enabled := false
 var _flight_button: Button
 var _screenshot_mode: OptionButton
+var _restart_confirmation: ConfirmationDialog
+var _next_restart_request_check_ms := 0
+var _damage_flash: ColorRect
+var _last_player_health := 0.0
 
 
 func _ready() -> void:
@@ -44,6 +51,7 @@ func _ready() -> void:
 	extraction_controller.configure(player, extraction_terminal.global_position, 8.0)
 	wave_manager.wave_finished.connect(_on_normal_wave_finished)
 	wave_manager.waves_completed.connect(_on_target_reached)
+	wave_manager.remaining_zombies_changed.connect(_on_wave_remaining_changed)
 	zombie_spawner.zombie_spawned.connect(_on_zombie_spawned)
 	extraction_terminal.extraction_requested.connect(_on_extraction_requested)
 	extraction_controller.countdown_changed.connect(_on_extraction_countdown_changed)
@@ -52,7 +60,14 @@ func _ready() -> void:
 	PortBalance.value_changed.connect(_on_balance_changed)
 	PortBalance.reset.connect(_on_balance_reset)
 	game_hud.configure(player, wave_manager, player.get_node("Head/Camera3D/InteractionController"))
+	player.weapon_controller.shot_fired.connect(_on_shot_fired)
+	player.weapon_controller.melee_swung.connect(_on_melee_swung)
+	player.weapon_controller.hit_confirmed.connect(_on_hit_confirmed)
 	_create_dev_menu()
+	_create_restart_confirmation()
+	_create_damage_flash()
+	_last_player_health = player.vitals.health
+	player.vitals.health_changed.connect(_on_player_health_changed)
 	if GameSession.start_new_session():
 		call_deferred("_start_normal_waves")
 	_update_port_status()
@@ -85,6 +100,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	_check_restart_request()
 	if not _flight_enabled or get_tree().paused or GameSession.state != GameSession.State.PLAYING:
 		return
 	var camera := player.get_node("Head/Camera3D") as Camera3D
@@ -104,6 +120,77 @@ func _process(delta: float) -> void:
 	if direction.length_squared() > 0.0:
 		var speed := 24.0 if Input.is_action_pressed("sprint") else 12.0
 		player.global_position += direction.normalized() * speed * delta
+
+
+func _create_restart_confirmation() -> void:
+	_restart_confirmation = ConfirmationDialog.new()
+	_restart_confirmation.title = "Traitement des commentaires terminé"
+	_restart_confirmation.dialog_text = "Codex va fermer puis relancer le jeu pour appliquer les modifications."
+	_restart_confirmation.ok_button_text = "OK"
+	_restart_confirmation.cancel_button_text = "Annuler"
+	_restart_confirmation.always_on_top = true
+	_restart_confirmation.process_mode = Node.PROCESS_MODE_ALWAYS
+	_restart_confirmation.confirmed.connect(_confirm_restart)
+	_restart_confirmation.canceled.connect(_cancel_restart)
+	add_child(_restart_confirmation)
+
+
+func _check_restart_request() -> void:
+	if Time.get_ticks_msec() < _next_restart_request_check_ms:
+		return
+	_next_restart_request_check_ms = Time.get_ticks_msec() + 1000
+	if _restart_confirmation == null or _restart_confirmation.visible or not FileAccess.file_exists(RESTART_REQUEST_PATH):
+		return
+	var file := FileAccess.open(RESTART_REQUEST_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var request = JSON.parse_string(file.get_as_text())
+	file.close()
+	if request is Dictionary and str((request as Dictionary).get("state", "")) == "pending":
+		_restart_confirmation.popup_centered()
+
+
+func _confirm_restart() -> void:
+	var helper_path := ProjectSettings.globalize_path("res://tools/port_relauncher.py")
+	var helper_pid := OS.create_process("python", [helper_path, str(OS.get_process_id())], false)
+	if helper_pid <= 0:
+		_write_restart_state("confirmed")
+		push_error("Impossible de lancer le redémarrage automatique du Port.")
+		return
+	_write_restart_state("launching")
+	get_tree().quit()
+
+
+func _cancel_restart() -> void:
+	_write_restart_state("cancelled")
+
+
+func _write_restart_state(state: String) -> void:
+	var file := FileAccess.open(RESTART_REQUEST_PATH, FileAccess.WRITE)
+	if file == null:
+		return
+	file.store_string(JSON.stringify({"state": state}))
+	file.close()
+
+
+func _create_damage_flash() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 30
+	layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(layer)
+	_damage_flash = ColorRect.new()
+	_damage_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_damage_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_damage_flash.color = Color(0.85, 0.03, 0.01, 0.0)
+	layer.add_child(_damage_flash)
+
+
+func _on_player_health_changed(current_health: float, _maximum_health: float) -> void:
+	if current_health < _last_player_health and _damage_flash != null:
+		_damage_flash.color = Color(0.85, 0.03, 0.01, 0.28)
+		var tween := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		tween.tween_property(_damage_flash, "color", Color(0.85, 0.03, 0.01, 0.0), 0.22)
+	_last_player_health = current_health
 
 
 func _build_normal_waves() -> void:
@@ -132,6 +219,10 @@ func _start_normal_waves() -> void:
 func _on_normal_wave_finished(wave_number: int) -> void:
 	if wave_number < _target_wave:
 		wave_manager.wave_definitions[wave_number] = _make_wave_definition(wave_number + 1, false)
+		_update_port_status()
+
+
+func _on_wave_remaining_changed(_remaining_count: int) -> void:
 	_update_port_status()
 
 
@@ -173,6 +264,22 @@ func _on_zombie_reward_granted(credits: int) -> void:
 	GameSession.add_credits(credits)
 
 
+func _on_shot_fired(weapon_name: String) -> void:
+	var definition = player.weapon_controller.get_current_definition()
+	if definition == null:
+		combat_audio.play_shot()
+		return
+	combat_audio.play_weapon_shot(weapon_name, definition.shot_tone_frequency, definition.shot_tone_duration_seconds, definition.shot_tone_amplitude)
+
+
+func _on_melee_swung() -> void:
+	combat_audio.play_melee()
+
+
+func _on_hit_confirmed(_damage: float) -> void:
+	combat_audio.play_hit()
+
+
 func _on_balance_changed(key: String, _value: float) -> void:
 	blockout.apply_balance(key)
 	if key == "extraction_price":
@@ -201,7 +308,11 @@ func _on_session_ended(final_state: int) -> void:
 
 
 func _update_port_status() -> void:
-	port_status.text = "PORT — Manche %d / objectif %d" % [wave_manager.current_wave_number, _target_wave]
+	port_status.text = "PORT — Manche %d / objectif %d\nZombies restants : %d" % [
+		wave_manager.current_wave_number,
+		_target_wave,
+		wave_manager.get_remaining_zombie_count(),
+	]
 
 
 func _create_dev_menu() -> void:
@@ -227,11 +338,11 @@ func _create_dev_menu() -> void:
 	panel_style.content_margin_bottom = 12
 	_dev_panel.add_theme_stylebox_override("panel", panel_style)
 	layer.add_child(_dev_panel)
-	var tabs := TabContainer.new()
-	_dev_panel.add_child(tabs)
+	_dev_tabs = TabContainer.new()
+	_dev_panel.add_child(_dev_tabs)
 	var scroll := ScrollContainer.new()
 	scroll.name = "Valeurs"
-	tabs.add_child(scroll)
+	_dev_tabs.add_child(scroll)
 	var content := VBoxContainer.new()
 	content.custom_minimum_size.x = 590
 	scroll.add_child(content)
@@ -245,10 +356,6 @@ func _create_dev_menu() -> void:
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	help.add_theme_color_override("font_color", Color(0.72, 0.8, 0.86, 1.0))
 	content.add_child(help)
-	_flight_button = Button.new()
-	_flight_button.pressed.connect(_toggle_flight_mode)
-	content.add_child(_flight_button)
-	_update_flight_button()
 	for key: String in PortBalance.DEFAULTS:
 		var row := HBoxContainer.new()
 		var label := Label.new()
@@ -270,10 +377,14 @@ func _create_dev_menu() -> void:
 	content.add_child(reset_button)
 	var comments_scroll := ScrollContainer.new()
 	comments_scroll.name = "Commentaires"
-	tabs.add_child(comments_scroll)
+	_dev_tabs.add_child(comments_scroll)
 	content = VBoxContainer.new()
 	content.custom_minimum_size.x = 590
 	comments_scroll.add_child(content)
+	_flight_button = Button.new()
+	_flight_button.pressed.connect(_toggle_flight_mode)
+	content.add_child(_flight_button)
+	_update_flight_button()
 	var notes_title := Label.new()
 	notes_title.text = "1. NOUVEAU COMMENTAIRE"
 	notes_title.add_theme_font_size_override("font_size", 16)
@@ -312,7 +423,7 @@ func _create_dev_menu() -> void:
 	content.add_child(recent_threads_title)
 	_debug_recent_notes_list = ItemList.new()
 	_debug_recent_notes_list.custom_minimum_size = Vector2(0, 135)
-	_debug_recent_notes_list.item_selected.connect(_on_debug_note_selected)
+	_debug_recent_notes_list.item_selected.connect(func(index: int): _on_debug_note_selected(_debug_recent_notes_list, index))
 	content.add_child(_debug_recent_notes_list)
 	var threads_title := Label.new()
 	threads_title.text = "3. EN ATTENTE DE VOTRE VALIDATION"
@@ -321,7 +432,7 @@ func _create_dev_menu() -> void:
 	content.add_child(threads_title)
 	_debug_notes_list = ItemList.new()
 	_debug_notes_list.custom_minimum_size = Vector2(0, 135)
-	_debug_notes_list.item_selected.connect(_on_debug_note_selected)
+	_debug_notes_list.item_selected.connect(func(index: int): _on_debug_note_selected(_debug_notes_list, index))
 	content.add_child(_debug_notes_list)
 	_debug_thread = RichTextLabel.new()
 	_debug_thread.bbcode_enabled = true
@@ -466,7 +577,7 @@ func _refresh_debug_threads() -> void:
 		if status == "resolved":
 			continue
 		var target_list := _debug_recent_notes_list if status == "new" or status == "in_analysis" else _debug_notes_list
-		var item_index := target_list.add_item("[%s] %s" % [status, str(note.get("content", "")).left(48)])
+		var item_index := target_list.add_item("[%s] %s" % [status, str(note.get("title", note.get("content", ""))).left(48)])
 		target_list.set_item_metadata(item_index, str(note.get("id", "")))
 		if str(note.get("id", "")) == _selected_debug_note_id:
 			if target_list == _debug_recent_notes_list:
@@ -479,10 +590,10 @@ func _refresh_debug_threads() -> void:
 		_debug_notes_list.select(selected_waiting_index)
 
 
-func _on_debug_note_selected(index: int) -> void:
-	if _debug_notes_list == null:
+func _on_debug_note_selected(source_list: ItemList, index: int) -> void:
+	if source_list == null:
 		return
-	_show_debug_thread(str(_debug_notes_list.get_item_metadata(index)))
+	_show_debug_thread(str(source_list.get_item_metadata(index)))
 
 
 func _show_debug_thread(note_id: String) -> void:
@@ -497,19 +608,25 @@ func _show_debug_thread(note_id: String) -> void:
 	for message: Dictionary in note.get("messages", []):
 		var author := "Vous" if str(message.get("role", "user")) == "user" else "Codex"
 		lines.append("[b]%s[/b] — %s" % [author, str(message.get("content", "")).replace("[", "\\[")])
-	_debug_thread.text = "\n\n".join(lines)
+	var content := "\n\n".join(lines)
+	_debug_thread.text = content
 
 
 func _toggle_dev_menu() -> void:
 	if _dev_panel == null:
 		return
 	_dev_panel.visible = not _dev_panel.visible
-	get_tree().paused = _dev_panel.visible
 	if _dev_panel.visible:
-		GameSession.toggle_pause()
+		if _dev_tabs != null:
+			_dev_tabs.current_tab = 1
+		if GameSession.state == GameSession.State.PLAYING:
+			GameSession.toggle_pause()
+		get_tree().paused = true
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
-		GameSession.toggle_pause()
+		get_tree().paused = false
+		if GameSession.state == GameSession.State.PAUSED:
+			GameSession.toggle_pause()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 

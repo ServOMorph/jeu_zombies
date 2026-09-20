@@ -19,6 +19,8 @@ enum DeferReason {
 @export_range(0.1, 10.0, 0.1) var navigation_projection_max_distance := 2.0
 @export_range(0, 128, 1) var prewarm_pool_size := 8
 @export var randomize_valid_spawn_points := false
+@export var prefer_nearest_valid_spawn_point := false
+@export_range(1, 16, 1) var nearest_candidate_pool_size := 5
 
 var _active_zombies: Array[ZombieStandard] = []
 var _pooled_zombies: Array[ZombieStandard] = []
@@ -113,6 +115,17 @@ func _find_first_valid_point(points: Array[Node3D], target: Node3D) -> Node3D:
 	for point: Node3D in points:
 		distances.append(point.global_position.distance_to(target.global_position))
 		paths_valid.append(_has_navigation_path(point, target))
+	if prefer_nearest_valid_spawn_point:
+		var nearest_indices := select_nearest_candidate_indices(
+			distances,
+			paths_valid,
+			player_exclusion_radius_meters,
+			nearest_candidate_pool_size,
+		)
+		var nearest_points: Array[Node3D] = []
+		for index in nearest_indices:
+			nearest_points.append(points[index])
+		return _take_cycled_candidates(nearest_points)
 	if randomize_valid_spawn_points:
 		return _take_cycled_random_point(points, distances, paths_valid)
 	var index := _select_candidate_index(distances, paths_valid)
@@ -128,6 +141,12 @@ func _take_cycled_random_point(
 	for index in mini(points.size(), mini(distances.size(), paths_valid.size())):
 		if paths_valid[index] and is_outside_player_exclusion(distances[index], player_exclusion_radius_meters):
 			valid_points.append(points[index])
+	if valid_points.is_empty():
+		return null
+	return _take_cycled_candidates(valid_points)
+
+
+func _take_cycled_candidates(valid_points: Array[Node3D]) -> Node3D:
 	if valid_points.is_empty():
 		return null
 	for index in range(_random_spawn_bag.size() - 1, -1, -1):
@@ -230,3 +249,36 @@ static func select_candidate_index(
 		if paths_valid[index] and is_outside_player_exclusion(distances_to_player[index], exclusion_radius):
 			return index
 	return -1
+
+
+static func select_nearest_candidate_index(
+	distances_to_player: Array[float],
+	paths_valid: Array[bool],
+	exclusion_radius: float,
+) -> int:
+	var candidate_index := -1
+	var nearest_distance := INF
+	var candidate_count := mini(distances_to_player.size(), paths_valid.size())
+	for index in candidate_count:
+		var distance := distances_to_player[index]
+		if paths_valid[index] and is_outside_player_exclusion(distance, exclusion_radius) and distance < nearest_distance:
+			candidate_index = index
+			nearest_distance = distance
+	return candidate_index
+
+
+static func select_nearest_candidate_indices(
+	distances_to_player: Array[float],
+	paths_valid: Array[bool],
+	exclusion_radius: float,
+	maximum_candidates: int,
+) -> Array[int]:
+	var candidate_indices: Array[int] = []
+	var candidate_count := mini(distances_to_player.size(), paths_valid.size())
+	for index in candidate_count:
+		if paths_valid[index] and is_outside_player_exclusion(distances_to_player[index], exclusion_radius):
+			candidate_indices.append(index)
+	candidate_indices.sort_custom(func(left: int, right: int): return distances_to_player[left] < distances_to_player[right])
+	if candidate_indices.size() > maximum_candidates:
+		candidate_indices.resize(maximum_candidates)
+	return candidate_indices

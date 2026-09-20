@@ -1,5 +1,8 @@
 # Décisions archivées — jeu_zombies
 
+- 2026-08-07 : M5.4 implémentée : chrono 120 s, `WaveManager` dédié à pression élevée capé par le plafond de zombies existant, extraction déverrouillée après succès via `REJOINDRE_EXTRACTION` ; validée manuellement en jeu réel.
+- 2026-08-07 : M5.5 implémentée : le blocage des actions à toute fin de partie est centralisé sur `GameSession.session_ended` ; validée manuellement en jeu réel.
+
 - 2026-08-07 : M5.3 complétée fonctionnellement et testée automatiquement (câblage `helix_blockout.gd`/`dev_player_test.tscn`, deux suites de tests créées). Cases roadmap non cochées tant que la validation manuelle en jeu réel n'est pas faite.
 - 2026-08-07 : M5.3 validée manuellement en jeu réel ; les quatre cases sont cochées dans `roadmap_v1.md` et `tests_manuels.md` est vidé.
 

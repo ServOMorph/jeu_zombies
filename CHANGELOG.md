@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.55 — 2026-09-20
+
+### Ajouté
+- Port : mer ouest inaccessible, quais, bateaux, matériaux procéduraux, trois semi-remorques supplémentaires et compteur de zombies restants.
+- Effets visuels de combat : impact, mort de zombie et dégâts joueur.
+- `tools/port_relauncher.py` : relance directe du jeu sur le bureau Agents après validation de l'overlay.
+
+### Modifié
+- Apparitions Port : alternance aléatoire parmi les cinq points navigables valides les plus proches du joueur.
+- F3 ouvre Commentaires, place le vol en tête et reprend explicitement les vagues à sa fermeture.
+
 ## v0.54 — 2026-09-16
 
 ### Modifié

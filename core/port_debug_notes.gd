@@ -15,6 +15,7 @@ func add_note(content: String) -> bool:
 		"id": _new_id(notes),
 		"created_at": Time.get_datetime_string_from_system(),
 		"content": normalized,
+		"title": normalized.left(64),
 		"status": "new",
 		"messages": [{"role": "user", "created_at": Time.get_datetime_string_from_system(), "content": normalized}],
 	}
@@ -64,6 +65,24 @@ func set_status(note_id: String, status: String) -> bool:
 	return false
 
 
+func rename_note(note_id: String, title: String) -> bool:
+	var normalized := title.strip_edges()
+	if normalized.is_empty():
+		return false
+	var notes := get_notes()
+	for index in notes.size():
+		var note := notes[index] as Dictionary
+		if str(note.get("id", "")) != note_id:
+			continue
+		note["title"] = normalized.left(64)
+		notes[index] = note
+		if not _save(notes):
+			return false
+		note_updated.emit(note)
+		return true
+	return false
+
+
 func get_notes() -> Array:
 	if not FileAccess.file_exists(SAVE_PATH):
 		return []
@@ -96,6 +115,8 @@ func _normalize_notes(raw_notes: Array) -> Array:
 			continue
 		if str(note.get("id", "")).is_empty():
 			note["id"] = "legacy_%d" % index
+		if str(note.get("title", "")).strip_edges().is_empty():
+			note["title"] = content.left(64)
 		if not ["new", "in_analysis", "waiting_validation", "resolved", "blocked"].has(str(note.get("status", ""))):
 			note["status"] = "new"
 		if not note.get("messages", []) is Array or (note["messages"] as Array).is_empty():

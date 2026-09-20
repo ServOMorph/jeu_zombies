@@ -28,4 +28,19 @@ func run_tests() -> Array[String]:
 	)
 	if fallback_index != 1:
 		failures.append("le repli doit ignorer le point proche et retenir le premier point navigable valide")
+	var nearest_index := ZOMBIE_SPAWNER.select_nearest_candidate_index(
+		[14.0, 8.0, 10.0],
+		[true, true, true],
+		6.0,
+	)
+	if nearest_index != 1:
+		failures.append("le Port doit choisir le point valide le plus proche du joueur")
+	var nearest_indices := ZOMBIE_SPAWNER.select_nearest_candidate_indices(
+		[12.0, 7.0, 18.0, 9.0, 14.0, 8.0, 5.0],
+		[true, true, true, true, true, true, true],
+		6.0,
+		5,
+	)
+	if nearest_indices != [1, 5, 3, 0, 4]:
+		failures.append("le Port doit retenir les cinq points valides les plus proches du joueur")
 	return failures

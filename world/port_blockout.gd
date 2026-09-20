@@ -36,15 +36,25 @@ const PORT_COORDINATES: Dictionary = {
 		{"id": "dock_est", "position": Vector3(18, 0, 24)},
 	],
 	"trucks": [
-		{"id": "ouest_1", "position": Vector3(-56, 0, 20)},
-		{"id": "ouest_2", "position": Vector3(-44, 0, 20)},
-		{"id": "ouest_3", "position": Vector3(-56, 0, 40)},
+		{"id": "ouest_1", "position": Vector3(-70, 0, 22)},
+		{"id": "centre_ouest", "position": Vector3(-48, 0, 8)},
+		{"id": "sud_ouest", "position": Vector3(-42, 0, -58)},
+		{"id": "est_1", "position": Vector3(64, 0, 22)},
+		{"id": "chargement_1", "position": Vector3(-67, 0, -75)},
+		{"id": "chargement_2", "position": Vector3(-55, 0, -75)},
+		{"id": "chargement_3", "position": Vector3(-43, 0, -75)},
 	],
 	"decorative_warehouses": [
 		{"id": "nord_ouest", "position": Vector3(-55, 0, 70)},
 		{"id": "nord_est", "position": Vector3(55, 0, 70)},
 	],
 	"parking": {"origin": Vector3(-12, 0, -68), "columns": 6, "rows": 5, "spacing": Vector3(5, 0, 5)},
+	"cardinal_markers": [
+		{"label": "NORD", "position": Vector3(0, 10, -94)},
+		{"label": "EST", "position": Vector3(94, 10, 0)},
+		{"label": "SUD", "position": Vector3(0, 10, 94)},
+		{"label": "OUEST", "position": Vector3(-94, 10, 0)},
+	],
 	"extraction": Vector3.ZERO,
 }
 
@@ -54,18 +64,24 @@ var _weapons: Array[WallWeaponBuy] = []
 var _perks: Array[PerkStation] = []
 var _mystery_box: MysteryBox
 var _upgrade_station: WeaponUpgradeStation
+var _layout_groups: Dictionary = {}
+var _discarded_layout_groups: Dictionary = {}
+var _port_materials: Dictionary = {}
 
 
 func _ready() -> void:
 	_rng.randomize()
 	_create_ground()
 	_create_boundaries()
+	_create_west_sea()
 	_create_port_ambience()
+	_create_cardinal_markers()
 	for warehouse: Dictionary in WAREHOUSES:
 		_create_warehouse(warehouse)
 	_create_port_cover()
 	_create_port_cranes()
 	_create_repair_boats()
+	_create_central_worksites()
 	_create_trucks()
 	_create_decorative_warehouses()
 	_create_parking()
@@ -132,13 +148,50 @@ func _create_ground() -> void:
 func _create_boundaries() -> void:
 	_create_static_box("NorthBoundary", Vector3(0, 3, -100), Vector3(200, 6, 1), Color(0.05, 0.07, 0.08, 1.0))
 	_create_static_box("SouthBoundary", Vector3(0, 3, 100), Vector3(200, 6, 1), Color(0.05, 0.07, 0.08, 1.0))
-	_create_static_box("WestBoundary", Vector3(-100, 3, 0), Vector3(1, 6, 200), Color(0.05, 0.07, 0.08, 1.0))
+	_create_invisible_boundary("WestSeaBarrier", Vector3(-100, 3, 0), Vector3(1, 6, 200))
 	_create_static_box("EastBoundary", Vector3(100, 3, 0), Vector3(1, 6, 200), Color(0.05, 0.07, 0.08, 1.0))
 
 
+func _create_west_sea() -> void:
+	var water := MeshInstance3D.new()
+	water.name = "WestSea"
+	water.position = Vector3(-132, -0.32, 0)
+	var water_mesh := PlaneMesh.new()
+	water_mesh.size = Vector2(64, 220)
+	water.mesh = water_mesh
+	water.material_override = _get_port_material("water", Color(0.025, 0.17, 0.24, 1.0))
+	add_child(water)
+	for z in [-72.0, 0.0, 72.0]:
+		_create_decor_box("WestQuay_%d" % int(z), Vector3(-108, 0.45, z), Vector3(16, 0.9, 38), Color(0.25, 0.28, 0.27, 1.0), false)
+		_create_decor_box("WestQuayEdge_%d" % int(z), Vector3(-116, 1.1, z), Vector3(0.6, 1.5, 38), Color(0.78, 0.5, 0.08, 1.0), false)
+	for boat: Dictionary in [
+		{"id": "amarrage_nord", "position": Vector3(-128, 1.4, -55), "size": Vector3(9, 2.8, 25)},
+		{"id": "amarrage_centre", "position": Vector3(-128, 1.4, 12), "size": Vector3(9, 2.8, 25)},
+		{"id": "ocean_1", "position": Vector3(-150, 1.2, -30), "size": Vector3(7, 2.4, 20)},
+		{"id": "ocean_2", "position": Vector3(-154, 1.2, 48), "size": Vector3(7, 2.4, 20)},
+	]:
+		var boat_id := str(boat["id"])
+		var boat_position := boat["position"] as Vector3
+		var hull_size := boat["size"] as Vector3
+		_create_decor_box("SeaBoatHull_%s" % boat_id, boat_position, hull_size, Color(0.17, 0.25, 0.29, 1.0), false)
+		_create_decor_box("SeaBoatCabin_%s" % boat_id, boat_position + Vector3(0, 2.5, -3), Vector3(hull_size.x * 0.6, 2.4, 6), Color(0.75, 0.77, 0.71, 1.0), false)
+
+
+func _create_invisible_boundary(boundary_name: String, boundary_position: Vector3, boundary_size: Vector3) -> void:
+	var body := StaticBody3D.new()
+	body.name = boundary_name
+	body.position = boundary_position
+	add_child(body)
+	var collision := CollisionShape3D.new()
+	var shape := BoxShape3D.new()
+	shape.size = boundary_size
+	collision.shape = shape
+	body.add_child(collision)
+
+
 func _create_port_ambience() -> void:
-	var cyan := Color(0.05, 0.72, 0.95, 1.0)
-	var amber := Color(1.0, 0.42, 0.06, 1.0)
+	var cyan := Color(0.12, 0.72, 0.92, 1.0)
+	var amber := Color(1.0, 0.58, 0.16, 1.0)
 	var safety := Color(0.82, 0.12, 0.05, 1.0)
 	_create_decor_box("DockLineNorth", Vector3(0, 0.025, -91), Vector3(176, 0.05, 0.32), cyan, true)
 	_create_decor_box("DockLineSouth", Vector3(0, 0.025, 91), Vector3(176, 0.05, 0.32), cyan, true)
@@ -153,10 +206,30 @@ func _create_port_ambience() -> void:
 		_create_light_pole("HarborPoleNorth%d" % index, Vector3(x, 0, -88), amber)
 		if index % 2 == 0:
 			_create_light_pole("HarborPoleSouth%d" % index, Vector3(x, 0, 88), cyan)
+	for mast in [
+		Vector3(-72, 0, -42), Vector3(72, 0, -42), Vector3(-72, 0, 42), Vector3(72, 0, 42),
+		Vector3(-38, 0, 0), Vector3(38, 0, 0),
+	]:
+		_create_high_mast("HighMast%d" % mast.x, mast, amber)
 	for index in 12:
 		var angle := TAU * float(index) / 12.0
 		var bollard_position := Vector3(cos(angle) * 89.0, 0.8, sin(angle) * 89.0)
 		_create_decor_box("Bollard_%d" % index, bollard_position, Vector3(0.7, 1.6, 0.7), safety, false)
+
+
+func _create_cardinal_markers() -> void:
+	for marker: Dictionary in PORT_COORDINATES["cardinal_markers"]:
+		var label := Label3D.new()
+		label.name = "Cardinal_%s" % str(marker["label"])
+		label.text = str(marker["label"])
+		label.position = marker["position"] as Vector3
+		label.font_size = 96
+		label.outline_size = 12
+		label.modulate = Color(1.0, 0.72, 0.22, 1.0)
+		label.outline_modulate = Color(0.04, 0.06, 0.09, 1.0)
+		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		label.no_depth_test = true
+		add_child(label)
 
 
 func _create_light_pole(pole_name: String, position_value: Vector3, color: Color) -> void:
@@ -168,6 +241,19 @@ func _create_light_pole(pole_name: String, position_value: Vector3, color: Color
 	light.light_color = color
 	light.light_energy = 2.2
 	light.omni_range = 15.0
+	light.shadow_enabled = false
+	add_child(light)
+
+
+func _create_high_mast(mast_name: String, position_value: Vector3, color: Color) -> void:
+	_create_decor_box("%sPost" % mast_name, position_value + Vector3(0, 10, 0), Vector3(0.5, 20, 0.5), Color(0.12, 0.14, 0.16, 1.0), false)
+	_create_decor_box("%sHead" % mast_name, position_value + Vector3(0, 20.1, 0), Vector3(3.5, 0.4, 1.4), color, true)
+	var light := OmniLight3D.new()
+	light.name = "%sGlow" % mast_name
+	light.position = position_value + Vector3(0, 19.5, 0)
+	light.light_color = color
+	light.light_energy = 5.5
+	light.omni_range = 38.0
 	light.shadow_enabled = false
 	add_child(light)
 
@@ -225,6 +311,14 @@ func _create_port_cranes() -> void:
 		_create_static_box("CraneBeam_%s" % crane_id, position_value + Vector3(0, 22, 0), Vector3(30, 2, 2), crane_color)
 		_create_static_box("CraneCargo_%s" % crane_id, position_value + Vector3(9, 2, 7), Vector3(7, 4, 7), cargo_color)
 		_create_decor_box("CraneBeacon_%s" % crane_id, position_value + Vector3(0, 23.8, 0), Vector3(0.9, 0.45, 0.9), Color(1.0, 0.08, 0.03, 1.0), true)
+		var crane_light := OmniLight3D.new()
+		crane_light.name = "CraneWorkLight_%s" % crane_id
+		crane_light.position = position_value + Vector3(0, 20, 0)
+		crane_light.light_color = Color(1.0, 0.58, 0.2, 1.0)
+		crane_light.light_energy = 3.4
+		crane_light.omni_range = 26.0
+		crane_light.shadow_enabled = false
+		add_child(crane_light)
 
 
 func _create_repair_boats() -> void:
@@ -237,6 +331,32 @@ func _create_repair_boats() -> void:
 		_create_static_box("RepairBoatHull_%s" % boat_id, position_value + Vector3(0, 1.8, 0), Vector3(12, 3.6, 28), hull_color)
 		_create_static_box("RepairBoatCabin_%s" % boat_id, position_value + Vector3(0, 5, -5), Vector3(8, 3, 8), cabin_color)
 		_create_static_box("RepairBoatScaffold_%s" % boat_id, position_value + Vector3(8, 5, 5), Vector3(2, 10, 12), repair_color)
+
+
+func _create_central_worksites() -> void:
+	var work_lamp := Color(1.0, 0.58, 0.18, 1.0)
+	var equipment := Color(0.92, 0.48, 0.06, 1.0)
+	var sites := [
+		{"id": "ouest", "position": Vector3(-10, 0, 28)},
+		{"id": "est", "position": Vector3(20, 0, -20)},
+		{"id": "nord", "position": Vector3(0, 0, -34)},
+		{"id": "sud", "position": Vector3(0, 0, 34)},
+	]
+	for site: Dictionary in sites:
+		var site_id := str(site["id"])
+		var center := site["position"] as Vector3
+		_create_static_box("WorksiteGenerator_%s" % site_id, center + Vector3(-3.5, 1.2, 0), Vector3(3.0, 2.4, 2.2), equipment)
+		_create_static_box("WorksitePallets_%s" % site_id, center + Vector3(3.2, 0.8, 1.8), Vector3(4.8, 1.6, 3.2), Color(0.33, 0.22, 0.1, 1.0))
+		_create_static_box("WorksiteForklift_%s" % site_id, center + Vector3(2.6, 1.1, -3.6), Vector3(2.4, 2.2, 4.6), Color(0.2, 0.42, 0.3, 1.0))
+		_create_decor_box("WorksiteLamp_%s" % site_id, center + Vector3(-3.5, 3.0, 0), Vector3(0.9, 0.35, 0.6), work_lamp, true)
+		var light := OmniLight3D.new()
+		light.name = "WorksiteLight_%s" % site_id
+		light.position = center + Vector3(-3.5, 3.0, 0)
+		light.light_color = work_lamp
+		light.light_energy = 2.8
+		light.omni_range = 15.0
+		light.shadow_enabled = false
+		add_child(light)
 
 
 func _create_trucks() -> void:
@@ -332,6 +452,8 @@ func _create_spawn_point(point_name: String, point_position: Vector3, zone: Stri
 
 
 func _create_static_box(node_name: String, box_position: Vector3, box_size: Vector3, color: Color) -> void:
+	if not _register_layout_box(node_name, box_position, box_size):
+		return
 	var body := StaticBody3D.new()
 	body.name = node_name
 	body.position = box_position
@@ -340,17 +462,78 @@ func _create_static_box(node_name: String, box_position: Vector3, box_size: Vect
 	var mesh := BoxMesh.new()
 	mesh.size = box_size
 	visual.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.metallic = 0.35
-	material.roughness = 0.7
-	visual.material_override = material
+	visual.material_override = _get_port_material(_get_surface_profile(node_name), color)
 	body.add_child(visual)
 	var collision := CollisionShape3D.new()
 	var shape := BoxShape3D.new()
 	shape.size = box_size
 	collision.shape = shape
 	body.add_child(collision)
+	var group_id := _get_layout_group_id(node_name)
+	var group := _layout_groups[group_id] as Dictionary
+	(group["bodies"] as Array[StaticBody3D]).append(body)
+
+
+func _register_layout_box(node_name: String, box_position: Vector3, box_size: Vector3) -> bool:
+	var group_id := _get_layout_group_id(node_name)
+	if _discarded_layout_groups.has(group_id):
+		return false
+	if _layout_groups.has(group_id):
+		return true
+	var candidate := AABB(box_position - box_size * 0.5, box_size)
+	var candidate_is_critical := _is_critical_layout_group(group_id)
+	for other_group_id: String in _layout_groups:
+		var other_group := _layout_groups[other_group_id] as Dictionary
+		for other_box: AABB in other_group["boxes"]:
+			if not candidate.intersects(other_box):
+				continue
+			if bool(other_group["critical"]) and not candidate_is_critical:
+				push_warning("Port : %s retiré, chevauche un élément de gameplay %s." % [group_id, other_group_id])
+				_discarded_layout_groups[group_id] = true
+				return false
+			if candidate_is_critical and not bool(other_group["critical"]):
+				push_warning("Port : %s retiré, chevauche un élément de gameplay %s." % [other_group_id, group_id])
+				_discard_layout_group(other_group_id)
+				break
+			push_warning("Port : %s et %s retirés car ils se chevauchent." % [group_id, other_group_id])
+			_discard_layout_group(other_group_id)
+			_discarded_layout_groups[group_id] = true
+			return false
+	_layout_groups[group_id] = {
+		"boxes": [candidate],
+		"bodies": [] as Array[StaticBody3D],
+		"critical": candidate_is_critical,
+	}
+	return true
+
+
+func _remove_layout_group(group_id: String) -> void:
+	var group := _layout_groups.get(group_id, {}) as Dictionary
+	for body: StaticBody3D in group.get("bodies", []):
+		body.queue_free()
+	_layout_groups.erase(group_id)
+
+
+func _discard_layout_group(group_id: String) -> void:
+	_remove_layout_group(group_id)
+	_discarded_layout_groups[group_id] = true
+
+
+func _get_layout_group_id(node_name: String) -> String:
+	if node_name.ends_with("Boundary"):
+		return "boundary"
+	for warehouse: Dictionary in WAREHOUSES:
+		var warehouse_id := str(warehouse["id"])
+		if node_name.begins_with(warehouse_id):
+			return "warehouse:%s" % warehouse_id
+	for prefix: String in ["Crane", "Worksite", "RepairBoat", "Truck", "DecorativeWarehouse"]:
+		if node_name.begins_with(prefix):
+			return "%s:%s" % [prefix, node_name.get_slice("_", 1)]
+	return node_name
+
+
+func _is_critical_layout_group(group_id: String) -> bool:
+	return group_id.begins_with("warehouse:")
 
 
 func _create_decor_box(node_name: String, box_position: Vector3, box_size: Vector3, color: Color, emissive: bool) -> void:
@@ -360,16 +543,49 @@ func _create_decor_box(node_name: String, box_position: Vector3, box_size: Vecto
 	var mesh := BoxMesh.new()
 	mesh.size = box_size
 	visual.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.metallic = 0.55
-	material.roughness = 0.45
+	var material := _get_port_material(_get_surface_profile(node_name), color)
 	if emissive:
+		material = material.duplicate() as StandardMaterial3D
 		material.emission_enabled = true
 		material.emission = color
 		material.emission_energy_multiplier = 4.0
 	visual.material_override = material
 	add_child(visual)
+
+
+func _get_surface_profile(node_name: String) -> String:
+	if node_name.begins_with("Container") or node_name.begins_with("Truck") or node_name.begins_with("Parking"):
+		return "painted_metal"
+	if node_name.begins_with("Crane") or node_name.begins_with("SeaBoat") or node_name.contains("Pole") or node_name.contains("Mast"):
+		return "steel"
+	if node_name.begins_with("WestQuay") or node_name.begins_with("PortFloor") or node_name.contains("Warehouse") or node_name.ends_with("Boundary"):
+		return "concrete"
+	return "painted_metal"
+
+
+func _get_port_material(profile: String, color: Color) -> StandardMaterial3D:
+	var cache_key := "%s_%s" % [profile, color.to_html(false)]
+	if _port_materials.has(cache_key):
+		return _port_materials[cache_key] as StandardMaterial3D
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color
+	material.metallic = 0.62 if profile == "steel" or profile == "painted_metal" else 0.08
+	material.roughness = 0.28 if profile == "water" else (0.42 if material.metallic > 0.5 else 0.82)
+	if profile == "water":
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.albedo_color.a = 0.82
+		material.emission_enabled = true
+		material.emission = Color(0.01, 0.08, 0.12, 1.0)
+		material.emission_energy_multiplier = 0.35
+	var noise := NoiseTexture2D.new()
+	noise.width = 256
+	noise.height = 256
+	noise.noise = FastNoiseLite.new()
+	noise.noise.seed = 173 if profile == "concrete" else 619
+	noise.noise.frequency = 0.09 if profile == "concrete" else 0.22
+	material.albedo_texture = noise
+	_port_materials[cache_key] = material
+	return material
 
 
 func _create_navigation() -> void:
