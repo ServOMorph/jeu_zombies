@@ -2,17 +2,15 @@ class_name PortBlockout
 extends Node3D
 
 const MAP_SIZE := 200.0
-const PLAYER_SPAWNS: Array[Vector3] = [
-	Vector3(-72, 0.1, -12), Vector3(-55, 0.1, 18), Vector3(-35, 0.1, 42), Vector3(-12, 0.1, 34), Vector3(14, 0.1, 34),
-	Vector3(38, 0.1, 42), Vector3(67, 0.1, 16), Vector3(73, 0.1, -18), Vector3(42, 0.1, -66), Vector3(-38, 0.1, -68),
-]
+const PLAYER_SPAWN := Vector3(0.0, 0.1, 0.0)
 const WAREHOUSES: Array[Dictionary] = [
 	{"id": "warehouse_1", "position": Vector3(-55, 0, -48), "entry": Vector3(-55, 0, -34), "cost_key": "door_1_price"},
 	{"id": "warehouse_2", "position": Vector3(55, 0, -48), "entry": Vector3(55, 0, -34), "cost_key": "door_2_price"},
 	{"id": "warehouse_3", "position": Vector3(0, 0, 58), "entry": Vector3(0, 0, 72), "cost_key": "door_3_price"},
 ]
 const PORT_COORDINATES: Dictionary = {
-	"player_spawns": PLAYER_SPAWNS,
+	"player_spawn": PLAYER_SPAWN,
+	"central_window_spawns": [Vector3(-14, 0.1, -22), Vector3(14, 0.1, -22), Vector3(-14, 0.1, 22), Vector3(14, 0.1, 22), Vector3(-22, 0.1, -14), Vector3(-22, 0.1, 14), Vector3(22, 0.1, -14), Vector3(22, 0.1, 14)],
 	"warehouses": WAREHOUSES,
 	"zombie_exterior": [Vector3(-84, 0.1, -80), Vector3(84, 0.1, -76), Vector3(-88, 0.1, 48), Vector3(88, 0.1, 52), Vector3(-18, 0.1, -88), Vector3(24, 0.1, 88)],
 	"weapon_stations": [Vector3(-18, 0.8, 4), Vector3(-55, 0.8, -56), Vector3(55, 0.8, -56), Vector3(0, 0.8, 52)],
@@ -60,6 +58,8 @@ const PORT_COORDINATES: Dictionary = {
 
 var _rng := RandomNumberGenerator.new()
 var _warehouse_doors: Dictionary = {}
+var _central_doors: Dictionary = {}
+var _exterior_spawn_points: Array[ZombieSpawnPoint] = []
 var _weapons: Array[WallWeaponBuy] = []
 var _perks: Array[PerkStation] = []
 var _mystery_box: MysteryBox
@@ -73,6 +73,7 @@ func _ready() -> void:
 	_rng.randomize()
 	_create_ground()
 	_create_boundaries()
+	_create_central_zone()
 	_create_west_sea()
 	_create_port_ambience()
 	_create_cardinal_markers()
@@ -89,9 +90,8 @@ func _ready() -> void:
 	_create_navigation()
 
 
-func get_random_player_spawn() -> Vector3:
-	var spawns := PORT_COORDINATES["player_spawns"] as Array[Vector3]
-	return spawns[_rng.randi_range(0, spawns.size() - 1)]
+func get_player_spawn() -> Vector3:
+	return PLAYER_SPAWN
 
 
 static func is_outside_warehouses(position_value: Vector3) -> bool:
@@ -103,16 +103,22 @@ static func is_outside_warehouses(position_value: Vector3) -> bool:
 
 
 func create_zombie_spawn_points() -> void:
+	for index in 8:
+		_create_spawn_point("PortSpawnWindow%d" % (index + 1), (PORT_COORDINATES["central_window_spawns"] as Array)[index] as Vector3, "port")
 	for index in 6:
-		_create_spawn_point("PortSpawnExterior%d" % (index + 1), [
+		var exterior_point := _create_spawn_point("PortSpawnExterior%d" % (index + 1), [
 			Vector3(-84, 0.1, -80), Vector3(84, 0.1, -76), Vector3(-88, 0.1, 48),
 			Vector3(88, 0.1, 52), Vector3(-18, 0.1, -88), Vector3(24, 0.1, 88),
 		][index], "port")
+		exterior_point.is_enabled = false
+		_exterior_spawn_points.append(exterior_point)
 	for warehouse: Dictionary in WAREHOUSES:
 		for index in 2:
 			var point := _create_spawn_point("%sSpawn%d" % [warehouse["id"], index + 1], warehouse["position"] + Vector3(-7 + index * 14, 0.1, -4), "port")
 			point.is_enabled = false
 			(_warehouse_doors[warehouse["id"]] as HelixDoor).state_changed.connect(func(is_open: bool): point.is_enabled = is_open)
+	for door: HelixDoor in _central_doors.values():
+		door.state_changed.connect(_on_central_door_state_changed)
 
 
 func apply_balance(key: String) -> void:
@@ -139,6 +145,10 @@ func apply_balance(key: String) -> void:
 			var warehouse_id := "warehouse_%d" % (door_index + 1)
 			if _warehouse_doors.has(warehouse_id):
 				(_warehouse_doors[warehouse_id] as HelixDoor).price_credits = int(PortBalance.get_value(key))
+		"central_door_north_price", "central_door_east_price", "central_door_south_price", "central_door_west_price":
+			var direction := key.trim_prefix("central_door_").trim_suffix("_price")
+			if _central_doors.has(direction):
+				(_central_doors[direction] as HelixDoor).price_credits = int(PortBalance.get_value(key))
 
 
 func _create_ground() -> void:
@@ -150,6 +160,81 @@ func _create_boundaries() -> void:
 	_create_static_box("SouthBoundary", Vector3(0, 3, 100), Vector3(200, 6, 1), Color(0.05, 0.07, 0.08, 1.0))
 	_create_invisible_boundary("WestSeaBarrier", Vector3(-100, 3, 0), Vector3(1, 6, 200))
 	_create_static_box("EastBoundary", Vector3(100, 3, 0), Vector3(1, 6, 200), Color(0.05, 0.07, 0.08, 1.0))
+
+
+func _create_central_zone() -> void:
+	var wall_color := Color(0.12, 0.18, 0.23, 1.0)
+	_create_windowed_central_wall("north", -24.0, wall_color)
+	_create_windowed_central_wall("south", 24.0, wall_color)
+	_create_windowed_central_wall("west", -24.0, wall_color)
+	_create_windowed_central_wall("east", 24.0, wall_color)
+	_create_central_door("north", Vector3(0, 0, -24), false)
+	_create_central_door("east", Vector3(24, 0, 0), true)
+	_create_central_door("south", Vector3(0, 0, 24), false)
+	_create_central_door("west", Vector3(-24, 0, 0), true)
+
+
+func _create_central_door(direction: String, position_value: Vector3, rotate: bool) -> void:
+	var definition := DoorDefinition.new()
+	definition.display_name = "Ouvrir la porte %s" % direction
+	definition.price_credits = int(PortBalance.get_value("central_door_%s_price" % direction))
+	var door := HelixDoor.new()
+	door.name = "CentralDoor_%s" % direction.capitalize()
+	door.configure(definition)
+	door.width = 8.0
+	door.height = 6.0
+	door.position = position_value
+	if rotate:
+		door.rotation.y = PI * 0.5
+	add_child(door)
+	_central_doors[direction] = door
+
+
+func _create_windowed_central_wall(direction: String, coordinate: float, wall_color: Color) -> void:
+	var horizontal := direction == "north" or direction == "south"
+	for offset in [-20.0, -8.0, 8.0, 20.0]:
+		var position_value := Vector3(offset, 3, coordinate) if horizontal else Vector3(coordinate, 3, offset)
+		var size_value := Vector3(8, 6, 1) if horizontal else Vector3(1, 6, 8)
+		_create_static_box("CentralZone%sWall%d" % [direction.capitalize(), int(offset)], position_value, size_value, wall_color)
+	for offset in [-14.0, 14.0]:
+		var lower_position := Vector3(offset, 0.75, coordinate) if horizontal else Vector3(coordinate, 0.75, offset)
+		var upper_position := Vector3(offset, 5.0, coordinate) if horizontal else Vector3(coordinate, 5.0, offset)
+		var segment_size := Vector3(4, 1.5, 1) if horizontal else Vector3(1, 1.5, 4)
+		var upper_size := Vector3(4, 2, 1) if horizontal else Vector3(1, 2, 4)
+		_create_static_box("CentralZone%sWindowLower%d" % [direction.capitalize(), int(offset)], lower_position, segment_size, wall_color)
+		_create_static_box("CentralZone%sWindowUpper%d" % [direction.capitalize(), int(offset)], upper_position, upper_size, wall_color)
+		_create_central_window("%s%d" % [direction, int(offset)], Vector3(offset, 2.75, coordinate) if horizontal else Vector3(coordinate, 2.75, offset), horizontal)
+
+
+func _create_central_window(window_id: String, position_value: Vector3, horizontal: bool) -> void:
+	var body := StaticBody3D.new()
+	body.name = "CentralWindow_%s" % window_id
+	body.position = position_value
+	add_child(body)
+	var visual := MeshInstance3D.new()
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(3.8, 3.5, 0.08) if horizontal else Vector3(0.08, 3.5, 3.8)
+	visual.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(0.08, 0.48, 0.68, 0.42)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.metallic = 0.65
+	material.roughness = 0.2
+	visual.material_override = material
+	body.add_child(visual)
+	var collision := CollisionShape3D.new()
+	var shape := BoxShape3D.new()
+	shape.size = mesh.size
+	collision.shape = shape
+	body.add_child(collision)
+
+
+func _on_central_door_state_changed(_is_open: bool) -> void:
+	var exterior_enabled := false
+	for door: HelixDoor in _central_doors.values():
+		exterior_enabled = exterior_enabled or door.is_open
+	for point: ZombieSpawnPoint in _exterior_spawn_points:
+		point.is_enabled = exterior_enabled
 
 
 func _create_west_sea() -> void:
@@ -520,6 +605,8 @@ func _discard_layout_group(group_id: String) -> void:
 
 
 func _get_layout_group_id(node_name: String) -> String:
+	if node_name.begins_with("CentralZone"):
+		return "central_zone"
 	if node_name.ends_with("Boundary"):
 		return "boundary"
 	for warehouse: Dictionary in WAREHOUSES:
@@ -533,7 +620,7 @@ func _get_layout_group_id(node_name: String) -> String:
 
 
 func _is_critical_layout_group(group_id: String) -> bool:
-	return group_id.begins_with("warehouse:")
+	return group_id.begins_with("warehouse:") or group_id == "central_zone"
 
 
 func _create_decor_box(node_name: String, box_position: Vector3, box_size: Vector3, color: Color, emissive: bool) -> void:

@@ -7,7 +7,7 @@ const SAVE_PATH := "user://port_balance.cfg"
 const SECTION := "balance"
 const DEFAULTS := {
 	"zombie_reward": 50.0,
-	"wave_start_count": 40.0,
+	"wave_start_count": 20.0,
 	"wave_increment": 5.0,
 	"health_per_wave": 0.10,
 	"spawn_interval": 1.0,
@@ -27,6 +27,10 @@ const DEFAULTS := {
 	"door_1_price": 500.0,
 	"door_2_price": 1000.0,
 	"door_3_price": 1500.0,
+	"central_door_north_price": 500.0,
+	"central_door_east_price": 1000.0,
+	"central_door_south_price": 1500.0,
+	"central_door_west_price": 2000.0,
 	"extraction_price": 1000.0,
 }
 

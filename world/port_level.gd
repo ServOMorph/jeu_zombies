@@ -37,6 +37,8 @@ var _restart_confirmation: ConfirmationDialog
 var _next_restart_request_check_ms := 0
 var _damage_flash: ColorRect
 var _last_player_health := 0.0
+var _dev_drag_active := false
+var _dev_drag_offset := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -44,7 +46,7 @@ func _ready() -> void:
 	_set_gameplay_process_mode()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	blockout.create_zombie_spawn_points()
-	player.global_position = blockout.get_random_player_spawn()
+	player.global_position = blockout.get_player_spawn()
 	_target_wave = PortProgress.get_target_wave()
 	_build_normal_waves()
 	extraction_terminal.price_credits = int(PortBalance.get_value("extraction_price"))
@@ -351,6 +353,8 @@ func _create_dev_menu() -> void:
 	title.add_theme_font_size_override("font_size", 20)
 	title.add_theme_color_override("font_color", Color(0.3, 0.85, 1.0, 1.0))
 	content.add_child(title)
+	title.mouse_filter = Control.MOUSE_FILTER_STOP
+	title.gui_input.connect(_on_dev_drag_handle_input)
 	var help := Label.new()
 	help.text = "Jeu en pause. Modifiez l'équilibrage, créez un fil, ou sélectionnez un fil existant."
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -381,6 +385,12 @@ func _create_dev_menu() -> void:
 	content = VBoxContainer.new()
 	content.custom_minimum_size.x = 590
 	comments_scroll.add_child(content)
+	var drag_handle := Label.new()
+	drag_handle.text = "MAINTENIR ET GLISSER POUR DÉPLACER F3"
+	drag_handle.add_theme_color_override("font_color", Color(0.3, 0.85, 1.0, 1.0))
+	drag_handle.mouse_filter = Control.MOUSE_FILTER_STOP
+	drag_handle.gui_input.connect(_on_dev_drag_handle_input)
+	content.add_child(drag_handle)
 	_flight_button = Button.new()
 	_flight_button.pressed.connect(_toggle_flight_mode)
 	content.add_child(_flight_button)
@@ -628,6 +638,23 @@ func _toggle_dev_menu() -> void:
 		if GameSession.state == GameSession.State.PAUSED:
 			GameSession.toggle_pause()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		_dev_drag_active = false
+
+
+func _on_dev_drag_handle_input(event: InputEvent) -> void:
+	if _dev_panel == null:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		_dev_drag_active = event.pressed
+		if event.pressed:
+			_dev_drag_offset = get_viewport().get_mouse_position() - _dev_panel.position
+		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventMouseMotion and _dev_drag_active:
+		var viewport_size := get_viewport().get_visible_rect().size
+		var max_position := Vector2(maxf(0.0, viewport_size.x - _dev_panel.size.x), maxf(0.0, viewport_size.y - _dev_panel.size.y))
+		_dev_panel.position = (get_viewport().get_mouse_position() - _dev_drag_offset).clamp(Vector2.ZERO, max_position)
+		get_viewport().set_input_as_handled()
 
 
 func _is_dev_menu_open() -> bool:

@@ -9,12 +9,10 @@ func run_tests() -> Array[String]:
 		failures.append("La sauvegarde des commentaires de debug est absente.")
 	if PortProgress.DEFAULT_TARGET_WAVE != 3 or PortProgress.MAX_TARGET_WAVE != 10:
 		failures.append("Les bornes de progression du Port doivent être 3 et 10.")
-	if PortBlockout.PLAYER_SPAWNS.size() != 10:
-		failures.append("Le Port doit définir exactement dix départs joueur.")
-	for player_spawn: Vector3 in PortBlockout.PLAYER_SPAWNS:
-		if not PortBlockout.is_outside_warehouses(player_spawn):
-			failures.append("Un départ joueur est placé dans un hangar.")
-			break
+	if PortBlockout.PLAYER_SPAWN != Vector3(0.0, 0.1, 0.0):
+		failures.append("Le joueur doit démarrer au centre du Port.")
+	if (PortBlockout.PORT_COORDINATES["central_window_spawns"] as Array).size() != 8:
+		failures.append("Le Port doit définir huit apparitions près des fenêtres centrales.")
 	if PortBlockout.WAREHOUSES.size() != 3:
 		failures.append("Le Port doit définir trois entrepôts.")
 	if (PortBlockout.PORT_COORDINATES["cranes"] as Array).size() != 5:
@@ -27,8 +25,8 @@ func run_tests() -> Array[String]:
 		failures.append("Le Port doit définir deux entrepôts décoratifs.")
 	if (PortBlockout.PORT_COORDINATES["cardinal_markers"] as Array).size() != 4:
 		failures.append("Le Port doit définir quatre repères cardinaux.")
-	if int(PortBalance.DEFAULTS["wave_start_count"]) != 40:
-		failures.append("La première manche du Port doit contenir quarante zombies.")
+	if int(PortBalance.DEFAULTS["wave_start_count"]) != 20:
+		failures.append("La première manche du Port doit contenir vingt zombies.")
 	if int(PortBalance.DEFAULTS["wave_increment"]) != 5:
 		failures.append("La progression doit ajouter cinq zombies par manche.")
 	if int(PortBalance.DEFAULTS["weapon_1_ammo_price"]) != 100:
@@ -38,7 +36,7 @@ func run_tests() -> Array[String]:
 	if int(PortBalance.DEFAULTS["extraction_duration"]) != 90:
 		failures.append("La durée par défaut de l'extraction doit être de 90 secondes.")
 	var blockout_source := FileAccess.get_file_as_string("res://world/port_blockout.gd")
-	for visual_marker: String in ["_create_port_ambience", "HarborPole", "HighMast", "CraneBeacon", "_create_central_worksites", "container_colors", "_create_cardinal_markers", "Cardinal_%s", "_register_layout_box", "_is_critical_layout_group", "_create_west_sea", "WestSeaBarrier", "SeaBoatHull", "_get_port_material"]:
+	for visual_marker: String in ["_create_port_ambience", "HarborPole", "HighMast", "CraneBeacon", "_create_central_worksites", "_create_central_zone", "_create_windowed_central_wall", "_create_central_window", "CentralDoor_", "central_window_spawns", "container_colors", "_create_cardinal_markers", "Cardinal_%s", "_register_layout_box", "_is_critical_layout_group", "_create_west_sea", "WestSeaBarrier", "SeaBoatHull", "_get_port_material"]:
 		if not blockout_source.contains(visual_marker):
 			failures.append("Le repère visuel Port %s est absent." % visual_marker)
 	var port_scene_source := FileAccess.get_file_as_string("res://world/port_level.tscn")

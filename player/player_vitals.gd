@@ -16,11 +16,13 @@ var stamina := 100.0
 var stamina_drain_per_second := 35.0
 var stamina_regeneration_per_second := 28.0
 var stamina_reactivation_threshold := 25.0
+var stamina_exhaustion_recovery_delay_seconds := 0.0
 
 var is_dead := false
 var is_exhausted := false
 var _invulnerability_remaining := 0.0
 var _time_since_last_damage := 0.0
+var _exhaustion_recovery_remaining := 0.0
 
 
 func configure(
@@ -31,7 +33,8 @@ func configure(
 	maximum_stamina: float,
 	drain_per_second: float,
 	stamina_regeneration: float,
-	reactivation_threshold: float
+	reactivation_threshold: float,
+	exhaustion_recovery_delay_seconds: float
 ) -> void:
 	max_health = maximum_health
 	damage_invulnerability_seconds = invulnerability_seconds
@@ -41,6 +44,7 @@ func configure(
 	stamina_drain_per_second = drain_per_second
 	stamina_regeneration_per_second = stamina_regeneration
 	stamina_reactivation_threshold = reactivation_threshold
+	stamina_exhaustion_recovery_delay_seconds = exhaustion_recovery_delay_seconds
 	reset()
 
 
@@ -51,6 +55,7 @@ func reset() -> void:
 	is_exhausted = false
 	_invulnerability_remaining = 0.0
 	_time_since_last_damage = 0.0
+	_exhaustion_recovery_remaining = 0.0
 	health_changed.emit(health, max_health)
 	stamina_changed.emit(stamina, max_stamina)
 
@@ -99,7 +104,13 @@ func _update_stamina(delta: float, is_sprinting: bool) -> void:
 		stamina = maxf(0.0, stamina - stamina_drain_per_second * delta)
 		if stamina == 0.0:
 			is_exhausted = true
+			_exhaustion_recovery_remaining = stamina_exhaustion_recovery_delay_seconds
 	else:
+		if is_exhausted and _exhaustion_recovery_remaining > 0.0:
+			_exhaustion_recovery_remaining = maxf(0.0, _exhaustion_recovery_remaining - delta)
+			if _exhaustion_recovery_remaining > 0.0001:
+				return
+			_exhaustion_recovery_remaining = 0.0
 		stamina = minf(max_stamina, stamina + stamina_regeneration_per_second * delta)
 		if is_exhausted and stamina >= stamina_reactivation_threshold:
 			is_exhausted = false

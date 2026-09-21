@@ -50,6 +50,8 @@ shadow_enabled = true
 script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("3")]
+stamina_exhaustion_recovery_delay_seconds = 2.0
+reload_animation_enabled = true
 
 [node name="CombatAudioFeedback" type="Node" parent="."]
 script = ExtResource("10")

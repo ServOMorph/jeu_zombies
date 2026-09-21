@@ -15,7 +15,7 @@ class SignalObserver:
 func run_tests() -> Array[String]:
 	var failures: Array[String] = []
 	var vitals := PLAYER_VITALS.new()
-	vitals.configure(100.0, 0.2, 2.0, 10.0, 100.0, 50.0, 25.0, 30.0)
+	vitals.configure(100.0, 0.2, 2.0, 10.0, 100.0, 50.0, 25.0, 30.0, 2.0)
 	var observer := SignalObserver.new()
 	vitals.died.connect(observer._on_died)
 
@@ -37,7 +37,11 @@ func run_tests() -> Array[String]:
 	vitals.update(0.2, true)
 	if vitals.stamina != 0.0 or not vitals.is_exhausted or vitals.can_sprint():
 		failures.append("l'endurance épuisée doit interdire la course")
-	vitals.update(1.2, false)
+	vitals.update(1.9, false)
+	if vitals.stamina != 0.0 or vitals.can_sprint():
+		failures.append("l'endurance épuisée doit attendre avant de se recharger")
+	vitals.update(0.1, false)
+	vitals.update(1.3, false)
 	if vitals.is_exhausted or not vitals.can_sprint() or vitals.stamina < 30.0:
 		failures.append("l'endurance doit réactiver la course après son seuil")
 

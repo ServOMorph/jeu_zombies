@@ -10,8 +10,8 @@
 
 - Depuis l'accueil, vérifier au clavier et à la souris la sélection de « Niveau 1 — Helix-9 » et
   « Niveau 2 — Port », puis la confirmation de réinitialisation de l'objectif du Port.
-- Lancer le Port plusieurs fois et vérifier que le départ est choisi parmi les dix positions
-  extérieures, que les limites sont infranchissables et que les trois entrepôts sont éclairés.
+- Lancer le Port plusieurs fois et vérifier que le joueur démarre au centre, dans une zone fermée,
+  que les limites sont infranchissables et que les trois entrepôts sont éclairés.
 - Vérifier le coucher de soleil : horizon orange, ombres longues, mâts hauts, grues et chantiers
   centraux éclairés, sans éblouissement empêchant de lire les silhouettes ou l'extraction.
 - Vérifier les quatre chantiers centraux (groupe électrogène, palettes et chariot) : aucun
@@ -38,8 +38,13 @@
   relance immédiatement sur le bureau Agents, sans attendre le prochain contrôle de cinq minutes.
 - Vérifier le HUD du Port : « Zombies restants » doit compter les zombies vivants et ceux qui
   restent à faire apparaître, puis atteindre zéro avant le changement de manche.
-- Vérifier les portes à 500, 1 000 et 1 500 crédits, la désactivation des apparitions intérieures
-  avant ouverture et les douze points d'apparition après ouverture.
+- Vérifier les huit fenêtres vitrées de la zone centrale : les zombies doivent apparaître de façon
+  répartie devant elles, sans concentration autour du joueur ; la première manche doit compter 20 zombies.
+- Vérifier les quatre portes centrales à 500, 1 000, 1 500 et 2 000 crédits, puis confirmer que les
+  six apparitions extérieures restent désactivées avant toute ouverture et s'activent après ouverture.
+- Épuiser l'endurance : sa recharge doit attendre deux secondes dans le Port avant de reprendre.
+- Recharger une arme : son visuel doit s'incliner puis revenir en position. Ouvrir F3 et déplacer
+  sa fenêtre en faisant glisser le titre ou la poignée dédiée.
 - Vérifier les quatre armes, la caisse, la station d'amélioration et les quatre avantages aux prix
   affichés, puis modifier les prix avec F3 et constater l'effet immédiat sur les stations encore
   disponibles.

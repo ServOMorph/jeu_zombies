@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.56 — 2026-09-21
+
+### Ajouté
+- Port : zone de départ centrale avec quatre portes payantes, huit fenêtres et huit apparitions zombies initiales.
+- Port : délai de récupération après épuisement, animation de rechargement et panneau F3 déplaçable.
+
+### Modifié
+- Première manche du Port ramenée à 20 zombies ; les apparitions extérieures s'activent après l'ouverture d'une porte centrale.
+
 ## v0.55 — 2026-09-20
 
 ### Ajouté

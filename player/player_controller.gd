@@ -41,6 +41,8 @@ const WEAPON_VISUAL_CLEARANCE := 0.04
 @export var stamina_drain_per_second := 35.0
 @export var stamina_regeneration_per_second := 28.0
 @export_range(1.0, 100.0, 1.0) var stamina_reactivation_threshold := 25.0
+@export_range(0.0, 10.0, 0.1) var stamina_exhaustion_recovery_delay_seconds := 0.0
+@export var reload_animation_enabled := false
 
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var head: Node3D = $Head
@@ -72,7 +74,8 @@ func _ready() -> void:
 		max_stamina,
 		stamina_drain_per_second,
 		stamina_regeneration_per_second,
-		stamina_reactivation_threshold
+		stamina_reactivation_threshold,
+		stamina_exhaustion_recovery_delay_seconds
 	)
 	vitals.died.connect(_on_died)
 	GameSession.session_ended.connect(_on_session_ended)
@@ -89,6 +92,8 @@ func _ready() -> void:
 	interaction_controller.configure(self)
 	weapon_controller.shot_fired.connect(_on_shot_fired)
 	weapon_controller.weapon_changed.connect(_on_weapon_changed)
+	weapon_controller.reload_started.connect(_on_reload_started)
+	weapon_controller.reload_finished.connect(_on_reload_finished)
 	_on_weapon_changed(weapon_controller.get_current_weapon_name())
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -256,6 +261,20 @@ func _on_shot_fired(_weapon_name: String) -> void:
 	var look_limit := deg_to_rad(vertical_look_limit_degrees)
 	head.rotation.x = maxf(head.rotation.x - recoil, -look_limit)
 	_recoil_remaining += recoil
+
+
+func _on_reload_started() -> void:
+	if not reload_animation_enabled:
+		return
+	var tween := create_tween()
+	tween.tween_property(weapon_visual_root, "rotation", Vector3(deg_to_rad(-32.0), deg_to_rad(18.0), 0.0), 0.12)
+
+
+func _on_reload_finished() -> void:
+	if not reload_animation_enabled:
+		return
+	var tween := create_tween()
+	tween.tween_property(weapon_visual_root, "rotation", Vector3.ZERO, 0.12)
 
 
 func _recover_recoil(delta: float) -> void:

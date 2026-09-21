@@ -1,5 +1,7 @@
 # Décisions archivées — jeu_zombies
 
+- 2026-08-07 : M5.1 validée manuellement a posteriori ; jalon M5 clos intégralement.
+
 - 2026-08-07 : M5.4 implémentée : chrono 120 s, `WaveManager` dédié à pression élevée capé par le plafond de zombies existant, extraction déverrouillée après succès via `REJOINDRE_EXTRACTION` ; validée manuellement en jeu réel.
 - 2026-08-07 : M5.5 implémentée : le blocage des actions à toute fin de partie est centralisé sur `GameSession.session_ended` ; validée manuellement en jeu réel.
 
