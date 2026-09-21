@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.57 — 2026-09-21
+
+### Ajouté
+- `.claude/commands/creer_asset_3d.md` : procédure de génération et qualification locale de candidats GLB.
+- `assets/generated/port_semi_remorque/` : premier essai Hunyuan, conservé avec sa référence et son rapport de rejet.
+
 ## v0.56 — 2026-09-21
 
 ### Ajouté

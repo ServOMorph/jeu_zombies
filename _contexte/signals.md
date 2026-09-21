@@ -9,32 +9,33 @@
 - [P2|ouvert] Généralisation du tuilage aux quatre autres zones. fait quand: phase P2 de `roadmap_m6.md` complétée. réf: `roadmap_m6.md`, `world/zone_walls.gd`
 - [P2|ouvert] Expérimentation de synthèse agents. fait quand: phase 2 de `roadmap_synthese_agents.md` exécutée en conditions réelles. réf: `roadmap_synthese_agents.md`
 - [P2|ouvert] Ligne d'attaque zombie potentiellement masquée par un congénère. fait quand: un test dédié confirme ou infirme le défaut, puis corrige si nécessaire. réf: `enemies/zombie_standard.gd:230-238`
+- [P2|ouvert] Chaîne d'assets 3D locale : refaire l'essai de semi-remorque avec une référence IA locale exploitable, puis qualifier le mesh. fait quand: un candidat respecte la silhouette, possède UV et matériau, est nettoyé et validé pour intégration. réf: `.claude/commands/creer_asset_3d.md`, `assets/generated/port_semi_remorque/validation.md`
 
 ## Contexte chaud
 
 - Le joueur du Port démarre au centre ; quatre portes payantes libèrent les apparitions extérieures.
 - Huit fenêtres répartissent les apparitions initiales ; la première manche contient 20 zombies.
 - `python test.py` (31 suites) et le chargement headless du Port réussissent ; les validations visuelles restent nécessaires.
+- Le premier candidat Hunyuan de semi-remorque est rejeté : GLB importable mais sans UV ni texture et presque plat.
 
 ## Dernière session
 
 # Session du 2026-09-21
 
 ## Décisions prises
-- Le Port démarre dans une zone centrale à quatre portes payantes, indépendante d'Helix-9.
-- Les apparitions initiales sont réparties entre huit fenêtres centrales et la première manche passe à 20 zombies.
+- Les assets 3D issus d'IA locale restent des candidats séparés jusqu'à qualification explicite ; aucun placeholder de jeu n'est écrasé.
 
 ## Livrables produits ou modifiés
-- `world/port_blockout.gd`, `core/port_balance.gd` : zone centrale, quatre portes, huit fenêtres, spawns et vague initiale.
-- `player/player_controller.gd`, `player/player_vitals.gd`, `world/port_level.gd` : rechargement, délai d'endurance et déplacement de F3.
-- `tests/`, `tests_manuels.md`, `roadmap_zone_centrale_port.md` : couverture automatisée et validation manuelle à effectuer.
+- `.claude/commands/creer_asset_3d.md` : procédure locale de génération et qualification d'un décor ou personnage.
+- `assets/generated/port_semi_remorque/` : référence, GLB brut et rapport de validation d'un essai Hunyuan.
 
 ## Hypothèses validées / invalidées
-- VALIDE : `python test.py` (31 suites), chargement headless du Port et contrôle de format Git.
-- EN ATTENTE : validation manuelle de la zone centrale et des fils F3.
+- VALIDE : le GLB Hunyuan est importé par Godot 4.5.
+- INVALIDE : une référence schématique suffit à produire une semi-remorque jouable ; le candidat est presque plat, sans UV ni texture.
+- EN ATTENTE : remise en service de Flux ou Sana pour une référence IA locale exploitable.
 
 ## Prochaine étape exacte
-Valider en jeu réel la zone centrale, les huit fenêtres, les portes, l'endurance, le rechargement et F3.
+Réparer ou qualifier la génération d'image locale, puis relancer `/creer_asset_3d decor port-semi-remorque` avec une référence trois-quarts de qualité.
 
 ## Question bloquante pour la session suivante
 Aucune.
