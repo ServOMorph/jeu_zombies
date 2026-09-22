@@ -9,6 +9,7 @@
 - [P2|ouvert] Généralisation du tuilage aux quatre autres zones. fait quand: phase P2 de `roadmap_m6.md` complétée. réf: `roadmap_m6.md`, `world/zone_walls.gd`
 - [P2|ouvert] Expérimentation de synthèse agents. fait quand: phase 2 de `roadmap_synthese_agents.md` exécutée en conditions réelles. réf: `roadmap_synthese_agents.md`
 - [P2|ouvert] Ligne d'attaque zombie potentiellement masquée par un congénère. fait quand: un test dédié confirme ou infirme le défaut, puis corrige si nécessaire. réf: `enemies/zombie_standard.gd:230-238`
+- [P2|ouvert] Remplacement visuel du zombie : intégrer un modèle avec les animations d'état et l'`AnimationTree` associés. fait quand: les clips `spawn`, `idle`, `walk`, `chase`, `attack`, `hit_reaction`, `death` et `disable` pilotent le modèle sans perdre le feedback d'état. réf: `DESIGN/zombie_standard/contrat_animation_phase4_v1.md`, `enemies/zombie_standard.gd`, `enemies/zombie_standard.tscn`
 - [P2|ouvert] Chaîne d'assets 3D locale : refaire l'essai de semi-remorque avec une référence IA locale exploitable, puis qualifier le mesh. fait quand: un candidat respecte la silhouette, possède UV et matériau, est nettoyé et validé pour intégration. réf: `.claude/commands/creer_asset_3d.md`, `assets/generated/port_semi_remorque/validation.md`
 
 ## Contexte chaud
@@ -17,25 +18,26 @@
 - Huit fenêtres répartissent les apparitions initiales ; la première manche contient 20 zombies.
 - `python test.py` (31 suites) et le chargement headless du Port réussissent ; les validations visuelles restent nécessaires.
 - Le premier candidat Hunyuan de semi-remorque est rejeté : GLB importable mais sans UV ni texture et presque plat.
+- Le pack Zombie Apocalypse Kit de Quaternius est CC0 et compatible glTF, mais son import reste différé : les animations doivent être intégrées avec le modèle.
 
 ## Dernière session
 
 # Session du 2026-09-21
 
 ## Décisions prises
-- Les assets 3D issus d'IA locale restent des candidats séparés jusqu'à qualification explicite ; aucun placeholder de jeu n'est écrasé.
+- Le zombie reste sur son rendu actuel tant que son modèle, ses clips d'animation et l'`AnimationTree` ne sont pas intégrés ensemble.
 
 ## Livrables produits ou modifiés
-- `.claude/commands/creer_asset_3d.md` : procédure locale de génération et qualification d'un décor ou personnage.
-- `assets/generated/port_semi_remorque/` : référence, GLB brut et rapport de validation d'un essai Hunyuan.
+- `_contexte/signals.md` : action d'intégration complète du rendu zombie ajoutée.
+- `CHANGELOG.md` : décision de non-régression consignée.
 
 ## Hypothèses validées / invalidées
-- VALIDE : le GLB Hunyuan est importé par Godot 4.5.
-- INVALIDE : une référence schématique suffit à produire une semi-remorque jouable ; le candidat est presque plat, sans UV ni texture.
-- EN ATTENTE : remise en service de Flux ou Sana pour une référence IA locale exploitable.
+- VALIDE : le pack Quaternius est importable par Godot 4.5 et sa licence CC0 convient au projet.
+- INVALIDE : remplacer seulement le mesh préserve le feedback d'état du zombie ; les animations sont indispensables.
+- EN ATTENTE : intégration d'un modèle et de ses huit animations avec `AnimationTree`.
 
 ## Prochaine étape exacte
-Réparer ou qualifier la génération d'image locale, puis relancer `/creer_asset_3d decor port-semi-remorque` avec une référence trois-quarts de qualité.
+Créer la scène visuelle zombie autour du GLB validé, puis relier les huit clips contractuels aux états de `ZombieStandard` via un `AnimationTree`.
 
 ## Question bloquante pour la session suivante
 Aucune.

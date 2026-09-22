@@ -12,7 +12,7 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - Le Port est une carte 200 × 200 m avec trois entrepôts, progression persistante, vagues, extraction et stations.
 - Le joueur démarre dans une zone centrale à quatre portes payantes et huit fenêtres d'apparition ; la vague 1 contient 20 zombies.
 - F3 est déplaçable, suspend puis reprend les vagues ; le Port applique aussi un délai d'endurance et une animation de rechargement.
-- Une commande locale de création d'assets 3D existe ; le candidat Hunyuan de semi-remorque est rejeté et n'a aucun impact en jeu.
+- Le zombie conserve son rendu de test ; son remplacement est différé jusqu'à une intégration conjointe des animations et de l'`AnimationTree`.
 
 ## Décisions structurantes (append only — 10 entrées max, 5 lignes max/entrée)
 - 2026-08-08 : Re-bake sur géométrie réelle : suppression de `_is_traversing_navigation_link()` et correction de `request_navigation_repath()`.
@@ -25,3 +25,4 @@ Python 3 fournit `run.py`, le lanceur headless `test.py` et le contrôle qualit�
 - 2026-09-20 : Le Port utilise des matériaux procéduraux et une extension maritime ouest inaccessible ; la relance après validation F3 est déléguée à un processus local lancé par le jeu.
 - 2026-09-21 : Le Port démarre dans une zone centrale à quatre accès payants ; huit fenêtres répartissent les spawns initiaux et la vague 1 passe à 20 zombies.
 - 2026-09-21 : Les candidats 3D locaux sont séparés des assets de production ; aucun remplacement de scène sans qualification explicite.
+- 2026-09-21 : Le rendu zombie ne sera remplacé qu'avec ses animations d'état et son `AnimationTree`, afin de préserver le feedback de gameplay.

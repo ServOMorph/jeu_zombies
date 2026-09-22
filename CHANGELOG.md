@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.58 — 2026-09-21
+
+### Modifié
+- Intégration visuelle du zombie différée : le modèle ne remplacera le rendu de test qu'avec les animations d'état et l'`AnimationTree` associés.
+
 ## v0.57 — 2026-09-21
 
 ### Ajouté
