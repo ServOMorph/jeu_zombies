@@ -8,6 +8,10 @@
 
 ## Port — parcours et systèmes
 
+- Vérifier dans le Port que les zombies utilisent le modèle et les textures Mixamo, que leurs pieds
+  reposent au sol et que les animations d'apparition, poursuite, attaque, réaction, mort et
+  désactivation sont lisibles sans décalage avec la collision ; leur face doit suivre la marche et
+  aucun clip ne doit produire de saut ou de translation visuelle indépendante du contrôleur.
 - Depuis l'accueil, vérifier au clavier et à la souris la sélection de « Niveau 1 — Helix-9 » et
   « Niveau 2 — Port », puis la confirmation de réinitialisation de l'objectif du Port.
 - Lancer le Port plusieurs fois et vérifier que le joueur démarre au centre, dans une zone fermée,
@@ -34,6 +38,8 @@
   zombies reprennent immédiatement.
 - Vérifier les effets visuels : éclat orange à l'impact sur un zombie, éclat vert à sa mort et
   flash rouge lorsque le joueur subit une attaque.
+- Vérifier qu’un zombie ne retire de vie qu’après le début visible de son animation de frappe, et
+  qu’aucun dégât ne survient si le joueur sort de portée avant le contact.
 - Après traitement d'un lot, cliquer sur OK dans l'overlay et confirmer que le jeu se ferme puis se
   relance immédiatement sur le bureau Agents, sans attendre le prochain contrôle de cinq minutes.
 - Vérifier le HUD du Port : « Zombies restants » doit compter les zombies vivants et ceux qui

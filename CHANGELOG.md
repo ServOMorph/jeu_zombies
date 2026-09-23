@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.59 — 2026-09-23
+
+### Ajouté
+- Port : personnage Mixamo Zombiegirl, textures et huit clips FBX intégrés au zombie standard.
+- Tests automatisés de l'import Mixamo, du mapping d'animations et du délai d'impact de la frappe.
+
+### Modifié
+- Zombie : orientation par déplacement, boucles d'animation et root motion horizontal neutralisé sans supprimer le mouvement vertical.
+- Zombie : dégâts appliqués 0,22 s après le début de la frappe, puis annulés si le joueur esquive avant l'impact.
+
 ## v0.58 — 2026-09-21
 
 ### Modifié

@@ -33,6 +33,14 @@ func run_tests() -> Array[String]:
 		failures.append("un zombie hors sol doit être soumis à la gravité")
 	if ZOMBIE_STANDARD.resolve_vertical_velocity(-1.0, true, 9.8, 0.1) != 0.0:
 		failures.append("un zombie au sol ne doit pas conserver une vitesse verticale")
+	if not is_equal_approx(ZOMBIE_STANDARD.horizontal_yaw_for_direction(Vector3(0.0, 0.0, -1.0)), 0.0):
+		failures.append("un zombie avançant vers -Z doit conserver son orientation initiale")
+	if not is_equal_approx(ZOMBIE_STANDARD.horizontal_yaw_for_direction(Vector3(1.0, 0.0, 0.0)), -PI * 0.5):
+		failures.append("un zombie avançant vers +X doit pivoter vers +X")
+	if not is_equal_approx(ZOMBIE_STANDARD.advance_attack_windup(0.22, 0.1), 0.12):
+		failures.append("le délai d'impact doit progresser avec le temps")
+	if ZOMBIE_STANDARD.advance_attack_windup(0.1, 0.2) != 0.0:
+		failures.append("le délai d'impact ne doit pas devenir négatif")
 	var base_definition := ZOMBIE_DEFINITION.new()
 	base_definition.max_health = 100.0
 	var wave_zombie := ZOMBIE_STANDARD.new()

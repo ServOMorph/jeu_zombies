@@ -2,13 +2,13 @@
 
 ## État actuel
 
-Aucune ressource externe n’est intégrée au projet. Les dossiers `assets/` ne contiennent que des fichiers `.gitkeep`.
+Le zombie Mixamo est intégré au niveau Port. Sa provenance et sa licence sont documentées ci-dessous.
 
 ## Registre
 
 | Ressource | Type | Auteur | Source | Licence | Preuve locale | Modifications | Emplacement |
 |---|---|---|---|---|---|---|---|
-| Aucune | — | — | — | — | — | — | — |
+| Zombiegirl W Kurniawan et 7 animations zombie | Personnage 3D et animations FBX | Adobe Mixamo | https://www.mixamo.com/ | Utilisation sans redevance dans les jeux, y compris commerciaux | `_docs/licenses/mixamo_adobe_faq.md` | Import Godot 4.5, clips reliés aux états du zombie | `assets/characters/enemies/mixamo/` |
 
 ## Règles d’intégration
 
