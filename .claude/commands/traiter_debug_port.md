@@ -10,7 +10,9 @@ model: opus
 2. Sans argument, traiter les commentaires dont le statut est `new` ou `in_analysis`, un par un.
    Avec un identifiant, ne traiter que ce fil.
 3. Pour chaque commentaire :
-   - reproduire le problème lorsque possible ;
+	- Définir un titre français court et descriptif (64 caractères maximum), puis l'écrire avec
+  `python tools/port_debug_notes.py rename <id> "<titre>"` avant toute réponse. Ce titre est celui affiché dans les listes F3.
+	- reproduire le problème lorsque possible ;
    - analyser la cause et classer le travail (correctif, réglage, design, investigation ou bloqué) ;
    - créer une roadmap uniquement si le travail comporte plusieurs phases. Cette roadmap ne doit
      contenir aucun checkpoint `/compact` ;

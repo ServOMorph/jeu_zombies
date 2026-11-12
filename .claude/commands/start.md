@@ -46,6 +46,14 @@ Lire `.claude/zones.md` pour obtenir la table des alias → dossiers réels.
     Ajouter ensuite, à partir des autres fichiers chargés : la phase en cours si roadmap active,
     et le point d'attention immédiat.
 
+4c. Si le dossier résolu est la racine du projet (celui contenant directement `.claude/zones.md`)
+    et que `_contexte/synthese_agents.md` existe et contient au moins une entrée (expérimentation
+    `roadmap_synthese_agents.md`) : une fois l'analyse standard ci-dessus terminée, lire ce fichier
+    intégralement, en produire une synthèse condensée par agent (ce qui a été fait, ce qui reste
+    ouvert), puis proposer 2 à 4 actions concrètes pour l'orchestrateur dérivées de cette synthèse
+    (ex: lancer `/start <alias agent>` pour traiter une action ouverte signalée par un agent).
+    Fichier absent ou vide : ignorer silencieusement cette étape.
+
 5. Afficher en fin de réponse : 🎉🎉🎉
 
 <!-- SPECIFICITES PROJET : DEBUT (préservé par /update, ne pas toucher hors de ce bloc) -->

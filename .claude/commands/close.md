@@ -68,12 +68,25 @@ Lire `.claude/zones.md` pour obtenir la table des alias → dossiers réels.
    session (statuts des tâches et phases). Mettre à jour si périmée.
    Invariant : ce que lira le prochain `/start` doit être vrai.
 
-7. Mettre à jour `README.md` à la racine du projet :
+7. Si `<dossier>/agent_role.md` existe (zone agent, expérimentation `roadmap_synthese_agents.md`) :
+   ajouter une entrée à `<racine du projet>/_contexte/synthese_agents.md` (créer le fichier avec son
+   en-tête standard s'il n'existe pas), au format :
+   ```
+   ## <alias> — AAAA-MM-JJ
+   - Décisions : [reprendre la synthèse de l'étape 3]
+   - Livrables : [reprendre la synthèse de l'étape 3]
+   - Prochaine étape : [reprendre la synthèse de l'étape 3]
+   ```
+   Toujours en append, à la fin du fichier — jamais réécrire une entrée existante. Cette écriture
+   est l'unique exception au périmètre déclaratif de la zone, déclarée explicitement dans son
+   `agent_role.md`.
+
+8. Mettre à jour `README.md` à la racine du projet :
    - Refléter l'état actuel du projet (section "État actuel" de `contexte.md`).
    - Ne pas modifier les sections stables (objectif, stack, structure) sauf changement explicite.
    - Si le README n'existe pas encore : le créer avec les sections standard (objectif, stack, structure, état actuel).
 
-8. Bumper la version dans `CHANGELOG.md` :
+9. Bumper la version dans `CHANGELOG.md` :
    - Lire la dernière entrée de `CHANGELOG.md` pour extraire la version actuelle (ex: `v2.2`).
    - Déterminer le type de bump à partir de la synthèse de l'étape 3 :
      - **major** si : structure de `_contexte/` modifiée, placeholder renommé ou supprimé, commande supprimée
@@ -88,12 +101,12 @@ Lire `.claude/zones.md` pour obtenir la table des alias → dossiers réels.
      ```
    - Ne pas modifier les entrées existantes.
 
-9. Avant de committer, relire les étapes 3 à 8 une par une et confirmer explicitement que chacune
-   a été exécutée (pas seulement planifiée). Si une étape a une commande associée (script de build,
-   régénération de vue, etc.) et qu'elle n'a pas encore été lancée dans cette session, l'exécuter
-   maintenant, avant le commit — jamais après.
+10. Avant de committer, relire les étapes 3 à 9 une par une et confirmer explicitement que chacune
+    a été exécutée (pas seulement planifiée). Si une étape a une commande associée (script de build,
+    régénération de vue, etc.) et qu'elle n'a pas encore été lancée dans cette session, l'exécuter
+    maintenant, avant le commit — jamais après.
 
-10. Effectuer un commit git :
+11. Effectuer un commit git :
     ```bash
     git diff --name-only          # vérifier tous les fichiers modifiés pendant la session
     git status                    # confirmer l'état du repo
@@ -105,26 +118,26 @@ Lire `.claude/zones.md` pour obtenir la table des alias → dossiers réels.
       plutôt qu'un commit partiel laissant le repo dans un état incohérent.
     - Ne pas inclure de fichiers sans lien avec la session.
     - Si une commande de génération a modifié des fichiers après le commit (cas non censé
-      survenir avec l'étape 9, mais à vérifier via `git status` après coup) : les inclure dans
+      survenir avec l'étape 10, mais à vérifier via `git status` après coup) : les inclure dans
       ce même commit, jamais dans un commit séparé.
 
-11. Exécuter `git push` :
+12. Exécuter `git push` :
     ```bash
     git push
     ```
     Si le projet n'a pas de remote configuré, ignorer cette étape silencieusement. Si le push
     échoue (pas de remote tracking, conflit, réseau, etc.) : afficher l'erreur telle quelle dans
-    le bilan de l'étape 12, ne pas tenter de résolution automatique (pas de force push, pas de
+    le bilan de l'étape 13, ne pas tenter de résolution automatique (pas de force push, pas de
     pull/rebase automatique).
 
-12. Afficher un bilan des résidus non commités :
+13. Afficher un bilan des résidus non commités :
     ```bash
     git status --short
     ```
     S'il reste des fichiers non commités : ajouter à la synthèse finale une ligne
     "résidus non commités : N fichiers". Pas d'action automatique — uniquement rendre visible.
 
-13. Afficher en fin de réponse en grand format : ✌️😎
+14. Afficher en fin de réponse en grand format : ✌️😎
 
 <!-- SPECIFICITES PROJET : DEBUT (préservé par /update, ne pas toucher hors de ce bloc) -->
 <!-- Convention : toute règle liée à une étape précise de la Procédure ci-dessus doit la
