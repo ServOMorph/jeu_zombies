@@ -89,4 +89,11 @@ Pour les tâches répétitives et templated (commits, posts, changelogs, donnée
 
 Section réservée aux règles propres à ce projet, hors périmètre du kit. Cette section est préservée intégralement par `/update` (jamais écrasée ni fusionnée avec le contenu du kit). Convention : toute règle liée à une section précise du fichier doit la référencer explicitement par son titre (ex: "Section Roadmap : ..."), plutôt que compter sur la position physique de cette section (toujours en fin de fichier).
 
-- Tests manuels : utiliser `D:\ServOMorph\jeu_zombies\tests_manuels.md` uniquement comme file d'attente des contrôles manuels non validés. Avant de créer, proposer ou lancer une nouvelle campagne de tests manuels, vérifier que ce fichier est vide. S'il ne l'est pas, informer l'utilisateur que des tests restent en attente et ne pas ajouter de nouveau test. Après validation d'un test, supprimer immédiatement sa section. Après validation de tous les tests de la campagne, vider intégralement le fichier, sans en conserver le titre ni les consignes.
+- Tests manuels : utiliser `D:\ServOMorph\jeu_zombies\tests_manuels.md` comme file d'attente exhaustive des contrôles manuels non validés. Lorsqu'un test manuel reste à effectuer, l'ajouter à ce fichier, même si d'autres tests y sont déjà en attente. Après validation d'un test, supprimer immédiatement sa section. Lorsque tous les tests en attente sont validés, vider intégralement le fichier, sans en conserver le titre ni les consignes.
+
+## Modèle Codex
+
+Quand l'agent est Codex : modèle `gpt-6.1-sol` uniquement, jamais `astra`. Le modèle est
+affiché en tête de la sortie (ligne `model:`) ; le vérifier au démarrage. En cas de refus du
+modèle (« not supported with a ChatGPT account »), s'arrêter et le signaler, ne pas choisir un
+autre modèle.
